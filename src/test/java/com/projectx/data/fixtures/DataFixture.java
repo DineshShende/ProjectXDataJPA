@@ -10,7 +10,7 @@ public class DataFixture {
 	
 	public static Email standardEmail()
 	{
-		return new Email(EMAIL_NAME,EMAIL_EMAIL);
+		return new Email(EMAIL_EMAIL,EMAIL_NAME);
 		
 	}
 
