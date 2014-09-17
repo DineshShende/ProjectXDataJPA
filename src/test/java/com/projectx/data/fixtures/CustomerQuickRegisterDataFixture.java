@@ -19,7 +19,7 @@ public class CustomerQuickRegisterDataFixture {
 
 	public static Integer CUST_MOBILEPIN=4125;
 	public static Long CUST_EMAILHASH=4141414141L;
-
+/*
 	public static CustomerQuickRegisterKey standardEmailMobileCustomerKey()
 	{
 		return new CustomerQuickRegisterKey(CUST_EMAIL, CUST_MOBILE);
@@ -35,23 +35,23 @@ public class CustomerQuickRegisterDataFixture {
 	{
 		return new CustomerQuickRegisterKey("", CUST_MOBILE);
 	}
-	
+	*/
 	
 	public static CustomerQuickRegisterEntity standardEmailMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_FIRSTNAME, CUST_LASTNAME, standardEmailMobileCustomerKey(), CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH);
+		return new CustomerQuickRegisterEntity(CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_FIRSTNAME, CUST_LASTNAME, standardMobileCustomerKey(), CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, CUST_EMAILHASH);
+		return new CustomerQuickRegisterEntity(CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardEmailCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_FIRSTNAME, CUST_LASTNAME, standardEmailCustomerKey(), CUST_PIN,CUST_STATUS_EMAIL, CUST_MOBILEPIN, CUST_EMAILHASH);
+		return new CustomerQuickRegisterEntity(CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH);
 		
 	}
 	
