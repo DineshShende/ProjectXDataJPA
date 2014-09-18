@@ -53,6 +53,7 @@ public class CustomerQuickRegisterRespositoryIntegrationTest {
 		
 		assertEquals(1,customerQuickRegisterRepository.findAll().size());
 		
+		
 	}
 	
 	@Test
@@ -89,6 +90,14 @@ public class CustomerQuickRegisterRespositoryIntegrationTest {
 		assertEquals(0,customerQuickRegisterRepository.findAll().size());
 		
 		customerQuickRegisterRepository.save(standardEmailCustomer());
+		
+		assertEquals(1,customerQuickRegisterRepository.findAll().size());
+		
+		//customerQuickRegisterRepository.save(new CustomerQuickRegisterEntity("ad", "fr", "fr", null, 41, "fr", null, 85L));
+		
+		//customerQuickRegisterRepository.save(new CustomerQuickRegisterEntity("ad", "fr", "fr1", null, 41, "fr", null, 85L));
+		
+		//assertEquals(3,customerQuickRegisterRepository.countByMobile(null));
 		
 		assertEquals(1,customerQuickRegisterRepository.findAll().size());
 		
