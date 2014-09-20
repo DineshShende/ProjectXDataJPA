@@ -19,6 +19,13 @@ public class CustomerQuickRegisterDataFixture {
 
 	public static Integer CUST_MOBILEPIN=4125;
 	public static Long CUST_EMAILHASH=4141414141L;
+	
+	public static String STATUS_EMAIL_VERFIED_MOBILE_PENDING="EmailVerifiedMobileVerficationPending";
+	public static String STATUS_MOBILE_VERFIED_EMAIL_PENDING="MobileVerifiedEmailVerficationPending";
+	public static String STATUS_EMAIL_MOBILE_VERIFIED="EmailMobileVerified";
+	public static String STATUS_MOBILE_VERFIED="MobileVerified";
+	public static String STATUS_EMAIL_VERFIED="EmailVerified";
+	
 /*
 	public static CustomerQuickRegisterKey standardEmailMobileCustomerKey()
 	{

@@ -10,6 +10,8 @@ import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.CUST_P
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.CUST_STATUS_EMAIL;
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.CUST_STATUS_EMAILMOBILE;
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.CUST_STATUS_MOBILE;
+import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.STATUS_EMAIL_VERFIED;
+import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.STATUS_MOBILE_VERFIED;
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.standardEmailCustomer;
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.standardEmailMobileCustomer;
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.standardMobileCustomer;
@@ -23,7 +25,10 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,17 +36,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Propagation;
 
 import com.projectx.data.Application;
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Test")
+@ActiveProfiles("Prod")
 @Transactional
 public class CustomerQuickRegisterRespositoryIntegrationTest {
 
 	@Autowired
 	CustomerQuickRegisterRepository  customerQuickRegisterRepository;
+	
+	@PersistenceContext
+	EntityManager entityManager;
 	
 	
 	
@@ -217,6 +226,114 @@ public class CustomerQuickRegisterRespositoryIntegrationTest {
 	}
 	
 	@Test
+	public void fetchStatusByMobileWithMobileCustomer()
+	{
+		assertEquals(0,customerQuickRegisterRepository.countByMobile(CUST_MOBILE));
+		
+		customerQuickRegisterRepository.save(standardMobileCustomer());
+		
+		assertEquals(CUST_STATUS_MOBILE,customerQuickRegisterRepository.fetchStatusByMobile(CUST_MOBILE));
+		
+		
+	}
+	
+	@Test
+	public void fetchStatusByMobileWithEmailMobileCustomer()
+	{
+		assertEquals(0,customerQuickRegisterRepository.countByMobile(CUST_MOBILE));
+		
+		customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		assertEquals(CUST_STATUS_EMAILMOBILE,customerQuickRegisterRepository.fetchStatusByMobile(CUST_MOBILE));
+		
+		
+	}
+	
+	@Test
+	public void fetchStatusByEmailWithEmailCustomer()
+	{
+		assertEquals(0,customerQuickRegisterRepository.countByEmail(CUST_EMAIL));
+		
+		customerQuickRegisterRepository.save(standardEmailCustomer());
+		
+		assertEquals(CUST_STATUS_EMAIL,customerQuickRegisterRepository.fetchStatusByEmail(CUST_EMAIL));
+		
+		
+	}
+	
+	@Test
+	public void fetchStatusByEmailWithEmailMobileCustomer()
+	{
+		assertEquals(0,customerQuickRegisterRepository.countByEmail(CUST_EMAIL));
+		
+		customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		assertEquals(CUST_STATUS_EMAILMOBILE,customerQuickRegisterRepository.fetchStatusByEmail(CUST_EMAIL));
+		
+		
+	}
+	
+	
+	
+	@Test
+	//@Transactional(value = TxType.REQUIRES_NEW)
+	//@Rollback(value=false)
+	public void updateStatusByMobileWithMobileCustomer()
+	{
+		assertEquals(0,customerQuickRegisterRepository.countByMobile(CUST_MOBILE));
+		
+		customerQuickRegisterRepository.save(standardMobileCustomer());
+		
+		assertEquals(CUST_STATUS_MOBILE,customerQuickRegisterRepository.findByMobile(CUST_MOBILE).getStatus());
+		
+		assertEquals(1,customerQuickRegisterRepository.updateStatusByMobile(CUST_MOBILE,STATUS_MOBILE_VERFIED ).intValue()); 
+		
+		//entityManager.flush();
+		
+		//entityManager.getTransaction().commit();
+		
+		//assertEquals(STATUS_MOBILE_VERFIED,customerQuickRegisterRepository.findByMobile(CUST_MOBILE).getStatus());
+	}
+	
+	@Test
+	public void updateStatusWithEmailAndMobileFailingCase()
+	{
+		assertEquals(0,customerQuickRegisterRepository.updateStatusByMobile(CUST_MOBILE,STATUS_MOBILE_VERFIED ).intValue());
+		
+		assertEquals(0,customerQuickRegisterRepository.updateStatusByEmail(CUST_EMAIL,STATUS_EMAIL_VERFIED).intValue());
+	}
+	
+	@Test
+	//@Rollback(value=false)
+	public void updateStatusByEmailWithEmailCustomer()
+	{
+		assertEquals(0,customerQuickRegisterRepository.countByEmail(CUST_EMAIL));
+		
+		customerQuickRegisterRepository.save(standardEmailCustomer());
+		
+		assertEquals(CUST_STATUS_EMAIL,customerQuickRegisterRepository.findByEmail(CUST_EMAIL).getStatus());
+		
+		assertEquals(1,customerQuickRegisterRepository.updateStatusByEmail(CUST_EMAIL,STATUS_EMAIL_VERFIED ).intValue()); 
+		
+		//entityManager.flush();
+			
+		//assertEquals(STATUS_EMAIL_VERFIED,customerQuickRegisterRepository.findByEmail(CUST_EMAIL).getStatus());
+	}
+	
+	/*
+	@Test
+	public void getStatusByEmail(String email)
+	{
+		assertEquals(0,customerQuickRegisterRepository.countByEmail(CUST_EMAIL));
+		
+		customerQuickRegisterRepository.save(standardEmailCustomer());
+		
+		assertEquals(CUST_STATUS_EMAIL,customerQuickRegisterRepository.fetchStatusByEmail(CUST_EMAIL));
+		
+	}
+	
+		
+	@Test
 	public void deleteByEmailWithEmailCustomer()
 	{
 		assertEquals(0,customerQuickRegisterRepository.countByEmail(CUST_EMAIL));
@@ -245,4 +362,5 @@ public class CustomerQuickRegisterRespositoryIntegrationTest {
 		assertEquals(0,customerQuickRegisterRepository.countByMobile(CUST_MOBILE));
 		
 	}
+	*/
 }
