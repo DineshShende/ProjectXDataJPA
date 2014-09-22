@@ -23,17 +23,7 @@ public interface CustomerQuickRegisterRepository extends
 		 @Override
 		 List<CustomerQuickRegisterEntity> findAll();
 		 
-		 int countByEmail(String email);
-		 
-		 int countByMobile(Long mobile);
-		 
-		// Long deleteByEmail(String email);
-		 
-		// Long deleteByMobile(Long mobile);
-	
-		 
-		
-		@Query(value="select status from customer_quick_register_entity where email=:email",nativeQuery = true)
+		 @Query(value="select status from customer_quick_register_entity where email=:email",nativeQuery = true)
 		 String fetchStatusByEmail(@Param("email") String email);
 		
 		 
@@ -48,5 +38,16 @@ public interface CustomerQuickRegisterRepository extends
 		@Modifying
 		@Query(value="update customer_quick_register_entity set status=:status where mobile=:mobile",nativeQuery = true)
 		 Integer updateStatusByMobile(@Param("mobile") Long mobile, @Param("status") String status);
+		
+		
 
+		 int countByEmail(String email);
+		 
+		 int countByMobile(Long mobile);
+		
+		// Long deleteByEmail(String email);
+		 
+		// Long deleteByMobile(Long mobile);
+			
+			
 }

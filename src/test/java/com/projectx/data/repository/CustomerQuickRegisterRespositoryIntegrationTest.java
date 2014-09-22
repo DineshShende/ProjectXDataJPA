@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.List;
@@ -28,15 +29,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
+import org.hibernate.Session;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Propagation;
 
 import com.projectx.data.Application;
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
@@ -52,7 +52,8 @@ public class CustomerQuickRegisterRespositoryIntegrationTest {
 	@PersistenceContext
 	EntityManager entityManager;
 	
-	
+	//@Autowired
+	//SessionFactory sessionFactory;
 	
 	@Test
 	public void addEmailMobileCustomer() {
@@ -273,7 +274,52 @@ public class CustomerQuickRegisterRespositoryIntegrationTest {
 		
 	}
 	
+	@Test
+	public void getCustomerByEmailWithEmailMobileCustomer()
+	{
+		assertNull(customerQuickRegisterRepository.findByEmail(CUST_EMAIL));
+		
+		customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		CustomerQuickRegisterEntity customer=customerQuickRegisterRepository.findByEmail(CUST_EMAIL);
+		
+		
+		assertEquals(CUST_FIRSTNAME,customer.getFirstName());
+		assertEquals(CUST_LASTNAME,customer.getLastName());
+		assertEquals(CUST_MOBILE,customer.getMobile());
+		assertEquals(CUST_EMAIL,customer.getEmail());
+		assertEquals(CUST_STATUS_EMAILMOBILE,customer.getStatus());
+		assertEquals(CUST_PIN,customer.getPin());
+		assertEquals(CUST_MOBILEPIN,customer.getMobilePin());
+		assertEquals(CUST_EMAILHASH,customer.getEmailHash());
+		
+		
+		
+	}
 	
+	
+	@Test
+	public void getCustomerByMobieWithEmailMobileCustomer()
+	{
+		assertNull(customerQuickRegisterRepository.findByMobile(CUST_MOBILE));
+		
+		customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		CustomerQuickRegisterEntity customer=customerQuickRegisterRepository.findByMobile(CUST_MOBILE);
+		
+		
+		assertEquals(CUST_FIRSTNAME,customer.getFirstName());
+		assertEquals(CUST_LASTNAME,customer.getLastName());
+		assertEquals(CUST_MOBILE,customer.getMobile());
+		assertEquals(CUST_EMAIL,customer.getEmail());
+		assertEquals(CUST_STATUS_EMAILMOBILE,customer.getStatus());
+		assertEquals(CUST_PIN,customer.getPin());
+		assertEquals(CUST_MOBILEPIN,customer.getMobilePin());
+		assertEquals(CUST_EMAILHASH,customer.getEmailHash());
+		
+		
+		
+	}
 	
 	@Test
 	//@Transactional(value = TxType.REQUIRES_NEW)
@@ -288,7 +334,12 @@ public class CustomerQuickRegisterRespositoryIntegrationTest {
 		
 		assertEquals(1,customerQuickRegisterRepository.updateStatusByMobile(CUST_MOBILE,STATUS_MOBILE_VERFIED ).intValue()); 
 		
-		//entityManager.flush();
+		//sessionFactory.getCurrentSession().flush();
+		
+		
+		//Session session = entityManager.unwrap(Session.class);
+		
+		//session.flush();
 		
 		//entityManager.getTransaction().commit();
 		
