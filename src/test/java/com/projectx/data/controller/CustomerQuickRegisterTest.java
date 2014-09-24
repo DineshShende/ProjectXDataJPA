@@ -269,6 +269,39 @@ public class CustomerQuickRegisterTest {
 	   */         	
 	}
 
+	@Test
+	@Rollback(value=false)
+	public void updateMobileWithEmailMobileCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister")
+	                    .content(standardJsonEmailMobileCustomer())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/updateMobilePin")
+	                    .content(standardJsonUpdateStatusByEmailDTO())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(content().string("1"));
+		
+
+		/*
+		this.mockMvc.perform(
+	            post("/customer/quickregister/getByEmail")
+	                    .content(standardJsonGetByEmailDTO())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk());
+	          //  .andExpect(jsonPath("$.status").value(""));
+	   */         	
+	}
+
+	
 
 	
 }

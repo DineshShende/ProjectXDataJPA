@@ -10,15 +10,12 @@ import javax.persistence.Id;
 public class CustomerQuickRegisterEntity {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="CUSTOMER_ID")
+	@Column(name="CUSTOMERID")
 	private Long customerId;
-	@Column(name="FIRST_NAME")
+	@Column(name="FIRSTNAME")
 	private String firstName;
-	@Column(name="LAST_NAME")
+	@Column(name="LASTNAME")
 	private String lastName;
-	
-	//@EmbeddedId 
-	//CustomerQuickRegisterKey key;
 	
 	@Column(name="EMAIL",unique=true)
 	private String email;
@@ -32,10 +29,10 @@ public class CustomerQuickRegisterEntity {
 	@Column(name="STATUS")
 	private String status;
 
-	@Column(name="MOBILE_PIN")
+	@Column(name="MOBILEPIN")
 	private Integer mobilePin;
 	
-	@Column(name="EMAIL_HASH",nullable=true)
+	@Column(name="EMAILHASH",nullable=true)
 	private Long emailHash;
 
 	
@@ -47,10 +44,11 @@ public class CustomerQuickRegisterEntity {
 
 	
 	
-	public CustomerQuickRegisterEntity(String firstName, String lastName,
+	public CustomerQuickRegisterEntity(Long customerId,String firstName, String lastName,
 			String email, Long mobile, Integer pin, String status,
 			Integer mobilePin, Long emailHash) {
 		super();
+		this.customerId=customerId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -59,6 +57,20 @@ public class CustomerQuickRegisterEntity {
 		this.status = status;
 		this.mobilePin = mobilePin;
 		this.emailHash = emailHash;
+	}
+
+
+
+
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+
+
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 
