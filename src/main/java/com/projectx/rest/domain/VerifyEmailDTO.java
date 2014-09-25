@@ -2,25 +2,25 @@ package com.projectx.rest.domain;
 
 public class VerifyEmailDTO  {
 
-	private String email;
+	private Long customerId;
 	private Long emailHash;
 	
 	public VerifyEmailDTO() {
 	
 	}
-	
-	public VerifyEmailDTO(String email, Long emailHash) {
+
+	public VerifyEmailDTO(Long customerId, Long emailHash) {
 		super();
-		this.email = email;
+		this.customerId = customerId;
 		this.emailHash = emailHash;
 	}
 
-	public String getEmail() {
-		return email;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public Long getEmailHash() {
@@ -30,7 +30,6 @@ public class VerifyEmailDTO  {
 	public void setEmailHash(Long emailHash) {
 		this.emailHash = emailHash;
 	}
-	
 	
 	
 	

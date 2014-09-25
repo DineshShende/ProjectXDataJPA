@@ -2,25 +2,25 @@ package com.projectx.rest.domain;
 
 public class VerifyMobileDTO {
 	
-	private Long mobile;
+	private Long customerId;
 	private Integer mobilePin;
 	
 	public VerifyMobileDTO() {
 	
 	}
-	
-	public VerifyMobileDTO(Long mobile, Integer mobilePin) {
+
+	public VerifyMobileDTO(Long customerId, Integer mobilePin) {
 		super();
-		this.mobile = mobile;
+		this.customerId = customerId;
 		this.mobilePin = mobilePin;
 	}
 
-	public Long getMobile() {
-		return mobile;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setMobile(Long mobile) {
-		this.mobile = mobile;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public Integer getMobilePin() {

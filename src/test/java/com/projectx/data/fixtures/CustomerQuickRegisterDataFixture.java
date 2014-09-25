@@ -1,11 +1,13 @@
 package com.projectx.data.fixtures;
 
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
+import com.projectx.rest.domain.CustomerIdDTO;
 import com.projectx.rest.domain.EmailDTO;
 import com.projectx.rest.domain.MobileDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
 import com.projectx.rest.domain.UpdateStatusByMobileDTO;
+import com.projectx.rest.domain.UpdateStatusWithCustomerIdDTO;
 import com.projectx.rest.domain.VerifyEmailDTO;
 import com.projectx.rest.domain.VerifyMobileDTO;
 
@@ -35,25 +37,7 @@ public class CustomerQuickRegisterDataFixture {
 	public static String STATUS_EMAIL_MOBILE_VERIFIED="EmailMobileVerified";
 	public static String STATUS_MOBILE_VERFIED="MobileVerified";
 	public static String STATUS_EMAIL_VERFIED="EmailVerified";
-	
-/*
-	public static CustomerQuickRegisterKey standardEmailMobileCustomerKey()
-	{
-		return new CustomerQuickRegisterKey(CUST_EMAIL, CUST_MOBILE);
-	}
-	
-	public static CustomerQuickRegisterKey standardEmailCustomerKey()
-	{
-		return new CustomerQuickRegisterKey(CUST_EMAIL, 0L);
-	}
-	
-	
-	public static CustomerQuickRegisterKey standardMobileCustomerKey()
-	{
-		return new CustomerQuickRegisterKey("", CUST_MOBILE);
-	}
-	*/
-	
+		
 	public static CustomerQuickRegisterEntity standardEmailMobileCustomer()
 	{
 		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH);
@@ -96,6 +80,11 @@ public class CustomerQuickRegisterDataFixture {
 		return "{\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"mobile\":9960821869,\"pin\":413133}";
 	}
 	
+	public static CustomerIdDTO standardCustomerId()
+	{
+		return new CustomerIdDTO(CUST_ID);
+	}
+	
 	public static EmailDTO standardGetByEmailDTO()
 	{
 		return new EmailDTO(CUST_EMAIL);
@@ -106,16 +95,22 @@ public class CustomerQuickRegisterDataFixture {
 		return new MobileDTO(CUST_MOBILE);
 	}
 	
-	public static VerifyMobileDTO standardVerifyMobileDTO()
+	public static VerifyMobileDTO standardVerifyMobilePinDTO()
 	{
-		return new VerifyMobileDTO(CUST_MOBILE, CUST_MOBILEPIN);
+		return new VerifyMobileDTO(CUST_ID, CUST_MOBILEPIN);
 	}
 	
-	public static VerifyEmailDTO standardVerifyEmailDTO()
+	public static VerifyEmailDTO standardVerifyEmailHashDTO()
 	{
-		return new VerifyEmailDTO(CUST_EMAIL,CUST_EMAILHASH);
+		return new VerifyEmailDTO(CUST_ID,CUST_EMAILHASH);
 	}
 	
+	public static UpdateStatusWithCustomerIdDTO standardUpdateStatusWithCustomerId()
+	{
+		return new UpdateStatusWithCustomerIdDTO(CUST_ID,STATUS_MOBILE_VERFIED);
+	}
+	
+	/*
 	public static UpdateStatusByMobileDTO standardUpdateStatusByMobileDTO()
 	{
 		return new UpdateStatusByMobileDTO(CUST_MOBILE,STATUS_MOBILE_VERFIED_EMAIL_PENDING);
@@ -125,28 +120,53 @@ public class CustomerQuickRegisterDataFixture {
 	{
 		return new UpdateMobilePinDTO(CUST_ID,CUST_MOBILEPIN_UPDATED);
 	}
+
+	*/
 	
 	public static UpdateEmailHashDTO standardUpdateEmailHashDTO()
 	{
 		return new UpdateEmailHashDTO(CUST_ID,CUST_EMAILHASH_UPDATED);
 	}
 	
-	public static String standardJsonGetByEmailDTO()
+	public static UpdateMobilePinDTO standardUpdateMobilePinDTO()
+	{
+		return new UpdateMobilePinDTO(CUST_ID,CUST_MOBILEPIN_UPDATED);
+	}
+
+
+	public static String standardJsonCustomerId()
+	{
+		return "{\"customerId\":212}";
+	}
+	
+	public static String standardJsonEmailDTO()
 	{
 		return "{\"email\":\"dineshshe@gmail.com\"}";
 	}
 	
-	public static String standardJsonGetByMobileDTO()
+	public static String standardJsonMobileDTO()
 	{
 		return "{\"mobile\":9960821869}";
 	}
 	
 	public static String standardJsonVerifyMobileDTO()
 	{
-		return "{\"mobile\":9960821869,\"mobilePin\":101010}";
+		return "{\"customerId\":212,\"mobilePin\":101010}";
+		       
+	}
+	
+	public static String standardJsonVerifyEmailDTO()
+	{
+		return "{\"customerId\":212,\"emailHash\":1010101010}";
 		       
 	}
 
+	public static String standardJsonUpdateStatusByCustomerIdDTO()
+	{
+		return "{\"customerId\":212,\"status\":\"EmailMobileVerified\"}";
+	}
+	
+	/*
 	public static String standardJsonUpdateStatusByMobileDTO()
 	{
 		return "{\"mobile\":9960821869,\"status\":\"UpdatedStatus\"}";
@@ -156,14 +176,14 @@ public class CustomerQuickRegisterDataFixture {
 	{
 		return "{\"email\":\"dineshshe@gmail.com\",\"status\":\"UpdatedStatus\"}";
 	}
-	
+	*/
 	public static String standardJsonUpdateMobilePinDTO()
 	{
-		return "{\"mobile\":9960821869,\"mobilePin\":102010}";
+		return "{\"customerId\":212,\"mobilePin\":102010}";
 	}
 	
 	public static String standardJsonUpdateEmailHashDTO()
 	{
-		return "{\"email\":\"dineshshe@gmail.com\",\"emailHash\":1020102010}";
+		return "{\"customerId\":212,\"emailHash\":1020102010}";
 	}
 }

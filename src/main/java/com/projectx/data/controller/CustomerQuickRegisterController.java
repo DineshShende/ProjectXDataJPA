@@ -3,25 +3,21 @@ package com.projectx.data.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
 import com.projectx.data.repository.CustomerQuickRegisterRepository;
 import com.projectx.rest.domain.CustomerIdDTO;
 import com.projectx.rest.domain.EmailDTO;
-import com.projectx.rest.domain.GetByEmailDTO;
-import com.projectx.rest.domain.GetByMobileDTO;
 import com.projectx.rest.domain.MobileDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
-import com.projectx.rest.domain.UpdateStatusByEmailDTO;
-import com.projectx.rest.domain.UpdateStatusByMobileDTO;
 import com.projectx.rest.domain.UpdateStatusWithCustomerIdDTO;
+import com.projectx.rest.domain.VerifyEmailDTO;
+import com.projectx.rest.domain.VerifyMobileDTO;
 
 
 @RestController
@@ -62,20 +58,31 @@ public class CustomerQuickRegisterController {
 	}
 	
 	@RequestMapping(value="/verifyEmailHash",method=RequestMethod.POST)
-	public Integer verifyEmailHash(@ResponseBody Verify)
+	public Integer verifyEmailHash(@RequestBody VerifyEmailDTO emailDTO)
+	{
+		return customerQuickRegisterRepository.countByCustomerIdAndEmailHash(emailDTO.getCustomerId(), emailDTO.getEmailHash());
+	}
 
+
+	@RequestMapping(value="/verifyMobilePin",method=RequestMethod.POST)
+	public Integer verifyEmailHash(@RequestBody VerifyMobileDTO mobileDTO)
+	{
+		return customerQuickRegisterRepository.countByCustomerIdAndMobilePin(mobileDTO.getCustomerId(), mobileDTO.getMobilePin());
+	}
+
+	//---------
 	@RequestMapping(value="/getStatusByCustomerId",method=RequestMethod.POST)
 	public String getStatusByCustomerId(@RequestBody CustomerIdDTO customerDTO)
 	{
 		 return customerQuickRegisterRepository.fetchStatusByCustomerId(customerDTO.getCustomerId());
 	}
-	
+			
 	@RequestMapping(value="/updateStatusByCustomerId",method=RequestMethod.POST)
 	public Integer updateStatusByCustomerId(@RequestBody UpdateStatusWithCustomerIdDTO updateStatus)
 	{
 		return customerQuickRegisterRepository.updateStatusByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus());
 	}
-	
+		
 	
 	@RequestMapping(value="/updateMobilePin",method=RequestMethod.POST)
 	public Integer updateMobilePin(@RequestBody UpdateMobilePinDTO updateMobilePin)
