@@ -2,6 +2,8 @@ package com.projectx.data.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +15,7 @@ import com.projectx.data.domain.CustomerQuickRegisterEntity;
 
 @Repository
 @Profile(value = { "Test", "Prod" })
+
 public interface CustomerQuickRegisterRepository extends
 		CrudRepository<CustomerQuickRegisterEntity,Long > {
 	
@@ -36,20 +39,25 @@ public interface CustomerQuickRegisterRepository extends
 		 @Query(value="select status from customer_quick_register_entity where CUSTOMERID=:customerId",nativeQuery = true)
 		 String fetchStatusByCustomerId(@Param("customerId") Long customerId);
 		 
-		
+		 @Transactional
 		 @Modifying
 		 @Query(value="update customer_quick_register_entity set status=:status where CUSTOMERID=:customerId",nativeQuery = true)
 		 Integer updateStatusByCustomerId(@Param("customerId") Long customerId,@Param("status") String status);
 		 
-		
+		@Transactional
 		@Modifying
 		@Query(value="update customer_quick_register_entity set MOBILEPIN=:mobilePin where CUSTOMERID=:customerId",nativeQuery = true)
 		 Integer updateMobilePin(@Param("customerId") Long customerId, @Param("mobilePin") Integer mobilePin);
 		 
-		
+		@Transactional
 		@Modifying
 		@Query(value="update customer_quick_register_entity set EMAILHASH=:emailHash where CUSTOMERID=:customerId",nativeQuery = true)
 		Integer updateEmailHash(@Param("customerId") Long customerId, @Param("emailHash") Long emailHash);
+
+		@Transactional
+		@Modifying
+		@Query(value="truncate table customer_quick_register_entity",nativeQuery = true)
+		void clearTestData();
 
 		
 		//@Query(value="select * from customer_quick_register_entity where mobile=:mobile and MOBILEPIN=:mobilePin",nativeQuery = true)

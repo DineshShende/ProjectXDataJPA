@@ -12,8 +12,10 @@ public class CustomerQuickRegisterEntity {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="CUSTOMERID")
 	private Long customerId;
+	
 	@Column(name="FIRSTNAME")
 	private String firstName;
+	
 	@Column(name="LASTNAME")
 	private String lastName;
 	

@@ -205,4 +205,40 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 	}
 
+	
+	@Test
+	public void clearTestingData() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister")
+	                    .content(standardJsonEmailMobileCustomer())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+	
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/getEmailCount")
+	                    .content(standardJsonEmailDTO())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string("1"));
+		
+		this.mockMvc.perform(
+				get("/customer/quickregister/clearForTesting"))
+					.andDo(print());
+		
+
+		this.mockMvc.perform(
+	            post("/customer/quickregister/getEmailCount")
+	                    .content(standardJsonEmailDTO())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string("0"));
+	
+	}
 }

@@ -2,7 +2,7 @@ package com.projectx.rest.domain;
 
 public class CustomerIdDTO {
 
-	Long customerId;
+	private Long customerId;
 
 	public CustomerIdDTO() {
 		super();

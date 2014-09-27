@@ -59,7 +59,7 @@ public class CustomerQuickRegisterDataFixture {
 
 	public static String standardJsonEmailMobileCustomer()
 	{
-		return "{\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"email\":\"dineshshe@gmail.com\",\"mobile\":9960821869,\"emailHash\":10101010,\"mobilePin\":101010,\"status\":\"EmailMobileVerificationPending\",\"pin\":413133}";
+		return "{\"customerId\":212,\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"email\":\"dineshshe@gmail.com\",\"mobile\":9960821869,\"emailHash\":10101010,\"mobilePin\":101010,\"status\":\"EmailMobileVerificationPending\",\"pin\":413133}";
 		//return "{\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"email\":\"dineshshe@gmail.com\",\"mobile\":\"9960821869\",\"pin\":\"413133\",\"status\":\"\"}";
 		        	
 	}

@@ -2,6 +2,8 @@ package com.projectx.data.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
 import com.projectx.data.repository.CustomerQuickRegisterRepository;
 import com.projectx.rest.domain.CustomerIdDTO;
+import com.projectx.rest.domain.CustomerQuickRegisterDTO;
 import com.projectx.rest.domain.EmailDTO;
 import com.projectx.rest.domain.MobileDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
@@ -28,9 +31,11 @@ public class CustomerQuickRegisterController {
 	CustomerQuickRegisterRepository customerQuickRegisterRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public CustomerQuickRegisterEntity saveNewCustomer(@RequestBody CustomerQuickRegisterEntity customerQuickRegisterEntity)
+	public CustomerQuickRegisterEntity saveNewCustomer(@RequestBody CustomerQuickRegisterDTO customerDTO)
 	{
-		return customerQuickRegisterRepository.save(customerQuickRegisterEntity);
+		CustomerQuickRegisterEntity customerEntity=customerDTO.toCustomerQuickRegisterEntity();
+		
+		return customerQuickRegisterRepository.save(customerEntity);
 	}
 	
 	@RequestMapping(value="/getAll",method=RequestMethod.GET)
@@ -42,7 +47,12 @@ public class CustomerQuickRegisterController {
 	@RequestMapping(value="/getEntityByCustomerId",method=RequestMethod.POST)
 	public CustomerQuickRegisterEntity getCustomerByCustomerId(@RequestBody CustomerIdDTO customerDTO)
 	{
-		return customerQuickRegisterRepository.findByCustomerId(customerDTO.getCustomerId());
+		CustomerQuickRegisterEntity fetchedEntity= customerQuickRegisterRepository.findByCustomerId(customerDTO.getCustomerId());
+		
+		if(fetchedEntity==null)
+			return new CustomerQuickRegisterEntity();
+		
+		return fetchedEntity;
 	}
 	
 	@RequestMapping(value="/getEmailCount",method=RequestMethod.POST)
@@ -70,7 +80,7 @@ public class CustomerQuickRegisterController {
 		return customerQuickRegisterRepository.countByCustomerIdAndMobilePin(mobileDTO.getCustomerId(), mobileDTO.getMobilePin());
 	}
 
-	//---------
+
 	@RequestMapping(value="/getStatusByCustomerId",method=RequestMethod.POST)
 	public String getStatusByCustomerId(@RequestBody CustomerIdDTO customerDTO)
 	{
@@ -80,7 +90,9 @@ public class CustomerQuickRegisterController {
 	@RequestMapping(value="/updateStatusByCustomerId",method=RequestMethod.POST)
 	public Integer updateStatusByCustomerId(@RequestBody UpdateStatusWithCustomerIdDTO updateStatus)
 	{
-		return customerQuickRegisterRepository.updateStatusByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus());
+		Integer result=customerQuickRegisterRepository.updateStatusByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus());
+				
+		return result;
 	}
 		
 	
@@ -96,7 +108,16 @@ public class CustomerQuickRegisterController {
 		return customerQuickRegisterRepository.updateEmailHash(updateEmailHash.getCustomerId(),updateEmailHash.getEmailHash());
 	}
 	
+	//***********************Highly Dangerous***************************************/
 	
+	@RequestMapping(value="/clearForTesting")
+	public Boolean clearTableForTesting()
+	{
+		 customerQuickRegisterRepository.clearTestData();
+		 
+		 return true;
+	}
+	//***********************Highly Dangerous***************************************/
 	
 	
 	/*
