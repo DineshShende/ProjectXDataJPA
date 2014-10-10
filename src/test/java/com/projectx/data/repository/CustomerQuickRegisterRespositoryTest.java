@@ -44,7 +44,7 @@ import com.projectx.data.Application;
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
+@ActiveProfiles("Test")
 @Transactional
 public class CustomerQuickRegisterRespositoryTest {
 
