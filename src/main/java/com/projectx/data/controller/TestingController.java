@@ -1,5 +1,7 @@
 package com.projectx.data.controller;
 
+import java.util.Date;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -18,7 +20,7 @@ public class TestingController {
 	{
 		RestTemplate restTemplate=new RestTemplate();
 		
-		Integer result= restTemplate.postForObject("http://localhost:9090/customer/quickregister/updateStatusByCustomerId",new UpdateStatusWithCustomerIdDTO(20L, "") , Integer.class);
+		Integer result= restTemplate.postForObject("http://localhost:9090/customer/quickregister/updateStatusByCustomerId",new UpdateStatusWithCustomerIdDTO(2L, "",new Date()) , Integer.class);
 		
 		System.out.println(result);
 		

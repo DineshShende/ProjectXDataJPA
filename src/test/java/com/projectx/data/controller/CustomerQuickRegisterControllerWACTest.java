@@ -61,8 +61,8 @@ public class CustomerQuickRegisterControllerWACTest {
 	            .andExpect(jsonPath("$.email").value(CUST_EMAIL))
 	            .andExpect(jsonPath("$.pin").value(CUST_PIN))
 				.andExpect(jsonPath("$.status").value(CUST_STATUS_EMAILMOBILE))
-				.andExpect(jsonPath("$.mobilePin").value(CUST_MOBILEPIN));
-			  //.andExpect(jsonPath("$.emailHash").value(CUST_EMAILHASH));
+				.andExpect(jsonPath("$.mobilePin").value(CUST_MOBILEPIN))
+			     .andExpect(jsonPath("$.emailHash").value(CUST_EMAILHASH));
 	
 	}
 
@@ -82,8 +82,8 @@ public class CustomerQuickRegisterControllerWACTest {
 	            .andExpect(jsonPath("$.email").value(CUST_EMAIL))
 	            .andExpect(jsonPath("$.pin").value(CUST_PIN))
 				.andExpect(jsonPath("$.status").value(CUST_STATUS_EMAILMOBILE))
-				.andExpect(jsonPath("$.mobilePin").value(CUST_MOBILEPIN));
-			  //.andExpect(jsonPath("$.emailHash").value(CUST_EMAILHASH));
+				.andExpect(jsonPath("$.mobilePin").value(CUST_MOBILEPIN))
+			    .andExpect(jsonPath("$.emailHash").value(CUST_EMAILHASH));
 	
 	
 	}
@@ -115,7 +115,7 @@ public class CustomerQuickRegisterControllerWACTest {
 					.andExpect(jsonPath("$[0].['status']").value(CUST_STATUS_EMAILMOBILE))
 					.andExpect(jsonPath("$[0].['pin']").value(CUST_PIN))
 					.andExpect(jsonPath("$[0].['mobilePin']").value(CUST_MOBILEPIN))
-					//.andExpect(jsonPath("$[0].['emailHash']").value(CUST_EMAILHASH))
+					.andExpect(jsonPath("$[0].['emailHash']").value(CUST_EMAILHASH))
 		
 					.andExpect(jsonPath("$[1].['firstName']").value(CUST_FIRSTNAME))
 					.andExpect(jsonPath("$[1].['lastName']").value(CUST_LASTNAME))

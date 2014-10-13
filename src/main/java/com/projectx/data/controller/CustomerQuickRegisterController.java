@@ -22,6 +22,7 @@ import com.projectx.rest.domain.UpdateStatusWithCustomerIdDTO;
 import com.projectx.rest.domain.VerifyEmailDTO;
 import com.projectx.rest.domain.VerifyMobileDTO;
 
+import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.*;
 
 @RestController
 @RequestMapping(value="/customer/quickregister")
@@ -83,14 +84,17 @@ public class CustomerQuickRegisterController {
 
 	@RequestMapping(value="/getStatusByCustomerId",method=RequestMethod.POST)
 	public String getStatusByCustomerId(@RequestBody CustomerIdDTO customerDTO)
-	{
-		 return customerQuickRegisterRepository.fetchStatusByCustomerId(customerDTO.getCustomerId());
+	{		 		 
+		String status=customerQuickRegisterRepository.fetchStatusByCustomerId(customerDTO.getCustomerId());
+		
+		return status;
+				
 	}
 			
 	@RequestMapping(value="/updateStatusByCustomerId",method=RequestMethod.POST)
-	public Integer updateStatusByCustomerId(@RequestBody UpdateStatusWithCustomerIdDTO updateStatus)
+	public Integer updateStatusByCustomerId(@RequestBody UpdateStatusWithCustomerIdDTO updateStatus) throws InterruptedException
 	{
-		Integer result=customerQuickRegisterRepository.updateStatusByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus());
+		Integer result=customerQuickRegisterRepository.updateStatusByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus(),updateStatus.getStatusChangeTime());
 				
 		return result;
 	}
@@ -99,13 +103,32 @@ public class CustomerQuickRegisterController {
 	@RequestMapping(value="/updateMobilePin",method=RequestMethod.POST)
 	public Integer updateMobilePin(@RequestBody UpdateMobilePinDTO updateMobilePin)
 	{
-		return customerQuickRegisterRepository.updateMobilePin(updateMobilePin.getCustomerId(),updateMobilePin.getMobilePin());
+		return customerQuickRegisterRepository.updateMobilePin(updateMobilePin.getCustomerId(),updateMobilePin.getMobilePin(),updateMobilePin.getUpdateTime());
 	}
 	
 	@RequestMapping(value="/updateEmailHash",method=RequestMethod.POST)
 	public Integer updateEmailHash(@RequestBody UpdateEmailHashDTO updateEmailHash)
 	{
-		return customerQuickRegisterRepository.updateEmailHash(updateEmailHash.getCustomerId(),updateEmailHash.getEmailHash());
+		return customerQuickRegisterRepository.updateEmailHash(updateEmailHash.getCustomerId(),updateEmailHash.getEmailHash(),updateEmailHash.getUpdateTime());
+	}
+	
+	@RequestMapping(value="/getMobileVerificationAttempts",method=RequestMethod.POST)
+	public Integer getMobileVerificationAttempts(@RequestBody CustomerIdDTO customerId)
+	{
+		return customerQuickRegisterRepository.getMobileVerificationAttempts(customerId.getCustomerId());
+	}
+	
+	@RequestMapping(value="/incrementMobileVerificationAttempts",method=RequestMethod.POST)
+	public Integer incrementMobileVerificationAttempts(@RequestBody CustomerIdDTO customerId)
+	{
+		return customerQuickRegisterRepository.incrementMobileVerificationAttempts(customerId.getCustomerId());
+	}
+	
+	@RequestMapping(value="/customer")
+	public CustomerQuickRegisterEntity returnCustomer()
+	{
+		
+		return standardEmailMobileCustomer();
 	}
 	
 	//***********************Highly Dangerous***************************************/
@@ -120,54 +143,4 @@ public class CustomerQuickRegisterController {
 	//***********************Highly Dangerous***************************************/
 	
 	
-	/*
-	@RequestMapping(value="/updateStatusByCustomerId",method=RequestMethod.POST)
-	public Integer updateCustomerStatusByCustomerId(@RequestBody UpdateStatusByCustomerIdDTO mobileDTO)
-	{
-	
-	}
-		
-	@RequestMapping(value="/updateStatusByMobile",method=RequestMethod.POST)
-	public Integer updateCustomerStatusByMobile(@RequestBody UpdateStatusByMobileDTO mobileDTO)
-	{
-		//System.out.println(mobileDTO.getMobile()+" "+mobileDTO.getStatus());
-			
-		return customerQuickRegisterRepository.updateStatusByMobile(mobileDTO.getMobile(), mobileDTO.getStatus());
-	}
-	
-	@RequestMapping(value="/updateStatusByEmail",method=RequestMethod.POST)
-	public Integer updateCustomerStatusByEmail(@RequestBody UpdateStatusByEmailDTO emailDTO)
-	{
-		//System.out.println(emailDTO.getEmail()+" "+emailDTO.getStatus());
-			
-		return customerQuickRegisterRepository.updateStatusByEmail(emailDTO.getEmail(), emailDTO.getStatus());
-	}
-	
-	@RequestMapping(value="/updateMobilePin")
-	public Integer updateMobilePin(@RequestBody UpdateMobilePinDTO updateMobilePin)
-	{
-		return  customerQuickRegisterRepository.updateMobilePin(updateMobilePin.getMobile(), updateMobilePin.getMobilePin());
-	}
-	
-	@RequestMapping(value="/updateEmailHash")
-	public Integer updateMobilePin(@RequestBody UpdateEmailHashDTO updateEmailHash)
-	{
-		return  customerQuickRegisterRepository.updateEmailHash(updateEmailHash.getEmail(), updateEmailHash.getEmailHash());
-	}
-	*/
-		
-	/*
-	@RequestMapping(value="/getStatusByMobile",method=RequestMethod.POST)
-	public String getStatusByEmail(@RequestBody GetByMobileDTO mobileDTO)
-	{
-		 return customerQuickRegisterRepository.fetchStatusByMobile(mobileDTO.getMobile());
-	}
-	*/
-	/*
-	@RequestMapping(value="/getByEmail",method=RequestMethod.POST)
-	public CustomerQuickRegisterEntity getCustomerByEmail(@RequestBody GetByEmailDTO emailDTO)
-	{
-		 return customerQuickRegisterRepository.findByEmail(emailDTO.getEmail());
-	}
-	*/
 }

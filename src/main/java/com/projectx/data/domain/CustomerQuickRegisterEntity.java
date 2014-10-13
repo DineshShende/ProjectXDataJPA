@@ -9,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Max;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.utils.JsonDateDeserializer;
+import com.projectx.data.utils.JsonDateSerializer;
+
 @Entity
 public class CustomerQuickRegisterEntity {
 	
@@ -38,9 +43,9 @@ public class CustomerQuickRegisterEntity {
 	private Integer mobilePin;
 	
 	@Column(name="EMAILHASH",nullable=true)
-	private Long emailHash;
+	private String emailHash;
 	
-	@Max(value=3)
+	//@Max(value=3)
 	@Column(name="MOBILEVERIFICATIONATTEMPTS")
 	private Integer mobileVerificationAttempts;
 	
@@ -50,7 +55,9 @@ public class CustomerQuickRegisterEntity {
 	@Column(name="EMAILHASHSENTTIME")
 	private Date emailHashSentTime;
 	
-
+	@Column(name="LASTSTATUSCHANGETIME")
+	private Date lastStatusChangedTime;
+	
 	
 	public CustomerQuickRegisterEntity()
 	{
@@ -58,12 +65,11 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public CustomerQuickRegisterEntity(Long customerId, String firstName,
 			String lastName, String email, Long mobile, Integer pin,
-			String status, Integer mobilePin, Long emailHash,
+			String status, Integer mobilePin, String emailHash,
 			Integer mobileVerificationAttempts, Date mobilePinSentTime,
-			Date emailHashSentTime) {
+			Date emailHashSentTime, Date lastStatusChangedTime) {
 		super();
 		this.customerId = customerId;
 		this.firstName = firstName;
@@ -77,8 +83,8 @@ public class CustomerQuickRegisterEntity {
 		this.mobileVerificationAttempts = mobileVerificationAttempts;
 		this.mobilePinSentTime = mobilePinSentTime;
 		this.emailHashSentTime = emailHashSentTime;
+		this.lastStatusChangedTime = lastStatusChangedTime;
 	}
-
 
 
 	public Long getCustomerId() {
@@ -86,11 +92,9 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
-
 
 
 	public String getFirstName() {
@@ -98,11 +102,9 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
 
 
 	public String getLastName() {
@@ -110,11 +112,9 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 
 
 	public String getEmail() {
@@ -122,11 +122,9 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 
 	public Long getMobile() {
@@ -134,11 +132,9 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setMobile(Long mobile) {
 		this.mobile = mobile;
 	}
-
 
 
 	public Integer getPin() {
@@ -146,11 +142,9 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setPin(Integer pin) {
 		this.pin = pin;
 	}
-
 
 
 	public String getStatus() {
@@ -158,11 +152,9 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 
 
 	public Integer getMobilePin() {
@@ -170,61 +162,59 @@ public class CustomerQuickRegisterEntity {
 	}
 
 
-
 	public void setMobilePin(Integer mobilePin) {
 		this.mobilePin = mobilePin;
 	}
 
 
-
-	public Long getEmailHash() {
+	public String getEmailHash() {
 		return emailHash;
 	}
 
 
-
-	public void setEmailHash(Long emailHash) {
+	public void setEmailHash(String emailHash) {
 		this.emailHash = emailHash;
 	}
-
 
 
 	public Integer getMobileVerificationAttempts() {
 		return mobileVerificationAttempts;
 	}
 
-
-
+	
 	public void setMobileVerificationAttempts(Integer mobileVerificationAttempts) {
 		this.mobileVerificationAttempts = mobileVerificationAttempts;
 	}
 
-
-
+	//@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getMobilePinSentTime() {
 		return mobilePinSentTime;
 	}
 
-
-
+	//@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setMobilePinSentTime(Date mobilePinSentTime) {
 		this.mobilePinSentTime = mobilePinSentTime;
 	}
 
-
-
+	//@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getEmailHashSentTime() {
 		return emailHashSentTime;
 	}
 
-
-
+	//@JsonDeserialize(using = JsonDateDeserializer.class)
 	public void setEmailHashSentTime(Date emailHashSentTime) {
 		this.emailHashSentTime = emailHashSentTime;
 	}
 
+	//@JsonSerialize(using=JsonDateSerializer.class)
+	public Date getLastStatusChangedTime() {
+		return lastStatusChangedTime;
+	}
 
-	
+	//@JsonDeserialize(using = JsonDateDeserializer.class)
+	public void setLastStatusChangedTime(Date lastStatusChangedTime) {
+		this.lastStatusChangedTime = lastStatusChangedTime;
+	}
 		
 	
 }

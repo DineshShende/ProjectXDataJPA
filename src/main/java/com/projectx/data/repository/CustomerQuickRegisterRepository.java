@@ -1,5 +1,6 @@
 package com.projectx.data.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -33,7 +34,7 @@ public interface CustomerQuickRegisterRepository extends
 
          Integer countByCustomerIdAndMobilePin(Long customerId,Integer mobilePin);
 			
-		 Integer countByCustomerIdAndEmailHash(Long customerId,Long emailHash);
+		 Integer countByCustomerIdAndEmailHash(Long customerId,String emailHash);
 
 		 
 		 @Query(value="select status from customer_quick_register_entity where CUSTOMERID=:customerId",nativeQuery = true)
@@ -41,24 +42,36 @@ public interface CustomerQuickRegisterRepository extends
 		 
 		 @Transactional
 		 @Modifying
-		 @Query(value="update customer_quick_register_entity set status=:status where CUSTOMERID=:customerId",nativeQuery = true)
-		 Integer updateStatusByCustomerId(@Param("customerId") Long customerId,@Param("status") String status);
+		 @Query(value="update customer_quick_register_entity set STATUS=:status,LASTSTATUSCHANGETIME=:lastStatusChangeTime where CUSTOMERID=:customerId",nativeQuery = true)
+		 Integer updateStatusByCustomerId(@Param("customerId") Long customerId,@Param("status") String status,@Param("lastStatusChangeTime") Date lastStatusChangeTime );
 		 
 		@Transactional
 		@Modifying
-		@Query(value="update customer_quick_register_entity set MOBILEPIN=:mobilePin where CUSTOMERID=:customerId",nativeQuery = true)
-		 Integer updateMobilePin(@Param("customerId") Long customerId, @Param("mobilePin") Integer mobilePin);
+		@Query(value="update customer_quick_register_entity set MOBILEPIN=:mobilePin ,MOBILEPINSENTTIME=:mobilePinSentTime,MOBILEVERIFICATIONATTEMPTS=0 where CUSTOMERID=:customerId",nativeQuery = true)
+		 Integer updateMobilePin(@Param("customerId") Long customerId, @Param("mobilePin") Integer mobilePin,@Param ("mobilePinSentTime") Date mobilePinSentTime);
 		 
+		 		
 		@Transactional
 		@Modifying
-		@Query(value="update customer_quick_register_entity set EMAILHASH=:emailHash where CUSTOMERID=:customerId",nativeQuery = true)
-		Integer updateEmailHash(@Param("customerId") Long customerId, @Param("emailHash") Long emailHash);
+		@Query(value="update customer_quick_register_entity set EMAILHASH=:emailHash, EMAILHASHSENTTIME=:emailHashSentTime where CUSTOMERID=:customerId",nativeQuery = true)
+		Integer updateEmailHash(@Param("customerId") Long customerId, @Param("emailHash") String emailHash,@Param("emailHashSentTime") Date emailHashSentTime);
 
+		
+		@Query(value="select MOBILEVERIFICATIONATTEMPTS from customer_quick_register_entity where CUSTOMERID=:customerId",nativeQuery=true)
+		Integer getMobileVerificationAttempts(@Param("customerId")Long customerId);
+
+		@Transactional
+		@Modifying
+		@Query(value="update customer_quick_register_entity set MOBILEVERIFICATIONATTEMPTS=MOBILEVERIFICATIONATTEMPTS+1 where CUSTOMERID=:customerId ",nativeQuery=true)
+		Integer incrementMobileVerificationAttempts(@Param("customerId")Long customerId);
+		
+		
 		@Transactional
 		@Modifying
 		@Query(value="truncate table customer_quick_register_entity",nativeQuery = true)
 		void clearTestData();
 
+		
 		
 		//@Query(value="select * from customer_quick_register_entity where mobile=:mobile and MOBILEPIN=:mobilePin",nativeQuery = true)
 		//Boolean verifyMobilePin(@Param ("mobile")Long mobile,@Param("mobilePin") Integer mobilePin);
