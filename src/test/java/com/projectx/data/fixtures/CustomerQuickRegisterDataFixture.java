@@ -5,13 +5,13 @@ import java.util.Date;
 
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
 import com.projectx.rest.domain.CustomerIdDTO;
-import com.projectx.rest.domain.EmailDTO;
-import com.projectx.rest.domain.MobileDTO;
+import com.projectx.rest.domain.GetByEmailDTO;
+import com.projectx.rest.domain.GetByMobileDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
-import com.projectx.rest.domain.UpdateStatusWithCustomerIdDTO;
-import com.projectx.rest.domain.VerifyEmailDTO;
-import com.projectx.rest.domain.VerifyMobileDTO;
+import com.projectx.rest.domain.UpdatePasswordDTO;
+import com.projectx.rest.domain.UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO;
+
 
 public class CustomerQuickRegisterDataFixture {
 
@@ -36,8 +36,11 @@ public class CustomerQuickRegisterDataFixture {
 	public static Integer CUST_MOBILEPIN_VERIFICATION_ATTEMPTS=0;
 	public static Date CUST_EMAIL_HASH_SENT_TIME=new Date();
 	public static Date CUST_MOBILE_PIN_SENT_TIME=new Date();
-	
 	public static Date CUST_LAST_STATUS_CHANGED_TIME=new Date();
+	public static String CUST_PASSWORD_DEFAULT="123456";
+	public static String CUST_PASSWORD_TYPE_DEFAULT="Default";
+	public static String CUST_PASSWORD_CHANGED="654321";
+	public static String CUST_PASSWORD_TYPE_CHANGED="Changed";
 	
 	
 	public static String STATUS_EMAIL_VERFIED_MOBILE_PENDING="EmailVerifiedMobileVerficationPending";
@@ -46,23 +49,23 @@ public class CustomerQuickRegisterDataFixture {
 	public static String STATUS_MOBILE_VERFIED="MobileVerified";
 	public static String STATUS_EMAIL_VERFIED="EmailVerified";
 	
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	//private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 	public static CustomerQuickRegisterEntity standardEmailMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,CUST_MOBILE_PIN_SENT_TIME,CUST_EMAIL_HASH_SENT_TIME,CUST_LAST_STATUS_CHANGED_TIME);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,CUST_MOBILE_PIN_SENT_TIME,CUST_EMAIL_HASH_SENT_TIME,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,CUST_MOBILE_PIN_SENT_TIME,null,CUST_LAST_STATUS_CHANGED_TIME);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,CUST_MOBILE_PIN_SENT_TIME,null,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardEmailCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,CUST_EMAIL_HASH_SENT_TIME,CUST_LAST_STATUS_CHANGED_TIME);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,CUST_EMAIL_HASH_SENT_TIME,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
 		
 	}
 	
@@ -95,42 +98,36 @@ public class CustomerQuickRegisterDataFixture {
 		return new CustomerIdDTO(CUST_ID);
 	}
 	
-	public static EmailDTO standardGetByEmailDTO()
+	public static GetByEmailDTO standardGetByEmailDTO()
 	{
-		return new EmailDTO(CUST_EMAIL);
+		return new GetByEmailDTO(CUST_EMAIL);
 	}
 	
-	public static MobileDTO standardGetByMobile()
+	public static GetByMobileDTO standardGetByMobile()
 	{
-		return new MobileDTO(CUST_MOBILE);
+		return new GetByMobileDTO(CUST_MOBILE);
 	}
 	
-	public static VerifyMobileDTO standardVerifyMobilePinDTO()
+	public static UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId()
 	{
-		return new VerifyMobileDTO(CUST_ID, CUST_MOBILEPIN);
-	}
-	
-	public static VerifyEmailDTO standardVerifyEmailHashDTO()
-	{
-		return new VerifyEmailDTO(CUST_ID,CUST_EMAILHASH);
-	}
-	
-	public static UpdateStatusWithCustomerIdDTO standardUpdateStatusWithCustomerId()
-	{
-		return new UpdateStatusWithCustomerIdDTO(CUST_ID,STATUS_EMAIL_MOBILE_VERIFIED,CUST_LAST_STATUS_CHANGED_TIME);
+		return new UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO(CUST_ID,STATUS_EMAIL_MOBILE_VERIFIED,CUST_LAST_STATUS_CHANGED_TIME,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS);
 	}
 	
 	
 	public static UpdateEmailHashDTO standardUpdateEmailHashDTO()
 	{
-		return new UpdateEmailHashDTO(CUST_ID,CUST_EMAILHASH_UPDATED,new Date());
+		return new UpdateEmailHashDTO(CUST_ID,CUST_EMAILHASH_UPDATED,CUST_EMAIL_HASH_SENT_TIME);
 	}
 	
 	public static UpdateMobilePinDTO standardUpdateMobilePinDTO()
 	{
-		return new UpdateMobilePinDTO(CUST_ID,CUST_MOBILEPIN_UPDATED,new Date());
+		return new UpdateMobilePinDTO(CUST_ID,CUST_MOBILEPIN_UPDATED,CUST_MOBILE_PIN_SENT_TIME);
 	}
 
+	public static UpdatePasswordDTO standardUpdatePasswordDTO()
+	{
+		return new UpdatePasswordDTO(CUST_ID, CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED);
+	}
 
 	public static String standardJsonCustomerId()
 	{
@@ -147,6 +144,63 @@ public class CustomerQuickRegisterDataFixture {
 		return "{\"mobile\":9960821869}";
 	}
 	
+	public static String standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO()
+	{
+		//String formattedDate = dateFormat.format(standardUpdateStatusWithCustomerId().getStatusChangeTime());
+		
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":212,\"status\":\"EmailMobileVerified\",\"statusChangeTime\":\"");
+		jsonBuilder.append(standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId().getStatusChangeTime().getTime());
+		jsonBuilder.append("\",\"mobileVerificationAttempts\":0}");
+		
+		return jsonBuilder.toString();
+	}
+	
+	
+	public static String standardJsonUpdateMobilePinDTO()
+	{
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":212,\"mobilePin\":");
+		jsonBuilder.append(CUST_MOBILEPIN_UPDATED);
+		jsonBuilder.append(",\"updateTime\":\"");
+		jsonBuilder.append(standardUpdateMobilePinDTO().getUpdateTime().getTime());
+		jsonBuilder.append("\"}");
+		
+		System.out.println(jsonBuilder.toString());
+		
+		return jsonBuilder.toString();
+	}
+	
+	public static String standardJsonUpdateEmailHashDTO()
+	{
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":212,\"emailHash\":\"");
+		jsonBuilder.append(CUST_EMAILHASH_UPDATED);
+		jsonBuilder.append("\",\"updateTime\":\"");
+		jsonBuilder.append(standardUpdateEmailHashDTO().getUpdateTime().getTime());
+		jsonBuilder.append("\"}");
+				
+		return jsonBuilder.toString();
+		
+	}
+	
+	public static String standardJsonUpdatePasswordDTO()
+	{
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":212,\"password\":\"");
+		jsonBuilder.append(CUST_PASSWORD_CHANGED);
+		jsonBuilder.append("\",\"passwordType\":\"");
+		jsonBuilder.append(CUST_PASSWORD_TYPE_CHANGED);
+		jsonBuilder.append("\"}");
+			
+		return jsonBuilder.toString();
+	}
+	
+	/*
 	public static String standardJsonVerifyMobileDTO()
 	{
 		return "{\"customerId\":212,\"mobilePin\":101010}";
@@ -158,28 +212,17 @@ public class CustomerQuickRegisterDataFixture {
 		return "{\"customerId\":212,\"emailHash\":\"02b99c87926ed36ed1b41afccf9b05f9efd6e54e6e9d116b8ed3a7eaf257b85a\"}";
 		       
 	}
-
-	public static String standardJsonUpdateStatusByCustomerIdDTO()
+*/
+	
+	/*
+	public static VerifyMobileDTO standardVerifyMobilePinDTO()
 	{
-		String formattedDate = dateFormat.format(standardUpdateStatusWithCustomerId().getStatusChangeTime());
-		
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":212,\"status\":\"EmailMobileVerified\",\"statusChangeTime\":\"");
-		jsonBuilder.append(standardUpdateStatusWithCustomerId().getStatusChangeTime().getTime());
-		jsonBuilder.append("\"}");
-		
-		return jsonBuilder.toString();
+		return new VerifyMobileDTO(CUST_ID, CUST_MOBILEPIN);
 	}
 	
-	
-	public static String standardJsonUpdateMobilePinDTO()
+	public static VerifyEmailDTO standardVerifyEmailHashDTO()
 	{
-		return "{\"customerId\":212,\"mobilePin\":102010,\"mobilePinSentTime\":\"10-11-2014:16:39:27\"}";
+		return new VerifyEmailDTO(CUST_ID,CUST_EMAILHASH);
 	}
-	
-	public static String standardJsonUpdateEmailHashDTO()
-	{
-		return "{\"customerId\":212,\"emailHash\":1020102010,\"emailHashSentTime\":\"10-11-2014:16:39:27\"}";
-	}
+	*/
 }

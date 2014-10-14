@@ -52,6 +52,13 @@ public class UpdateEmailHashDTO {
 	}
 
 
+	@Override
+	public String toString() {
+		return "UpdateEmailHashDTO [customerId=" + customerId + ", emailHash="
+				+ emailHash + ", updateTime=" + updateTime + "]";
+	}
+
+
 	
 	
 }

@@ -252,6 +252,123 @@ public class CustomerQuickRegisterRespositoryTest {
 	}
 	
 	
+	
+	@Test
+	public void updateStatusAndMobileVerificationAttemptsWithEmailAndMobileFailingCase()
+	{
+		assertEquals(new Integer(0),customerQuickRegisterRepository.updateStatusAndMobileVerificationAttemptsByCustomerId(CUST_ID, CUST_STATUS_EMAIL,new Date(),CUST_MOBILEPIN_VERIFICATION_ATTEMPTS));
+	}
+	 
+	@Test
+	public void updateMobilePinFailingCase()
+	{
+		assertEquals(0, customerQuickRegisterRepository.updateMobilePin(CUST_ID, CUST_MOBILEPIN, CUST_MOBILE_PIN_SENT_TIME).intValue());
+	}
+	
+	@Test
+	public void updateEmailHashFailingCase()
+	{
+		assertEquals(0, customerQuickRegisterRepository.updateEmailHash(CUST_ID, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME).intValue());
+	}
+	
+	
+
+	
+	
+	@Test
+	//@Rollback(value=false)
+	public void updateStatusAndMobileVerificationAttemptsByCustomerIdWithMobileCustomer() throws InterruptedException
+	{
+		assertEquals(0,customerQuickRegisterRepository.findAll().size());
+		
+		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardMobileCustomer());
+		
+	//	Thread.sleep(10000);
+		
+		assertEquals(CUST_STATUS_MOBILE,customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId()).getStatus());
+		
+		assertEquals(new Integer(1),customerQuickRegisterRepository.updateStatusAndMobileVerificationAttemptsByCustomerId(savedCustomer.getCustomerId(), STATUS_MOBILE_VERFIED,new Date(),CUST_MOBILEPIN_VERIFICATION_ATTEMPTS+1)); 
+		
+		//sessionFactory.getCurrentSession().flush();
+				
+		//Session session = entityManager.unwrap(Session.class);
+		
+		//session.flush();
+		
+		//entityManager.getTransaction().commit();
+		
+		//assertEquals(STATUS_MOBILE_VERFIED,customerQuickRegisterRepository.findByMobile(CUST_MOBILE).getStatus());
+	}
+	
+		
+	@Test 
+	//@Rollback(value=false)
+	public void updateMobilePinWithMobileCustomer() throws InterruptedException
+	{
+		assertEquals(new Integer(0), customerQuickRegisterRepository.countByMobile(CUST_MOBILE));
+		
+		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardMobileCustomer());
+		
+	//	Thread.sleep(10000);
+		
+		assertEquals(CUST_MOBILEPIN, customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId()).getMobilePin());
+		
+		assertEquals(1,customerQuickRegisterRepository.updateMobilePin(savedCustomer.getCustomerId(), CUST_MOBILEPIN_UPDATED,new Date()).intValue());
+	}
+	
+	
+	
+	@Test 
+	//@Rollback(value=false)
+	public void updateEmailHashWithEmailMobileCustomer() throws InterruptedException
+	{
+		assertEquals(new Integer(0), customerQuickRegisterRepository.countByEmail(CUST_EMAIL));
+		
+		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		//Thread.sleep(10000);
+		
+		assertEquals(CUST_EMAILHASH, customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId()).getEmailHash());
+		
+		assertEquals(1,customerQuickRegisterRepository.updateEmailHash(savedCustomer.getCustomerId(), CUST_EMAILHASH_UPDATED,new Date()).intValue());
+		
+	}
+	
+	
+	
+	@Test
+	//@Rollback(value=false)
+	public void updatePasswordWithEmailMobileCustomer()
+	{
+		assertEquals(0, customerQuickRegisterRepository.findAll().size());
+		
+		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		assertEquals(CUST_PASSWORD_DEFAULT,savedCustomer.getPassword());
+		
+		assertEquals(1, customerQuickRegisterRepository.updatePassword(savedCustomer.getCustomerId(), CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED).intValue());
+		
+		
+		
+	}
+	
+
+	
+	
+	@Test
+	public void clearTestingData()
+	{
+		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		assertEquals(1, customerQuickRegisterRepository.findAll().size());
+		
+		customerQuickRegisterRepository.clearTestData();
+		
+		assertEquals(0, customerQuickRegisterRepository.findAll().size());
+	}
+
+	
+	/*
 	@Test
 	public void fetchStatusByCustomerIdWithMobileCustomer()
 	{
@@ -318,127 +435,39 @@ public class CustomerQuickRegisterRespositoryTest {
 		
 		
 	}
+	*/
+
+	
+//	@Test
+//	public void incrementMobileVerificationAttemptsFailingTest()
+//	{
+//		assertEquals(0, customerQuickRegisterRepository.incrementMobileVerificationAttempts(CUST_ID).intValue());
+//	}
+//	
+
 	
 	
-	
-	@Test
-	public void updateStatusWithEmailAndMobileFailingCase()
-	{
-		assertEquals(new Integer(0),customerQuickRegisterRepository.updateStatusByCustomerId(CUST_ID, CUST_STATUS_EMAIL,new Date()));
-	}
-	 
-	@Test
-	public void updateMobilePinFailingCase()
-	{
-		assertEquals(0, customerQuickRegisterRepository.updateMobilePin(CUST_ID, CUST_MOBILEPIN, CUST_MOBILE_PIN_SENT_TIME).intValue());
-	}
-	
-	@Test
-	public void updateEmailHashFailingCase()
-	{
-		assertEquals(0, customerQuickRegisterRepository.updateEmailHash(CUST_ID, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME).intValue());
-	}
-	
-	@Test
-	public void incrementMobileVerificationAttemptsFailingTest()
-	{
-		assertEquals(0, customerQuickRegisterRepository.incrementMobileVerificationAttempts(CUST_ID).intValue());
-	}
-	
-	
-	
-	@Test
-	//@Rollback(value=false)
-	public void updateStatusByCustomerIdWithMobileCustomer() throws InterruptedException
-	{
-		assertEquals(0,customerQuickRegisterRepository.findAll().size());
-		
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardMobileCustomer());
-		
-	//	Thread.sleep(10000);
-		
-		assertEquals(CUST_STATUS_MOBILE,customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId()).getStatus());
-		
-		assertEquals(new Integer(1),customerQuickRegisterRepository.updateStatusByCustomerId(savedCustomer.getCustomerId(), STATUS_MOBILE_VERFIED,new Date())); 
-		
-		//sessionFactory.getCurrentSession().flush();
-				
-		//Session session = entityManager.unwrap(Session.class);
-		
-		//session.flush();
-		
-		//entityManager.getTransaction().commit();
-		
-		//assertEquals(STATUS_MOBILE_VERFIED,customerQuickRegisterRepository.findByMobile(CUST_MOBILE).getStatus());
-	}
-	
-	
-	@Test 
-	//@Rollback(value=false)
-	public void updateMobilePinWithMobileCustomer() throws InterruptedException
-	{
-		assertEquals(new Integer(0), customerQuickRegisterRepository.countByMobile(CUST_MOBILE));
-		
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardMobileCustomer());
-		
-	//	Thread.sleep(10000);
-		
-		assertEquals(CUST_MOBILEPIN, customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId()).getMobilePin());
-		
-		assertEquals(1,customerQuickRegisterRepository.updateMobilePin(savedCustomer.getCustomerId(), CUST_MOBILEPIN_UPDATED,new Date()).intValue());
-	}
-	
-	
-	
-	@Test 
-	//@Rollback(value=false)
-	public void updateEmailHashWithEmailMobileCustomer() throws InterruptedException
-	{
-		assertEquals(new Integer(0), customerQuickRegisterRepository.countByEmail(CUST_EMAIL));
-		
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
-		
-		//Thread.sleep(10000);
-		
-		assertEquals(CUST_EMAILHASH, customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId()).getEmailHash());
-		
-		assertEquals(1,customerQuickRegisterRepository.updateEmailHash(savedCustomer.getCustomerId(), CUST_EMAILHASH_UPDATED,new Date()).intValue());
-		
-	}
-	
-	@Test
-	public void getMobileVerificationAttempts()
-	{
-		assertEquals(0, customerQuickRegisterRepository.findAll().size());
-		
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
-		
-		assertEquals(0, customerQuickRegisterRepository.getMobileVerificationAttempts(savedCustomer.getCustomerId()).intValue());
-	}
-	
-	
-	@Test
-	//@Rollback(value=false)
-	public void incrementMobileVerificationAttempts()
-	{
-		assertEquals(0, customerQuickRegisterRepository.findAll().size());
-		
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
-		
-		assertEquals(1, customerQuickRegisterRepository.incrementMobileVerificationAttempts(savedCustomer.getCustomerId()).intValue());
-	}
-	
-	
-	@Test
-	public void clearTestingData()
-	{
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
-		
-		assertEquals(1, customerQuickRegisterRepository.findAll().size());
-		
-		customerQuickRegisterRepository.clearTestData();
-		
-		assertEquals(0, customerQuickRegisterRepository.findAll().size());
-	}
+//	@Test
+//	public void getMobileVerificationAttempts()
+//	{
+//		assertEquals(0, customerQuickRegisterRepository.findAll().size());
+//		
+//		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+//		
+//		assertEquals(0, customerQuickRegisterRepository.getMobileVerificationAttempts(savedCustomer.getCustomerId()).intValue());
+//	}
+//	
+//	
+//	@Test
+//	//@Rollback(value=false)
+//	public void incrementMobileVerificationAttempts()
+//	{
+//		assertEquals(0, customerQuickRegisterRepository.findAll().size());
+//		
+//		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+//		
+//		assertEquals(1, customerQuickRegisterRepository.incrementMobileVerificationAttempts(savedCustomer.getCustomerId()).intValue());
+//	}
+
 	
 }

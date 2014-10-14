@@ -14,15 +14,14 @@ import com.projectx.data.domain.CustomerQuickRegisterEntity;
 import com.projectx.data.repository.CustomerQuickRegisterRepository;
 import com.projectx.rest.domain.CustomerIdDTO;
 import com.projectx.rest.domain.CustomerQuickRegisterDTO;
-import com.projectx.rest.domain.EmailDTO;
-import com.projectx.rest.domain.MobileDTO;
+import com.projectx.rest.domain.GetByEmailDTO;
+import com.projectx.rest.domain.GetByMobileDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
-import com.projectx.rest.domain.UpdateStatusWithCustomerIdDTO;
-import com.projectx.rest.domain.VerifyEmailDTO;
-import com.projectx.rest.domain.VerifyMobileDTO;
+import com.projectx.rest.domain.UpdatePasswordDTO;
+import com.projectx.rest.domain.UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO;
 
-import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.*;
+
 
 @RestController
 @RequestMapping(value="/customer/quickregister")
@@ -57,17 +56,81 @@ public class CustomerQuickRegisterController {
 	}
 	
 	@RequestMapping(value="/getEmailCount",method=RequestMethod.POST)
-	public Integer getEmailCount(@RequestBody EmailDTO emailDTO)
+	public Integer getEmailCount(@RequestBody GetByEmailDTO emailDTO)
 	{
 		return customerQuickRegisterRepository.countByEmail(emailDTO.getEmail());
 	}
 	
 	@RequestMapping(value="/getMobileCount",method=RequestMethod.POST)
-	public Integer getMobileCount(@RequestBody MobileDTO mobileDTO)
+	public Integer getMobileCount(@RequestBody GetByMobileDTO mobileDTO)
 	{
 		return customerQuickRegisterRepository.countByMobile(mobileDTO.getMobile());
 	}
 	
+
+			
+	@RequestMapping(value="/updateStatusByCustomerId",method=RequestMethod.POST)
+	public Integer updateStatusByCustomerId(@RequestBody UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO updateStatus) throws InterruptedException
+	{
+		Integer result=customerQuickRegisterRepository.updateStatusAndMobileVerificationAttemptsByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus(),updateStatus.getStatusChangeTime(),updateStatus.getMobileVerificationAttempts());
+				
+		return result;
+	}
+		
+	
+	@RequestMapping(value="/updateMobilePin",method=RequestMethod.POST)
+	public Integer updateMobilePin(@RequestBody UpdateMobilePinDTO updateMobilePin)
+	{
+		return customerQuickRegisterRepository.updateMobilePin(updateMobilePin.getCustomerId(),updateMobilePin.getMobilePin(),updateMobilePin.getUpdateTime());
+	}
+	
+	@RequestMapping(value="/updateEmailHash",method=RequestMethod.POST)
+	public Integer updateEmailHash(@RequestBody UpdateEmailHashDTO updateEmailHash)
+	{
+		return customerQuickRegisterRepository.updateEmailHash(updateEmailHash.getCustomerId(),updateEmailHash.getEmailHash(),updateEmailHash.getUpdateTime());
+	}
+	
+	@RequestMapping(value="/updatePassword",method=RequestMethod.POST)
+	public Integer updatePassword(@RequestBody UpdatePasswordDTO updatePassword)
+	{
+		return customerQuickRegisterRepository.updatePassword(updatePassword.getCustomerId(), updatePassword.getPassword(),updatePassword.getPasswordType());
+	}
+	
+	
+//	@RequestMapping(value="/customer")
+//	public CustomerQuickRegisterEntity returnCustomer()
+//	{
+//		
+//		return standardEmailMobileCustomer();
+//	}
+	
+	//***********************Highly Dangerous***************************************/
+	
+	@RequestMapping(value="/clearForTesting")
+	public Boolean clearTableForTesting()
+	{
+		 customerQuickRegisterRepository.clearTestData();
+		 
+		 return true;
+	}
+	//***********************Highly Dangerous***************************************/
+	
+
+	/*
+	@RequestMapping(value="/getMobileVerificationAttempts",method=RequestMethod.POST)
+	public Integer getMobileVerificationAttempts(@RequestBody CustomerIdDTO customerId)
+	{
+		return customerQuickRegisterRepository.getMobileVerificationAttempts(customerId.getCustomerId());
+	}
+	
+	@RequestMapping(value="/incrementMobileVerificationAttempts",method=RequestMethod.POST)
+	public Integer incrementMobileVerificationAttempts(@RequestBody CustomerIdDTO customerId)
+	{
+		return customerQuickRegisterRepository.incrementMobileVerificationAttempts(customerId.getCustomerId());
+	}
+	*/
+	
+	/*
 	@RequestMapping(value="/verifyEmailHash",method=RequestMethod.POST)
 	public Integer verifyEmailHash(@RequestBody VerifyEmailDTO emailDTO)
 	{
@@ -90,57 +153,5 @@ public class CustomerQuickRegisterController {
 		return status;
 				
 	}
-			
-	@RequestMapping(value="/updateStatusByCustomerId",method=RequestMethod.POST)
-	public Integer updateStatusByCustomerId(@RequestBody UpdateStatusWithCustomerIdDTO updateStatus) throws InterruptedException
-	{
-		Integer result=customerQuickRegisterRepository.updateStatusByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus(),updateStatus.getStatusChangeTime());
-				
-		return result;
-	}
-		
-	
-	@RequestMapping(value="/updateMobilePin",method=RequestMethod.POST)
-	public Integer updateMobilePin(@RequestBody UpdateMobilePinDTO updateMobilePin)
-	{
-		return customerQuickRegisterRepository.updateMobilePin(updateMobilePin.getCustomerId(),updateMobilePin.getMobilePin(),updateMobilePin.getUpdateTime());
-	}
-	
-	@RequestMapping(value="/updateEmailHash",method=RequestMethod.POST)
-	public Integer updateEmailHash(@RequestBody UpdateEmailHashDTO updateEmailHash)
-	{
-		return customerQuickRegisterRepository.updateEmailHash(updateEmailHash.getCustomerId(),updateEmailHash.getEmailHash(),updateEmailHash.getUpdateTime());
-	}
-	
-	@RequestMapping(value="/getMobileVerificationAttempts",method=RequestMethod.POST)
-	public Integer getMobileVerificationAttempts(@RequestBody CustomerIdDTO customerId)
-	{
-		return customerQuickRegisterRepository.getMobileVerificationAttempts(customerId.getCustomerId());
-	}
-	
-	@RequestMapping(value="/incrementMobileVerificationAttempts",method=RequestMethod.POST)
-	public Integer incrementMobileVerificationAttempts(@RequestBody CustomerIdDTO customerId)
-	{
-		return customerQuickRegisterRepository.incrementMobileVerificationAttempts(customerId.getCustomerId());
-	}
-	
-	@RequestMapping(value="/customer")
-	public CustomerQuickRegisterEntity returnCustomer()
-	{
-		
-		return standardEmailMobileCustomer();
-	}
-	
-	//***********************Highly Dangerous***************************************/
-	
-	@RequestMapping(value="/clearForTesting")
-	public Boolean clearTableForTesting()
-	{
-		 customerQuickRegisterRepository.clearTestData();
-		 
-		 return true;
-	}
-	//***********************Highly Dangerous***************************************/
-	
-	
+	*/	
 }
