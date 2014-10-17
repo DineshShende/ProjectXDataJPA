@@ -7,6 +7,7 @@ import com.projectx.data.domain.CustomerQuickRegisterEntity;
 import com.projectx.rest.domain.CustomerIdDTO;
 import com.projectx.rest.domain.GetByEmailDTO;
 import com.projectx.rest.domain.GetByMobileDTO;
+import com.projectx.rest.domain.UpdateEmailHashAndMobilePinSentTimeDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
 import com.projectx.rest.domain.UpdatePasswordDTO;
@@ -128,6 +129,11 @@ public class CustomerQuickRegisterDataFixture {
 	{
 		return new UpdatePasswordDTO(CUST_ID, CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED);
 	}
+	
+	public static UpdateEmailHashAndMobilePinSentTimeDTO standardUpdateEmailHashAndMobilePinSentTimeDTO()
+	{
+		return new UpdateEmailHashAndMobilePinSentTimeDTO(CUST_ID, CUST_EMAIL_HASH_SENT_TIME, CUST_MOBILE_PIN_SENT_TIME);
+	}
 
 	public static String standardJsonCustomerId()
 	{
@@ -196,7 +202,26 @@ public class CustomerQuickRegisterDataFixture {
 		jsonBuilder.append("\",\"passwordType\":\"");
 		jsonBuilder.append(CUST_PASSWORD_TYPE_CHANGED);
 		jsonBuilder.append("\"}");
-			
+		
+		System.out.println(jsonBuilder.toString());
+		
+		return jsonBuilder.toString();
+	}
+	
+	public static String standardJsonUpdateEmailHashAndMobilePinSentTimeDTO()
+	{
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":");
+		jsonBuilder.append(CUST_ID);
+		jsonBuilder.append(",\"emailSentTime\":\"");
+		jsonBuilder.append(standardUpdateEmailHashAndMobilePinSentTimeDTO().getEmailSentTime().getTime());
+		jsonBuilder.append("\",\"mobilePinSentTime\":\"");
+		jsonBuilder.append(standardUpdateEmailHashAndMobilePinSentTimeDTO().getMobilePinSentTime().getTime());
+		jsonBuilder.append("\"}");
+		
+		System.out.println(jsonBuilder.toString());
+		
 		return jsonBuilder.toString();
 	}
 	

@@ -16,6 +16,7 @@ import com.projectx.rest.domain.CustomerIdDTO;
 import com.projectx.rest.domain.CustomerQuickRegisterDTO;
 import com.projectx.rest.domain.GetByEmailDTO;
 import com.projectx.rest.domain.GetByMobileDTO;
+import com.projectx.rest.domain.UpdateEmailHashAndMobilePinSentTimeDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
 import com.projectx.rest.domain.UpdatePasswordDTO;
@@ -94,6 +95,14 @@ public class CustomerQuickRegisterController {
 	public Integer updatePassword(@RequestBody UpdatePasswordDTO updatePassword)
 	{
 		return customerQuickRegisterRepository.updatePassword(updatePassword.getCustomerId(), updatePassword.getPassword(),updatePassword.getPasswordType());
+	}
+
+	@RequestMapping(value="/updateEmailHashAndMobilePinSentTime",method=RequestMethod.POST)
+	public Integer updateEmailHashAndMobilePinSentTime(@RequestBody UpdateEmailHashAndMobilePinSentTimeDTO timeDTO)
+	{
+		
+		System.out.println(timeDTO);
+		return customerQuickRegisterRepository.updateEmailHashAndMobilePinSentTime(timeDTO.getCustomerId(), timeDTO.getEmailSentTime(), timeDTO.getMobilePinSentTime());
 	}
 	
 	

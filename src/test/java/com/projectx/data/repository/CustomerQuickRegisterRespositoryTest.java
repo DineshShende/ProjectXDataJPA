@@ -19,6 +19,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+
+
 import com.projectx.data.Application;
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
 @RunWith(SpringJUnit4ClassRunner.class)   
@@ -350,6 +352,18 @@ public class CustomerQuickRegisterRespositoryTest {
 		
 		
 		
+	}
+	
+	
+	@Test
+	//@Rollback(value=false)
+	public void updateEmailHashAndMobileSentTime()
+	{
+		assertEquals(0, customerQuickRegisterRepository.findAll().size());
+		
+		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+	
+		assertEquals(1, customerQuickRegisterRepository.updateEmailHashAndMobilePinSentTime(savedCustomer.getCustomerId(), new Date(), new Date()).intValue());
 	}
 	
 

@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.any;
 
 
-import java.sql.Date;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -142,6 +142,27 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 		
 	}
 
+
+	@Test
+	public void updateEmailHashAndMobilePinSentTime() throws Exception
+	{
+		when(customerQuickRegisterRepository.updateEmailHashAndMobilePinSentTime(standardUpdateEmailHashAndMobilePinSentTimeDTO().getCustomerId(),
+				standardUpdateEmailHashAndMobilePinSentTimeDTO().getEmailSentTime(),standardUpdateEmailHashAndMobilePinSentTimeDTO().getMobilePinSentTime())).thenReturn(1);
+		
+
+		this.mockMvc.perform(
+	            post("/customer/quickregister/updateEmailHashAndMobilePinSentTime")
+	                    .content(standardJsonUpdateEmailHashAndMobilePinSentTimeDTO())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(content().string("1"));
+		
+	}
+
+	
+	
 	
 	/*
 	@Test

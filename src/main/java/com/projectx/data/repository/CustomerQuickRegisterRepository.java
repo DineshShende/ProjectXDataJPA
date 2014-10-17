@@ -57,6 +57,13 @@ public interface CustomerQuickRegisterRepository extends
 		
 		@Transactional
 		@Modifying
+		@Query(value="update customer_quick_register_entity set EMAILHASHSENTTIME=:emailHashSentTime, MOBILEPINSENTTIME=:mobilePinSentTime where CUSTOMERID=:customerId",nativeQuery=true)
+		 Integer updateEmailHashAndMobilePinSentTime(@Param("customerId") Long customerId,@Param("emailHashSentTime") Date emailHashSentTime,@Param("mobilePinSentTime")Date mobilePinSentTime);
+		
+		
+		
+		@Transactional
+		@Modifying
 		@Query(value="truncate table customer_quick_register_entity",nativeQuery = true)
 		void clearTestData();
 
