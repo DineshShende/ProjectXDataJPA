@@ -44,7 +44,7 @@ public class CustomerQuickRegisterControllerWACTest {
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
 	}
 	
-	
+
 	@Test
 	public void saveNewEmailMobileCustomer() throws Exception {
 		
@@ -55,39 +55,79 @@ public class CustomerQuickRegisterControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.firstName").value(CUST_FIRSTNAME))
-	            .andExpect(jsonPath("$.lastName").value(CUST_LASTNAME))
-	            //.andExpect(jsonPath("$.mobile").value(CUST_MOBILE))
-	            .andExpect(jsonPath("$.email").value(CUST_EMAIL))
-	            .andExpect(jsonPath("$.pin").value(CUST_PIN))
-				.andExpect(jsonPath("$.status").value(CUST_STATUS_EMAILMOBILE))
-				.andExpect(jsonPath("$.mobilePin").value(CUST_MOBILEPIN))
-			     .andExpect(jsonPath("$.emailHash").value(CUST_EMAILHASH));
-	
+	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
+	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
+	            .andExpect(jsonPath("$.email").value(standardEmailMobileCustomer().getEmail()))
+	            .andExpect(jsonPath("$.pin").value(standardEmailMobileCustomer().getPin()))
+				.andExpect(jsonPath("$.status").value(standardEmailMobileCustomer().getStatus()))
+				.andExpect(jsonPath("$.mobilePin").value(standardEmailMobileCustomer().getMobilePin()))
+			    .andExpect(jsonPath("$.emailHash").value(standardEmailMobileCustomer().getEmailHash()))
+				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
+				.andExpect(jsonPath("$.mobilePinSentTime").exists())
+				.andExpect(jsonPath("$.emailHashSentTime").exists())
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
+				.andExpect(jsonPath("$.password").value(standardEmailMobileCustomer().getPassword()))
+				.andExpect(jsonPath("$.passwordType").value(standardEmailMobileCustomer().getPasswordType()));
+		
 	}
 
 	@Test
-	public void saveEmailMobileCustomer() throws Exception {
+	public void saveNewEmailCustomer() throws Exception {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailMobileCustomer())
+	                    .content(standardJsonEmailCustomer())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.firstName").value(CUST_FIRSTNAME))
-	            .andExpect(jsonPath("$.lastName").value(CUST_LASTNAME))
-	            //.andExpect(jsonPath("$.mobile").value(CUST_MOBILE))
-	            .andExpect(jsonPath("$.email").value(CUST_EMAIL))
-	            .andExpect(jsonPath("$.pin").value(CUST_PIN))
-				.andExpect(jsonPath("$.status").value(CUST_STATUS_EMAILMOBILE))
-				.andExpect(jsonPath("$.mobilePin").value(CUST_MOBILEPIN))
-			    .andExpect(jsonPath("$.emailHash").value(CUST_EMAILHASH));
+	            .andExpect(jsonPath("$.firstName").value(standardEmailCustomer().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardEmailCustomer().getLastName()))
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.email").value(standardEmailCustomer().getEmail()))
+	            .andExpect(jsonPath("$.pin").value(standardEmailCustomer().getPin()))
+				.andExpect(jsonPath("$.status").value(standardEmailCustomer().getStatus()))
+				.andExpect(jsonPath("$.mobilePin").doesNotExist())
+			    .andExpect(jsonPath("$.emailHash").value(standardEmailCustomer().getEmailHash()))
+				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailCustomer().getMobileVerificationAttempts()))
+				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
+				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailCustomer().getLastStatusChangedTime().getTime()))
+				.andExpect(jsonPath("$.password").doesNotExist())
+				.andExpect(jsonPath("$.passwordType").doesNotExist());
+	
+	}
+
+	@Test
+	public void saveNewMobileCustomer() throws Exception {
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister")
+	                    .content(standardJsonMobileCustomer())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.firstName").value(standardMobileCustomer().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardMobileCustomer().getLastName()))
+	            .andExpect(jsonPath("$.mobile").value(standardMobileCustomer().getMobile()))
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.pin").value(standardMobileCustomer().getPin()))
+				.andExpect(jsonPath("$.status").value(standardMobileCustomer().getStatus()))
+				.andExpect(jsonPath("$.mobilePin").value(standardMobileCustomer().getMobilePin()))
+			    .andExpect(jsonPath("$.emailHash").doesNotExist())
+				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardMobileCustomer().getMobileVerificationAttempts()))
+				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
+				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardMobileCustomer().getLastStatusChangedTime().getTime()))
+				.andExpect(jsonPath("$.password").value(standardMobileCustomer().getPassword()))
+				.andExpect(jsonPath("$.passwordType").value(standardMobileCustomer().getPasswordType()));
 	
 	
 	}
 
+	
 	@Test
 	public void getAllCustomerWithEmaiMobileAndMobileCustomer() throws Exception
 	{
@@ -108,24 +148,35 @@ public class CustomerQuickRegisterControllerWACTest {
 				get("/customer/quickregister/getAll"))
 					.andDo(print())
 					.andExpect(status().isOk())
-					.andExpect(jsonPath("$[0].['firstName']").value(CUST_FIRSTNAME))
-					.andExpect(jsonPath("$[0].['lastName']").value(CUST_LASTNAME))
-					.andExpect(jsonPath("$[0].['email']").value(CUST_EMAIL))
-					.andExpect(jsonPath("$[0].['mobile']").value(CUST_MOBILE))
-					.andExpect(jsonPath("$[0].['status']").value(CUST_STATUS_EMAILMOBILE))
-					.andExpect(jsonPath("$[0].['pin']").value(CUST_PIN))
-					.andExpect(jsonPath("$[0].['mobilePin']").value(CUST_MOBILEPIN))
-					.andExpect(jsonPath("$[0].['emailHash']").value(CUST_EMAILHASH))
+					.andExpect(jsonPath("$[0].['firstName']").value(standardEmailMobileCustomer().getFirstName()))
+					.andExpect(jsonPath("$[0].['lastName']").value(standardEmailMobileCustomer().getLastName()))
+					.andExpect(jsonPath("$[0].['mobile']").value(standardEmailMobileCustomer().getMobile()))
+					.andExpect(jsonPath("$[0].['email']").value(standardEmailMobileCustomer().getEmail()))
+					.andExpect(jsonPath("$[0].['pin']").value(standardEmailMobileCustomer().getPin()))
+					.andExpect(jsonPath("$[0].['status']").value(standardEmailMobileCustomer().getStatus()))
+					.andExpect(jsonPath("$[0].['mobilePin']").value(standardEmailMobileCustomer().getMobilePin()))
+					.andExpect(jsonPath("$[0].['emailHash']").value(standardEmailMobileCustomer().getEmailHash()))
+					.andExpect(jsonPath("$[0].['mobileVerificationAttempts']").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
+					.andExpect(jsonPath("$[0].['mobilePinSentTime']").doesNotExist())
+					.andExpect(jsonPath("$[0].['emailHashSentTime']").doesNotExist())
+					.andExpect(jsonPath("$[0].['lastStatusChangedTime']").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
+					.andExpect(jsonPath("$[0].['password']").value(standardEmailMobileCustomer().getPassword()))
+					.andExpect(jsonPath("$[0].['passwordType']").value(standardEmailMobileCustomer().getPasswordType()))
 		
-					.andExpect(jsonPath("$[1].['firstName']").value(CUST_FIRSTNAME))
-					.andExpect(jsonPath("$[1].['lastName']").value(CUST_LASTNAME))
-					.andExpect(jsonPath("$[1].['email']").value(CUST_EMAIL_OTHER))
+					.andExpect(jsonPath("$[1].['firstName']").value(standardEmailCustomer().getFirstName()))
+					.andExpect(jsonPath("$[1].['lastName']").value(standardEmailCustomer().getLastName()))
 					.andExpect(jsonPath("$[1].['mobile']").doesNotExist())
-					.andExpect(jsonPath("$[1].['status']").doesNotExist())		
-					.andExpect(jsonPath("$[1].['pin']").value(CUST_PIN))
+					.andExpect(jsonPath("$[1].['email']").value(CUST_EMAIL_OTHER))
+					.andExpect(jsonPath("$[1].['pin']").value(standardEmailCustomer().getPin()))
+					.andExpect(jsonPath("$[1].['status']").value(standardEmailCustomer().getStatus()))
 					.andExpect(jsonPath("$[1].['mobilePin']").doesNotExist())
-					.andExpect(jsonPath("$[1].['emailHash']").doesNotExist());
-
+					.andExpect(jsonPath("$[1].['emailHash']").value(standardEmailCustomer().getEmailHash()))
+					.andExpect(jsonPath("$[1].['mobileVerificationAttempts']").value(standardEmailCustomer().getMobileVerificationAttempts()))
+					.andExpect(jsonPath("$[1].['mobilePinSentTime']").doesNotExist())
+					.andExpect(jsonPath("$[1].['emailHashSentTime']").doesNotExist())
+					.andExpect(jsonPath("$[1].['lastStatusChangedTime']").value(standardEmailCustomer().getLastStatusChangedTime().getTime()))
+					.andExpect(jsonPath("$[1].['password']").doesNotExist())
+					.andExpect(jsonPath("$[1].['passwordType']").doesNotExist());
 		
 					
 		
@@ -241,4 +292,6 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(content().string("0"));
 	
 	}
+	
+	
 }

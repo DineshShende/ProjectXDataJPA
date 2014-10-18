@@ -75,7 +75,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 		
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/updateStatusByCustomerId")
+	            post("/customer/quickregister/updateStatusAndMobileVerificationAttempts")
 	                    .content(standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))

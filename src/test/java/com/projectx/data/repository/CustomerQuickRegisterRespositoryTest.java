@@ -69,17 +69,21 @@ public class CustomerQuickRegisterRespositoryTest {
 		assertThat(listOfCustomer, contains(
                 allOf(
                 		//hasProperty("customerId",is(CUST_ID)),
-                        hasProperty("firstName", is(CUST_FIRSTNAME)),
-                        hasProperty("lastName", is(CUST_LASTNAME)),     
-                        hasProperty("email", is(CUST_EMAIL)),
-                        hasProperty("mobile", is(CUST_MOBILE)),
-                        hasProperty("pin", is(CUST_PIN)),
-                        hasProperty("mobilePin", is(CUST_MOBILEPIN)),
-                        hasProperty("emailHash", is(CUST_EMAILHASH)),
-                        hasProperty("status", is(CUST_STATUS_EMAILMOBILE)),
-                        hasProperty("mobileVerificationAttempts",is( CUST_MOBILEPIN_VERIFICATION_ATTEMPTS)),
-                        hasProperty("mobilePinSentTime", is(CUST_MOBILE_PIN_SENT_TIME)),
-                        hasProperty("emailHashSentTime", is(CUST_EMAIL_HASH_SENT_TIME))
+                		hasProperty("firstName", is(standardEmailMobileCustomer().getFirstName())),
+                        hasProperty("lastName", is(standardEmailMobileCustomer().getLastName())),     
+                        hasProperty("email", is(standardEmailMobileCustomer().getEmail()) ),
+                        hasProperty("mobile",is(standardEmailMobileCustomer().getMobile())),
+                        hasProperty("pin", is(standardEmailMobileCustomer().getPin())),
+                        hasProperty("mobilePin", is(standardEmailMobileCustomer().getMobilePin())),
+                        hasProperty("emailHash", is(standardEmailMobileCustomer().getEmailHash())),
+                        hasProperty("status", is(standardEmailMobileCustomer().getStatus())),
+                    	hasProperty("mobileVerificationAttempts",is(standardEmailMobileCustomer().getMobileVerificationAttempts())),
+                        hasProperty("mobilePinSentTime", nullValue()),
+                        hasProperty("emailHashSentTime", nullValue()),
+                        hasProperty("lastStatusChangedTime",is(standardEmailMobileCustomer().getLastStatusChangedTime())),
+                        hasProperty("password", is(standardEmailMobileCustomer().getPassword())),
+                        hasProperty("passwordType",is(standardEmailMobileCustomer().getPasswordType()))
+                        
                 )
         ));
 		
@@ -112,17 +116,20 @@ public class CustomerQuickRegisterRespositoryTest {
       
 		assertThat(listOfCustomer, contains(
                 allOf(
-                        hasProperty("firstName", is(CUST_FIRSTNAME)),
-                        hasProperty("lastName", is(CUST_LASTNAME)),     
-                        hasProperty("email", is(CUST_EMAIL)),
-                        hasProperty("mobile",nullValue() ),
-                        hasProperty("pin", is(CUST_PIN)),
-                        hasProperty("mobilePin",nullValue()),
-                        hasProperty("emailHash",is(CUST_EMAILHASH)),
-                        hasProperty("status", is(CUST_STATUS_EMAIL)),
-                        hasProperty("mobileVerificationAttempts",is( CUST_MOBILEPIN_VERIFICATION_ATTEMPTS)),
-                       // hasProperty("mobilePinSentTime", is(CUST_MOBILE_PIN_SENT_TIME)),
-                        hasProperty("emailHashSentTime", is(CUST_EMAIL_HASH_SENT_TIME))
+                		hasProperty("firstName", is(standardEmailCustomer().getFirstName())),
+                        hasProperty("lastName", is(standardEmailCustomer().getLastName())),     
+                        hasProperty("email", is(standardEmailCustomer().getEmail()) ),
+                        hasProperty("mobile",nullValue()),
+                        hasProperty("pin", is(standardEmailCustomer().getPin())),
+                        hasProperty("mobilePin", nullValue()),
+                        hasProperty("emailHash", is(standardEmailCustomer().getEmailHash())),
+                        hasProperty("status", is(standardEmailCustomer().getStatus())),
+                    	hasProperty("mobileVerificationAttempts",is(standardEmailCustomer().getMobileVerificationAttempts())),
+                        hasProperty("mobilePinSentTime", nullValue()),
+                        hasProperty("emailHashSentTime", nullValue()),
+                        hasProperty("lastStatusChangedTime",is(standardEmailCustomer().getLastStatusChangedTime())),
+                        hasProperty("password", nullValue()),
+                        hasProperty("passwordType",nullValue())
                         
                 )
         ));
@@ -159,18 +166,20 @@ public class CustomerQuickRegisterRespositoryTest {
       
 		assertThat(listOfCustomer, contains(
                 allOf(
-                        hasProperty("firstName", is(CUST_FIRSTNAME)),
-                        hasProperty("lastName", is(CUST_LASTNAME)),     
+                        hasProperty("firstName", is(standardMobileCustomer().getFirstName())),
+                        hasProperty("lastName", is(standardMobileCustomer().getLastName())),     
                         hasProperty("email", nullValue() ),
-                        hasProperty("mobile",is(CUST_MOBILE)),
-                        hasProperty("pin", is(CUST_PIN)),
-                        hasProperty("mobilePin", is(CUST_MOBILEPIN)),
+                        hasProperty("mobile",is(standardMobileCustomer().getMobile())),
+                        hasProperty("pin", is(standardMobileCustomer().getPin())),
+                        hasProperty("mobilePin", is(standardMobileCustomer().getMobilePin())),
                         hasProperty("emailHash", nullValue()),
-                        hasProperty("status", is(CUST_STATUS_MOBILE)),
-                    	hasProperty("mobileVerificationAttempts",is( CUST_MOBILEPIN_VERIFICATION_ATTEMPTS)),
-                        hasProperty("mobilePinSentTime", is(CUST_MOBILE_PIN_SENT_TIME)),
-                      //  hasProperty("emailHashSentTime", is(CUST_EMAIL_HASH_SENT_TIME)),
-                        hasProperty("lastStatusChangedTime",is(CUST_LAST_STATUS_CHANGED_TIME))
+                        hasProperty("status", is(standardMobileCustomer().getStatus())),
+                    	hasProperty("mobileVerificationAttempts",is(standardMobileCustomer().getMobileVerificationAttempts())),
+                        hasProperty("mobilePinSentTime", nullValue()),
+                        hasProperty("emailHashSentTime", nullValue()),
+                        hasProperty("lastStatusChangedTime",is(standardMobileCustomer().getLastStatusChangedTime())),
+                        hasProperty("password", is(standardMobileCustomer().getPassword())),
+                        hasProperty("passwordType",is(standardMobileCustomer().getPasswordType()))
                         
                 )
         ));
@@ -189,18 +198,20 @@ public class CustomerQuickRegisterRespositoryTest {
 		CustomerQuickRegisterEntity customer=customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId());
 		
 		assertEquals(savedCustomer.getCustomerId(),customer.getCustomerId());
-		assertEquals(CUST_FIRSTNAME,customer.getFirstName());
-		assertEquals(CUST_LASTNAME,customer.getLastName());
-		assertEquals(CUST_MOBILE,customer.getMobile());
-		assertEquals(CUST_EMAIL,customer.getEmail());
-		assertEquals(CUST_STATUS_EMAILMOBILE,customer.getStatus());
-		assertEquals(CUST_PIN,customer.getPin());
-		assertEquals(CUST_MOBILEPIN,customer.getMobilePin());
-		assertEquals(CUST_EMAILHASH,customer.getEmailHash());
-		assertEquals(CUST_MOBILEPIN_VERIFICATION_ATTEMPTS, customer.getMobileVerificationAttempts());
-		assertEquals(CUST_MOBILE_PIN_SENT_TIME, customer.getMobilePinSentTime());
-		assertEquals(CUST_EMAIL_HASH_SENT_TIME, customer.getEmailHashSentTime());
-		assertEquals(CUST_LAST_STATUS_CHANGED_TIME, customer.getLastStatusChangedTime());
+		assertEquals(standardEmailMobileCustomer().getFirstName(),customer.getFirstName());
+		assertEquals(standardEmailMobileCustomer().getLastName(),customer.getLastName());
+		assertEquals(standardEmailMobileCustomer().getMobile(),customer.getMobile());
+		assertEquals(standardEmailMobileCustomer().getEmail(),customer.getEmail());
+		assertEquals(standardEmailMobileCustomer().getStatus(),customer.getStatus());
+		assertEquals(standardEmailMobileCustomer().getPin(),customer.getPin());
+		assertEquals(standardEmailMobileCustomer().getMobilePin(),customer.getMobilePin());
+		assertEquals(standardEmailMobileCustomer().getEmailHash(),customer.getEmailHash());
+		assertEquals(standardEmailMobileCustomer().getMobileVerificationAttempts(), customer.getMobileVerificationAttempts());
+		assertEquals(standardEmailMobileCustomer().getMobilePinSentTime(), customer.getMobilePinSentTime());
+		assertEquals(standardEmailMobileCustomer().getEmailHashSentTime(), customer.getEmailHashSentTime());
+		assertEquals(standardEmailMobileCustomer().getLastStatusChangedTime(), customer.getLastStatusChangedTime());
+		assertEquals(standardEmailMobileCustomer().getPassword(), customer.getPassword());
+		assertEquals(standardEmailMobileCustomer().getPasswordType(), customer.getPasswordType());
 		
 		
 	}
@@ -344,7 +355,7 @@ public class CustomerQuickRegisterRespositoryTest {
 	{
 		assertEquals(0, customerQuickRegisterRepository.findAll().size());
 		
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomerWithPassword());
 		
 		assertEquals(CUST_PASSWORD_DEFAULT,savedCustomer.getPassword());
 		

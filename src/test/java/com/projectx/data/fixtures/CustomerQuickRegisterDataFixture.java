@@ -54,45 +54,415 @@ public class CustomerQuickRegisterDataFixture {
 		
 	public static CustomerQuickRegisterEntity standardEmailMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,CUST_MOBILE_PIN_SENT_TIME,CUST_EMAIL_HASH_SENT_TIME,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,null,null);
+		
+	}
+	
+	public static CustomerQuickRegisterEntity standardEmailMobileCustomerWithPassword()
+	{
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,CUST_MOBILE_PIN_SENT_TIME,null,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,null,null);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardEmailCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,CUST_EMAIL_HASH_SENT_TIME,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,null,null);
 		
 	}
 	
 
 	public static String standardJsonEmailMobileCustomer()
 	{
-		return "{\"customerId\":212,\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"email\":\"dineshshe@gmail.com\",\"mobile\":9960821869,\"emailHash\":\"02b99c87926ed36ed1b41afccf9b05f9efd6e54e6e9d116b8ed3a7eaf257b85a\",\"mobilePin\":101010,\"status\":\"EmailMobileVerificationPending\",\"pin\":413133}";
-		//return "{\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"email\":\"dineshshe@gmail.com\",\"mobile\":\"9960821869\",\"pin\":\"413133\",\"status\":\"\"}";
-		        	
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":");
+		jsonBuilder.append(standardEmailMobileCustomer().getCustomerId());
+		jsonBuilder.append(",\"firstName\":\"");
+		jsonBuilder.append(standardEmailMobileCustomer().getFirstName());
+		jsonBuilder.append("\",\"lastName\":\"");
+		
+		jsonBuilder.append(standardEmailMobileCustomer().getLastName());
+		
+		jsonBuilder.append("\",\"email\":");
+		if(standardEmailMobileCustomer().getEmail()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomer().getEmail()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobile\":");
+		
+		jsonBuilder.append(standardEmailMobileCustomer().getMobile());
+		jsonBuilder.append(",\"pin\":");
+		jsonBuilder.append(standardEmailMobileCustomer().getPin());
+		jsonBuilder.append(",\"status\":\"");
+		jsonBuilder.append(standardEmailMobileCustomer().getStatus());
+		jsonBuilder.append("\",\"mobilePin\":");
+		jsonBuilder.append(standardEmailMobileCustomer().getMobilePin());
+		
+		jsonBuilder.append(",\"emailHash\":");
+		if(standardEmailMobileCustomer().getEmailHash()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomer().getEmailHash()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobileVerificationAttempts\":");
+		jsonBuilder.append(standardEmailMobileCustomer().getMobileVerificationAttempts());
+		
+		jsonBuilder.append(",\"mobilePinSentTime\":");
+		if(standardEmailMobileCustomer().getMobilePinSentTime()!=null)
+			jsonBuilder.append(standardEmailMobileCustomer().getMobilePinSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"emailHashSentTime\":");
+		if(standardEmailMobileCustomer().getEmailHashSentTime()!=null)
+			jsonBuilder.append(standardEmailMobileCustomer().getEmailHashSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"lastStatusChangedTime\":");
+		if(standardEmailMobileCustomer().getLastStatusChangedTime()!=null)
+			jsonBuilder.append(standardEmailMobileCustomer().getLastStatusChangedTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"password\":");
+		if(standardEmailMobileCustomer().getPassword()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomer().getPassword()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"passwordType\":");
+		if(standardEmailMobileCustomer().getPasswordType()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomer().getPasswordType()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append("}");
+		
+		System.out.println(jsonBuilder.toString());
+		
+		return jsonBuilder.toString();
+
 	}
+
+	
+	public static String standardJsonEmailMobileCustomerWithPassword()
+	{
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":");
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getCustomerId());
+		jsonBuilder.append(",\"firstName\":\"");
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getFirstName());
+		jsonBuilder.append("\",\"lastName\":\"");
+		
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getLastName());
+		
+		jsonBuilder.append("\",\"email\":");
+		if(standardEmailMobileCustomerWithPassword().getEmail()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getEmail()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobile\":");
+		
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobile());
+		jsonBuilder.append(",\"pin\":");
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getPin());
+		jsonBuilder.append(",\"status\":\"");
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getStatus());
+		jsonBuilder.append("\",\"mobilePin\":");
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobilePin());
+		
+		jsonBuilder.append(",\"emailHash\":");
+		if(standardEmailMobileCustomerWithPassword().getEmailHash()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getEmailHash()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobileVerificationAttempts\":");
+		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobileVerificationAttempts());
+		
+		jsonBuilder.append(",\"mobilePinSentTime\":");
+		if(standardEmailMobileCustomerWithPassword().getMobilePinSentTime()!=null)
+			jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobilePinSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"emailHashSentTime\":");
+		if(standardEmailMobileCustomerWithPassword().getEmailHashSentTime()!=null)
+			jsonBuilder.append(standardEmailMobileCustomerWithPassword().getEmailHashSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"lastStatusChangedTime\":");
+		if(standardEmailMobileCustomerWithPassword().getLastStatusChangedTime()!=null)
+			jsonBuilder.append(standardEmailMobileCustomerWithPassword().getLastStatusChangedTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"password\":");
+		if(standardEmailMobileCustomerWithPassword().getPassword()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getPassword()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"passwordType\":");
+		if(standardEmailMobileCustomerWithPassword().getPasswordType()!=null)
+			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getPasswordType()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append("}");
+		
+		System.out.println(jsonBuilder.toString());
+		
+		return jsonBuilder.toString();
+
+	}
+
 	
 	public static String standardJsonEmailCustomer()
 	{
-		return "{\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"email\":\"dineshshe@gmail.com\",\"pin\":413133}";
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":");
+		jsonBuilder.append(standardEmailCustomer().getCustomerId());
+		jsonBuilder.append(",\"firstName\":\"");
+		jsonBuilder.append(standardEmailCustomer().getFirstName());
+		jsonBuilder.append("\",\"lastName\":\"");
+		
+		jsonBuilder.append(standardEmailCustomer().getLastName());
+		
+		jsonBuilder.append("\",\"email\":");
+		if(standardEmailCustomer().getEmail()!=null)
+			jsonBuilder.append("\""+standardEmailCustomer().getEmail()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobile\":");
+		
+		jsonBuilder.append(standardEmailCustomer().getMobile());
+		jsonBuilder.append(",\"pin\":");
+		jsonBuilder.append(standardEmailCustomer().getPin());
+		jsonBuilder.append(",\"status\":\"");
+		jsonBuilder.append(standardEmailCustomer().getStatus());
+		jsonBuilder.append("\",\"mobilePin\":");
+		jsonBuilder.append(standardEmailCustomer().getMobilePin());
+		
+		jsonBuilder.append(",\"emailHash\":");
+		if(standardEmailCustomer().getEmailHash()!=null)
+			jsonBuilder.append("\""+standardEmailCustomer().getEmailHash()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobileVerificationAttempts\":");
+		jsonBuilder.append(standardEmailCustomer().getMobileVerificationAttempts());
+		
+		jsonBuilder.append(",\"mobilePinSentTime\":");
+		if(standardEmailCustomer().getMobilePinSentTime()!=null)
+			jsonBuilder.append(standardEmailCustomer().getMobilePinSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"emailHashSentTime\":");
+		if(standardEmailCustomer().getEmailHashSentTime()!=null)
+			jsonBuilder.append(standardEmailCustomer().getEmailHashSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"lastStatusChangedTime\":");
+		if(standardEmailCustomer().getLastStatusChangedTime()!=null)
+			jsonBuilder.append(standardEmailCustomer().getLastStatusChangedTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"password\":");
+		if(standardEmailCustomer().getPassword()!=null)
+			jsonBuilder.append("\""+standardEmailCustomer().getPassword()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"passwordType\":");
+		if(standardEmailCustomer().getPasswordType()!=null)
+			jsonBuilder.append("\""+standardEmailCustomer().getPasswordType()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append("}");
+		
+		System.out.println(jsonBuilder.toString());
+		
+		return jsonBuilder.toString();
 	}
-	
+
+	public static String standardJsonMobileCustomer()
+	{
+		StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":");
+		jsonBuilder.append(standardMobileCustomer().getCustomerId());
+		jsonBuilder.append(",\"firstName\":\"");
+		jsonBuilder.append(standardMobileCustomer().getFirstName());
+		jsonBuilder.append("\",\"lastName\":\"");
+		
+		jsonBuilder.append(standardMobileCustomer().getLastName());
+		
+		jsonBuilder.append("\",\"email\":");
+		if(standardMobileCustomer().getEmail()!=null)
+			jsonBuilder.append("\""+standardMobileCustomer().getEmail()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobile\":");
+		
+		jsonBuilder.append(standardMobileCustomer().getMobile());
+		jsonBuilder.append(",\"pin\":");
+		jsonBuilder.append(standardMobileCustomer().getPin());
+		jsonBuilder.append(",\"status\":\"");
+		jsonBuilder.append(standardMobileCustomer().getStatus());
+		jsonBuilder.append("\",\"mobilePin\":");
+		jsonBuilder.append(standardMobileCustomer().getMobilePin());
+		
+		jsonBuilder.append(",\"emailHash\":");
+		if(standardMobileCustomer().getEmailHash()!=null)
+			jsonBuilder.append("\""+standardMobileCustomer().getEmailHash()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobileVerificationAttempts\":");
+		jsonBuilder.append(standardMobileCustomer().getMobileVerificationAttempts());
+		
+		jsonBuilder.append(",\"mobilePinSentTime\":");
+		if(standardMobileCustomer().getMobilePinSentTime()!=null)
+			jsonBuilder.append(standardMobileCustomer().getMobilePinSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"emailHashSentTime\":");
+		if(standardMobileCustomer().getEmailHashSentTime()!=null)
+			jsonBuilder.append(standardMobileCustomer().getEmailHashSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"lastStatusChangedTime\":");
+		if(standardMobileCustomer().getLastStatusChangedTime()!=null)
+			jsonBuilder.append(standardMobileCustomer().getLastStatusChangedTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"password\":");
+		if(standardMobileCustomer().getPassword()!=null)
+			jsonBuilder.append("\""+standardMobileCustomer().getPassword()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"passwordType\":");
+		if(standardMobileCustomer().getPasswordType()!=null)
+			jsonBuilder.append("\""+standardMobileCustomer().getPasswordType()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append("}");
+		
+		System.out.println(jsonBuilder.toString());
+		
+		return jsonBuilder.toString();
+	}
 
 	public static String standardJsonEmailCustomerOther()
 	{
-		return "{\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"email\":\"shendedinesh@gmail.com\",\"pin\":413133}";
+StringBuilder jsonBuilder=new StringBuilder();
+		
+		jsonBuilder.append("{\"customerId\":");
+		jsonBuilder.append(standardEmailCustomer().getCustomerId());
+		jsonBuilder.append(",\"firstName\":\"");
+		jsonBuilder.append(standardEmailCustomer().getFirstName());
+		jsonBuilder.append("\",\"lastName\":\"");
+		
+		jsonBuilder.append(standardEmailCustomer().getLastName());
+		
+		jsonBuilder.append("\",\"email\":");
+		if(standardEmailCustomer().getEmail()!=null)
+			jsonBuilder.append("\""+CUST_EMAIL_OTHER+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobile\":");
+		
+		jsonBuilder.append(standardEmailCustomer().getMobile());
+		jsonBuilder.append(",\"pin\":");
+		jsonBuilder.append(standardEmailCustomer().getPin());
+		jsonBuilder.append(",\"status\":\"");
+		jsonBuilder.append(standardEmailCustomer().getStatus());
+		jsonBuilder.append("\",\"mobilePin\":");
+		jsonBuilder.append(standardEmailCustomer().getMobilePin());
+		
+		jsonBuilder.append(",\"emailHash\":");
+		if(standardEmailCustomer().getEmailHash()!=null)
+			jsonBuilder.append("\""+standardEmailCustomer().getEmailHash()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"mobileVerificationAttempts\":");
+		jsonBuilder.append(standardEmailCustomer().getMobileVerificationAttempts());
+		
+		jsonBuilder.append(",\"mobilePinSentTime\":");
+		if(standardEmailCustomer().getMobilePinSentTime()!=null)
+			jsonBuilder.append(standardEmailCustomer().getMobilePinSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"emailHashSentTime\":");
+		if(standardEmailCustomer().getEmailHashSentTime()!=null)
+			jsonBuilder.append(standardEmailCustomer().getEmailHashSentTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"lastStatusChangedTime\":");
+		if(standardEmailCustomer().getLastStatusChangedTime()!=null)
+			jsonBuilder.append(standardEmailCustomer().getLastStatusChangedTime().getTime());
+		else
+			jsonBuilder.append("null");
+		
+		
+		jsonBuilder.append(",\"password\":");
+		if(standardEmailCustomer().getPassword()!=null)
+			jsonBuilder.append("\""+standardEmailCustomer().getPassword()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append(",\"passwordType\":");
+		if(standardEmailCustomer().getPasswordType()!=null)
+			jsonBuilder.append("\""+standardEmailCustomer().getPasswordType()+"\"");
+		else
+			jsonBuilder.append("null");
+		
+		jsonBuilder.append("}");
+		
+		System.out.println(jsonBuilder.toString());
+		
+		return jsonBuilder.toString();
+
 	}
 	
-	public static String standardJsonMobileCustomer()
-	{
-		return "{\"firstName\":\"dinesh\",\"lastName\":\"shende\",\"mobile\":9960821869,\"pin\":413133}";
-	}
+
 	
 	public static CustomerIdDTO standardCustomerId()
 	{

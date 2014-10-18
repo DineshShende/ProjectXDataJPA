@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
 import com.projectx.data.repository.CustomerQuickRegisterRepository;
@@ -22,6 +23,9 @@ import com.projectx.rest.domain.UpdateMobilePinDTO;
 import com.projectx.rest.domain.UpdatePasswordDTO;
 import com.projectx.rest.domain.UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO;
 
+import static com.projectx.data.fixtures.CustomerQuickRegisterEntityDataFixture.*;
+
+
 
 
 @RestController
@@ -32,9 +36,9 @@ public class CustomerQuickRegisterController {
 	CustomerQuickRegisterRepository customerQuickRegisterRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public CustomerQuickRegisterEntity saveNewCustomer(@RequestBody CustomerQuickRegisterDTO customerDTO)
+	public CustomerQuickRegisterEntity saveNewCustomer(@RequestBody CustomerQuickRegisterEntity customerEntity)
 	{
-		CustomerQuickRegisterEntity customerEntity=customerDTO.toCustomerQuickRegisterEntity();
+		//CustomerQuickRegisterEntity customerEntity=customerDTO.toCustomerQuickRegisterEntity();
 		
 		return customerQuickRegisterRepository.save(customerEntity);
 	}
@@ -67,17 +71,17 @@ public class CustomerQuickRegisterController {
 	{
 		return customerQuickRegisterRepository.countByMobile(mobileDTO.getMobile());
 	}
-	
 
-			
-	@RequestMapping(value="/updateStatusByCustomerId",method=RequestMethod.POST)
-	public Integer updateStatusByCustomerId(@RequestBody UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO updateStatus) throws InterruptedException
+	
+	@RequestMapping(value="/updateStatusAndMobileVerificationAttempts",method=RequestMethod.POST)
+	public Integer updateStatusAndMobileVerificationAttempts(@RequestBody UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO updateStatus) throws InterruptedException
 	{
 		Integer result=customerQuickRegisterRepository.updateStatusAndMobileVerificationAttemptsByCustomerId(updateStatus.getCustomerId(),updateStatus.getStatus(),updateStatus.getStatusChangeTime(),updateStatus.getMobileVerificationAttempts());
 				
 		return result;
 	}
 		
+
 	
 	@RequestMapping(value="/updateMobilePin",method=RequestMethod.POST)
 	public Integer updateMobilePin(@RequestBody UpdateMobilePinDTO updateMobilePin)
@@ -104,14 +108,19 @@ public class CustomerQuickRegisterController {
 		System.out.println(timeDTO);
 		return customerQuickRegisterRepository.updateEmailHashAndMobilePinSentTime(timeDTO.getCustomerId(), timeDTO.getEmailSentTime(), timeDTO.getMobilePinSentTime());
 	}
-	
-	
-//	@RequestMapping(value="/customer")
-//	public CustomerQuickRegisterEntity returnCustomer()
-//	{
-//		
-//		return standardEmailMobileCustomer();
-//	}
+
+	@RequestMapping(value="/customer")
+	public CustomerQuickRegisterEntity returnCustomer()
+	{
+		RestTemplate restTemplate=new RestTemplate();
+		
+		System.out.println("Here");
+		
+		CustomerQuickRegisterEntity savedEntity=restTemplate.postForObject("http://localhost:9090/customer/quickregister", 
+				standardEmailMobileCustomer(), CustomerQuickRegisterEntity.class);
+			
+		return savedEntity;
+	}
 	
 	//***********************Highly Dangerous***************************************/
 	
