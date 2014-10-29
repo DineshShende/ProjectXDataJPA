@@ -38,7 +38,15 @@ public class CustomerQuickRegisterRespositoryTest {
 	//@Autowired
 	//SessionFactory sessionFactory;
 	
-	
+	/*
+	@Test
+	public void addSameCustomerTwice()
+	{
+		customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		customerQuickRegisterRepository.save(standardEmailMobileCustomer());
+	}
+	*/
 	
 	@Test
 	//@Rollback(value=false)

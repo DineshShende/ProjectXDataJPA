@@ -64,8 +64,8 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.mobilePin").value(standardEmailMobileCustomer().getMobilePin()))
 			    .andExpect(jsonPath("$.emailHash").value(standardEmailMobileCustomer().getEmailHash()))
 				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
-				.andExpect(jsonPath("$.mobilePinSentTime").exists())
-				.andExpect(jsonPath("$.emailHashSentTime").exists())
+				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
+				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
 				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
 				.andExpect(jsonPath("$.password").value(standardEmailMobileCustomer().getPassword()))
 				.andExpect(jsonPath("$.passwordType").value(standardEmailMobileCustomer().getPasswordType()));

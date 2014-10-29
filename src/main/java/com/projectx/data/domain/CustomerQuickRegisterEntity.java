@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
 
 @Entity
 public class CustomerQuickRegisterEntity {
@@ -39,7 +40,7 @@ public class CustomerQuickRegisterEntity {
 	@Column(name="EMAILHASH",nullable=true)
 	private String emailHash;
 	
-	//@Max(value=3)
+	@Max(3)
 	@Column(name="MOBILEVERIFICATIONATTEMPTS")
 	private Integer mobileVerificationAttempts;
 	
