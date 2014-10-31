@@ -123,7 +123,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 		
 	}
 
-
+/*
 	@Test
 	public void updatePassword() throws Exception
 	{
@@ -141,7 +141,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 	            .andExpect(content().string("1"));
 		
 	}
-
+*/
 
 	@Test
 	public void updateEmailHashAndMobilePinSentTime() throws Exception

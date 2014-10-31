@@ -1,16 +1,16 @@
 package com.projectx.rest.domain;
 
-public class UpdatePasswordDTO {
+public class UpdatePasswordAndPasswordTypeDTO {
 
 	private Long customerId;
 	private String password;
 	private String passwordType;
 	
-	public UpdatePasswordDTO() {
+	public UpdatePasswordAndPasswordTypeDTO() {
 		
 	}
 
-	public UpdatePasswordDTO(Long customerId, String password,
+	public UpdatePasswordAndPasswordTypeDTO(Long customerId, String password,
 			String passwordType) {
 		super();
 		this.customerId = customerId;

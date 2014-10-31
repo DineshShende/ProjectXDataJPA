@@ -8,19 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.projectx.data.domain.CustomerAuthenticationDetails;
 import com.projectx.data.domain.CustomerQuickRegisterEntity;
+import com.projectx.data.repository.CustomerAuthenticationDetailsRepository;
 import com.projectx.data.repository.CustomerQuickRegisterRepository;
 import com.projectx.rest.domain.CustomerIdDTO;
 import com.projectx.rest.domain.CustomerQuickRegisterDTO;
 import com.projectx.rest.domain.GetByEmailDTO;
 import com.projectx.rest.domain.GetByMobileDTO;
+import com.projectx.rest.domain.LoginVerificationDTO;
 import com.projectx.rest.domain.UpdateEmailHashAndMobilePinSentTimeDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
-import com.projectx.rest.domain.UpdatePasswordDTO;
+import com.projectx.rest.domain.UpdatePasswordAndPasswordTypeDTO;
 import com.projectx.rest.domain.UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO;
 
 import static com.projectx.data.fixtures.CustomerQuickRegisterEntityDataFixture.*;
@@ -34,6 +38,9 @@ public class CustomerQuickRegisterController {
 	
 	@Autowired
 	CustomerQuickRegisterRepository customerQuickRegisterRepository;
+	
+	@Autowired
+	CustomerAuthenticationDetailsRepository customerAuthenticationDetailsRepository;  
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public CustomerQuickRegisterEntity saveNewCustomer(@RequestBody CustomerQuickRegisterEntity customerEntity)
@@ -94,21 +101,60 @@ public class CustomerQuickRegisterController {
 	{
 		return customerQuickRegisterRepository.updateEmailHash(updateEmailHash.getCustomerId(),updateEmailHash.getEmailHash(),updateEmailHash.getUpdateTime());
 	}
-	
+	/*
 	@RequestMapping(value="/updatePassword",method=RequestMethod.POST)
-	public Integer updatePassword(@RequestBody UpdatePasswordDTO updatePassword)
+	public Integer updatePassword(@RequestBody UpdatePasswordAndPasswordTypeDTO updatePassword)
 	{
 		return customerQuickRegisterRepository.updatePassword(updatePassword.getCustomerId(), updatePassword.getPassword(),updatePassword.getPasswordType());
 	}
-
+*/
 	@RequestMapping(value="/updateEmailHashAndMobilePinSentTime",method=RequestMethod.POST)
 	public Integer updateEmailHashAndMobilePinSentTime(@RequestBody UpdateEmailHashAndMobilePinSentTimeDTO timeDTO)
 	{
 		
-		System.out.println(timeDTO);
+		//System.out.println(timeDTO);
 		return customerQuickRegisterRepository.updateEmailHashAndMobilePinSentTime(timeDTO.getCustomerId(), timeDTO.getEmailSentTime(), timeDTO.getMobilePinSentTime());
 	}
 
+	//---------
+	@RequestMapping(value="/saveLoginDetails",method=RequestMethod.POST)
+	public CustomerAuthenticationDetails saveLoginDetails(@RequestBody CustomerAuthenticationDetails customerAuthenticationDetails)
+	{
+		return customerAuthenticationDetailsRepository.save(customerAuthenticationDetails);
+	}
+	
+	@RequestMapping(value="/updatePassword",method=RequestMethod.POST)
+	public Integer updatePassword(@RequestBody UpdatePasswordAndPasswordTypeDTO updatePasswordAndPasswordTypeDTO)
+	{
+		return customerAuthenticationDetailsRepository.updatePasswordAndPasswordType(updatePasswordAndPasswordTypeDTO.getCustomerId(),
+												updatePasswordAndPasswordTypeDTO.getPassword(), updatePasswordAndPasswordTypeDTO.getPasswordType());
+	}
+	
+	@RequestMapping(value="/verifyLoginDetails")
+	public CustomerAuthenticationDetails verifyLoginDetails(@RequestBody LoginVerificationDTO loginVerificationDTO)
+	{
+		CustomerAuthenticationDetails fetchedDetails= customerAuthenticationDetailsRepository.loginVerification(loginVerificationDTO.getEmail(), loginVerificationDTO.getMobile(),
+																				loginVerificationDTO.getPassword());
+		
+		if(fetchedDetails==null)
+			return new CustomerAuthenticationDetails();
+		
+		return fetchedDetails;
+																				
+	}
+	//***********************Highly Dangerous***************************************/
+	
+	@RequestMapping(value="/clearForTesting")
+	public Boolean clearTableForTesting()
+	{
+		 customerQuickRegisterRepository.clearTestData();
+		 
+		 return true;
+	}
+	//***********************Highly Dangerous***************************************/
+	
+	
+/*	
 	@RequestMapping(value="/customer")
 	public CustomerQuickRegisterEntity returnCustomer()
 	{
@@ -122,18 +168,7 @@ public class CustomerQuickRegisterController {
 		return savedEntity;
 	}
 	
-	//***********************Highly Dangerous***************************************/
-	
-	@RequestMapping(value="/clearForTesting")
-	public Boolean clearTableForTesting()
-	{
-		 customerQuickRegisterRepository.clearTestData();
-		 
-		 return true;
-	}
-	//***********************Highly Dangerous***************************************/
-	
-
+*/
 	/*
 	@RequestMapping(value="/getMobileVerificationAttempts",method=RequestMethod.POST)
 	public Integer getMobileVerificationAttempts(@RequestBody CustomerIdDTO customerId)

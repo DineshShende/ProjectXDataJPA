@@ -10,7 +10,7 @@ import com.projectx.rest.domain.GetByMobileDTO;
 import com.projectx.rest.domain.UpdateEmailHashAndMobilePinSentTimeDTO;
 import com.projectx.rest.domain.UpdateEmailHashDTO;
 import com.projectx.rest.domain.UpdateMobilePinDTO;
-import com.projectx.rest.domain.UpdatePasswordDTO;
+import com.projectx.rest.domain.UpdatePasswordAndPasswordTypeDTO;
 import com.projectx.rest.domain.UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO;
 
 
@@ -495,9 +495,9 @@ StringBuilder jsonBuilder=new StringBuilder();
 		return new UpdateMobilePinDTO(CUST_ID,CUST_MOBILEPIN_UPDATED,CUST_MOBILE_PIN_SENT_TIME);
 	}
 
-	public static UpdatePasswordDTO standardUpdatePasswordDTO()
+	public static UpdatePasswordAndPasswordTypeDTO standardUpdatePasswordDTO()
 	{
-		return new UpdatePasswordDTO(CUST_ID, CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED);
+		return new UpdatePasswordAndPasswordTypeDTO(CUST_ID, CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED);
 	}
 	
 	public static UpdateEmailHashAndMobilePinSentTimeDTO standardUpdateEmailHashAndMobilePinSentTimeDTO()

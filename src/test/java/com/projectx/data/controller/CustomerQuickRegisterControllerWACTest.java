@@ -2,6 +2,7 @@ package com.projectx.data.controller;
 
 import static org.junit.Assert.*;
 
+import javax.net.ssl.SSLEngineResult.Status;
 import javax.transaction.Transactional;
 
 import org.junit.Before;
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.*;
+import static com.projectx.data.fixtures.CustomerAuthenticationDetailsDataFixtures.*;
 
 import com.projectx.data.Application;
 
@@ -292,6 +294,228 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(content().string("0"));
 	
 	}
+
 	
+	@Test
+	public void saveVerificationDetailsWithEmailMobileCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+		
+		
+	}
+	
+	@Test
+	public void saveVerificationDetailsWithEmailCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+		
+		
+	}
+
+	
+	@Test
+	public void saveVerificationDetailsWithMobileCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+		
+		
+	}
+	
+	
+	
+	@Test
+	public void verifyLoginDetailsWithEmailMobileCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmail()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+		
+	    
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithMobile()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+		
+	}
+	
+	@Test
+	public void verifyLoginDetailsWithEmailCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmail()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+		
+
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithMobile()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.password").doesNotExist())
+	            .andExpect(jsonPath("$.passwordType").doesNotExist());
+
+	}
+	
+	
+	@Test
+	public void verifyLoginDetailsWithMobileCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithMobile()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerMobileAuthenticationDetails().getPasswordType()));
+		
+
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmail()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.password").doesNotExist())
+	            .andExpect(jsonPath("$.passwordType").doesNotExist());
+
+	}
+	
+	
+	@Test
+	public void updatePasswordWithMobileCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmailNewPassword()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.password").doesNotExist())
+	            .andExpect(jsonPath("$.passwordType").doesNotExist());
+		
+
+		this.mockMvc.perform(
+	            post("/customer/quickregister/updatePassword")
+	                    .content(standardJsonUpdatePasswordAndPasswordType())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	           .andDo(print())
+	           .andExpect(status().isOk())
+			   .andExpect(content().string("1"));
+	                    
+		/*
+		this.mockMvc.perform(
+	            post("/customer/quickregister/verifyLoginDetails")
+	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmailNewPassword()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getPasswordType()));
+		*/
+
+		
+	}	
 	
 }
