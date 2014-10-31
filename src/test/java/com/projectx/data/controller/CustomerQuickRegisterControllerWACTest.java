@@ -501,21 +501,76 @@ public class CustomerQuickRegisterControllerWACTest {
 	           .andExpect(status().isOk())
 			   .andExpect(content().string("1"));
 	                    
-		/*
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmailNewPassword()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getEmail()))
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getMobile()))
-	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetailsWithNewPassword().getPasswordType()));
-		*/
+		
 
 		
 	}	
+	
+	@Test
+	public void loginDetailsCount() throws Exception
+	{
+		this.mockMvc.perform(
+					get("/customer/quickregister/loginDetailsCount")
+				)
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string("0"));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+				get("/customer/quickregister/loginDetailsCount")
+			)
+			.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(content().string("1"));
+	
+	}
+	
+	
+	@Test
+	public void clearLoginDetailsForTesting() throws Exception
+	{
+		this.mockMvc.perform(
+							get("/customer/quickregister/loginDetailsCount")
+							)
+					.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(content().string("0"));
+	
+		this.mockMvc.perform(
+							post("/customer/quickregister/saveLoginDetails")
+                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON));
+	
+			
+		this.mockMvc.perform(
+							get("/customer/quickregister/loginDetailsCount")
+							)
+					.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(content().string("1"));
+	
+		this.mockMvc.perform(
+							get("/customer/quickregister/clearLoginDetailsForTesting")
+							)
+					.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(content().string("true"));
+	
+		
+		this.mockMvc.perform(
+							get("/customer/quickregister/loginDetailsCount")
+							)
+					.andDo(print())
+					.andExpect(status().isOk())
+					.andExpect(content().string("0"));
+
+	}
 	
 }

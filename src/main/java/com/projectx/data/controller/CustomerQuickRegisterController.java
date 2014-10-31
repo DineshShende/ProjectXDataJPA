@@ -133,6 +133,8 @@ public class CustomerQuickRegisterController {
 	@RequestMapping(value="/verifyLoginDetails")
 	public CustomerAuthenticationDetails verifyLoginDetails(@RequestBody LoginVerificationDTO loginVerificationDTO)
 	{
+		//System.out.println(loginVerificationDTO);
+		
 		CustomerAuthenticationDetails fetchedDetails= customerAuthenticationDetailsRepository.loginVerification(loginVerificationDTO.getEmail(), loginVerificationDTO.getMobile(),
 																				loginVerificationDTO.getPassword());
 		
@@ -142,6 +144,12 @@ public class CustomerQuickRegisterController {
 		return fetchedDetails;
 																				
 	}
+	
+	@RequestMapping(value="/loginDetailsCount" )
+	public Integer loginDetailsCount()
+	{
+		return new Integer((int) customerAuthenticationDetailsRepository.count());
+	}
 	//***********************Highly Dangerous***************************************/
 	
 	@RequestMapping(value="/clearForTesting")
@@ -150,6 +158,14 @@ public class CustomerQuickRegisterController {
 		 customerQuickRegisterRepository.clearTestData();
 		 
 		 return true;
+	}
+	
+	@RequestMapping(value="/clearLoginDetailsForTesting")
+	public Boolean clearLoginDetailsForTesting()
+	{
+		customerAuthenticationDetailsRepository.clearTestData();
+		
+		return true;
 	}
 	//***********************Highly Dangerous***************************************/
 	
