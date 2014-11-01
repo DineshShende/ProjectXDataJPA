@@ -35,5 +35,7 @@ public interface CustomerAuthenticationDetailsRepository extends
 	@Query(value="truncate table customer_authentication_details",nativeQuery = true)
 	void clearTestData();
 
+//	CustomerAuthenticationDetails findByCustomerId();
+	
 	
 }

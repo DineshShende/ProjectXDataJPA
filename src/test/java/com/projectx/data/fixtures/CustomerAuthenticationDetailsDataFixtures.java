@@ -124,4 +124,11 @@ public class CustomerAuthenticationDetailsDataFixtures {
 		
 	}
 	
+	public static String standardJsonCustomerIdForLoginDetails(Long customerId) {
+		
+		System.out.println("{\"customerId\":"+customerId+"}");
+		
+		return "{\"customerId\":"+customerId+"}";
+	}
+	
 }

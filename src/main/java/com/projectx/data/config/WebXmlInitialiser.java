@@ -1,4 +1,4 @@
-package com.projectx.data;
+package com.projectx.data.config;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;

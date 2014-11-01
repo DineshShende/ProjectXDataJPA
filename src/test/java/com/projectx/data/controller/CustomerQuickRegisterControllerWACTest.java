@@ -25,14 +25,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.*;
 import static com.projectx.data.fixtures.CustomerAuthenticationDetailsDataFixtures.*;
 
-import com.projectx.data.Application;
+import com.projectx.data.config.Application;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Test")
+@ActiveProfiles(value="Prod")
 public class CustomerQuickRegisterControllerWACTest {
 
 	@Autowired
@@ -571,6 +571,48 @@ public class CustomerQuickRegisterControllerWACTest {
 					.andExpect(status().isOk())
 					.andExpect(content().string("0"));
 
+	}
+	
+	
+	@Test
+	public void getLoginDetailsByCustomerId() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		this.mockMvc.perform(
+					post("/customer/quickregister/getLoginDetailsByCustomerId")
+						.content(standardJsonCustomerIdForLoginDetails(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON))
+		.andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+        .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
+        .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+        .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+
+	
+	}
+
+	@Test
+	public void getLoginDetailsByCustomerIdFailingCase() throws Exception
+	{
+		
+		
+		this.mockMvc.perform(
+					post("/customer/quickregister/getLoginDetailsByCustomerId")
+						.content(standardJsonCustomerIdForLoginDetails(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+						.contentType(MediaType.APPLICATION_JSON)
+						.accept(MediaType.APPLICATION_JSON))
+		.andExpect(jsonPath("$.email").doesNotExist())
+        .andExpect(jsonPath("$.mobile").doesNotExist())
+        .andExpect(jsonPath("$.password").doesNotExist())
+        .andExpect(jsonPath("$.passwordType").doesNotExist());
+
+	
 	}
 	
 }

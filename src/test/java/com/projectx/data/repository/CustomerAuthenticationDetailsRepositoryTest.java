@@ -2,6 +2,8 @@ package com.projectx.data.repository;
 
 import javax.transaction.Transactional;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,7 +15,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.projectx.data.Application;
+import com.projectx.data.config.Application;
 import com.projectx.data.domain.CustomerAuthenticationDetails;
 
 import static com.projectx.data.fixtures.CustomerAuthenticationDetailsDataFixtures.*;
@@ -27,6 +29,19 @@ public class CustomerAuthenticationDetailsRepositoryTest {
 	@Autowired
 	CustomerAuthenticationDetailsRepository customerAuthenticationDetailsRepository;
 	
+	
+	@Before
+	public void clearData()
+	{
+		customerAuthenticationDetailsRepository.clearTestData();
+	}
+	
+	
+	@Test
+	public void environmentTest()
+	{
+		
+	}
 	
 	@Test
 	//@Rollback(value=false)
@@ -97,5 +112,18 @@ public class CustomerAuthenticationDetailsRepositoryTest {
 		
 	}
 	
+
+	@Test
+	public void findByCustomerId()
+	{
+		assertEquals(0,customerAuthenticationDetailsRepository.count());
+		
+		CustomerAuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
+		
+		assertEquals(1,customerAuthenticationDetailsRepository.count());
+		
+		assertEquals(standardCustomerEmailMobileAuthenticationDetails(), customerAuthenticationDetailsRepository.findOne(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()));
+		
+	}
 	
 }

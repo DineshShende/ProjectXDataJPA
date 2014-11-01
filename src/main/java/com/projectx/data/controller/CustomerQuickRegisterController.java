@@ -123,6 +123,17 @@ public class CustomerQuickRegisterController {
 		return customerAuthenticationDetailsRepository.save(customerAuthenticationDetails);
 	}
 	
+	@RequestMapping(value="/getLoginDetailsByCustomerId",method=RequestMethod.POST)
+	public CustomerAuthenticationDetails getLoginDetailsByCustomerId(@RequestBody CustomerIdDTO customerIdDTO)
+	{
+		CustomerAuthenticationDetails fetchedEntity=customerAuthenticationDetailsRepository.findOne(customerIdDTO.getCustomerId());
+		
+		if(fetchedEntity==null)
+			return new CustomerAuthenticationDetails();
+		
+		return fetchedEntity;
+	}
+	
 	@RequestMapping(value="/updatePassword",method=RequestMethod.POST)
 	public Integer updatePassword(@RequestBody UpdatePasswordAndPasswordTypeDTO updatePasswordAndPasswordTypeDTO)
 	{
