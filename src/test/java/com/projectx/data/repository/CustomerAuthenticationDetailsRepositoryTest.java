@@ -42,7 +42,7 @@ public class CustomerAuthenticationDetailsRepositoryTest {
 	{
 		
 	}
-	
+	/*
 	@Test
 	//@Rollback(value=false)
 	public void addNewCustomerDetailsWithEmailMobileCustomer()
@@ -125,5 +125,5 @@ public class CustomerAuthenticationDetailsRepositoryTest {
 		assertEquals(standardCustomerEmailMobileAuthenticationDetails(), customerAuthenticationDetailsRepository.findOne(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()));
 		
 	}
-	
+	*/
 }

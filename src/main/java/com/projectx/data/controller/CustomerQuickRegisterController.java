@@ -29,9 +29,6 @@ import com.projectx.rest.domain.UpdateStatusAndMobileVerificationAttemptsWithCus
 
 import static com.projectx.data.fixtures.CustomerQuickRegisterEntityDataFixture.*;
 
-
-
-
 @RestController
 @RequestMapping(value="/customer/quickregister")
 public class CustomerQuickRegisterController {
