@@ -64,6 +64,34 @@ public class CustomerQuickRegisterController {
 		return fetchedEntity;
 	}
 	
+	@RequestMapping(value="/getCustomerQuickRegisterEntityByEmail",method=RequestMethod.POST)
+	public CustomerQuickRegisterEntity getCustomerQuickRegisterEntityByEmail(@RequestBody GetByEmailDTO getByEmailDTO)
+	{
+		CustomerQuickRegisterEntity fetchedEntity=customerQuickRegisterRepository.findByEmail(getByEmailDTO.getEmail());
+		
+		if(fetchedEntity==null)
+			return new CustomerQuickRegisterEntity();
+		
+		return fetchedEntity;
+	}
+	
+	
+	@RequestMapping(value="/getCustomerQuickRegisterEntityByMobile",method=RequestMethod.POST)
+	public CustomerQuickRegisterEntity getCustomerQuickRegisterEntityByMobile(@RequestBody GetByMobileDTO getByMobileDTO)
+	{
+		CustomerQuickRegisterEntity fetchedEntity=customerQuickRegisterRepository.findByMobile(getByMobileDTO.getMobile());
+		
+		if(fetchedEntity==null)
+			return new CustomerQuickRegisterEntity();
+		
+		return fetchedEntity;
+	}
+	
+	//TODO
+	//@RequestMapping(value="/getLoginDetailsByEmail")
+	//@RequestMapping(value="/getLoginDetailsByMobile")
+	
+	
 	@RequestMapping(value="/getEmailCount",method=RequestMethod.POST)
 	public Integer getEmailCount(@RequestBody GetByEmailDTO emailDTO)
 	{

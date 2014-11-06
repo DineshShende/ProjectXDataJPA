@@ -14,8 +14,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 
 @EnableAutoConfiguration
- @EnableJpaRepositories(basePackages="com.projectx.repository")
-@EntityScan(basePackages="com.projectx.domain")
+@EnableJpaRepositories(basePackages="com.projectx.data.repository")
+@EntityScan(basePackages="com.projectx.data.domain")
 @ComponentScan(basePackages = "com.projectx")
 
 public class Application {

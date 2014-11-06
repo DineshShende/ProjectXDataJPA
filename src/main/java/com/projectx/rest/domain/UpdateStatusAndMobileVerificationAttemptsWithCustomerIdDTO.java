@@ -3,7 +3,7 @@ package com.projectx.rest.domain;
 import java.util.Date;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.projectx.data.utils.JsonDateDeserializer;
+
 
 public class UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO {
 

@@ -22,6 +22,10 @@ public interface CustomerAuthenticationDetailsRepository extends
 	@Override
 	CustomerAuthenticationDetails save(CustomerAuthenticationDetails authenticationDetails);
 	
+	CustomerAuthenticationDetails findByEmail(String email);
+	
+	CustomerAuthenticationDetails findByMobile(Long mobile);
+	
 	@Transactional
 	@Modifying
 	@Query(value="update customer_authentication_details set PASSWORD=:password,PASSWORDTYPE=:passwordType where CUSTOMERID=:customerId",nativeQuery = true)

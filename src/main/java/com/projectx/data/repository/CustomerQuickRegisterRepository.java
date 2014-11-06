@@ -32,6 +32,10 @@ public interface CustomerQuickRegisterRepository extends
 		 
 		 Integer countByMobile(Long mobile);
 
+		 CustomerQuickRegisterEntity findByEmail(String email);
+		 
+		 CustomerQuickRegisterEntity findByMobile(Long mobile);
+		 
 		 
 		 @Transactional
 		 @Modifying

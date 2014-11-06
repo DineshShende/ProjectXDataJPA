@@ -19,6 +19,8 @@ import com.projectx.data.config.Application;
 import com.projectx.data.domain.CustomerAuthenticationDetails;
 
 import static com.projectx.data.fixtures.CustomerAuthenticationDetailsDataFixtures.*;
+import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.*;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
@@ -42,7 +44,7 @@ public class CustomerAuthenticationDetailsRepositoryTest {
 	{
 		
 	}
-	/*
+	
 	@Test
 	//@Rollback(value=false)
 	public void addNewCustomerDetailsWithEmailMobileCustomer()
@@ -125,5 +127,44 @@ public class CustomerAuthenticationDetailsRepositoryTest {
 		assertEquals(standardCustomerEmailMobileAuthenticationDetails(), customerAuthenticationDetailsRepository.findOne(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()));
 		
 	}
-	*/
+
+	@Test
+	public void findByEmailWithEmailMobileCustomer()
+	{
+		assertEquals(0, customerAuthenticationDetailsRepository.count());
+		
+		CustomerAuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
+		
+		assertEquals(savedEntity, customerAuthenticationDetailsRepository.findByEmail(CUST_EMAIL));
+		
+		assertEquals(savedEntity, customerAuthenticationDetailsRepository.findByMobile(CUST_MOBILE));
+		
+	}
+	
+	@Test
+	public void findByEmailWithEmailCustomer()
+	{
+		assertEquals(0, customerAuthenticationDetailsRepository.count());
+		
+		CustomerAuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailAuthenticationDetails());
+		
+		assertEquals(savedEntity, customerAuthenticationDetailsRepository.findByEmail(CUST_EMAIL));
+		
+		assertNull( customerAuthenticationDetailsRepository.findByMobile(CUST_MOBILE));
+		
+	}
+	
+	@Test
+	public void findByEmailWithMobileCustomer()
+	{
+		assertEquals(0, customerAuthenticationDetailsRepository.count());
+		
+		CustomerAuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerMobileAuthenticationDetails());
+		
+		assertNull(customerAuthenticationDetailsRepository.findByEmail(CUST_EMAIL));
+		
+		assertEquals(savedEntity, customerAuthenticationDetailsRepository.findByMobile(CUST_MOBILE));
+		
+	}
+	
 }
