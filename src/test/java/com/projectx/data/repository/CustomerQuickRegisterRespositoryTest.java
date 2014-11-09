@@ -91,9 +91,7 @@ public class CustomerQuickRegisterRespositoryTest {
                     	hasProperty("mobileVerificationAttempts",is(standardEmailMobileCustomer().getMobileVerificationAttempts())),
                         hasProperty("mobilePinSentTime", nullValue()),
                         hasProperty("emailHashSentTime", nullValue()),
-                        hasProperty("lastStatusChangedTime",is(standardEmailMobileCustomer().getLastStatusChangedTime())),
-                        hasProperty("password", is(standardEmailMobileCustomer().getPassword())),
-                        hasProperty("passwordType",is(standardEmailMobileCustomer().getPasswordType()))
+                        hasProperty("lastStatusChangedTime",is(standardEmailMobileCustomer().getLastStatusChangedTime()))
                         
                 )
         ));
@@ -138,9 +136,7 @@ public class CustomerQuickRegisterRespositoryTest {
                     	hasProperty("mobileVerificationAttempts",is(standardEmailCustomer().getMobileVerificationAttempts())),
                         hasProperty("mobilePinSentTime", nullValue()),
                         hasProperty("emailHashSentTime", nullValue()),
-                        hasProperty("lastStatusChangedTime",is(standardEmailCustomer().getLastStatusChangedTime())),
-                        hasProperty("password", nullValue()),
-                        hasProperty("passwordType",nullValue())
+                        hasProperty("lastStatusChangedTime",is(standardEmailCustomer().getLastStatusChangedTime()))
                         
                 )
         ));
@@ -188,9 +184,7 @@ public class CustomerQuickRegisterRespositoryTest {
                     	hasProperty("mobileVerificationAttempts",is(standardMobileCustomer().getMobileVerificationAttempts())),
                         hasProperty("mobilePinSentTime", nullValue()),
                         hasProperty("emailHashSentTime", nullValue()),
-                        hasProperty("lastStatusChangedTime",is(standardMobileCustomer().getLastStatusChangedTime())),
-                        hasProperty("password", is(standardMobileCustomer().getPassword())),
-                        hasProperty("passwordType",is(standardMobileCustomer().getPasswordType()))
+                        hasProperty("lastStatusChangedTime",is(standardMobileCustomer().getLastStatusChangedTime()))
                         
                 )
         ));
@@ -221,8 +215,6 @@ public class CustomerQuickRegisterRespositoryTest {
 		assertEquals(standardEmailMobileCustomer().getMobilePinSentTime(), customer.getMobilePinSentTime());
 		assertEquals(standardEmailMobileCustomer().getEmailHashSentTime(), customer.getEmailHashSentTime());
 		assertEquals(standardEmailMobileCustomer().getLastStatusChangedTime(), customer.getLastStatusChangedTime());
-		assertEquals(standardEmailMobileCustomer().getPassword(), customer.getPassword());
-		assertEquals(standardEmailMobileCustomer().getPasswordType(), customer.getPasswordType());
 		
 		
 	}
@@ -358,25 +350,7 @@ public class CustomerQuickRegisterRespositoryTest {
 		
 	}
 	
-	
-	
-	@Test
-	//@Rollback(value=false)
-	public void updatePasswordWithEmailMobileCustomer()
-	{
-		assertEquals(0, customerQuickRegisterRepository.findAll().size());
 		
-		CustomerQuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomerWithPassword());
-		
-		assertEquals(CUST_PASSWORD_DEFAULT,savedCustomer.getPassword());
-		
-		assertEquals(1, customerQuickRegisterRepository.updatePassword(savedCustomer.getCustomerId(), CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED).intValue());
-		
-		
-		
-	}
-	
-	
 	@Test
 	//@Rollback(value=false)
 	public void updateEmailHashAndMobileSentTime()

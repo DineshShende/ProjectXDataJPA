@@ -50,7 +50,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getEntityByCustomerId")
-	                    .content(standardJsonCustomerId())
+	                    .content(standardJsonCustomerId(CUST_ID))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -76,7 +76,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/updateStatusAndMobileVerificationAttempts")
-	                    .content(standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO())
+	                    .content(standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO(standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -95,7 +95,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister/updateEmailHash")
-	                    .content(standardJsonUpdateEmailHashDTO())
+	                    .content(standardJsonUpdateEmailHashDTO(standardUpdateEmailHashDTO()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -114,7 +114,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister/updateMobilePin")
-	                    .content(standardJsonUpdateMobilePinDTO())
+	                    .content(standardJsonUpdateMobilePinDTO(standardUpdateMobilePinDTO()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -123,25 +123,6 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 		
 	}
 
-/*
-	@Test
-	public void updatePassword() throws Exception
-	{
-		when(customerQuickRegisterRepository.updatePassword(standardUpdatePasswordDTO().getCustomerId(),
-				standardUpdatePasswordDTO().getPassword(),standardUpdatePasswordDTO().getPasswordType())).thenReturn(1);
-		
-
-		this.mockMvc.perform(
-	            post("/customer/quickregister/updatePassword")
-	                    .content(standardJsonUpdatePasswordDTO())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-	}
-*/
 
 	@Test
 	public void updateEmailHashAndMobilePinSentTime() throws Exception
@@ -152,7 +133,7 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister/updateEmailHashAndMobilePinSentTime")
-	                    .content(standardJsonUpdateEmailHashAndMobilePinSentTimeDTO())
+	                    .content(standardJsonUpdateEmailHashAndMobilePinSentTimeDTO(standardUpdateEmailHashAndMobilePinSentTimeDTO()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -163,60 +144,5 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 
 
 	
-	
-	/*
-	@Test
-	public void verifyEmailHash() throws Exception
-	{
-		when(customerQuickRegisterRepository.countByCustomerIdAndEmailHash(standardVerifyEmailHashDTO().getCustomerId(),
-																					standardVerifyEmailHashDTO().getEmailHash()))
-																						.thenReturn(1);
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyEmailHash")
-	                    .content(standardJsonVerifyEmailDTO())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-	}
 
-
-	@Test
-	public void verifyMobilePin() throws Exception
-	{
-		when(customerQuickRegisterRepository.countByCustomerIdAndMobilePin(standardVerifyMobilePinDTO().getCustomerId(),
-																					standardVerifyMobilePinDTO().getMobilePin()))
-																						.thenReturn(1);
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyMobilePin")
-	                    .content(standardJsonVerifyMobileDTO())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-	}
-
-	@Test
-	public void getStatusByCustomerId() throws Exception
-	{
-		when(customerQuickRegisterRepository.fetchStatusByCustomerId(CUST_ID)).thenReturn(CUST_STATUS_EMAILMOBILE);
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/getStatusByCustomerId")
-	                    .content(standardJsonCustomerId())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string(CUST_STATUS_EMAILMOBILE));
-		
-		
-		
-	}
-	*/
-	
 }

@@ -53,12 +53,6 @@ public class CustomerQuickRegisterEntity {
 	@Column(name="LASTSTATUSCHANGETIME")
 	private Date lastStatusChangedTime;
 	
-	@Column(name="PASSWORD")
-	private String password;
-	
-	@Column(name="PASSWORDTYPE")
-	private String passwordType;
-	
 	
 	public CustomerQuickRegisterEntity()
 	{
@@ -69,7 +63,7 @@ public class CustomerQuickRegisterEntity {
 			String lastName, String email, Long mobile, Integer pin,
 			String status, Integer mobilePin, String emailHash,
 			Integer mobileVerificationAttempts, Date mobilePinSentTime,
-			Date emailHashSentTime, Date lastStatusChangedTime, String password,String passwordType) {
+			Date emailHashSentTime, Date lastStatusChangedTime) {
 		super();
 		this.customerId = customerId;
 		this.firstName = firstName;
@@ -84,8 +78,7 @@ public class CustomerQuickRegisterEntity {
 		this.mobilePinSentTime = mobilePinSentTime;
 		this.emailHashSentTime = emailHashSentTime;
 		this.lastStatusChangedTime = lastStatusChangedTime;
-		this.password = password;
-		this.passwordType=passwordType;
+		
 	}
 
 	public Long getCustomerId() {
@@ -184,13 +177,6 @@ public class CustomerQuickRegisterEntity {
 		this.lastStatusChangedTime = lastStatusChangedTime;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	public String getStatus() {
 		return status;
@@ -199,19 +185,6 @@ public class CustomerQuickRegisterEntity {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public String getPasswordType() {
-		return passwordType;
-	}
-
-	public void setPasswordType(String passwordType) {
-		this.passwordType = passwordType;
-	}
-
-
-	
-	
-	
 
 	/*
 	//@JsonSerialize(using=JsonDateSerializer.class)

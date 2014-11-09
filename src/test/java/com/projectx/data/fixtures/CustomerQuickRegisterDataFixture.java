@@ -54,98 +54,92 @@ public class CustomerQuickRegisterDataFixture {
 		
 	public static CustomerQuickRegisterEntity standardEmailMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,null,null);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardEmailMobileCustomerWithPassword()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,CUST_PASSWORD_DEFAULT,CUST_PASSWORD_TYPE_DEFAULT);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,null,null);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardEmailCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME,null,null);
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME);
+		
+	}
+	
+	public static CustomerQuickRegisterEntity standardEmailCustomerOther()
+	{
+		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL_OTHER,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME);
 		
 	}
 	
 
-	public static String standardJsonEmailMobileCustomer()
+	public static String standardJsonQuickRegisterCustomer(CustomerQuickRegisterEntity customer)
 	{
 		StringBuilder jsonBuilder=new StringBuilder();
 		
 		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(standardEmailMobileCustomer().getCustomerId());
+		jsonBuilder.append(customer.getCustomerId());
 		jsonBuilder.append(",\"firstName\":\"");
-		jsonBuilder.append(standardEmailMobileCustomer().getFirstName());
+		jsonBuilder.append(customer.getFirstName());
 		jsonBuilder.append("\",\"lastName\":\"");
 		
-		jsonBuilder.append(standardEmailMobileCustomer().getLastName());
+		jsonBuilder.append(customer.getLastName());
 		
 		jsonBuilder.append("\",\"email\":");
-		if(standardEmailMobileCustomer().getEmail()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomer().getEmail()+"\"");
+		if(customer.getEmail()!=null)
+			jsonBuilder.append("\""+customer.getEmail()+"\"");
 		else
 			jsonBuilder.append("null");
 		
 		jsonBuilder.append(",\"mobile\":");
 		
-		jsonBuilder.append(standardEmailMobileCustomer().getMobile());
+		jsonBuilder.append(customer.getMobile());
 		jsonBuilder.append(",\"pin\":");
-		jsonBuilder.append(standardEmailMobileCustomer().getPin());
+		jsonBuilder.append(customer.getPin());
 		jsonBuilder.append(",\"status\":\"");
-		jsonBuilder.append(standardEmailMobileCustomer().getStatus());
+		jsonBuilder.append(customer.getStatus());
 		jsonBuilder.append("\",\"mobilePin\":");
-		jsonBuilder.append(standardEmailMobileCustomer().getMobilePin());
+		jsonBuilder.append(customer.getMobilePin());
 		
 		jsonBuilder.append(",\"emailHash\":");
-		if(standardEmailMobileCustomer().getEmailHash()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomer().getEmailHash()+"\"");
+		if(customer.getEmailHash()!=null)
+			jsonBuilder.append("\""+customer.getEmailHash()+"\"");
 		else
 			jsonBuilder.append("null");
 		
 		jsonBuilder.append(",\"mobileVerificationAttempts\":");
-		jsonBuilder.append(standardEmailMobileCustomer().getMobileVerificationAttempts());
+		jsonBuilder.append(customer.getMobileVerificationAttempts());
 		
 		jsonBuilder.append(",\"mobilePinSentTime\":");
-		if(standardEmailMobileCustomer().getMobilePinSentTime()!=null)
-			jsonBuilder.append(standardEmailMobileCustomer().getMobilePinSentTime().getTime());
+		if(customer.getMobilePinSentTime()!=null)
+			jsonBuilder.append(customer.getMobilePinSentTime().getTime());
 		else
 			jsonBuilder.append("null");
 		
 		jsonBuilder.append(",\"emailHashSentTime\":");
-		if(standardEmailMobileCustomer().getEmailHashSentTime()!=null)
-			jsonBuilder.append(standardEmailMobileCustomer().getEmailHashSentTime().getTime());
+		if(customer.getEmailHashSentTime()!=null)
+			jsonBuilder.append(customer.getEmailHashSentTime().getTime());
 		else
 			jsonBuilder.append("null");
 		
 		
 		jsonBuilder.append(",\"lastStatusChangedTime\":");
-		if(standardEmailMobileCustomer().getLastStatusChangedTime()!=null)
-			jsonBuilder.append(standardEmailMobileCustomer().getLastStatusChangedTime().getTime());
+		if(customer.getLastStatusChangedTime()!=null)
+			jsonBuilder.append(customer.getLastStatusChangedTime().getTime());
 		else
 			jsonBuilder.append("null");
 		
-		
-		jsonBuilder.append(",\"password\":");
-		if(standardEmailMobileCustomer().getPassword()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomer().getPassword()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"passwordType\":");
-		if(standardEmailMobileCustomer().getPasswordType()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomer().getPasswordType()+"\"");
-		else
-			jsonBuilder.append("null");
-		
+				
 		jsonBuilder.append("}");
 		
 		System.out.println(jsonBuilder.toString());
@@ -153,315 +147,6 @@ public class CustomerQuickRegisterDataFixture {
 		return jsonBuilder.toString();
 
 	}
-
-	
-	public static String standardJsonEmailMobileCustomerWithPassword()
-	{
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getCustomerId());
-		jsonBuilder.append(",\"firstName\":\"");
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getFirstName());
-		jsonBuilder.append("\",\"lastName\":\"");
-		
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getLastName());
-		
-		jsonBuilder.append("\",\"email\":");
-		if(standardEmailMobileCustomerWithPassword().getEmail()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getEmail()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobile\":");
-		
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobile());
-		jsonBuilder.append(",\"pin\":");
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getPin());
-		jsonBuilder.append(",\"status\":\"");
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getStatus());
-		jsonBuilder.append("\",\"mobilePin\":");
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobilePin());
-		
-		jsonBuilder.append(",\"emailHash\":");
-		if(standardEmailMobileCustomerWithPassword().getEmailHash()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getEmailHash()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobileVerificationAttempts\":");
-		jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobileVerificationAttempts());
-		
-		jsonBuilder.append(",\"mobilePinSentTime\":");
-		if(standardEmailMobileCustomerWithPassword().getMobilePinSentTime()!=null)
-			jsonBuilder.append(standardEmailMobileCustomerWithPassword().getMobilePinSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"emailHashSentTime\":");
-		if(standardEmailMobileCustomerWithPassword().getEmailHashSentTime()!=null)
-			jsonBuilder.append(standardEmailMobileCustomerWithPassword().getEmailHashSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"lastStatusChangedTime\":");
-		if(standardEmailMobileCustomerWithPassword().getLastStatusChangedTime()!=null)
-			jsonBuilder.append(standardEmailMobileCustomerWithPassword().getLastStatusChangedTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"password\":");
-		if(standardEmailMobileCustomerWithPassword().getPassword()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getPassword()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"passwordType\":");
-		if(standardEmailMobileCustomerWithPassword().getPasswordType()!=null)
-			jsonBuilder.append("\""+standardEmailMobileCustomerWithPassword().getPasswordType()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append("}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-
-	}
-
-	
-	public static String standardJsonEmailCustomer()
-	{
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(standardEmailCustomer().getCustomerId());
-		jsonBuilder.append(",\"firstName\":\"");
-		jsonBuilder.append(standardEmailCustomer().getFirstName());
-		jsonBuilder.append("\",\"lastName\":\"");
-		
-		jsonBuilder.append(standardEmailCustomer().getLastName());
-		
-		jsonBuilder.append("\",\"email\":");
-		if(standardEmailCustomer().getEmail()!=null)
-			jsonBuilder.append("\""+standardEmailCustomer().getEmail()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobile\":");
-		
-		jsonBuilder.append(standardEmailCustomer().getMobile());
-		jsonBuilder.append(",\"pin\":");
-		jsonBuilder.append(standardEmailCustomer().getPin());
-		jsonBuilder.append(",\"status\":\"");
-		jsonBuilder.append(standardEmailCustomer().getStatus());
-		jsonBuilder.append("\",\"mobilePin\":");
-		jsonBuilder.append(standardEmailCustomer().getMobilePin());
-		
-		jsonBuilder.append(",\"emailHash\":");
-		if(standardEmailCustomer().getEmailHash()!=null)
-			jsonBuilder.append("\""+standardEmailCustomer().getEmailHash()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobileVerificationAttempts\":");
-		jsonBuilder.append(standardEmailCustomer().getMobileVerificationAttempts());
-		
-		jsonBuilder.append(",\"mobilePinSentTime\":");
-		if(standardEmailCustomer().getMobilePinSentTime()!=null)
-			jsonBuilder.append(standardEmailCustomer().getMobilePinSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"emailHashSentTime\":");
-		if(standardEmailCustomer().getEmailHashSentTime()!=null)
-			jsonBuilder.append(standardEmailCustomer().getEmailHashSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"lastStatusChangedTime\":");
-		if(standardEmailCustomer().getLastStatusChangedTime()!=null)
-			jsonBuilder.append(standardEmailCustomer().getLastStatusChangedTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"password\":");
-		if(standardEmailCustomer().getPassword()!=null)
-			jsonBuilder.append("\""+standardEmailCustomer().getPassword()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"passwordType\":");
-		if(standardEmailCustomer().getPasswordType()!=null)
-			jsonBuilder.append("\""+standardEmailCustomer().getPasswordType()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append("}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-	}
-
-	public static String standardJsonMobileCustomer()
-	{
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(standardMobileCustomer().getCustomerId());
-		jsonBuilder.append(",\"firstName\":\"");
-		jsonBuilder.append(standardMobileCustomer().getFirstName());
-		jsonBuilder.append("\",\"lastName\":\"");
-		
-		jsonBuilder.append(standardMobileCustomer().getLastName());
-		
-		jsonBuilder.append("\",\"email\":");
-		if(standardMobileCustomer().getEmail()!=null)
-			jsonBuilder.append("\""+standardMobileCustomer().getEmail()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobile\":");
-		
-		jsonBuilder.append(standardMobileCustomer().getMobile());
-		jsonBuilder.append(",\"pin\":");
-		jsonBuilder.append(standardMobileCustomer().getPin());
-		jsonBuilder.append(",\"status\":\"");
-		jsonBuilder.append(standardMobileCustomer().getStatus());
-		jsonBuilder.append("\",\"mobilePin\":");
-		jsonBuilder.append(standardMobileCustomer().getMobilePin());
-		
-		jsonBuilder.append(",\"emailHash\":");
-		if(standardMobileCustomer().getEmailHash()!=null)
-			jsonBuilder.append("\""+standardMobileCustomer().getEmailHash()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobileVerificationAttempts\":");
-		jsonBuilder.append(standardMobileCustomer().getMobileVerificationAttempts());
-		
-		jsonBuilder.append(",\"mobilePinSentTime\":");
-		if(standardMobileCustomer().getMobilePinSentTime()!=null)
-			jsonBuilder.append(standardMobileCustomer().getMobilePinSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"emailHashSentTime\":");
-		if(standardMobileCustomer().getEmailHashSentTime()!=null)
-			jsonBuilder.append(standardMobileCustomer().getEmailHashSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"lastStatusChangedTime\":");
-		if(standardMobileCustomer().getLastStatusChangedTime()!=null)
-			jsonBuilder.append(standardMobileCustomer().getLastStatusChangedTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"password\":");
-		if(standardMobileCustomer().getPassword()!=null)
-			jsonBuilder.append("\""+standardMobileCustomer().getPassword()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"passwordType\":");
-		if(standardMobileCustomer().getPasswordType()!=null)
-			jsonBuilder.append("\""+standardMobileCustomer().getPasswordType()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append("}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-	}
-
-	public static String standardJsonEmailCustomerOther()
-	{
-StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(standardEmailCustomer().getCustomerId());
-		jsonBuilder.append(",\"firstName\":\"");
-		jsonBuilder.append(standardEmailCustomer().getFirstName());
-		jsonBuilder.append("\",\"lastName\":\"");
-		
-		jsonBuilder.append(standardEmailCustomer().getLastName());
-		
-		jsonBuilder.append("\",\"email\":");
-		if(standardEmailCustomer().getEmail()!=null)
-			jsonBuilder.append("\""+CUST_EMAIL_OTHER+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobile\":");
-		
-		jsonBuilder.append(standardEmailCustomer().getMobile());
-		jsonBuilder.append(",\"pin\":");
-		jsonBuilder.append(standardEmailCustomer().getPin());
-		jsonBuilder.append(",\"status\":\"");
-		jsonBuilder.append(standardEmailCustomer().getStatus());
-		jsonBuilder.append("\",\"mobilePin\":");
-		jsonBuilder.append(standardEmailCustomer().getMobilePin());
-		
-		jsonBuilder.append(",\"emailHash\":");
-		if(standardEmailCustomer().getEmailHash()!=null)
-			jsonBuilder.append("\""+standardEmailCustomer().getEmailHash()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobileVerificationAttempts\":");
-		jsonBuilder.append(standardEmailCustomer().getMobileVerificationAttempts());
-		
-		jsonBuilder.append(",\"mobilePinSentTime\":");
-		if(standardEmailCustomer().getMobilePinSentTime()!=null)
-			jsonBuilder.append(standardEmailCustomer().getMobilePinSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"emailHashSentTime\":");
-		if(standardEmailCustomer().getEmailHashSentTime()!=null)
-			jsonBuilder.append(standardEmailCustomer().getEmailHashSentTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"lastStatusChangedTime\":");
-		if(standardEmailCustomer().getLastStatusChangedTime()!=null)
-			jsonBuilder.append(standardEmailCustomer().getLastStatusChangedTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"password\":");
-		if(standardEmailCustomer().getPassword()!=null)
-			jsonBuilder.append("\""+standardEmailCustomer().getPassword()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"passwordType\":");
-		if(standardEmailCustomer().getPasswordType()!=null)
-			jsonBuilder.append("\""+standardEmailCustomer().getPasswordType()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append("}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-
-	}
-	
 
 	
 	public static CustomerIdDTO standardCustomerId()
@@ -490,6 +175,8 @@ StringBuilder jsonBuilder=new StringBuilder();
 		return new UpdateEmailHashDTO(CUST_ID,CUST_EMAILHASH_UPDATED,CUST_EMAIL_HASH_SENT_TIME);
 	}
 	
+	
+	
 	public static UpdateMobilePinDTO standardUpdateMobilePinDTO()
 	{
 		return new UpdateMobilePinDTO(CUST_ID,CUST_MOBILEPIN_UPDATED,CUST_MOBILE_PIN_SENT_TIME);
@@ -505,43 +192,43 @@ StringBuilder jsonBuilder=new StringBuilder();
 		return new UpdateEmailHashAndMobilePinSentTimeDTO(CUST_ID, CUST_EMAIL_HASH_SENT_TIME, CUST_MOBILE_PIN_SENT_TIME);
 	}
 
-	public static String standardJsonCustomerId()
+	public static String standardJsonCustomerId(Long customerId)
 	{
-		return "{\"customerId\":212}";
+		return "{\"customerId\":"+customerId+"}";
 	}
 	
-	public static String standardJsonEmailDTO()
+	public static String standardJsonEmailDTO(String email)
 	{
-		return "{\"email\":\"dineshshe@gmail.com\"}";
+		return "{\"email\":\""+email+"\"}";
 	}
 	
-	public static String standardJsonMobileDTO()
+	public static String standardJsonMobileDTO(Long mobile)
 	{
-		return "{\"mobile\":9960821869}";
+		return "{\"mobile\":"+mobile+"}";
 	}
 	
-	public static String standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO()
+	public static String standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO(UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO dto)
 	{
 		//String formattedDate = dateFormat.format(standardUpdateStatusWithCustomerId().getStatusChangeTime());
 		
 		StringBuilder jsonBuilder=new StringBuilder();
 		
-		jsonBuilder.append("{\"customerId\":212,\"status\":\"EmailMobileVerified\",\"statusChangeTime\":\"");
-		jsonBuilder.append(standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId().getStatusChangeTime().getTime());
+		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"status\":\""+dto.getStatus()+"\",\"statusChangeTime\":\"");
+		jsonBuilder.append(dto.getStatusChangeTime().getTime());
 		jsonBuilder.append("\",\"mobileVerificationAttempts\":0}");
 		
 		return jsonBuilder.toString();
 	}
 	
 	
-	public static String standardJsonUpdateMobilePinDTO()
+	public static String standardJsonUpdateMobilePinDTO(UpdateMobilePinDTO dto)
 	{
 		StringBuilder jsonBuilder=new StringBuilder();
 		
-		jsonBuilder.append("{\"customerId\":212,\"mobilePin\":");
-		jsonBuilder.append(CUST_MOBILEPIN_UPDATED);
+		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"mobilePin\":");
+		jsonBuilder.append(dto.getMobilePin());
 		jsonBuilder.append(",\"updateTime\":\"");
-		jsonBuilder.append(standardUpdateMobilePinDTO().getUpdateTime().getTime());
+		jsonBuilder.append(dto.getUpdateTime().getTime());
 		jsonBuilder.append("\"}");
 		
 		System.out.println(jsonBuilder.toString());
@@ -549,28 +236,28 @@ StringBuilder jsonBuilder=new StringBuilder();
 		return jsonBuilder.toString();
 	}
 	
-	public static String standardJsonUpdateEmailHashDTO()
+	public static String standardJsonUpdateEmailHashDTO(UpdateEmailHashDTO dto)
 	{
 		StringBuilder jsonBuilder=new StringBuilder();
 		
-		jsonBuilder.append("{\"customerId\":212,\"emailHash\":\"");
-		jsonBuilder.append(CUST_EMAILHASH_UPDATED);
+		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"emailHash\":\"");
+		jsonBuilder.append(dto.getEmailHash());
 		jsonBuilder.append("\",\"updateTime\":\"");
-		jsonBuilder.append(standardUpdateEmailHashDTO().getUpdateTime().getTime());
+		jsonBuilder.append(dto.getUpdateTime().getTime());
 		jsonBuilder.append("\"}");
 				
 		return jsonBuilder.toString();
 		
 	}
 	
-	public static String standardJsonUpdatePasswordDTO()
+	public static String standardJsonUpdatePasswordDTO(UpdatePasswordAndPasswordTypeDTO dto)
 	{
 		StringBuilder jsonBuilder=new StringBuilder();
 		
-		jsonBuilder.append("{\"customerId\":212,\"password\":\"");
-		jsonBuilder.append(CUST_PASSWORD_CHANGED);
+		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"password\":\"");
+		jsonBuilder.append(dto.getPassword());
 		jsonBuilder.append("\",\"passwordType\":\"");
-		jsonBuilder.append(CUST_PASSWORD_TYPE_CHANGED);
+		jsonBuilder.append(dto.getPasswordType());
 		jsonBuilder.append("\"}");
 		
 		System.out.println(jsonBuilder.toString());
@@ -578,16 +265,16 @@ StringBuilder jsonBuilder=new StringBuilder();
 		return jsonBuilder.toString();
 	}
 	
-	public static String standardJsonUpdateEmailHashAndMobilePinSentTimeDTO()
+	public static String standardJsonUpdateEmailHashAndMobilePinSentTimeDTO(UpdateEmailHashAndMobilePinSentTimeDTO dto)
 	{
 		StringBuilder jsonBuilder=new StringBuilder();
 		
 		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(CUST_ID);
+		jsonBuilder.append(dto.getCustomerId());
 		jsonBuilder.append(",\"emailSentTime\":\"");
-		jsonBuilder.append(standardUpdateEmailHashAndMobilePinSentTimeDTO().getEmailSentTime().getTime());
+		jsonBuilder.append(dto.getEmailSentTime().getTime());
 		jsonBuilder.append("\",\"mobilePinSentTime\":\"");
-		jsonBuilder.append(standardUpdateEmailHashAndMobilePinSentTimeDTO().getMobilePinSentTime().getTime());
+		jsonBuilder.append(dto.getMobilePinSentTime().getTime());
 		jsonBuilder.append("\"}");
 		
 		System.out.println(jsonBuilder.toString());
@@ -595,29 +282,5 @@ StringBuilder jsonBuilder=new StringBuilder();
 		return jsonBuilder.toString();
 	}
 	
-	/*
-	public static String standardJsonVerifyMobileDTO()
-	{
-		return "{\"customerId\":212,\"mobilePin\":101010}";
-		       
-	}
 	
-	public static String standardJsonVerifyEmailDTO()
-	{
-		return "{\"customerId\":212,\"emailHash\":\"02b99c87926ed36ed1b41afccf9b05f9efd6e54e6e9d116b8ed3a7eaf257b85a\"}";
-		       
-	}
-*/
-	
-	/*
-	public static VerifyMobileDTO standardVerifyMobilePinDTO()
-	{
-		return new VerifyMobileDTO(CUST_ID, CUST_MOBILEPIN);
-	}
-	
-	public static VerifyEmailDTO standardVerifyEmailHashDTO()
-	{
-		return new VerifyEmailDTO(CUST_ID,CUST_EMAILHASH);
-	}
-	*/
 }

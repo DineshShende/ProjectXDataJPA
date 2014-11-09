@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,10 +20,11 @@ import com.projectx.data.domain.CustomerDocumet;
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
 @ActiveProfiles("Prod")
-@Transactional
+
 public class CustomerDocumentRepositoryTest {
 
-	@CustomerDocumentRepositoty 
+	@Autowired
+	CustomerDocumetRepository customerDocumentRepository;
 	
 	@Test
 	public void test() {
@@ -50,6 +52,14 @@ public class CustomerDocumentRepositoryTest {
 	        }
 
 		doc.setImage(bFile);
+		
+		assertEquals(0, customerDocumentRepository.count());
+		
+		customerDocumentRepository.save(doc);
+		
+		assertEquals(1, customerDocumentRepository.count());
+		
+		CustomerDocumet fetched=customerDocumentRepository.findOne(2L);
 		
 		
 		

@@ -41,9 +41,10 @@ public class CustomerQuickRegisterControllerWACTest {
 	MockMvc mockMvc;
 	
 	@Before
-	public void setUp()
+	public void setUp() throws Exception
 	{
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
+	
 	}
 	
 
@@ -52,7 +53,7 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailMobileCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -68,10 +69,8 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
 				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
 				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
-				.andExpect(jsonPath("$.password").value(standardEmailMobileCustomer().getPassword()))
-				.andExpect(jsonPath("$.passwordType").value(standardEmailMobileCustomer().getPasswordType()));
-		
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()));
+				
 	}
 
 	@Test
@@ -79,7 +78,7 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -95,9 +94,8 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailCustomer().getMobileVerificationAttempts()))
 				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
 				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailCustomer().getLastStatusChangedTime().getTime()))
-				.andExpect(jsonPath("$.password").doesNotExist())
-				.andExpect(jsonPath("$.passwordType").doesNotExist());
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailCustomer().getLastStatusChangedTime().getTime()));
+				
 	
 	}
 
@@ -106,7 +104,7 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonMobileCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -122,11 +120,8 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardMobileCustomer().getMobileVerificationAttempts()))
 				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
 				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardMobileCustomer().getLastStatusChangedTime().getTime()))
-				.andExpect(jsonPath("$.password").value(standardMobileCustomer().getPassword()))
-				.andExpect(jsonPath("$.passwordType").value(standardMobileCustomer().getPasswordType()));
-	
-	
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardMobileCustomer().getLastStatusChangedTime().getTime()));
+				
 	}
 
 	
@@ -135,13 +130,13 @@ public class CustomerQuickRegisterControllerWACTest {
 	{
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailMobileCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailCustomerOther())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailCustomerOther()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
@@ -162,8 +157,6 @@ public class CustomerQuickRegisterControllerWACTest {
 					.andExpect(jsonPath("$[0].['mobilePinSentTime']").doesNotExist())
 					.andExpect(jsonPath("$[0].['emailHashSentTime']").doesNotExist())
 					.andExpect(jsonPath("$[0].['lastStatusChangedTime']").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
-					.andExpect(jsonPath("$[0].['password']").value(standardEmailMobileCustomer().getPassword()))
-					.andExpect(jsonPath("$[0].['passwordType']").value(standardEmailMobileCustomer().getPasswordType()))
 		
 					.andExpect(jsonPath("$[1].['firstName']").value(standardEmailCustomer().getFirstName()))
 					.andExpect(jsonPath("$[1].['lastName']").value(standardEmailCustomer().getLastName()))
@@ -176,9 +169,7 @@ public class CustomerQuickRegisterControllerWACTest {
 					.andExpect(jsonPath("$[1].['mobileVerificationAttempts']").value(standardEmailCustomer().getMobileVerificationAttempts()))
 					.andExpect(jsonPath("$[1].['mobilePinSentTime']").doesNotExist())
 					.andExpect(jsonPath("$[1].['emailHashSentTime']").doesNotExist())
-					.andExpect(jsonPath("$[1].['lastStatusChangedTime']").value(standardEmailCustomer().getLastStatusChangedTime().getTime()))
-					.andExpect(jsonPath("$[1].['password']").doesNotExist())
-					.andExpect(jsonPath("$[1].['passwordType']").doesNotExist());
+					.andExpect(jsonPath("$[1].['lastStatusChangedTime']").value(standardEmailCustomer().getLastStatusChangedTime().getTime()));
 		
 					
 		
@@ -191,14 +182,14 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailMobileCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO())
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
@@ -213,7 +204,7 @@ public class CustomerQuickRegisterControllerWACTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO())
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
@@ -228,14 +219,14 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailMobileCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getMobileCount")
-	                    .content(standardJsonMobileDTO())
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
@@ -250,7 +241,7 @@ public class CustomerQuickRegisterControllerWACTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getMobileCount")
-	                    .content(standardJsonMobileDTO())
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
@@ -265,14 +256,14 @@ public class CustomerQuickRegisterControllerWACTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailMobileCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 		
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getCustomerQuickRegisterEntityByEmail")
-	                    .content(standardJsonEmailDTO())
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
@@ -288,15 +279,14 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
 				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
 				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
-				.andExpect(jsonPath("$.password").value(standardEmailMobileCustomer().getPassword()))
-				.andExpect(jsonPath("$.passwordType").value(standardEmailMobileCustomer().getPasswordType()));
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()));
+				
 	
 		
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getCustomerQuickRegisterEntityByMobile")
-	                    .content(standardJsonMobileDTO())
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
@@ -312,10 +302,8 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
 				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
 				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
-				.andExpect(jsonPath("$.password").value(standardEmailMobileCustomer().getPassword()))
-				.andExpect(jsonPath("$.passwordType").value(standardEmailMobileCustomer().getPasswordType()));
-	
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()));
+					
 		
 	}
 
@@ -327,14 +315,14 @@ public class CustomerQuickRegisterControllerWACTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 		
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getCustomerQuickRegisterEntityByEmail")
-	                    .content(standardJsonEmailDTO())
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
@@ -350,15 +338,13 @@ public class CustomerQuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailCustomer().getMobileVerificationAttempts()))
 				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
 				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailCustomer().getLastStatusChangedTime().getTime()))
-				.andExpect(jsonPath("$.password").value(standardEmailCustomer().getPassword()))
-				.andExpect(jsonPath("$.passwordType").value(standardEmailCustomer().getPasswordType()));
-	
+				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailCustomer().getLastStatusChangedTime().getTime()));
+					
 		
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getCustomerQuickRegisterEntityByMobile")
-	                    .content(standardJsonMobileDTO())
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
@@ -389,14 +375,14 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
-	                    .content(standardJsonEmailMobileCustomer())
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO())
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
@@ -410,7 +396,7 @@ public class CustomerQuickRegisterControllerWACTest {
 
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO())
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
@@ -738,5 +724,5 @@ public class CustomerQuickRegisterControllerWACTest {
 
 	
 	}
-
+	
 }
