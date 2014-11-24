@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 
 import javax.transaction.Transactional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ public class CustomerDocumentRepositoryTest {
 
 	@Autowired
 	CustomerDocumetRepository customerDocumentRepository;
+	
+	
+	
+	@Before
+	public void clearTestData()
+	{
+		customerDocumentRepository.deleteAll();
+	}
+	
 	
 	@Test
 	public void test() {

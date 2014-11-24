@@ -24,8 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.*;
 import static com.projectx.data.fixtures.CustomerAuthenticationDetailsDataFixtures.*;
+import static com.projectx.data.fixtures.CustomerEmailVerificationDetailsDataFixtures.*;
+import static com.projectx.data.fixtures.CustomerMobileVericationDetailsFixtures.*;
 
 import com.projectx.data.config.Application;
+
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -47,7 +50,96 @@ public class CustomerQuickRegisterControllerWACTest {
 	
 	}
 	
+	
+	@Test
+	public void saveNewEmailMobileCustomer() throws Exception {
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/responseEntity")
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated());
+		/*
+	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
+	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
+	            .andExpect(jsonPath("$.email").value(standardEmailMobileCustomer().getEmail()))
+	            .andExpect(jsonPath("$.pincode").value(standardEmailMobileCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailMobileCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailMobileCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardEmailMobileCustomer().getUpdatedBy()));
+			
+				*/
+				 
+	}
+	
+	@Test
+	public void saveNewEmailMobileCustomerWithErrors() throws Exception {
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister")
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk());
+	}
+	            
 
+
+	/*
+	@Test
+	public void getCustomerByCustomerId() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/getEntityByCustomerId")
+	                    .content(standardJsonCustomerId(CUST_ID))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.firstName").doesNotExist())
+	            .andExpect(jsonPath("$.lastName").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.pincode").doesNotExist())
+				.andExpect(jsonPath("$.isEmailVerified").doesNotExist())
+				.andExpect(jsonPath("$.isMobileVerified").doesNotExist())
+				.andExpect(jsonPath("$.insertTime").doesNotExist())
+				.andExpect(jsonPath("$.updateTime").doesNotExist())
+				.andExpect(jsonPath("$.updatedBy").doesNotExist());
+
+	}
+	
+	
+	@Test
+	public void saveNewEmailMobileCustomerWithErrors() throws Exception {
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister")
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomerWithErrors()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.firstName").doesNotExist())
+	            .andExpect(jsonPath("$.lastName").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.pincode").doesNotExist())
+				.andExpect(jsonPath("$.isEmailVerified").doesNotExist())
+				.andExpect(jsonPath("$.isMobileVerified").doesNotExist())
+				.andExpect(jsonPath("$.insertTime").doesNotExist())
+				.andExpect(jsonPath("$.updateTime").doesNotExist())
+				.andExpect(jsonPath("$.updatedBy").doesNotExist());
+				 
+	}
+
+	
 	@Test
 	public void saveNewEmailMobileCustomer() throws Exception {
 		
@@ -62,17 +154,18 @@ public class CustomerQuickRegisterControllerWACTest {
 	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
 	            .andExpect(jsonPath("$.email").value(standardEmailMobileCustomer().getEmail()))
-	            .andExpect(jsonPath("$.pin").value(standardEmailMobileCustomer().getPin()))
-				.andExpect(jsonPath("$.status").value(standardEmailMobileCustomer().getStatus()))
-				.andExpect(jsonPath("$.mobilePin").value(standardEmailMobileCustomer().getMobilePin()))
-			    .andExpect(jsonPath("$.emailHash").value(standardEmailMobileCustomer().getEmailHash()))
-				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
-				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
-				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()));
-				
+	            .andExpect(jsonPath("$.pincode").value(standardEmailMobileCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailMobileCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailMobileCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardEmailMobileCustomer().getUpdatedBy()));
+				 
 	}
 
+	
+	
+	
 	@Test
 	public void saveNewEmailCustomer() throws Exception {
 		
@@ -85,17 +178,14 @@ public class CustomerQuickRegisterControllerWACTest {
 	            .andExpect(status().isOk())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailCustomer().getLastName()))
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").value(standardEmailCustomer().getMobile()))
 	            .andExpect(jsonPath("$.email").value(standardEmailCustomer().getEmail()))
-	            .andExpect(jsonPath("$.pin").value(standardEmailCustomer().getPin()))
-				.andExpect(jsonPath("$.status").value(standardEmailCustomer().getStatus()))
-				.andExpect(jsonPath("$.mobilePin").doesNotExist())
-			    .andExpect(jsonPath("$.emailHash").value(standardEmailCustomer().getEmailHash()))
-				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailCustomer().getMobileVerificationAttempts()))
-				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
-				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailCustomer().getLastStatusChangedTime().getTime()));
-				
+	            .andExpect(jsonPath("$.pincode").value(standardEmailCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardEmailCustomer().getUpdatedBy()));			
 	
 	}
 
@@ -112,21 +202,19 @@ public class CustomerQuickRegisterControllerWACTest {
 	            .andExpect(jsonPath("$.firstName").value(standardMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardMobileCustomer().getMobile()))
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.pin").value(standardMobileCustomer().getPin()))
-				.andExpect(jsonPath("$.status").value(standardMobileCustomer().getStatus()))
-				.andExpect(jsonPath("$.mobilePin").value(standardMobileCustomer().getMobilePin()))
-			    .andExpect(jsonPath("$.emailHash").doesNotExist())
-				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardMobileCustomer().getMobileVerificationAttempts()))
-				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
-				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardMobileCustomer().getLastStatusChangedTime().getTime()));
+	            .andExpect(jsonPath("$.email").value(standardMobileCustomer().getEmail()))
+	            .andExpect(jsonPath("$.pincode").value(standardMobileCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardMobileCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardMobileCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardMobileCustomer().getUpdatedBy()));
 				
 	}
 
 	
 	@Test
-	public void getAllCustomerWithEmaiMobileAndMobileCustomer() throws Exception
+	public void getAllCustomerWithEmaiMobileAndEmailCustomer() throws Exception
 	{
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
@@ -149,27 +237,24 @@ public class CustomerQuickRegisterControllerWACTest {
 					.andExpect(jsonPath("$[0].['lastName']").value(standardEmailMobileCustomer().getLastName()))
 					.andExpect(jsonPath("$[0].['mobile']").value(standardEmailMobileCustomer().getMobile()))
 					.andExpect(jsonPath("$[0].['email']").value(standardEmailMobileCustomer().getEmail()))
-					.andExpect(jsonPath("$[0].['pin']").value(standardEmailMobileCustomer().getPin()))
-					.andExpect(jsonPath("$[0].['status']").value(standardEmailMobileCustomer().getStatus()))
-					.andExpect(jsonPath("$[0].['mobilePin']").value(standardEmailMobileCustomer().getMobilePin()))
-					.andExpect(jsonPath("$[0].['emailHash']").value(standardEmailMobileCustomer().getEmailHash()))
-					.andExpect(jsonPath("$[0].['mobileVerificationAttempts']").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
-					.andExpect(jsonPath("$[0].['mobilePinSentTime']").doesNotExist())
-					.andExpect(jsonPath("$[0].['emailHashSentTime']").doesNotExist())
-					.andExpect(jsonPath("$[0].['lastStatusChangedTime']").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()))
-		
+					.andExpect(jsonPath("$[0].['pincode']").value(standardEmailMobileCustomer().getPincode()))
+					.andExpect(jsonPath("$[0].['isEmailVerified']").value(standardEmailMobileCustomer().getIsEmailVerified()))
+					.andExpect(jsonPath("$[0].['isMobileVerified']").value(standardEmailMobileCustomer().getIsMobileVerified()))
+					.andExpect(jsonPath("$[0].['insertTime']").exists())
+					.andExpect(jsonPath("$[0].['updateTime']").exists())
+					.andExpect(jsonPath("$[0].['updatedBy']").value(standardEmailMobileCustomer().getUpdatedBy()))
+				
 					.andExpect(jsonPath("$[1].['firstName']").value(standardEmailCustomer().getFirstName()))
 					.andExpect(jsonPath("$[1].['lastName']").value(standardEmailCustomer().getLastName()))
 					.andExpect(jsonPath("$[1].['mobile']").doesNotExist())
 					.andExpect(jsonPath("$[1].['email']").value(CUST_EMAIL_OTHER))
-					.andExpect(jsonPath("$[1].['pin']").value(standardEmailCustomer().getPin()))
-					.andExpect(jsonPath("$[1].['status']").value(standardEmailCustomer().getStatus()))
-					.andExpect(jsonPath("$[1].['mobilePin']").doesNotExist())
-					.andExpect(jsonPath("$[1].['emailHash']").value(standardEmailCustomer().getEmailHash()))
-					.andExpect(jsonPath("$[1].['mobileVerificationAttempts']").value(standardEmailCustomer().getMobileVerificationAttempts()))
-					.andExpect(jsonPath("$[1].['mobilePinSentTime']").doesNotExist())
-					.andExpect(jsonPath("$[1].['emailHashSentTime']").doesNotExist())
-					.andExpect(jsonPath("$[1].['lastStatusChangedTime']").value(standardEmailCustomer().getLastStatusChangedTime().getTime()));
+					.andExpect(jsonPath("$[1].['pincode']").value(standardEmailCustomer().getPincode()))
+					.andExpect(jsonPath("$[1].['isEmailVerified']").value(standardEmailCustomer().getIsEmailVerified()))
+					.andExpect(jsonPath("$[1].['isMobileVerified']").value(standardEmailCustomer().getIsMobileVerified()))
+					.andExpect(jsonPath("$[1].['insertTime']").exists())
+					.andExpect(jsonPath("$[1].['updateTime']").exists())
+					.andExpect(jsonPath("$[1].['updatedBy']").value(standardEmailCustomer().getUpdatedBy()));
+				
 		
 					
 		
@@ -177,169 +262,93 @@ public class CustomerQuickRegisterControllerWACTest {
 	}
 	
 	@Test
-	public void getEmailCountWithEmaiMobileCustomer() throws Exception
+	public void getCustomerQuickRegisterEntityByEmailAndMobileWithEmailMobileCustomer() throws Exception
 	{
-		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
-	
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO(CUST_EMAIL))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(content().string("1"));
-	
-	}
-	
-	@Test
-	public void getEmailCountWithOutAnyCustomer() throws Exception
-	{
-
-		this.mockMvc.perform(
-	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO(CUST_EMAIL))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(content().string("0"));
-		
-	}
-	
-
-	@Test
-	public void getMobileCountWithEmaiMobileCustomer() throws Exception
-	{
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister")
-	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-	
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/getMobileCount")
-	                    .content(standardJsonMobileDTO(CUST_MOBILE))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(content().string("1"));
-	
-	}
-	
-	@Test
-	public void getMobileCountWithOutAnyCustomer() throws Exception
-	{
-
-		this.mockMvc.perform(
-	            post("/customer/quickregister/getMobileCount")
-	                    .content(standardJsonMobileDTO(CUST_MOBILE))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(content().string("0"));
-		
-	}
-
-	
-	@Test
-	public void getByEmailAndMobileWithEmailMobileCustomer() throws Exception
-	{
-
-		this.mockMvc.perform(
-	            post("/customer/quickregister")
-	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-		
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getCustomerQuickRegisterEntityByEmail")
 	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
+	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
 	            .andExpect(jsonPath("$.email").value(standardEmailMobileCustomer().getEmail()))
-	            .andExpect(jsonPath("$.pin").value(standardEmailMobileCustomer().getPin()))
-				.andExpect(jsonPath("$.status").value(standardEmailMobileCustomer().getStatus()))
-				.andExpect(jsonPath("$.mobilePin").value(standardEmailMobileCustomer().getMobilePin()))
-			    .andExpect(jsonPath("$.emailHash").value(standardEmailMobileCustomer().getEmailHash()))
-				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
-				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
-				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()));
-				
+	            .andExpect(jsonPath("$.pincode").value(standardEmailMobileCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailMobileCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailMobileCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardEmailMobileCustomer().getUpdatedBy()));			
 	
-		
-		
+	
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getCustomerQuickRegisterEntityByMobile")
 	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
+	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
 	            .andExpect(jsonPath("$.email").value(standardEmailMobileCustomer().getEmail()))
-	            .andExpect(jsonPath("$.pin").value(standardEmailMobileCustomer().getPin()))
-				.andExpect(jsonPath("$.status").value(standardEmailMobileCustomer().getStatus()))
-				.andExpect(jsonPath("$.mobilePin").value(standardEmailMobileCustomer().getMobilePin()))
-			    .andExpect(jsonPath("$.emailHash").value(standardEmailMobileCustomer().getEmailHash()))
-				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailMobileCustomer().getMobileVerificationAttempts()))
-				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
-				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailMobileCustomer().getLastStatusChangedTime().getTime()));
-					
+	            .andExpect(jsonPath("$.pincode").value(standardEmailMobileCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailMobileCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailMobileCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardEmailMobileCustomer().getUpdatedBy()));			
+	
+		
 		
 	}
-
 	
-
 	@Test
-	public void getByEmailAndMobileWithEmailCustomer() throws Exception
+	public void getCustomerQuickRegisterEntityByEmailWithEmailCustomer() throws Exception
 	{
-
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 		
-		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getCustomerQuickRegisterEntityByEmail")
 	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
+	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailCustomer().getMobile()))
 	            .andExpect(jsonPath("$.email").value(standardEmailCustomer().getEmail()))
-	            .andExpect(jsonPath("$.pin").value(standardEmailCustomer().getPin()))
-				.andExpect(jsonPath("$.status").value(standardEmailCustomer().getStatus()))
-				.andExpect(jsonPath("$.mobilePin").value(standardEmailCustomer().getMobilePin()))
-			    .andExpect(jsonPath("$.emailHash").value(standardEmailCustomer().getEmailHash()))
-				.andExpect(jsonPath("$.mobileVerificationAttempts").value(standardEmailCustomer().getMobileVerificationAttempts()))
-				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
-				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").value(standardEmailCustomer().getLastStatusChangedTime().getTime()));
-					
+	            .andExpect(jsonPath("$.pincode").value(standardEmailCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardEmailCustomer().getUpdatedBy()));			
+	
+		
+	}
+	
+	@Test
+	public void getCustomerQuickRegisterEntityByMobileWithMobileCustomer() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister")
+	                    .content(standardJsonQuickRegisterCustomer(standardMobileCustomer()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
 		
 		
 		this.mockMvc.perform(
@@ -347,28 +356,24 @@ public class CustomerQuickRegisterControllerWACTest {
 	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
+	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.firstName").doesNotExist())
-	            .andExpect(jsonPath("$.lastName").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.pin").doesNotExist())
-				.andExpect(jsonPath("$.status").doesNotExist())
-				.andExpect(jsonPath("$.mobilePin").doesNotExist())
-			    .andExpect(jsonPath("$.emailHash").doesNotExist())
-				.andExpect(jsonPath("$.mobileVerificationAttempts").doesNotExist())
-				.andExpect(jsonPath("$.mobilePinSentTime").doesNotExist())
-				.andExpect(jsonPath("$.emailHashSentTime").doesNotExist())
-				.andExpect(jsonPath("$.lastStatusChangedTime").doesNotExist())
-				.andExpect(jsonPath("$.password").doesNotExist())
-				.andExpect(jsonPath("$.passwordType").doesNotExist());
+	            .andExpect(jsonPath("$.firstName").value(standardMobileCustomer().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardMobileCustomer().getLastName()))
+	            .andExpect(jsonPath("$.mobile").value(standardMobileCustomer().getMobile()))
+	            .andExpect(jsonPath("$.email").value(standardMobileCustomer().getEmail()))
+	            .andExpect(jsonPath("$.pincode").value(standardMobileCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardMobileCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardMobileCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardMobileCustomer().getUpdatedBy()));			
 	
 		
+		
 	}
-
 	
-	
+		
 	@Test
 	public void clearTestingData() throws Exception
 	{
@@ -381,13 +386,13 @@ public class CustomerQuickRegisterControllerWACTest {
 	
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO(CUST_EMAIL))
+	            post("/customer/quickregister/getCustomerQuickRegisterEntityByMobile")
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(content().string("1"));
+				.andExpect(jsonPath("$.firstName").value(standardMobileCustomer().getFirstName()));
 		
 		this.mockMvc.perform(
 				get("/customer/quickregister/clearForTesting"))
@@ -395,13 +400,13 @@ public class CustomerQuickRegisterControllerWACTest {
 		
 
 		this.mockMvc.perform(
-	            post("/customer/quickregister/getEmailCount")
-	                    .content(standardJsonEmailDTO(CUST_EMAIL))
+	            post("/customer/quickregister/getCustomerQuickRegisterEntityByMobile")
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(content().string("0"));
+				.andExpect(jsonPath("$.firstName").doesNotExist());
 	
 	}
 
@@ -410,7 +415,7 @@ public class CustomerQuickRegisterControllerWACTest {
 	public void saveVerificationDetailsWithEmailMobileCustomer() throws Exception
 	{
 		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
+	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
 	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
@@ -420,26 +425,33 @@ public class CustomerQuickRegisterControllerWACTest {
 	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
 	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
 	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailMobileAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailMobileAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
 		
 		
 	}
+	
 	
 	@Test
 	public void saveVerificationDetailsWithEmailCustomer() throws Exception
 	{
 		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
+	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
 	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailAuthenticationDetails().getMobile()))
+	           // .andExpect(jsonPath("$.password").value(null))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailAuthenticationDetails().getLastUnsucessfullAttempts()));
 		
 		
 	}
@@ -449,280 +461,427 @@ public class CustomerQuickRegisterControllerWACTest {
 	public void saveVerificationDetailsWithMobileCustomer() throws Exception
 	{
 		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
+	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
 	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
-	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+	            .andExpect(jsonPath("$.email").value(standardCustomerMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerMobileAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerMobileAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
 		
 		
 	}
 	
-	
-	
+
 	@Test
-	public void verifyLoginDetailsWithEmailMobileCustomer() throws Exception
+	public void getLoginDetailsByEmailWithEmailAuthenticationEntity() throws Exception
 	{
 		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmail()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isOk())
-	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
-	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
-		
-	    
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithMobile()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isOk())
-	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
-	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
-		
-	}
-	
-	@Test
-	public void verifyLoginDetailsWithEmailCustomer() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
+	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
 	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmail()))
+	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByEmail")
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailAuthenticationDetails().getMobile()))
+	          //  .andExpect(jsonPath("$.password").value(standardCustomerEmailAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailAuthenticationDetails().getPasswordType()))
+				.andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailAuthenticationDetails().getEmailPassword()))
+		        .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailAuthenticationDetails().getResendCount()))
+		        .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailAuthenticationDetails().getLastUnsucessfullAttempts()));
+	}
+	
+	@Test
+	public void getLoginDetailsByMobileWithMobileAuthenticationEntity() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByMobile")
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerMobileAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerMobileAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
+	}
+	
+	@Test
+	public void getLoginDetailsByEmailAndMobileWithEmailMobileAuthenticationEntity() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByMobile")
+	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
 	            .andExpect(status().isOk())
 	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
 	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
 	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
-		
-
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithMobile()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.password").doesNotExist())
-	            .andExpect(jsonPath("$.passwordType").doesNotExist());
-
-	}
-	
-	
-	@Test
-	public void verifyLoginDetailsWithMobileCustomer() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailMobileAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailMobileAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithMobile()))
+	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByEmail")
+	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
 	            .andExpect(status().isOk())
 	       //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerMobileAuthenticationDetails().getMobile()))
-	            .andExpect(jsonPath("$.password").value(standardCustomerMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerMobileAuthenticationDetails().getPasswordType()));
-		
-
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmail()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.password").doesNotExist())
-	            .andExpect(jsonPath("$.passwordType").doesNotExist());
-
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailMobileAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailMobileAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
 	}
 	
-	
-	@Test
-	public void updatePasswordWithMobileCustomer() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/verifyLoginDetails")
-	                    .content(standardJsonLoginVerification(standardLoginVerificationWithEmailNewPassword()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.password").doesNotExist())
-	            .andExpect(jsonPath("$.passwordType").doesNotExist());
-		
-
-		this.mockMvc.perform(
-	            post("/customer/quickregister/updatePassword")
-	                    .content(standardJsonUpdatePasswordAndPasswordType())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	           .andDo(print())
-	           .andExpect(status().isOk())
-			   .andExpect(content().string("1"));
-	                    
-		
-
-		
-	}	
 	
 	@Test
 	public void loginDetailsCount() throws Exception
 	{
 		this.mockMvc.perform(
-					get("/customer/quickregister/loginDetailsCount")
-				)
-				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(content().string("0"));
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-		
-		this.mockMvc.perform(
-				get("/customer/quickregister/loginDetailsCount")
-			)
-			.andDo(print())
-			.andExpect(status().isOk())
-			.andExpect(content().string("1"));
-	
-	}
-	
-	
-	@Test
-	public void clearLoginDetailsForTesting() throws Exception
-	{
-		this.mockMvc.perform(
-							get("/customer/quickregister/loginDetailsCount")
-							)
-					.andDo(print())
-					.andExpect(status().isOk())
-					.andExpect(content().string("0"));
-	
-		this.mockMvc.perform(
-							post("/customer/quickregister/saveLoginDetails")
-                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON));
-	
-			
-		this.mockMvc.perform(
-							get("/customer/quickregister/loginDetailsCount")
-							)
-					.andDo(print())
-					.andExpect(status().isOk())
-					.andExpect(content().string("1"));
-	
-		this.mockMvc.perform(
-							get("/customer/quickregister/clearLoginDetailsForTesting")
-							)
-					.andDo(print())
-					.andExpect(status().isOk())
-					.andExpect(content().string("true"));
-	
-		
-		this.mockMvc.perform(
-							get("/customer/quickregister/loginDetailsCount")
-							)
-					.andDo(print())
-					.andExpect(status().isOk())
-					.andExpect(content().string("0"));
-
-	}
-	
-	
-	@Test
-	public void getLoginDetailsByCustomerId() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/saveLoginDetails")
+	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
 	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 		
+		this.mockMvc.perform(get("/customer/quickregister/customerAuthentication/loginDetailsCount"))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string("1"));
+	}
+	
+	
+	@Test
+	public void saveEmailVerificationEntity() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
+	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
+	          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
+	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
+	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
+	          .andExpect(jsonPath("$.emailHashSentTime").exists())
+	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
+	            
+	}
+	
+	@Test
+	public void getEmailVerificationDetailsByCustomerIdAndEmail() throws Exception
+	{
 		
 		this.mockMvc.perform(
-					post("/customer/quickregister/getLoginDetailsByCustomerId")
-						.content(standardJsonCustomerIdForLoginDetails(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
-        .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
-        .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-        .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()));
+	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
+	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/getEmailVerificationDetailsByCustomerIdAndEmail")
+	                    .content(standardJsonCustomerIdEmail())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
+	          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
+	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
+	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
+	          .andExpect(jsonPath("$.emailHashSentTime").exists())
+	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
 
+	}
 	
+	
+	@Test
+	//@Rollback(value=false)
+	public void resetEmailHashAndEmailHashSentTime() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
+	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+	
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/getEmailVerificationDetailsByCustomerIdAndEmail")
+	                    .content(standardJsonCustomerIdEmail())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
+	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
+	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
+	          .andExpect(jsonPath("$.emailHashSentTime").exists())
+	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
+
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/resetEmailHashAndEmailHashSentTime")
+	                    .content(standardJsonUpdateEmailHashAndEmailHashSentTimeAndResendCountDTO())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+                .andExpect(content().string("1"));
+
+		
+	}
+	
+
+	@Test
+	public void incrementResendCountByCustomerIdAndEmail() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
+	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+	
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/getEmailVerificationDetailsByCustomerIdAndEmail")
+	                    .content(standardJsonCustomerIdEmail())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
+	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
+	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
+	          .andExpect(jsonPath("$.emailHashSentTime").exists())
+	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
+
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/incrementResendCountByCustomerIdAndEmail")
+	                    .content(standardJsonCustomerIdEmail())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+                .andExpect(content().string("1"));
+
+		
+	}
+	
+	@Test
+	public void getEmailVerificationCount() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
+	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+	
+		this.mockMvc.perform(get("/customer/quickregister/emailVerification/getCount"))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string("1"));
+	}
+	
+	
+	@Test
+	public void saveMobileVerificationEntity() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	             .andDo(print())
+	            .andExpect(status().isOk())
+	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
+	          .andExpect(jsonPath("$.mobile").value(standardCustomerMobileVerificationDetails().getMobile()))
+	          .andExpect(jsonPath("$.mobileType").value(standardCustomerMobileVerificationDetails().getMobileType()))
+	          .andExpect(jsonPath("$.mobilePin").value(standardCustomerMobileVerificationDetails().getMobilePin()))
+	          .andExpect(jsonPath("$.mobileVerificationAttempts").value(standardCustomerMobileVerificationDetails().getMobileVerificationAttempts()))
+	          .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileVerificationDetails().getResendCount()));
+	            
+	}
+	
+	
+	@Test
+	public void getMobikeVerificationDetailsByCustomerIdAndMobile() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/getMobileVerificationDetailsByCustomerIdAndMobile")
+	                    .content(standardJsonCustomerIdMobile())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerMobileVerificationDetails().getMobile()))
+		          .andExpect(jsonPath("$.mobileType").value(standardCustomerMobileVerificationDetails().getMobileType()))
+		          .andExpect(jsonPath("$.mobilePin").value(standardCustomerMobileVerificationDetails().getMobilePin()))
+		          .andExpect(jsonPath("$.mobileVerificationAttempts").value(standardCustomerMobileVerificationDetails().getMobileVerificationAttempts()))
+		          .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileVerificationDetails().getResendCount()));
+		          
 	}
 
 	@Test
-	public void getLoginDetailsByCustomerIdFailingCase() throws Exception
+	public void updateMobilePinAndMobileVerificationAttemptsAndResendCount() throws Exception
 	{
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
 		
 		
 		this.mockMvc.perform(
-					post("/customer/quickregister/getLoginDetailsByCustomerId")
-						.content(standardJsonCustomerIdForLoginDetails(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-						.contentType(MediaType.APPLICATION_JSON)
-						.accept(MediaType.APPLICATION_JSON))
-		.andExpect(jsonPath("$.email").doesNotExist())
-        .andExpect(jsonPath("$.mobile").doesNotExist())
-        .andExpect(jsonPath("$.password").doesNotExist())
-        .andExpect(jsonPath("$.passwordType").doesNotExist());
+	            post("/customer/quickregister/mobileVerification/getMobileVerificationDetailsByCustomerIdAndMobile")
+	                    .content(standardJsonCustomerIdMobile())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/updateMobilePinAndMobileVerificationAttemptsAndResendCount")
+	                    .content(standardJsonUpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+                .andExpect(content().string("1"));
 
-	
+		
 	}
+	
+	@Test
+	public void incrementMobileVerificationAttempts() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/getMobileVerificationDetailsByCustomerIdAndMobile")
+	                    .content(standardJsonCustomerIdMobile())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/incrementMobileVerificationAttempts")
+	                    .content(standardJsonCustomerIdMobile())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+                .andExpect(content().string("1"));
+
+		
+	}
+	
+	@Test
+	public void incrementResendCount() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/getMobileVerificationDetailsByCustomerIdAndMobile")
+	                    .content(standardJsonCustomerIdMobile())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/incrementResendCount")
+	                    .content(standardJsonCustomerIdMobile())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+                .andExpect(content().string("1"));
+
+		
+	}
+	
+	@Test
+	public void mobileVerificationCount() throws Exception
+	{
+
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+	
+		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/getCount"))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(content().string("1"));
+	}
+	*/
 	
 }

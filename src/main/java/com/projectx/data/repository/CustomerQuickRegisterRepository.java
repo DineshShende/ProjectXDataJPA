@@ -2,6 +2,7 @@ package com.projectx.data.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -26,15 +27,36 @@ public interface CustomerQuickRegisterRepository extends
 		 @Override
 		 List<CustomerQuickRegisterEntity> findAll();
 	
-		 CustomerQuickRegisterEntity findByCustomerId(Long customerId);
+		 Optional<CustomerQuickRegisterEntity> findByCustomerId(Long customerId);
 		
-		 Integer countByEmail(String email);
+		 Optional<CustomerQuickRegisterEntity> findByEmail(String email);
 		 
-		 Integer countByMobile(Long mobile);
+		 Optional<CustomerQuickRegisterEntity> findByMobile(Long mobile);
+		 
 
-		 CustomerQuickRegisterEntity findByEmail(String email);
+			
+		@Transactional
+		@Modifying
+		@Query(value="truncate table customer_quick_register_entity",nativeQuery = true)
+		void clearTestData();
+
 		 
-		 CustomerQuickRegisterEntity findByMobile(Long mobile);
+		@Transactional
+		 @Modifying
+		 @Query(value="update customer_quick_register_entity set ISMOBILEVERIFIED=:status,UPDATETIME=:updateTime,"
+		 		+ "UPDATEDBY=:updatedBy where CUSTOMERID=:customerId",nativeQuery = true)
+		 Integer updateMobileVerificationStatus(@Param("customerId")Long customerId, @Param("status")Boolean status,
+				 @Param("updateTime")Date updateTime,@Param("updatedBy")String updatedBy);
+		 
+		@Transactional
+		 @Modifying
+		 @Query(value="update customer_quick_register_entity set ISEMAILVERIFIED=:status,UPDATETIME=:updateTime,"
+		 		+ "UPDATEDBY=:updatedBy where CUSTOMERID=:customerId",nativeQuery = true)
+		 Integer updateEmailVerificationStatus(@Param("customerId")Long customerId,@Param("status")Boolean status,
+				 @Param("updateTime")Date updateTime,@Param("updatedBy")String updatedBy);
+		 
+
+/*
 		 
 		 
 		 @Transactional
@@ -65,12 +87,7 @@ public interface CustomerQuickRegisterRepository extends
 		 Integer updateEmailHashAndMobilePinSentTime(@Param("customerId") Long customerId,@Param("emailHashSentTime") Date emailHashSentTime,@Param("mobilePinSentTime")Date mobilePinSentTime);
 		
 		
-		
-		@Transactional
-		@Modifying
-		@Query(value="truncate table customer_quick_register_entity",nativeQuery = true)
-		void clearTestData();
-
+*/
 		
 		
 //      Integer countByCustomerIdAndMobilePin(Long customerId,Integer mobilePin);

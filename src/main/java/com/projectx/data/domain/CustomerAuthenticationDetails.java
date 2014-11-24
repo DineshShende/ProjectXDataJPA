@@ -7,14 +7,14 @@ import javax.persistence.Id;
 @Entity
 public class CustomerAuthenticationDetails {
 
-	@Id
-	@Column(name="CUSTOMERID")
+	
+	@Id @Column(name="CUSTOMERID")
 	private Long customerId;
 	
-	@Column(name="EMAIL")
+	@Column(name="EMAIL",unique=true)
 	private String email;
 	
-	@Column(name="MOBILE")
+	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	
 	@Column(name="PASSWORD")
@@ -22,60 +22,150 @@ public class CustomerAuthenticationDetails {
 	
 	@Column(name="PASSWORDTYPE")
 	private String passwordType;
+	
+	@Column(name="EMAILPASSWORD")
+	private String emailPassword;
+	
+	@Column(name="RESENDCOUNT")
+	private Integer resendCount;
+	
+	@Column(name="LASTUNSUCESSFULLATTEMPTS")
+	private Integer lastUnsucessfullAttempts;
+
 
 	public CustomerAuthenticationDetails() {
 
 	}
 
+	
+
 	public CustomerAuthenticationDetails(Long customerId, String email,
-			Long mobile, String password, String passwordType) {
+			Long mobile, String password, String passwordType,
+			String emailPassword, Integer resendCount,
+			Integer lastUnsucessfullAttempts) {
 		super();
 		this.customerId = customerId;
 		this.email = email;
 		this.mobile = mobile;
 		this.password = password;
 		this.passwordType = passwordType;
+		this.emailPassword = emailPassword;
+		this.resendCount = resendCount;
+		this.lastUnsucessfullAttempts = lastUnsucessfullAttempts;
 	}
 
+
+
+	
 	public Long getCustomerId() {
 		return customerId;
 	}
+
+
 
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 
+
+
 	public String getEmail() {
 		return email;
 	}
+
+
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+
+
 	public Long getMobile() {
 		return mobile;
 	}
+
+
 
 	public void setMobile(Long mobile) {
 		this.mobile = mobile;
 	}
 
+
+
 	public String getPassword() {
 		return password;
 	}
+
+
 
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+
+
 	public String getPasswordType() {
 		return passwordType;
 	}
 
+
+
 	public void setPasswordType(String passwordType) {
 		this.passwordType = passwordType;
 	}
+
+
+
+	public String getEmailPassword() {
+		return emailPassword;
+	}
+
+
+
+	public void setEmailPassword(String emailPassword) {
+		this.emailPassword = emailPassword;
+	}
+
+
+
+	public Integer getResendCount() {
+		return resendCount;
+	}
+
+
+
+	public void setResendCount(Integer resendCount) {
+		this.resendCount = resendCount;
+	}
+
+
+
+	public Integer getLastUnsucessfullAttempts() {
+		return lastUnsucessfullAttempts;
+	}
+
+
+
+	public void setLastUnsucessfullAttempts(Integer lastUnsucessfullAttempts) {
+		this.lastUnsucessfullAttempts = lastUnsucessfullAttempts;
+	}
+
+	
+	
+
+
+	@Override
+	public String toString() {
+		return "CustomerAuthenticationDetails [customerId=" + customerId
+				+ ", email=" + email + ", mobile=" + mobile + ", password="
+				+ password + ", passwordType=" + passwordType
+				+ ", emailPassword=" + emailPassword + ", resendCount="
+				+ resendCount + ", lastUnsucessfullAttempts="
+				+ lastUnsucessfullAttempts + "]";
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -84,13 +174,23 @@ public class CustomerAuthenticationDetails {
 		result = prime * result
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result
+				+ ((emailPassword == null) ? 0 : emailPassword.hashCode());
+		result = prime
+				* result
+				+ ((lastUnsucessfullAttempts == null) ? 0
+						: lastUnsucessfullAttempts.hashCode());
 		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result
 				+ ((passwordType == null) ? 0 : passwordType.hashCode());
+		result = prime * result
+				+ ((resendCount == null) ? 0 : resendCount.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -111,6 +211,17 @@ public class CustomerAuthenticationDetails {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		if (emailPassword == null) {
+			if (other.emailPassword != null)
+				return false;
+		} else if (!emailPassword.equals(other.emailPassword))
+			return false;
+		if (lastUnsucessfullAttempts == null) {
+			if (other.lastUnsucessfullAttempts != null)
+				return false;
+		} else if (!lastUnsucessfullAttempts
+				.equals(other.lastUnsucessfullAttempts))
+			return false;
 		if (mobile == null) {
 			if (other.mobile != null)
 				return false;
@@ -126,9 +237,16 @@ public class CustomerAuthenticationDetails {
 				return false;
 		} else if (!passwordType.equals(other.passwordType))
 			return false;
+		if (resendCount == null) {
+			if (other.resendCount != null)
+				return false;
+		} else if (!resendCount.equals(other.resendCount))
+			return false;
 		return true;
 	}
-	
-	
+
+
+
+		
 	
 }

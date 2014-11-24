@@ -33,6 +33,14 @@ public class CustomerQuickRegisterEntityDataFixture {
 	public static String CUST_PASSWORD_CHANGED="654321";
 	public static String CUST_PASSWORD_TYPE_CHANGED="Changed";
 	
+	public static Boolean CUST_ISMOBILE_VERIFIED=false;
+	public static Boolean CUST_ISEMAIL_VERIFIED=false;
+	
+	public static Date CUST_INSERT_TIME=new Date();
+	public static Date CUST_UPDATE_TIME=new Date();
+	
+	public static String CUST_UPDATED_BY="CUST_ONLINE";
+	
 	
 	public static String STATUS_EMAIL_VERFIED_MOBILE_PENDING="EmailVerifiedMobileVerficationPending";
 	public static String STATUS_MOBILE_VERFIED_EMAIL_PENDING="MobileVerifiedEmailVerficationPending";
@@ -44,19 +52,19 @@ public class CustomerQuickRegisterEntityDataFixture {
 		
 	public static CustomerQuickRegisterEntity standardEmailMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,CUST_MOBILE, CUST_PIN,CUST_STATUS_EMAILMOBILE, CUST_MOBILEPIN, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,null,CUST_LAST_STATUS_CHANGED_TIME);
+		return new CustomerQuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL, CUST_MOBILE, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardMobileCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, null,CUST_MOBILE, CUST_PIN,CUST_STATUS_MOBILE, CUST_MOBILEPIN, null,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,CUST_MOBILE_PIN_SENT_TIME,null,CUST_LAST_STATUS_CHANGED_TIME);
+		return new CustomerQuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, null, CUST_MOBILE, CUST_PIN, null, CUST_ISMOBILE_VERIFIED, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
 		
 	}
 	
 	public static CustomerQuickRegisterEntity standardEmailCustomer()
 	{
-		return new CustomerQuickRegisterEntity(CUST_ID,CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL,null, CUST_PIN,CUST_STATUS_EMAIL, null, CUST_EMAILHASH,CUST_MOBILEPIN_VERIFICATION_ATTEMPTS,null,CUST_EMAIL_HASH_SENT_TIME,CUST_LAST_STATUS_CHANGED_TIME);
+		return new CustomerQuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL, null, CUST_PIN, CUST_ISEMAIL_VERIFIED, null, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
 		
 	}
 	

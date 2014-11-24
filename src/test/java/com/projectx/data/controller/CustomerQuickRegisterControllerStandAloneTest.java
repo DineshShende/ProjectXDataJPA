@@ -1,6 +1,9 @@
 package com.projectx.data.controller;
 
 import static com.projectx.data.fixtures.CustomerQuickRegisterDataFixture.*;
+import static com.projectx.data.fixtures.CustomerAuthenticationDetailsDataFixtures.*;
+import static com.projectx.data.fixtures.CustomerMobileVericationDetailsFixtures.*;
+import static com.projectx.data.fixtures.CustomerEmailVerificationDetailsDataFixtures.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -12,6 +15,16 @@ import static org.mockito.Matchers.any;
 
 
 
+
+
+
+
+
+
+
+
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -20,6 +33,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.projectx.data.domain.CustomerAuthenticationDetails;
+import com.projectx.data.domain.CustomerQuickRegisterEntity;
+import com.projectx.data.repository.CustomerAuthenticationDetailsRepository;
 import com.projectx.data.repository.CustomerQuickRegisterRepository;
 
 public class CustomerQuickRegisterControllerStandAloneTest {
@@ -29,6 +45,11 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 	
 	@Mock
 	CustomerQuickRegisterRepository customerQuickRegisterRepository;
+	
+	@Mock
+	CustomerAuthenticationDetailsRepository customerAuthenticationDetailsRepository;
+	
+	private static final Integer ZERO_COUNT=0;
 	
 	private MockMvc mockMvc;
 	
@@ -46,7 +67,10 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 	@Test
 	public void getCustomerByCustomerId() throws Exception
 	{
-		when(customerQuickRegisterRepository.findByCustomerId(standardCustomerId().getCustomerId())).thenReturn(standardEmailMobileCustomer());
+		Optional<CustomerQuickRegisterEntity> customerOptional=Optional.of(standardEmailMobileCustomer());
+		
+				
+		when(customerQuickRegisterRepository.findByCustomerId(standardCustomerId().getCustomerId())).thenReturn(customerOptional);
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getEntityByCustomerId")
@@ -55,94 +79,152 @@ public class CustomerQuickRegisterControllerStandAloneTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.firstName").value(CUST_FIRSTNAME))
-	            .andExpect(jsonPath("$.lastName").value(CUST_LASTNAME))
-	            //.andExpect(jsonPath("$.mobile").value(CUST_MOBILE))
-	            .andExpect(jsonPath("$.email").value(CUST_EMAIL))
-	            .andExpect(jsonPath("$.pin").value(CUST_PIN))
-				.andExpect(jsonPath("$.status").value(CUST_STATUS_EMAILMOBILE))
-				.andExpect(jsonPath("$.mobilePin").value(CUST_MOBILEPIN));
-			  //.andExpect(jsonPath("$.emailHash").value(CUST_EMAILHASH));
+	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
+	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
+	            .andExpect(jsonPath("$.email").value(standardEmailMobileCustomer().getEmail()))
+	            .andExpect(jsonPath("$.pincode").value(standardEmailMobileCustomer().getPincode()))
+				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailMobileCustomer().getIsEmailVerified()))
+				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailMobileCustomer().getIsMobileVerified()))
+				.andExpect(jsonPath("$.insertTime").exists())
+				.andExpect(jsonPath("$.updateTime").exists())
+				.andExpect(jsonPath("$.updatedBy").value(standardEmailMobileCustomer().getUpdatedBy()));
+				
 	}
 	
+	@Test
+	public void updateMobileVerificationStatus() throws Exception
+	{
+		when(customerQuickRegisterRepository.updateMobileVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(),
+				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy())).thenReturn(new Integer(1));
+		
 
+		this.mockMvc.perform(
+	            post("/customer/quickregister/updateMobileVerificationStatus")
+	                    .content(standardJsonUpdateEmailMobileVerificationStatus())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk());
+	}
+	
 	
 	@Test
-	public void updateStatusByCustomerId() throws Exception
+	public void updateEmailVerificationStatus() throws Exception
 	{
-		when(customerQuickRegisterRepository.updateStatusAndMobileVerificationAttemptsByCustomerId(standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId().getCustomerId(),
-				standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId().getStatus(),standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId().getStatusChangeTime(),standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId().getMobileVerificationAttempts())).thenReturn(1);
+		when(customerQuickRegisterRepository.updateEmailVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(),
+				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy())).thenReturn(new Integer(1));
 		
+
+		this.mockMvc.perform(
+	            post("/customer/quickregister/updateEmailVerificationStatus")
+	                    .content(standardJsonUpdateEmailMobileVerificationStatus())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk());
+	}
+	
+	
+	@Test
+	public void getLoginDetailsByCustomerId() throws Exception
+	{
+		when(customerAuthenticationDetailsRepository.findByCustomerId(CUST_ID)).thenReturn(standardCustomerEmailAuthenticationDetails());
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/updateStatusAndMobileVerificationAttempts")
-	                    .content(standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO(standardUpdateStatusAndMobileVerificationAttemptsWithCustomerId()))
+	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByCustomerId")
+	                    .content(standardJsonCustomerId(CUST_ID))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailAuthenticationDetails().getMobile()))
+	           // .andExpect(jsonPath("$.password").value(null))
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailAuthenticationDetails().getLastUnsucessfullAttempts()));
+		
+	}
+	
+	
+	@Test
+	public void updatePasswordAndPasswordTypeAndCounts() throws Exception
+	{
+		when(customerAuthenticationDetailsRepository.updatePasswordAndPasswordTypeAndCounts
+				(standardUpdatePasswordAndPasswordTypeDTO().getCustomerId(), standardUpdatePasswordAndPasswordTypeDTO().getPassword(),
+						standardUpdatePasswordAndPasswordTypeDTO().getPasswordType(), ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/customerAuthentication/updatePasswordAndPasswordTypeAndCounts")
+	                    .content(standardJsonUpdatePasswordAndPasswordType())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("1"));
 		
+		
 	}
 	
-	
 	@Test
-	public void updateEmailHash() throws Exception
+	public void updateEmailPasswordAndPasswordTypeAndCounts() throws Exception
 	{
-		when(customerQuickRegisterRepository.updateEmailHash(standardUpdateEmailHashDTO().getCustomerId(),
-					standardUpdateEmailHashDTO().getEmailHash(),standardUpdateEmailHashDTO().getUpdateTime())).thenReturn(1);
+		when(customerAuthenticationDetailsRepository.updateEmailPasswordAndPasswordTypeAndCounts
+				(standardUpdateEmailPassword().getCustomerId(), standardUpdateEmailPassword().getEmailPassword(),
+						"Default", ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
 		
-
 		this.mockMvc.perform(
-	            post("/customer/quickregister/updateEmailHash")
-	                    .content(standardJsonUpdateEmailHashDTO(standardUpdateEmailHashDTO()))
+	            post("/customer/quickregister/customerAuthentication/updateEmailPasswordAndPasswordTypeAndCounts")
+	                    .content(standardJsonUpdateEmailPassword())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("1"));
 		
+		
 	}
-
 	
 	@Test
-	public void updateMobilePin() throws Exception
+	public void incrementResendCount() throws Exception
 	{
-		when(customerQuickRegisterRepository.updateMobilePin(standardUpdateMobilePinDTO().getCustomerId(),
-				standardUpdateMobilePinDTO().getMobilePin(),standardUpdateMobilePinDTO().getUpdateTime())).thenReturn(1);
+		when(customerAuthenticationDetailsRepository.incrementResendCount(standardCustomerId().getCustomerId())).thenReturn(1);
 		
-
 		this.mockMvc.perform(
-	            post("/customer/quickregister/updateMobilePin")
-	                    .content(standardJsonUpdateMobilePinDTO(standardUpdateMobilePinDTO()))
+	            post("/customer/quickregister/customerAuthentication/incrementResendCount")
+	                    .content(standardJsonCustomerId(CUST_ID))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("1"));
 		
+		
 	}
-
-
+	
 	@Test
-	public void updateEmailHashAndMobilePinSentTime() throws Exception
+	public void incrementLastUnsucessfullAttempts() throws Exception
 	{
-		when(customerQuickRegisterRepository.updateEmailHashAndMobilePinSentTime(standardUpdateEmailHashAndMobilePinSentTimeDTO().getCustomerId(),
-				standardUpdateEmailHashAndMobilePinSentTimeDTO().getEmailSentTime(),standardUpdateEmailHashAndMobilePinSentTimeDTO().getMobilePinSentTime())).thenReturn(1);
+		when(customerAuthenticationDetailsRepository.incrementLastUnsucessfullAttempts(standardCustomerId().getCustomerId())).thenReturn(1);
 		
-
 		this.mockMvc.perform(
-	            post("/customer/quickregister/updateEmailHashAndMobilePinSentTime")
-	                    .content(standardJsonUpdateEmailHashAndMobilePinSentTimeDTO(standardUpdateEmailHashAndMobilePinSentTimeDTO()))
+	            post("/customer/quickregister/customerAuthentication/incrementLastUnsucessfullAttempts")
+	                    .content(standardJsonCustomerId(CUST_ID))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("1"));
 		
+		
 	}
-
-
+	
+	
 	
 
 }
