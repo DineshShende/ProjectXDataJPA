@@ -12,6 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+import com.projectx.data.util.validator.CustomerQuickRegisterEntityValidator;
+
 
 @EnableAutoConfiguration
 @EnableJpaRepositories(basePackages="com.projectx.data.repository")
@@ -24,6 +26,13 @@ public class Application {
 
 		SpringApplication.run(Application.class, args);
 
+	}
+	
+	
+	@Bean
+	public CustomerQuickRegisterEntityValidator customerQuickRegisterValidator()
+	{
+		return new CustomerQuickRegisterEntityValidator();
 	}
 	
 	/*
