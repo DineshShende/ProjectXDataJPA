@@ -4,15 +4,13 @@ package com.projectx.data.repository.quickregister;
 
 import java.util.Optional;
 
-import javax.persistence.LockModeType;
-import javax.persistence.NamedNativeQuery;
+
 import javax.transaction.Transactional;
 
 import com.projectx.data.domain.quickregister.AuthenticationDetails;
 import com.projectx.data.domain.quickregister.AuthenticationDetailsKey;
 
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

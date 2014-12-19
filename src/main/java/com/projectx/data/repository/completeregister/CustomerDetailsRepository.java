@@ -1,5 +1,8 @@
 package com.projectx.data.repository.completeregister;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +16,16 @@ public interface CustomerDetailsRepository extends CrudRepository<CustomerDetail
 	@Override
 	CustomerDetails save(CustomerDetails customerDetails);
 	
-	//@Query(value="update customerdetails set ismobileverified=:ismobileVerified where customerid=:customerId",nativeQuery=true)
-	//Integer updateIsMobileVerified(@Param("customerId")Long customerId,@Param("isMobileVerified")Boolean isMobileVerified);
 	
+	@Transactional
+	@Modifying
+	@Query(value="update customerdetails set ismobileverified=:isMobileVerified where customerid=:customerId",nativeQuery=true)
+	Integer updateIsMobileVerified(@Param("customerId")Long customerId,@Param("isMobileVerified")Boolean isMobileVerified);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update customerdetails set issecondarymobileverified=:isSeconadryMobileVerified where customerid=:customerId",nativeQuery=true)
+	Integer updateIsSecondaryMobileVerified(@Param("customerId")Long customerId,@Param("isSeconadryMobileVerified")Boolean isSecondaryMobileVerified);
+		
+		
 }

@@ -41,6 +41,9 @@ dependencies {
 	compile("com.github.springtestdbunit:spring-test-dbunit:1.1.0")
 	compile('org.dbunit:dbunit:2.5.0')
 	
+	compile('org.glassfish:javax.json:1.0.4')
+	
+	
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile('org.hsqldb:hsqldb:2.0.0')
     compile("mysql:mysql-connector-java:5.1.6")

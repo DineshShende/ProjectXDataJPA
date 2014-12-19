@@ -10,6 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.projectx.data.util.serializer.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 
 
@@ -48,22 +54,28 @@ public class CustomerDetails {
 	@Column(name="LANGUAGE")
 	private String language;
 	
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="BUSINESSDOMAIN")
 	private String  businessDomain;
 	
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="NAMEOFFIRM")
 	private String nameOfFirm;
 	
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="FIRMADDRESSID")
 	private Address firmAddressId;
 	
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="SECONARYMOBILE")
 	private Long secondaryMobile;
 	
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="ISSECONDARYMOBILEVERIFIED")
 	private Boolean isSecondaryMobileVerified;
 	
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="SECONDARYEMAIL")
 	private String secondaryEmail;
 	
@@ -141,14 +153,14 @@ public class CustomerDetails {
 
 
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
 
-
-
+	
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
@@ -317,27 +329,28 @@ public class CustomerDetails {
 
 
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getInsertTime() {
 		return insertTime;
 	}
 
 
 
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
 	}
 
 
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getUpdateTime() {
 		return updateTime;
 	}
 
 
 
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}

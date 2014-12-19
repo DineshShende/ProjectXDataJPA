@@ -30,7 +30,7 @@ import com.projectx.data.config.Application;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Test")
+@ActiveProfiles(value="Prod")
 public class EmailVerificationControllerWACTest {
 
 	@Autowired
