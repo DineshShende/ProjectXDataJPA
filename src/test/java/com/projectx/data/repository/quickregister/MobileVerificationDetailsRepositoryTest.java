@@ -173,4 +173,20 @@ public class MobileVerificationDetailsRepositoryTest {
 	}
 	
 	
+	@Test
+	public void deleteByKey()
+	{
+		
+		assertEquals(0, customerMobileVerificationDetailsRepository.count());
+		
+		MobileVerificationDetails mobileVerification=customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
+		
+		assertEquals(1, customerMobileVerificationDetailsRepository.count());
+	
+		customerMobileVerificationDetailsRepository.delete(mobileVerification.getKey());
+		
+		assertEquals(0, customerMobileVerificationDetailsRepository.count());
+		
+	}
+	
 }

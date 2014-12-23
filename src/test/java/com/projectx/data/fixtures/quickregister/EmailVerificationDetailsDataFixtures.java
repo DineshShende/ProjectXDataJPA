@@ -4,6 +4,7 @@ import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.
 
 import java.util.Date;
 
+import com.google.gson.Gson;
 import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailDTO;
@@ -12,13 +13,15 @@ import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTim
 
 public class EmailVerificationDetailsDataFixtures {
 	
-	public static String CUST_EMAIL_TYPE_PRIMARY="PRIMARY";
-	public static String CUST_EMAIL_TYPE_SECONDARY="SECONDARY";
+	public static Integer CUST_EMAIL_TYPE_PRIMARY=1;
+	public static Integer CUST_EMAIL_TYPE_SECONDARY=2;
 	public static Integer CUST_RESEND_COUNT=0;
 	
 	public static Date CUST_DATE=new Date();
 	public static String CUST_UPDATED_BY="CUST_ONLINE";
 
+	public static Gson gson=new Gson();
+	
 	public static EmailVerificationDetails standardCustomerEmailVerificationDetails()
 	{
 		return new EmailVerificationDetails(standardEmailVerificationKey(), CUST_EMAIL_TYPE_PRIMARY, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
@@ -73,6 +76,14 @@ public class EmailVerificationDetailsDataFixtures {
 				+ "\"customerType\":"+standardCustomerIdTypeEmailDTO().getCustomerType()+","
 				
 				+ "\"email\":\""+standardCustomerIdTypeEmailDTO().getEmail()+"\"}";
+	}
+	
+	
+	public static String standardJsonEmailKey()
+	{
+		System.out.println(gson.toJson(standardCustomerEmailVerificationDetails().getKey()));
+		
+		return gson.toJson(standardCustomerEmailVerificationDetails().getKey());
 	}
 	
 	public static String standardJsonUpdateEmailHashAndEmailHashSentTimeAndResendCountDTO()

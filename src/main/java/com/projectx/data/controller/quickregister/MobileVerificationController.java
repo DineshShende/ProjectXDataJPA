@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
@@ -79,6 +80,14 @@ public class MobileVerificationController {
 		return updateStatus;
 		
 	}
+	
+	@RequestMapping(value="/deleteByKey",method=RequestMethod.POST)
+	public Boolean deleteByKey(@RequestBody MobileVerificationKey key)
+	{
+		customerMobileVerificationDetailsRepository.delete(key);
+		
+		return true;
+	}
 		
 	@RequestMapping(value="/getCount")
 	public Integer mobileVerificationCount()
@@ -104,7 +113,7 @@ public class MobileVerificationController {
 	@RequestMapping(value="/test")
 	public MobileVerificationDetails getMobileVerificationDetails()
 	{
-		return new MobileVerificationDetails(new MobileVerificationKey(212L, 1, 9960821869L), "PRIMARY", 10000, 0, 0, null, null, null);
+		return new MobileVerificationDetails(new MobileVerificationKey(212L, 1, 9960821869L), 1, 10000, 0, 0, null, null, null);
 	}
 	
 }

@@ -165,7 +165,7 @@ public class QuickRegisterController {
 	@RequestMapping(value="/test")
 	public MobileVerificationDetails test()
 	{
-		return new MobileVerificationDetails(new MobileVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, CUST_MOBILE), "SECONDARY", CUST_MOBILEPIN, ZERO_COUNT, ZERO_COUNT, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
+		return new MobileVerificationDetails(new MobileVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, CUST_MOBILE), 2, CUST_MOBILEPIN, ZERO_COUNT, ZERO_COUNT, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
 	}
 	/*
 	@RequestMapping(value="/customer")

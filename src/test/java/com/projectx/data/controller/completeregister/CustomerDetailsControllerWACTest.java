@@ -3,6 +3,7 @@ package com.projectx.data.controller.completeregister;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -140,6 +141,61 @@ public class CustomerDetailsControllerWACTest {
 	            
 		
 	}
+	
+	@Test
+	public void findOne() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk());
+	 
+		
+		this.mockMvc.perform(
+	            get("/customer/completeregister/212"))
+	             .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetails().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardCustomerDetails().getLastName()))
+	            .andExpect(jsonPath("$.homeAddressId.customerType").value(standardCustomerDetails().getHomeAddressId().getCustomerType()))
+	            .andExpect(jsonPath("$.homeAddressId.addressLine").value(standardCustomerDetails().getHomeAddressId().getAddressLine()))
+	            .andExpect(jsonPath("$.homeAddressId.city").value(standardCustomerDetails().getHomeAddressId().getCity()))
+	            .andExpect(jsonPath("$.homeAddressId.district").value(standardCustomerDetails().getHomeAddressId().getDistrict()))
+	            .andExpect(jsonPath("$.homeAddressId.state").value(standardCustomerDetails().getHomeAddressId().getState()))
+	            .andExpect(jsonPath("$.homeAddressId.pincode").value(standardCustomerDetails().getHomeAddressId().getPincode()))
+	            .andExpect(jsonPath("$.homeAddressId.updatedBy").value(standardCustomerDetails().getHomeAddressId().getUpdatedBy()))
+	            .andExpect(jsonPath("$.homeAddressId.insertTime").exists())
+	            .andExpect(jsonPath("$.homeAddressId.updateTime").exists())
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerDetails().getMobile()))
+	            .andExpect(jsonPath("$.isMobileVerified").value(standardCustomerDetails().getIsMobileVerified()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerDetails().getEmail()))
+	            .andExpect(jsonPath("$.isEmailVerified").value(standardCustomerDetails().getIsEmailVerified()))
+	            .andExpect(jsonPath("$.language").value(standardCustomerDetails().getLanguage()))
+	            .andExpect(jsonPath("$.firmAddressId.customerType").value(standardCustomerDetails().getFirmAddressId().getCustomerType()))
+	            .andExpect(jsonPath("$.firmAddressId.addressLine").value(standardCustomerDetails().getFirmAddressId().getAddressLine()))
+	            .andExpect(jsonPath("$.firmAddressId.city").value(standardCustomerDetails().getFirmAddressId().getCity()))
+	            .andExpect(jsonPath("$.firmAddressId.district").value(standardCustomerDetails().getFirmAddressId().getDistrict()))
+	            .andExpect(jsonPath("$.firmAddressId.state").value(standardCustomerDetails().getFirmAddressId().getState()))
+	            .andExpect(jsonPath("$.firmAddressId.pincode").value(standardCustomerDetails().getFirmAddressId().getPincode()))
+	            .andExpect(jsonPath("$.firmAddressId.updatedBy").value(standardCustomerDetails().getFirmAddressId().getUpdatedBy()))
+	            .andExpect(jsonPath("$.firmAddressId.insertTime").exists())
+	            .andExpect(jsonPath("$.firmAddressId.updateTime").exists())
+	            .andExpect(jsonPath("$.businessDomain").value(standardCustomerDetails().getBusinessDomain()))
+	            .andExpect(jsonPath("$.nameOfFirm").value(standardCustomerDetails().getNameOfFirm()))
+	            .andExpect(jsonPath("$.updatedBy").value(standardCustomerDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.secondaryMobile").value(standardCustomerDetails().getSecondaryMobile()))
+	            .andExpect(jsonPath("$.isSecondaryMobileVerified").value(standardCustomerDetails().getIsSecondaryMobileVerified()))
+	            .andExpect(jsonPath("$.secondaryEmail").value(standardCustomerDetails().getSecondaryEmail()))
+	            .andExpect(jsonPath("$.insertTime").exists())
+	            .andExpect(jsonPath("$.updateTime").exists());		
+	             
+	    
+		
+	}
+	
 
 	@Test
 	public void updateFirmAddress() throws Exception

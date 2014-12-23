@@ -1,5 +1,7 @@
 package com.projectx.data.controller.quickregister;
 
+import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.standardJsonCustomerEmailVerificationDetails;
+import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.standardJsonEmailKey;
 import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -44,7 +46,7 @@ public class MobileVerificationControllerWACTest {
 	{
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
 	
-		//this.mockMvc.perform(get("/customer/quickregister/mobileVerification/clearForTesting"));
+		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/clearForTesting"));
 	}
 	
 	
@@ -200,5 +202,37 @@ public class MobileVerificationControllerWACTest {
 				.andExpect(content().string("1"));
 	}
 	
+	@Test
+	public void deleteByKey() throws Exception
+	{
+	
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+	
+		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/getCount"))
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(content().string("1"));
+
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/deleteByKey")
+	                    .content(standardJsonMobileKey())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+                .andExpect(content().string("true"));
+
+		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/getCount"))
+		.andDo(print())
+		.andExpect(status().isOk())
+		.andExpect(content().string("0"));
+		
+	}
+
 
 }

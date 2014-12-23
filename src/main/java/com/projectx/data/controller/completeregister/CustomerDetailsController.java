@@ -52,6 +52,8 @@ public class CustomerDetailsController {
 	{
 		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateHomeAddress(addressDTO);
 		
+		System.out.println(updatedEntity);
+		
 		return updatedEntity;
 	}
 	

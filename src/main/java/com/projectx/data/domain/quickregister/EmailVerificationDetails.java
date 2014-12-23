@@ -24,7 +24,7 @@ public class EmailVerificationDetails <ID extends Serializable> implements Persi
 	private EmailVerificationKey key;
 	
 	@Column(name="EMAILTYPE")
-	private String emailType;
+	private Integer emailType;
 	
 	@Column(name="EMAILHASH")
 	private String emailHash;
@@ -52,7 +52,7 @@ public class EmailVerificationDetails <ID extends Serializable> implements Persi
 
 
 
-	public EmailVerificationDetails(EmailVerificationKey key, String emailType,
+	public EmailVerificationDetails(EmailVerificationKey key, Integer emailType,
 			String emailHash, Date emailHashSentTime, Integer resendCount,
 			Date insertTime, Date updateTime, String updatedBy) {
 		this.key = key;
@@ -79,13 +79,13 @@ public class EmailVerificationDetails <ID extends Serializable> implements Persi
 
 
 
-	public String getEmailType() {
+	public Integer getEmailType() {
 		return emailType;
 	}
 
 
 
-	public void setEmailType(String emailType) {
+	public void setEmailType(Integer emailType) {
 		this.emailType = emailType;
 	}
 

@@ -48,6 +48,7 @@ public interface MobileVerificationDetailsRepository extends
 	Integer incrementResendCount(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobile")Long mobile);
 	
 	
-	
+	@Override
+	public void delete(MobileVerificationKey id);
 
 }

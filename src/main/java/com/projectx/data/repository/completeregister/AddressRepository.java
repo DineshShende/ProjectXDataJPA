@@ -6,4 +6,5 @@ import com.projectx.data.domain.completeregister.Address;
 
 public interface AddressRepository extends CrudRepository<Address, Long> {
 
+	
 }

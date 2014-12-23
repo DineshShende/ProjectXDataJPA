@@ -2,6 +2,7 @@ package com.projectx.data.fixtures.completeregister;
 
 import java.util.Date;
 
+import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.Address;
 
 public class AddressDataFixture {
@@ -24,12 +25,23 @@ public class AddressDataFixture {
 	
 	public static String ADDRESS_UPDATED_BY="CUST_ONLINE";
 	
-	
+	private static Gson gson=new Gson();
 	
 	public static Address standardAddress()
 	{
 		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, ADDRESS_STATE, ADDRESS_PINCODE, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
 	}
 	
+	public static String standardJsonAddressId()
+	{
+		
+		return "{\"addressId\":212}";
+	}
 	
+	public static String standardJsonAddress()
+	{
+		System.out.println(gson.toJson(standardAddress()));
+		
+		return gson.toJson(standardAddress());
+	}
 }

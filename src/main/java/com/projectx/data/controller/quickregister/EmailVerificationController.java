@@ -74,6 +74,14 @@ public class EmailVerificationController {
 		
 	}
 	
+	@RequestMapping(value="/deleteByKey",method=RequestMethod.POST)
+	public Boolean deleteByKey(@RequestBody EmailVerificationKey key)
+	{
+		customerEmailVerificationDetailsRepository.delete(key);
+		
+		return true;
+	}
+	
 	@RequestMapping(value="/getCount")
 	public Integer getEmailVerificationCount()
 	{
@@ -97,7 +105,7 @@ public class EmailVerificationController {
 	@RequestMapping(value="/test")
 	public EmailVerificationDetails getEmailVerificationDetails()
 	{
-		return new EmailVerificationDetails(new EmailVerificationKey(212L,1, "dineshshe@gmail.com") , "SECONDARY", "skjgwjhsgfjguriueyiryeyriuyeiur", new Date(), 0,new Date(), new Date(), "ME");
+		return new EmailVerificationDetails(new EmailVerificationKey(212L,1, "dineshshe@gmail.com") , 2, "skjgwjhsgfjguriueyiryeyriuyeiur", new Date(), 0,new Date(), new Date(), "ME");
 	}
 	
 }

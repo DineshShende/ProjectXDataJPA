@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.quickregister.EmailVerificationDetails;
+import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
@@ -56,7 +57,7 @@ public class EmailVerificationRepositoryTest {
 		
 		try{
 		customerEmailVericationDetailsRepository.save(new EmailVerificationDetails(standardEmailVerificationKey(), 
-				"SECONDARY", "skjfhkfhakjfh78658746884r", new Date(), 0, new Date(), new Date(), "CUST_TEST"));
+				2, "skjfhkfhakjfh78658746884r", new Date(), 0, new Date(), new Date(), "CUST_TEST"));
 		}catch(DataIntegrityViolationException e)
 		{
 			
@@ -145,5 +146,19 @@ public class EmailVerificationRepositoryTest {
 	}
 	
 	
+	@Test
+	public void deleteByKey()
+	{
+		assertEquals(0, customerEmailVericationDetailsRepository.count());
+		
+		EmailVerificationDetails savedEntity= customerEmailVericationDetailsRepository.save(standardCustomerEmailVerificationDetails());
+		
+		assertEquals(1, customerEmailVericationDetailsRepository.count());
+		
+		customerEmailVericationDetailsRepository.delete(savedEntity.getKey());
+		
+		assertEquals(0, customerEmailVericationDetailsRepository.count());
+		
+	}
 
 }

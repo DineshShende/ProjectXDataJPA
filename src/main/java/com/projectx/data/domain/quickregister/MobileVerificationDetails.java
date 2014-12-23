@@ -29,7 +29,7 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 	
 
 	@Column(name="MOBILETYPE")
-	private String mobileType;
+	private Integer mobileType;
 	
 	@Column(name="MOBILEPIN")
 	private Integer mobilePin;
@@ -56,7 +56,7 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 	
 
 	public MobileVerificationDetails(MobileVerificationKey key,
-			String mobileType, Integer mobilePin,
+			Integer mobileType, Integer mobilePin,
 			Integer mobileVerificationAttempts, Integer resendCount,
 			Date insertTime, Date updateTime, String updatedBy) {
 		super();
@@ -80,11 +80,11 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 		this.key = key;
 	}
 
-	public String getMobileType() {
+	public Integer getMobileType() {
 		return mobileType;
 	}
 
-	public void setMobileType(String mobileType) {
+	public void setMobileType(Integer mobileType) {
 		this.mobileType = mobileType;
 	}
 

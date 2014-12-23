@@ -43,4 +43,7 @@ public interface EmailVerificationDetailsRepository extends CrudRepository<Email
 	@Override
 	public void deleteAll();
 	
+	@Override
+	public void delete(EmailVerificationKey id);
+		
 }
