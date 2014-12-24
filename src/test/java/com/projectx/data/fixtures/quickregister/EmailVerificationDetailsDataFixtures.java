@@ -47,35 +47,18 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static String standardJsonCustomerEmailVerificationDetails()
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
+			
+		System.out.println(gson.toJson(standardCustomerEmailVerificationDetails()));
 		
-		//{"key":{"customerId":212,"customerType":1,"email":"dineshshe@gmail.com"},
-		
-		jsonBuilder.append("{\"key\":{\"customerId\":"+standardEmailVerificationKey().getCustomerId()+",\"customerType\":"+standardEmailVerificationKey().getCustomerType()+",\"email\":\""+standardEmailVerificationKey().getEmail()+"\"},");
-		//jsonBuilder.append("\"email\":\""+standardCustomerEmailVerificationDetails().getEmail()+"\",");
-		jsonBuilder.append("\"emailType\":\""+standardCustomerEmailVerificationDetails().getEmailType()+"\",");
-		jsonBuilder.append("\"emailHash\":\""+standardCustomerEmailVerificationDetails().getEmailHash()+"\",");
-		jsonBuilder.append("\"emailHashSentTime\":"+standardCustomerEmailVerificationDetails().getEmailHashSentTime().getTime()+",");
-		jsonBuilder.append("\"resendCount\":"+standardCustomerEmailVerificationDetails().getResendCount()+"}");
-		
-		
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
+		return gson.toJson(standardCustomerEmailVerificationDetails());
 	}
 	
 	public static String standardJsonCustomerIdTypeEmail()
 	{
-		System.out.println("{\"customerId\":"+standardCustomerIdTypeEmailDTO().getCustomerId()+","
-				+ "\"customerType\":"+standardCustomerIdTypeEmailDTO().getCustomerType()+","
-				
-				+ "\"email\":\""+standardCustomerIdTypeEmailDTO().getEmail()+"\"}");
 		
-		return "{\"customerId\":"+standardCustomerIdTypeEmailDTO().getCustomerId()+","
-				+ "\"customerType\":"+standardCustomerIdTypeEmailDTO().getCustomerType()+","
-				
-				+ "\"email\":\""+standardCustomerIdTypeEmailDTO().getEmail()+"\"}";
+		System.out.println(gson.toJson(standardCustomerIdTypeEmailDTO()));
+		
+		return gson.toJson(standardCustomerIdTypeEmailDTO());
 	}
 	
 	
@@ -88,18 +71,12 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static String standardJsonUpdateEmailHashAndEmailHashSentTimeAndResendCountDTO()
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
+				
+		System.out.println(gson.toJson(standardUpdateEmailHashAndEmailHashSentTimeDTO()));
 		
-		jsonBuilder.append("{\"customerId\":"+standardUpdateEmailHashAndEmailHashSentTimeDTO().getCustomerId()+",");
-		jsonBuilder.append("\"customerType\":"+standardCustomerIdTypeEmailDTO().getCustomerType()+",");
-		jsonBuilder.append("\"email\":\""+standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmail()+"\",");
-		jsonBuilder.append("\"emailHash\":\""+standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailHash()+"\",");
-		jsonBuilder.append("\"emailHashSentTime\":"+standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailHashSentTime().getTime()+",");
-		jsonBuilder.append("\"resendCount\":"+standardUpdateEmailHashAndEmailHashSentTimeDTO().getResendCount()+"}");
+		return gson.toJson(standardUpdateEmailHashAndEmailHashSentTimeDTO());
 		
-		System.out.println(jsonBuilder.toString());
 		
-		return jsonBuilder.toString();
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.projectx.data.controller.quickregister;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,13 +132,13 @@ public class AuthenticationController {
 	
 	//***********************Highly Dangerous***************************************/
 	
-	/*
+	
 	@RequestMapping(value="/test")
 	public AuthenticationDetails returnAuthenticationDetails()
 	{
-		return new AuthenticationDetails(new AuthenticationDetailsKey(212L, 1), "dienshshe@gmail.com", 9960821869L, "123456", "Default","1234356ujhgfdghjh", 0, 0);
+		return new AuthenticationDetails(new AuthenticationDetailsKey(212L, 1), "dienshshe@gmail.com", 9960821869L, "123456", "Default","1234356ujhgfdghjh", 0, 0,new Date(),new Date(),"CUST_ONLINE");
 		
 		//return new AuthenticationDetails(key, "dienshshe@gmail.com", 9960821869L, password, passwordType, emailPassword, resendCount, lastUnsucessfullAttempts)
 	}
-	*/
+	
 }

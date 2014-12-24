@@ -34,11 +34,7 @@ public interface QuickRegisterRepository extends
 		 Optional<QuickRegisterEntity> findByMobile(Long mobile);
 		 
 
-		@Override
-		public void deleteAll(); 
-		 
-
-		 
+	 
 		@Transactional
 		 @Modifying
 		 @Query(value="update quickregisterentity set ISMOBILEVERIFIED=:status,UPDATETIME=:updateTime,"

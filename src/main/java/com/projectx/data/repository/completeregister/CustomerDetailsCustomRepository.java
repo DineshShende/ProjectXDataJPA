@@ -89,6 +89,11 @@ public class CustomerDetailsCustomRepository {
 		return customerDetailsRepository.updateIsSecondaryMobileVerified(customerId, status);
 	}
 	
+	public Integer updateEmailVerificationStatus(Long customerId,Boolean status)
+	{
+		return customerDetailsRepository.updateIsEmailVerified(customerId, status);
+	}
+	
 	public Long count()
 	{
 		return customerDetailsRepository.count();

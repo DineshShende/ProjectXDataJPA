@@ -152,10 +152,12 @@ public class QuickRegisterController {
 	}
 	
 	//***********************Highly Dangerous***************************************/
-	@RequestMapping(value="/clearForTesting")
+	@RequestMapping(value="/clearForTesting",method=RequestMethod.GET)
 	public Boolean clearTableForTesting()
 	{
+		//System.out.println("Here");
 		 customerQuickRegisterRepository.deleteAll();
+		//System.out.println(customerQuickRegisterRepository.count()); 
 		 
 		 return true;
 	}
@@ -167,12 +169,13 @@ public class QuickRegisterController {
 	{
 		return new MobileVerificationDetails(new MobileVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, CUST_MOBILE), 2, CUST_MOBILEPIN, ZERO_COUNT, ZERO_COUNT, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
 	}
-	/*
+	
 	@RequestMapping(value="/customer")
-	public MobileVerificationDetails show()
+	public QuickRegisterEntity show()
 	{
-		return new MobileVerificationDetails(CUST_ID, CUST_MOBILE, "PRIMARY", CUST_MOBILEPIN, ZERO_COUNT, ZERO_COUNT);
+		return standardEmailMobileCustomer();
+				
 	}
-	*/
+	
 	
 }

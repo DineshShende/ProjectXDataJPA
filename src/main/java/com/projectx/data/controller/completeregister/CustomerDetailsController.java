@@ -11,7 +11,7 @@ import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.repository.completeregister.CustomerDetailsCustomRepository;
 import com.projectx.data.repository.completeregister.CustomerDetailsRepository;
 import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateVerificationStatusDTO;
 
 
 @RestController
@@ -52,13 +52,13 @@ public class CustomerDetailsController {
 	{
 		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateHomeAddress(addressDTO);
 		
-		System.out.println(updatedEntity);
+		//System.out.println(updatedEntity);
 		
 		return updatedEntity;
 	}
 	
 	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
-	public Integer updateMobileVerificationStatus(@RequestBody UpdateMobileVerificationStatusDTO verificationStatusDTO)
+	public Integer updateMobileVerificationStatus(@RequestBody UpdateVerificationStatusDTO verificationStatusDTO)
 	{
 		Integer updateStatus=customerDetailsCustomRepository.updateMobileVerificationStatus(verificationStatusDTO.getCustomerId(),
 				verificationStatusDTO.getStatus());
@@ -67,9 +67,18 @@ public class CustomerDetailsController {
 	}
 	
 	@RequestMapping(value="/updateSecondaryMobileVerificationStatus",method=RequestMethod.POST)
-	public Integer updateSecondaryMobileVerificationStatus(@RequestBody UpdateMobileVerificationStatusDTO verificationStatusDTO)
+	public Integer updateSecondaryMobileVerificationStatus(@RequestBody UpdateVerificationStatusDTO verificationStatusDTO)
 	{
 		Integer updateStatus=customerDetailsCustomRepository.updateSecondaryMobileVerificationStatus(verificationStatusDTO.getCustomerId(),
+				verificationStatusDTO.getStatus());
+		
+		return updateStatus;
+	}
+	
+	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
+	public Integer updateEmailVerificationStatus(@RequestBody UpdateVerificationStatusDTO verificationStatusDTO)
+	{
+		Integer updateStatus=customerDetailsCustomRepository.updateEmailVerificationStatus(verificationStatusDTO.getCustomerId(),
 				verificationStatusDTO.getStatus());
 		
 		return updateStatus;

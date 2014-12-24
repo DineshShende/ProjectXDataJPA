@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.Address;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateVerificationStatusDTO;
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 
@@ -82,9 +82,9 @@ public class CustomerDetailsDataFixtures {
 				new Date(), new Date(), "CUST_ONLINE"));
 	}
 	
-	public static UpdateMobileVerificationStatusDTO standardMobileVerificationStatusDTO()
+	public static UpdateVerificationStatusDTO standardMobileVerificationStatusDTO()
 	{
-		return new UpdateMobileVerificationStatusDTO(CUST_ID, true);
+		return new UpdateVerificationStatusDTO(CUST_ID, true);
 	}
 	
 	
@@ -135,7 +135,7 @@ public class CustomerDetailsDataFixtures {
 		return gson.toJson(standardUpdateAddressDTO());
 	}
 	
-	public static String standardJsonUpdateMobileVerificationStatus()
+	public static String standardJsonUpdateVerificationStatus()
 	{
 		System.out.println(gson.toJson(standardMobileVerificationStatusDTO()));
 		

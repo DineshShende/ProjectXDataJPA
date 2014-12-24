@@ -26,6 +26,10 @@ public interface CustomerDetailsRepository extends CrudRepository<CustomerDetail
 	@Modifying
 	@Query(value="update customerdetails set issecondarymobileverified=:isSeconadryMobileVerified where customerid=:customerId",nativeQuery=true)
 	Integer updateIsSecondaryMobileVerified(@Param("customerId")Long customerId,@Param("isSeconadryMobileVerified")Boolean isSecondaryMobileVerified);
-		
+	
+	@Transactional
+	@Modifying
+	@Query(value="update customerdetails set isemailverified=:isEmailVerified where customerid=:customerId",nativeQuery=true)
+	Integer updateIsEmailVerified(@Param("customerId")Long customerId,@Param("isEmailVerified")Boolean isEmailVerified);
 		
 }

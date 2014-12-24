@@ -2,6 +2,11 @@ package com.projectx.rest.domain.quickregister;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.serializer.JsonDateDeSerializer;
+import com.projectx.data.util.serializer.JsonDateSerializer;
+
 public class UpdateEmailMobileVerificationStatus {
 
 	private Long customerId;
@@ -40,11 +45,11 @@ public class UpdateEmailMobileVerificationStatus {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getUpdateTime() {
 		return updateTime;
 	}
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}

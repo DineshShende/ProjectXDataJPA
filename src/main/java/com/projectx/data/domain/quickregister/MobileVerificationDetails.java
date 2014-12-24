@@ -6,24 +6,24 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.data.domain.Persistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.serializer.JsonDateDeSerializer;
+import com.projectx.data.util.serializer.JsonDateSerializer;
 
 @Entity
 @Table(name="mobileverificationdetails")
-public class MobileVerificationDetails <ID extends Serializable> implements Persistable<ID>{
+public class MobileVerificationDetails <ID extends Serializable>{
 
-	private static final long serialVersionUID = 1L;
-
-
+	
 	@EmbeddedId
 	private MobileVerificationKey key;
 	
@@ -40,11 +40,14 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 	@Column(name="RESENDCOUNT")
 	private Integer resendCount;
 	
+	
 	@Column(name="INSERTIME")
 	private Date insertTime;
 	
+	
 	@Column(name="UPDATETIME")
 	private Date updateTime;
+	
 	
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
@@ -104,6 +107,7 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 		this.mobileVerificationAttempts = mobileVerificationAttempts;
 	}
 
+	
 	public Integer getResendCount() {
 		return resendCount;
 	}
@@ -113,25 +117,25 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 	}
 
 	
-	
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getInsertTime() {
 		return insertTime;
 	}
 
 
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
 	}
 
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getUpdateTime() {
 		return updateTime;
 	}
 
 
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
@@ -242,7 +246,7 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 	}
 
 
-
+/*
 	@JsonIgnore
 	@Override
 	public ID getId() {
@@ -253,8 +257,8 @@ public class MobileVerificationDetails <ID extends Serializable> implements Pers
 	@JsonIgnore
 	private @Transient boolean isNew = true;
 
-	  @Override
 	  @JsonIgnore
+	  @Override
 	  public boolean isNew() {
 	    return isNew;
 	  }

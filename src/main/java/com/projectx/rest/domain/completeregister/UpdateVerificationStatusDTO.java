@@ -1,16 +1,16 @@
 package com.projectx.rest.domain.completeregister;
 
-public class UpdateMobileVerificationStatusDTO {
+public class UpdateVerificationStatusDTO {
 
 	private Long customerId;
 	
 	private Boolean status;
 
-	public UpdateMobileVerificationStatusDTO() {
+	public UpdateVerificationStatusDTO() {
 
 	}
 
-	public UpdateMobileVerificationStatusDTO(Long customerId, Boolean status) {
+	public UpdateVerificationStatusDTO(Long customerId, Boolean status) {
 		super();
 		this.customerId = customerId;
 		this.status = status;
@@ -56,7 +56,7 @@ public class UpdateMobileVerificationStatusDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UpdateMobileVerificationStatusDTO other = (UpdateMobileVerificationStatusDTO) obj;
+		UpdateVerificationStatusDTO other = (UpdateVerificationStatusDTO) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;

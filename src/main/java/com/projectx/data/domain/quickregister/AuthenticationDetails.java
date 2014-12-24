@@ -5,21 +5,24 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import com.projectx.data.util.serializer.*;
 
 @Entity
 @Table(name="AUTHENTICATIONDETAILS")
-public class AuthenticationDetails {
+public class AuthenticationDetails  {
 
 	@EmbeddedId
 	private AuthenticationDetailsKey key;
 	
-	@Column(name="EMAIL",unique=true)
+	@Column(name="EMAIL")
 	private String email;
 	
-	@Column(name="MOBILE",unique=true)
+	@Column(name="MOBILE")
 	private Long mobile;
 	
 	@Column(name="PASSWORD")
@@ -37,18 +40,23 @@ public class AuthenticationDetails {
 	@Column(name="LASTUNSUCESSFULLATTEMPTS")
 	private Integer lastUnsucessfullAttempts;
 
+	
 	@Column(name="INSERTTIME")
 	private Date insertTime;
+	
 	
 	@Column(name="UPDATETIME")
 	private Date UpdateTime;
 	
+	
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
-	
+
+
 	public AuthenticationDetails() {
 
 	}
+
 
 	public AuthenticationDetails(AuthenticationDetailsKey key, String email,
 			Long mobile, String password, String passwordType,
@@ -68,8 +76,6 @@ public class AuthenticationDetails {
 		UpdateTime = updateTime;
 		this.updatedBy = updatedBy;
 	}
-
-
 
 
 	public AuthenticationDetailsKey getKey() {
@@ -151,29 +157,36 @@ public class AuthenticationDetails {
 		this.lastUnsucessfullAttempts = lastUnsucessfullAttempts;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getInsertTime() {
 		return insertTime;
 	}
 
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getUpdateTime() {
 		return UpdateTime;
 	}
 
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setUpdateTime(Date updateTime) {
 		UpdateTime = updateTime;
 	}
+
 
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
 
+
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 
 	@Override
 	public String toString() {
@@ -185,6 +198,7 @@ public class AuthenticationDetails {
 				+ ", insertTime=" + insertTime + ", UpdateTime=" + UpdateTime
 				+ ", updatedBy=" + updatedBy + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -213,6 +227,7 @@ public class AuthenticationDetails {
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -282,5 +297,6 @@ public class AuthenticationDetails {
 		return true;
 	}
 
-		
+
+				
 }

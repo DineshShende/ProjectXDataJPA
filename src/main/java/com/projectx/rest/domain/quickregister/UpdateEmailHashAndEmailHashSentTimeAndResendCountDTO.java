@@ -2,6 +2,11 @@ package com.projectx.rest.domain.quickregister;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.serializer.JsonDateDeSerializer;
+import com.projectx.data.util.serializer.JsonDateSerializer;
+
 public class UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO {
 	
 	private Long customerId;
@@ -60,10 +65,12 @@ public class UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO {
 		this.emailHash = emailHash;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getEmailHashSentTime() {
 		return emailHashSentTime;
 	}
-
+	
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setEmailHashSentTime(Date emailHashSentTime) {
 		this.emailHashSentTime = emailHashSentTime;
 	}

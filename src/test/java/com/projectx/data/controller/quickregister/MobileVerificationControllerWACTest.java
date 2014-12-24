@@ -69,11 +69,15 @@ public class MobileVerificationControllerWACTest {
 	             .andDo(print())
 	            .andExpect(status().isOk())
 	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
+	          .andExpect(jsonPath("$.key.customerType").value(standardCustomerMobileVerificationDetails().getKey().getCustomerType()))
 	          .andExpect(jsonPath("$.key.mobile").value(standardCustomerMobileVerificationDetails().getKey().getMobile()))
 	          .andExpect(jsonPath("$.mobileType").value(standardCustomerMobileVerificationDetails().getMobileType()))
 	          .andExpect(jsonPath("$.mobilePin").value(standardCustomerMobileVerificationDetails().getMobilePin()))
 	          .andExpect(jsonPath("$.mobileVerificationAttempts").value(standardCustomerMobileVerificationDetails().getMobileVerificationAttempts()))
-	          .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileVerificationDetails().getResendCount()));
+	          .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileVerificationDetails().getResendCount()))
+	          .andExpect(jsonPath("$.insertTime").exists())
+	          .andExpect(jsonPath("$.updateTime").exists())
+	          .andExpect(jsonPath("$.updatedBy").value(standardCustomerMobileVerificationDetails().getUpdatedBy()));
 	            
 	}
 	

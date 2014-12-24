@@ -236,7 +236,7 @@ public class AuthenticationControllerWACTest {
 				.andExpect(status().isOk())
 				.andExpect(content().string("1"));
 	}
-
+	
 
 
 }

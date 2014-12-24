@@ -159,5 +159,18 @@ public class CustomerDetailsCustomRepositoryTest {
 		assertEquals(1, customerDetailsCustomRepository.updateSecondaryMobileVerificationStatus(savedEntity.getCustomerId(), true).intValue());
 		
 	}
+	
+	@Test
+	public void updateEmailVerificationStatus()
+	{
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
+		
+		assertEquals(1, customerDetailsCustomRepository.count().intValue());
+		
+		assertEquals(1, customerDetailsCustomRepository.updateEmailVerificationStatus(savedEntity.getCustomerId(), true).intValue());
+		
+	}
 
 }

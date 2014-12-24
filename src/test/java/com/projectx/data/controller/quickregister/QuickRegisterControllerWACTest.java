@@ -5,7 +5,9 @@ import static org.junit.Assert.*;
 import javax.net.ssl.SSLEngineResult.Status;
 import javax.transaction.Transactional;
 
+import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +46,21 @@ public class QuickRegisterControllerWACTest {
 	MockMvc mockMvc;
 	
 	@Before
+	
 	public void setUp() throws Exception
 	{
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
-	
+
 	}
 	
+	
+	@Before
+	public void clearTestData() throws Exception
+	{
+		this.mockMvc.perform(
+				get("/customer/quickregister/clearForTesting"));
+
+	}
 	
 	@Test
 	public void saveNewEmailMobileCustomerDebug() throws Exception {
@@ -61,20 +72,7 @@ public class QuickRegisterControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isConflict());
-		/*
-	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
-	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
-	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
-	            .andExpect(jsonPath("$.email").value(standardEmailMobileCustomer().getEmail()))
-	            .andExpect(jsonPath("$.pincode").value(standardEmailMobileCustomer().getPincode()))
-				.andExpect(jsonPath("$.isEmailVerified").value(standardEmailMobileCustomer().getIsEmailVerified()))
-				.andExpect(jsonPath("$.isMobileVerified").value(standardEmailMobileCustomer().getIsMobileVerified()))
-				.andExpect(jsonPath("$.insertTime").exists())
-				.andExpect(jsonPath("$.updateTime").exists())
-				.andExpect(jsonPath("$.updatedBy").value(standardEmailMobileCustomer().getUpdatedBy()));
-			
-				*/
-				 
+			 
 	}
 
 	@Test

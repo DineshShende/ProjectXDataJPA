@@ -58,44 +58,24 @@ public class MobileVericationDetailsFixtures {
 	
 	public static String standardJsonCustomerMobileVerificationDetails()
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"key\":{\"customerId\":"+standardMobileVerificationKey().getCustomerId()+",\"customerType\":"+standardMobileVerificationKey().getCustomerType()+",\"mobile\":"+standardMobileVerificationKey().getMobile()+"},");
-		jsonBuilder.append("\"mobileType\":\""+standardCustomerMobileVerificationDetails().getMobileType()+"\",");
-		jsonBuilder.append("\"mobilePin\":"+standardCustomerMobileVerificationDetails().getMobilePin()+",");
-		jsonBuilder.append("\"mobileVerificationAttempts\":"+standardCustomerMobileVerificationDetails().getMobileVerificationAttempts()+",");
-		jsonBuilder.append("\"resendCount\":"+standardCustomerMobileVerificationDetails().getResendCount()+"}");
-		
-		System.out.println(jsonBuilder.toString());
-		//System.out.println(gson.toJson(standardCustomerMobileVerificationDetails()));
-		
-		return jsonBuilder.toString();
-		//return jsonBuilder.toString();
+		System.out.println(gson.toJson(standardCustomerMobileVerificationDetails()));
+				
+		return gson.toJson(standardCustomerMobileVerificationDetails());
 	}
 	
 	public static String standardJsonUpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO()
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
 		
-		jsonBuilder.append("{\"customerId\":"+standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getCustomerId()+",");
-		jsonBuilder.append("\"customerType\":"+standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getCustomerType()+",");
-		jsonBuilder.append("\"mobile\":"+standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobile()+",");
+		System.out.println(gson.toJson(standardUpdateMobilePinAndMobileVerificationAttemptsDTO()));
+		return gson.toJson(standardUpdateMobilePinAndMobileVerificationAttemptsDTO());
 		
-		jsonBuilder.append("\"mobilePin\":"+standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobilePin()+",");
-		jsonBuilder.append("\"mobileVerificationAttempts\":"+standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobileVerificationAttempts()+",");
-		jsonBuilder.append("\"resendCount\":"+standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getResendCount()+"}");
-		
-		System.out.println(jsonBuilder.toString());
-		//return gson.toJson(standardUpdateMobilePinAndMobileVerificationAttemptsDTO());
-		return jsonBuilder.toString();
 		
 	}
 	
 	public static String standardJsonCustomerIdTypeMobile()
 	{
-		return "{\"customerId\":"+standardCustomerIdMobileDTO().getCustomerId()+","
-				+"\"customerType\":"+standardCustomerIdMobileDTO().getCustomerType()+","
-				+ "\"mobile\":"+standardCustomerIdMobileDTO().getMobile()+"}";
+		System.out.println(gson.toJson(standardCustomerIdMobileDTO()));
+		return gson.toJson(standardCustomerIdMobileDTO());
 	}
 	
 	

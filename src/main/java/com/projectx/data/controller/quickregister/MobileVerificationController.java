@@ -26,7 +26,11 @@ public class MobileVerificationController {
 	@RequestMapping(value="/saveMobileVerificationDetails",method=RequestMethod.POST)
 	public MobileVerificationDetails saveMobileVerificationEntity(@RequestBody MobileVerificationDetails mobileVerificationDetails)
 	{
+		System.out.println(mobileVerificationDetails);
+		
 		MobileVerificationDetails savedmobileVerificationDetails=customerMobileVerificationDetailsRepository.save(mobileVerificationDetails);
+		
+		System.out.println(mobileVerificationDetails);
 		
 		return savedmobileVerificationDetails;
 		

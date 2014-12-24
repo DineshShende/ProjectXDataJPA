@@ -1,24 +1,20 @@
 package com.projectx.data.domain.quickregister;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.PostLoad;
-import javax.persistence.PostPersist;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
-import org.springframework.data.domain.Persistable;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.serializer.JsonDateDeSerializer;
+import com.projectx.data.util.serializer.JsonDateSerializer;
 
 @Entity
 @Table(name="EMAILVERIFICATIONDETAILS")
-public class EmailVerificationDetails <ID extends Serializable> implements Persistable<ID> {
+public class EmailVerificationDetails  {
 
 	@EmbeddedId
 	private EmailVerificationKey key;
@@ -102,13 +98,13 @@ public class EmailVerificationDetails <ID extends Serializable> implements Persi
 	}
 
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getEmailHashSentTime() {
 		return emailHashSentTime;
 	}
 
 
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setEmailHashSentTime(Date emailHashSentTime) {
 		this.emailHashSentTime = emailHashSentTime;
 	}
@@ -126,25 +122,25 @@ public class EmailVerificationDetails <ID extends Serializable> implements Persi
 	}
 
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getInsertTime() {
 		return insertTime;
 	}
 
 
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
 	}
 
 
-
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getUpdateTime() {
 		return updateTime;
 	}
 
 
-
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
@@ -252,6 +248,7 @@ public class EmailVerificationDetails <ID extends Serializable> implements Persi
 		return true;
 	}
 
+	/*
 	@Override
 	@JsonIgnore
 	public ID getId() {
@@ -275,6 +272,6 @@ public class EmailVerificationDetails <ID extends Serializable> implements Persi
 	  void markNotNew() {
 	    this.isNew = false;
 	  }
-	
+	*/
 	
 }

@@ -27,6 +27,7 @@ public class AuthenticationDetailsDataFixtures {
     
 	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetails()
 	{
+		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
 		return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
 	}
 	
@@ -98,6 +99,7 @@ public class AuthenticationDetailsDataFixtures {
 	
 	public static String standardJsonCustomerAuthenticationDetails(AuthenticationDetails standardCustomer)
 	{
+		
 		StringBuilder jsonBuilder=new StringBuilder();
 		
 		jsonBuilder.append("{\"key\":{\"customerId\":"+standardCustomer.getKey().getCustomerId()+",\"customerType\":"+standardCustomer.getKey().getCustomerType()+"},");
@@ -127,73 +129,51 @@ public class AuthenticationDetailsDataFixtures {
 		
 		jsonBuilder.append("\"passwordType\":\""+standardCustomer.getPasswordType()+"\"}");
 		
+		//jsonBuilder.append("\"insertTime\":"+standardCustomer.getInsertTime().getTime()+",");
+		
+		//jsonBuilder.append("\"updateTime\":"+standardCustomer.getUpdateTime().getTime()+",");
+		
+		//jsonBuilder.append("\"updatedBy\":\""+standardCustomer.getUpdatedBy()+"\"}");
+		
 		System.out.println(jsonBuilder.toString());
 		
-		return jsonBuilder.toString();
+		System.out.println(gson.toJson(standardCustomer));
 		
+		//System.out.println(gson.toJson(standardCustomer));
+		
+		return jsonBuilder.toString();
+			
 		//return gson.toJson(standardCustomer);
 		
 	}
 	
 	public static String standardJsonCustomerIdType(CustomerIdTypeDTO idTypeDTO)
 	{
-		return "{\"customerId\":"+idTypeDTO.getCustomerId()+",\"customerType\":"+idTypeDTO.getCustomerType()+"}";
+		return gson.toJson(idTypeDTO);
 	}
 	
 	
 	public static String standardJsonLoginVerification(LoginVerificationDTO loginVerificationDTO)
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
-
-		if(loginVerificationDTO.getEmail()!=null)
-			jsonBuilder.append("{\"email\":\""+loginVerificationDTO.getEmail()+"\",");
-		else
-			jsonBuilder.append("{\"email\":"+loginVerificationDTO.getEmail()+",");
-
-		jsonBuilder.append("\"mobile\":"+loginVerificationDTO.getMobile()+",");
+		System.out.println(loginVerificationDTO);
 		
-		jsonBuilder.append("\"password\":\""+loginVerificationDTO.getPassword()+"\"}");
-		
-		//System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-		
-		//return gson.toJson(loginVerificationDTO);
+		return gson.toJson(loginVerificationDTO);
 	}
 	
 	
 	public static String standardJsonUpdatePasswordAndPasswordType()
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
-
-		jsonBuilder.append("{\"customerId\":"+standardUpdatePasswordAndPasswordTypeDTO().getCustomerId()+",");
-		jsonBuilder.append("\"customerType\":"+standardUpdatePasswordAndPasswordTypeDTO().getCustomerType()+",");
-		jsonBuilder.append("\"password\":\""+standardUpdatePasswordAndPasswordTypeDTO().getPassword()+"\",");
-		jsonBuilder.append("\"passwordType\":\""+standardUpdatePasswordAndPasswordTypeDTO().getPasswordType()+"\"}");
+		System.out.println(standardUpdatePasswordAndPasswordTypeDTO());
 		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-		
-		//return gson.toJson(standardUpdatePasswordAndPasswordTypeDTO());
+		return gson.toJson(standardUpdatePasswordAndPasswordTypeDTO());
 		
 	}
 	
 	public static String standardJsonUpdateEmailPassword()
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
-
-		jsonBuilder.append("{\"customerId\":"+standardUpdateEmailPassword().getCustomerId()+",");
+		System.out.println(standardUpdateEmailPassword());
 		
-		jsonBuilder.append("\"customerType\":"+standardUpdateEmailPassword().getCustomerType()+",");
-		
-		jsonBuilder.append("\"emailPassword\":\""+standardUpdateEmailPassword().getEmailPassword()+"\"}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-
-		
+		return gson.toJson(standardUpdateEmailPassword());
 	}
 	
 	

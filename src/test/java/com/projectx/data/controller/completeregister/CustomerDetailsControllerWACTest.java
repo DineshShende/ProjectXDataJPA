@@ -263,7 +263,7 @@ public class CustomerDetailsControllerWACTest {
 	
 		this.mockMvc.perform(
 	            post("/customer/completeregister/updateMobileVerificationStatus")
-	                    .content(standardJsonUpdateMobileVerificationStatus())
+	                    .content(standardJsonUpdateVerificationStatus())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -286,7 +286,30 @@ public class CustomerDetailsControllerWACTest {
 	
 		this.mockMvc.perform(
 	            post("/customer/completeregister/updateSecondaryMobileVerificationStatus")
-	                    .content(standardJsonUpdateMobileVerificationStatus())
+	                    .content(standardJsonUpdateVerificationStatus())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(content().string("1"));
+		
+	}
+	
+	@Test
+	public void updateEmailVerificationStatus() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk());
+	 
+	
+		this.mockMvc.perform(
+	            post("/customer/completeregister/updateEmailVerificationStatus")
+	                    .content(standardJsonUpdateVerificationStatus())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())

@@ -108,74 +108,9 @@ public class QuickRegisterDataFixture {
 
 	public static String standardJsonQuickRegisterCustomer(QuickRegisterEntity customer)
 	{
-
-		StringBuilder jsonBuilder=new StringBuilder();
+		System.out.println(gson.toJson(customer));
 		
-		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(customer.getCustomerId());
-		
-		jsonBuilder.append(",\"firstName\":");
-				
-		if(customer.getFirstName()!=null)
-				jsonBuilder.append("\""+customer.getFirstName()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"lastName\":");
-		
-		if(customer.getLastName()!=null)
-			jsonBuilder.append("\""+customer.getLastName()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"email\":");
-		if(customer.getEmail()!=null)
-			jsonBuilder.append("\""+customer.getEmail()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"mobile\":");
-		
-		jsonBuilder.append(customer.getMobile());
-		jsonBuilder.append(",\"pincode\":");
-		jsonBuilder.append(customer.getPincode());
-		jsonBuilder.append(",\"isEmailVerified\":");
-		jsonBuilder.append(customer.getIsEmailVerified());
-		
-		jsonBuilder.append(",\"isMobileVerified\":");
-		jsonBuilder.append(customer.getIsMobileVerified());
-		
-		jsonBuilder.append(",\"insertTime\":");
-		if(customer.getInsertTime()!=null)
-			jsonBuilder.append(customer.getInsertTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		jsonBuilder.append(",\"updateTime\":");
-		if(customer.getUpdateTime()!=null)
-			jsonBuilder.append(customer.getUpdateTime().getTime());
-		else
-			jsonBuilder.append("null");
-		
-		
-		jsonBuilder.append(",\"updatedBy\":");
-		if(customer.getUpdatedBy()!=null)
-			jsonBuilder.append("\""+customer.getUpdatedBy()+"\"");
-		else
-			jsonBuilder.append("null");
-		
-				
-		jsonBuilder.append("}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		
-		return jsonBuilder.toString();
-
-//		System.out.println(gson.toJson(customer));
-//		
-//		return gson.toJson(customer);
-
+		return gson.toJson(customer);
 	}
 
 	
@@ -211,24 +146,13 @@ public class QuickRegisterDataFixture {
 	{
 		return new UpdateEmailHashDTO(CUST_ID,CUST_EMAILHASH_UPDATED,CUST_EMAIL_HASH_SENT_TIME);
 	}
-	/*
-	public static UpdatePasswordAndPasswordTypeDTO standardUpdatePasswordDTO()
-	{
-		return new UpdatePasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED);
-	}
-	*/
+	
 	
 	public static String standardJsonUpdateEmailMobileVerificationStatus()
 	{
-		System.out.println("{\"customerId\":"+standardUpdateEmailMobileVerificationStatus().getCustomerId()+","
-				+ "\"status\":"+standardUpdateEmailMobileVerificationStatus().getStatus()+","
-			+ "\"updateTime\":"+standardUpdateEmailMobileVerificationStatus().getUpdateTime().getTime()+","
-			+ "\"updatedBy\":\""+standardUpdateEmailMobileVerificationStatus().getUpdatedBy()+"\"}");
+		System.out.println(gson.toJson(standardUpdateEmailMobileVerificationStatus()));
 		
-		return "{\"customerId\":"+standardUpdateEmailMobileVerificationStatus().getCustomerId()+","
-				+ "\"status\":"+standardUpdateEmailMobileVerificationStatus().getStatus()+","
-			+ "\"updateTime\":"+standardUpdateEmailMobileVerificationStatus().getUpdateTime().getTime()+","
-			+ "\"updatedBy\":\""+standardUpdateEmailMobileVerificationStatus().getUpdatedBy()+"\"}";
+		return gson.toJson(standardUpdateEmailMobileVerificationStatus());
 	}
 	
 	
@@ -247,81 +171,21 @@ public class QuickRegisterDataFixture {
 		return "{\"mobile\":"+mobile+"}";
 	}
 	
-	/*
-	public static String standardJsonUpdateStatusAndMobileVerficationAttemptsByCustomerIdDTO(UpdateStatusAndMobileVerificationAttemptsWithCustomerIdDTO dto)
-	{
-		//String formattedDate = dateFormat.format(standardUpdateStatusWithCustomerId().getStatusChangeTime());
-		
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"status\":\""+dto.getStatus()+"\",\"statusChangeTime\":\"");
-		jsonBuilder.append(dto.getStatusChangeTime().getTime());
-		jsonBuilder.append("\",\"mobileVerificationAttempts\":0}");
-		
-		return jsonBuilder.toString();
-	}
 	
-	
-	public static String standardJsonUpdateMobilePinDTO(UpdateMobilePinDTO dto)
-	{
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"mobilePin\":");
-		jsonBuilder.append(dto.getMobilePin());
-		jsonBuilder.append(",\"updateTime\":\"");
-		jsonBuilder.append(dto.getUpdateTime().getTime());
-		jsonBuilder.append("\"}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-	}
-	*/
 	public static String standardJsonUpdateEmailHashDTO(UpdateEmailHashDTO dto)
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
+		System.out.println(gson.toJson(dto));
 		
-		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"emailHash\":\"");
-		jsonBuilder.append(dto.getEmailHash());
-		jsonBuilder.append("\",\"updateTime\":\"");
-		jsonBuilder.append(dto.getUpdateTime().getTime());
-		jsonBuilder.append("\"}");
-				
-		return jsonBuilder.toString();
+		return gson.toJson(dto);
 		
 	}
 	
 	public static String standardJsonUpdatePasswordDTO(UpdatePasswordAndPasswordTypeDTO dto)
 	{
-		StringBuilder jsonBuilder=new StringBuilder();
+		System.out.println(gson.toJson(dto));
 		
-		jsonBuilder.append("{\"customerId\":"+dto.getCustomerId()+",\"password\":\"");
-		jsonBuilder.append(dto.getPassword());
-		jsonBuilder.append("\",\"passwordType\":\"");
-		jsonBuilder.append(dto.getPasswordType());
-		jsonBuilder.append("\"}");
+		return gson.toJson(dto);
 		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
 	}
-	/*
-	public static String standardJsonUpdateEmailHashAndMobilePinSentTimeDTO(UpdateEmailHashAndMobilePinSentTimeDTO dto)
-	{
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"customerId\":");
-		jsonBuilder.append(dto.getCustomerId());
-		jsonBuilder.append(",\"emailSentTime\":\"");
-		jsonBuilder.append(dto.getEmailSentTime().getTime());
-		jsonBuilder.append("\",\"mobilePinSentTime\":\"");
-		jsonBuilder.append(dto.getMobilePinSentTime().getTime());
-		jsonBuilder.append("\"}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		return jsonBuilder.toString();
-	}
-	*/
 	
 }
