@@ -12,7 +12,7 @@ public class PincodeValidator implements ConstraintValidator<Pincode, Integer> {
 		// TODO Auto-generated method stub
 		
 	}
-
+//apache commons email validation
 	@Override
 	public boolean isValid(Integer value, ConstraintValidatorContext context) {
 		// TODO Auto-generated method stub

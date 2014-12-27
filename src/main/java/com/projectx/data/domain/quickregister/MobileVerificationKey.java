@@ -17,7 +17,7 @@ public class MobileVerificationKey implements Serializable{
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
-	@Column(name="MOBILE")
+	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 
 	public MobileVerificationKey() {

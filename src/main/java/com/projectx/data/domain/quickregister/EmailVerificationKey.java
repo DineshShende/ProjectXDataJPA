@@ -17,7 +17,7 @@ public class EmailVerificationKey implements Serializable{
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
-	@Column(name="EMAIL")
+	@Column(name="EMAIL",unique=true)
 	private String email;
 
 	public EmailVerificationKey() {

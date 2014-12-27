@@ -36,7 +36,10 @@ public class CustomerDetailsController {
 	{
 		CustomerDetails fetchedEntity=customerDetailsCustomRepository.findOne(customerId);
 		
-		return fetchedEntity;
+		if(fetchedEntity!=null)
+			return fetchedEntity;
+		else
+			return new CustomerDetails();
 	}
 	
 	@RequestMapping(value="/updateFirmAddress",method=RequestMethod.POST)
