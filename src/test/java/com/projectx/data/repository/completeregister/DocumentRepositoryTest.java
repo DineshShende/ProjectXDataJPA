@@ -62,11 +62,65 @@ public class DocumentRepositoryTest {
 	{
 		assertEquals(0, customerDocumentRepository.count());
 		
+		assertNull(customerDocumentRepository.findOne(standardDocumentKey()));
+		
 		assertEquals(standardDocumentDetails(), customerDocumentRepository.save(standardDocumentDetails()));
 		
 		assertEquals(standardDocumentDetails(), customerDocumentRepository.findOne(standardDocumentKey()));
 		
 		assertEquals(1, customerDocumentRepository.count());
+	}
+	
+	@Test
+	public void updateDocumentAndContentType()
+	{
+		assertEquals(0, customerDocumentRepository.count());
+		
+		assertEquals(standardDocumentDetails(), customerDocumentRepository.save(standardDocumentDetails()));
+		
+		assertEquals(standardDocumentDetails(), customerDocumentRepository.findOne(standardDocumentKey()));
+		
+		assertEquals(1, customerDocumentRepository.count());
+		
+		DocumentDetails updatedDocument=customerDocumentRepository.save(standardDocumentDetailsWithNewDocumentContentType());
+		
+		assertEquals(standardDocumentDetailsWithNewDocumentContentType(),
+				customerDocumentRepository.findOne(standardDocumentKey()));
+		
+		assertEquals(1, customerDocumentRepository.count());
+	}
+	
+	@Test
+	public void updateVerificationStatusAndRemark()
+	{
+		assertEquals(0, customerDocumentRepository.count());
+		
+		assertEquals(standardDocumentDetails(), customerDocumentRepository.save(standardDocumentDetails()));
+		
+		assertEquals(standardDocumentDetails(), customerDocumentRepository.findOne(standardDocumentKey()));
+		
+		assertEquals(1, customerDocumentRepository.count());
+		
+		DocumentDetails updatedDocument=customerDocumentRepository.save(standardDocumentDetailsWithNewVerificationStatusAndRemark());
+		
+		assertEquals(standardDocumentDetailsWithNewVerificationStatusAndRemark(),
+				customerDocumentRepository.findOne(standardDocumentKey()));
+		
+		assertEquals(1, customerDocumentRepository.count());
+	}
+	
+	@Test
+	public void deleteAll()
+	{
+		assertEquals(0, customerDocumentRepository.count());
+		
+		assertEquals(standardDocumentDetails(), customerDocumentRepository.save(standardDocumentDetails()));
+		
+		assertEquals(1, customerDocumentRepository.count());
+		
+		customerDocumentRepository.deleteAll();
+		
+		assertEquals(0, customerDocumentRepository.count());
 	}
 	
 	/*

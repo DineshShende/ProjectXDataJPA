@@ -66,8 +66,6 @@ public interface AuthenticationDetailsRepository extends
 	Integer incrementLastUnsucessfullAttempts(@Param("customerId") Long customerId,@Param("customerType")Integer customerType);
 
 	
-	@Override
-	public void deleteAll();
 
 //	CustomerAuthenticationDetails findByCustomerId();
 	

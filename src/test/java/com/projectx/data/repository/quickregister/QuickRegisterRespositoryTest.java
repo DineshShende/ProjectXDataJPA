@@ -377,6 +377,8 @@ public class QuickRegisterRespositoryTest {
 	@Test
 	public void clearTestingData()
 	{
+		assertEquals(0, customerQuickRegisterRepository.findAll().size());
+		
 		QuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
 		
 		assertEquals(1, customerQuickRegisterRepository.findAll().size());

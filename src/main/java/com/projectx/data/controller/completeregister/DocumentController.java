@@ -7,12 +7,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.completeregister.DocumentDetails;
+import com.projectx.data.domain.completeregister.DocumentKey;
 import com.projectx.data.repository.completeregister.DocumetDetailsRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdDTO;
 
 
 @RestController
-@RequestMapping(value="/customer/quickregister")
+@RequestMapping(value="/document")
 public class DocumentController {
 
 	@Autowired
@@ -22,20 +23,32 @@ public class DocumentController {
 	@RequestMapping(value="/saveCustomerDocument",method=RequestMethod.POST)
 	public DocumentDetails saveCustomerDocument(@RequestBody DocumentDetails customerDocumet)
 	{
-		return customerDocumentRepository.save(customerDocumet);
+		DocumentDetails savedEntity= customerDocumentRepository.save(customerDocumet);
+		
+		return savedEntity;
 	}
 	
-	@RequestMapping(value="/getCustomerDocumentById",method=RequestMethod.POST)
-	public DocumentDetails getCustomerDocumentById(@RequestBody CustomerIdDTO customerIdDTO)
+	@RequestMapping(value="/getCustomerDocumentByKey",method=RequestMethod.POST)
+	public DocumentDetails getCustomerDocumentById(@RequestBody DocumentKey documentKey)
 	{
-		//return customerDocumentRepository.findOne(customerIdDTO.getCustomerId());
-		return null;
+		DocumentDetails fetchedEntity= customerDocumentRepository.findOne(documentKey);
+
+		if(fetchedEntity==null)
+			return new DocumentDetails();
+		
+		return fetchedEntity;
 	}
 	
-	@RequestMapping(value="/getAllCustomerDocument")
-	public DocumentDetails getAllCustomerDocument()
+	@RequestMapping(value="/count",method=RequestMethod.GET)
+	public Integer count()
 	{
-		return customerDocumentRepository.findAll().iterator().next();
+		return (int)customerDocumentRepository.count();
 	}
 	
+	@RequestMapping(value="/clearTestData",method=RequestMethod.GET)
+	public Boolean clearTestData()
+	{
+		customerDocumentRepository.deleteAll();
+		return true;
+	}
 }

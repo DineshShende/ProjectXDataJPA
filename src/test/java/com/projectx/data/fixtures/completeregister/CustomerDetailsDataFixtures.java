@@ -17,7 +17,7 @@ import com.projectx.data.domain.completeregister.Address;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
 import com.projectx.rest.domain.completeregister.UpdateVerificationStatusDTO;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+
 
 
 public class CustomerDetailsDataFixtures {
