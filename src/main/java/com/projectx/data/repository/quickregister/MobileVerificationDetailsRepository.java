@@ -1,8 +1,5 @@
 package com.projectx.data.repository.quickregister;
 
-import java.sql.SQLDataException;
-import java.sql.SQLException;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -23,8 +20,9 @@ public interface MobileVerificationDetailsRepository extends
 	@Override
 	MobileVerificationDetails  findOne(MobileVerificationKey id);
 	
-	@Override
-	public void deleteAll();
+	@Query(value="select * from mobileverificationdetails where mobile=:mobile",nativeQuery=true)
+	MobileVerificationDetails findByMobile(@Param("mobile")Long mobile);
+	
 	
 	@Transactional
 	@Modifying

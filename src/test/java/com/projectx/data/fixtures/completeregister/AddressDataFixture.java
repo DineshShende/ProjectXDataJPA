@@ -32,6 +32,11 @@ public class AddressDataFixture {
 		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, ADDRESS_STATE, ADDRESS_PINCODE, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
 	}
 	
+	public static Address standardAddressUpdated()
+	{
+		return new Address(ADDRESS_CUST_TYPE, "Updated", "Updated", "Updated", "Updated", 111111, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
+	}
+	
 	public static String standardJsonAddressId()
 	{
 		

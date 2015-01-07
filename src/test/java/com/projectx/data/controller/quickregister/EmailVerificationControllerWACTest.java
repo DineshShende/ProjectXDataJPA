@@ -75,7 +75,7 @@ public class EmailVerificationControllerWACTest {
 	            
 	}
 	
-	/*
+
 	@Test
 	public void getEmailVerificationDetailsByCustomerIdAndEmail() throws Exception
 	{
@@ -103,7 +103,36 @@ public class EmailVerificationControllerWACTest {
 	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
 
 	}
+
 	
+	@Test
+	public void getEmailVerificationDetailsByEmail() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
+	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/getEmailVerificationDetailsByEmail")
+	                    .content(standardJsonEmail())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
+	          .andExpect(jsonPath("$.key.email").value(standardCustomerEmailVerificationDetails().getKey().getEmail()))
+	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
+	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
+	          .andExpect(jsonPath("$.emailHashSentTime").exists())
+	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
+
+	}
+
 	
 	@Test
 	//@Rollback(value=false)
@@ -202,5 +231,5 @@ public class EmailVerificationControllerWACTest {
 		.andExpect(content().string("0"));
 		
 	}
-*/
+
 }

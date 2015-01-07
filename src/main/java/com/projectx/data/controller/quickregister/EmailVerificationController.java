@@ -13,6 +13,7 @@ import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailDTO;
+import com.projectx.rest.domain.quickregister.EmailDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
 
 @RestController
@@ -48,6 +49,20 @@ public class EmailVerificationController {
 		
 	}
 	
+	
+	@RequestMapping(value="/getEmailVerificationDetailsByEmail",method=RequestMethod.POST)
+	public EmailVerificationDetails getEmailVerificationDetailsByEmail(@RequestBody EmailDTO emailDTO)
+	{
+		EmailVerificationDetails fetchedEmailVerificationDetails=customerEmailVerificationDetailsRepository
+				.findByEmail(emailDTO.getEmail());
+		
+		if(fetchedEmailVerificationDetails==null)
+			return new EmailVerificationDetails();
+		
+		return fetchedEmailVerificationDetails;
+		
+	}
+
 	@RequestMapping(value="/resetEmailHashAndEmailHashSentTime",method=RequestMethod.POST)
 	public Integer resetEmailHashAndEmailHashSentTime(@RequestBody UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO dto)
 	{

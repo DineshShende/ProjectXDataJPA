@@ -144,6 +144,20 @@ public class EmailVerificationRepositoryTest {
 		
 		
 	}
+
+	@Test
+	public void findByEmail()
+	{
+		assertEquals(0, customerEmailVericationDetailsRepository.count());
+		
+		assertNull(customerEmailVericationDetailsRepository.findByEmail(standardCustomerEmailVerificationDetails().getKey().getEmail()));
+		
+		EmailVerificationDetails emailVerificationDetails=customerEmailVericationDetailsRepository.save(standardCustomerEmailVerificationDetails());
+		
+		assertEquals(emailVerificationDetails, customerEmailVericationDetailsRepository.findByEmail(standardCustomerEmailVerificationDetails().getKey().getEmail()));
+		
+		assertEquals(1, customerEmailVericationDetailsRepository.count());
+	}
 	
 	
 	@Test

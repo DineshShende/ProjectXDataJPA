@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileDTO;
+import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO;
 
 public class MobileVericationDetailsFixtures {
@@ -78,6 +79,10 @@ public class MobileVericationDetailsFixtures {
 		return gson.toJson(standardCustomerIdMobileDTO());
 	}
 	
+	public static String standardJsonMobile()
+	{
+		return gson.toJson(new MobileDTO(CUST_MOBILE));
+	}
 	
 	public static String standardJsonMobileKey()
 	{

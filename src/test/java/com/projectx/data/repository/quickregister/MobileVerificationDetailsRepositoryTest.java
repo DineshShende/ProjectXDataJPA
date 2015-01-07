@@ -95,7 +95,20 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.findOne(standardMobileVerificationKey()));
 	}
+
 	
+	@Test
+	public void findByMobile()
+	{
+		assertEquals(0, customerMobileVerificationDetailsRepository.count());
+		
+		assertNull( customerMobileVerificationDetailsRepository.findByMobile(standardMobileVerificationKey().getMobile()));
+		
+		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
+		
+		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.findByMobile(standardMobileVerificationKey().getMobile()));
+	}
+
 	
 	@Test
 	public void updateMobilePinAndMobileVerificationAttemptsAndResendCount()

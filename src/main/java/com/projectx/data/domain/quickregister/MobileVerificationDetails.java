@@ -21,7 +21,7 @@ import com.projectx.data.util.serializer.JsonDateSerializer;
 
 @Entity
 @Table(name="mobileverificationdetails")
-public class MobileVerificationDetails <ID extends Serializable>{
+public class MobileVerificationDetails {
 
 	
 	@EmbeddedId

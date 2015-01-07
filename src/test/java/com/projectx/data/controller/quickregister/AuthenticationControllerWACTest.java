@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import javax.transaction.Transactional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,9 +58,10 @@ public class AuthenticationControllerWACTest {
 	}
 	
 	@Before
+	
 	public void clearTestData() throws Exception
 	{
-		this.mockMvc.perform(get("/customer/quickregister/customerAuthentication/clearTestData"));
+		authenticationDetailsRepository.deleteAll();
 	}
 	
 	
@@ -138,11 +140,11 @@ public class AuthenticationControllerWACTest {
 	}
 	
 	
-
+	
 	@Test
 	public void getLoginDetailsByEmailWithEmailAuthenticationEntity() throws Exception
 	{
-		authenticationDetailsRepository.deleteAll();
+		authenticationDetailsRepository.deleteAll();		
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
@@ -171,6 +173,8 @@ public class AuthenticationControllerWACTest {
 	@Test
 	public void getLoginDetailsByMobileWithMobileAuthenticationEntity() throws Exception
 	{
+		
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
 	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))

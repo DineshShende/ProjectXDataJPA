@@ -61,6 +61,10 @@ public class EmailVerificationDetailsDataFixtures {
 		return gson.toJson(standardCustomerIdTypeEmailDTO());
 	}
 	
+	public static String standardJsonEmail()
+	{
+		return "{\"email\":\""+standardCustomerEmailVerificationDetails().getKey().getEmail()+"\"}";
+	}
 	
 	public static String standardJsonEmailKey()
 	{

@@ -112,6 +112,35 @@ public class MobileVerificationControllerWACTest {
 
 	
 	@Test
+	public void getMobikeVerificationDetailsByMobile() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
+	                    .content(standardJsonCustomerMobileVerificationDetails())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/quickregister/mobileVerification/getMobileVerificationDetailsByMobile")
+	                    .content(standardJsonMobile())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isOk())
+	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
+	            .andExpect(jsonPath("$.key.mobile").value(standardCustomerMobileVerificationDetails().getKey().getMobile()))
+		          .andExpect(jsonPath("$.mobileType").value(standardCustomerMobileVerificationDetails().getMobileType()))
+		          .andExpect(jsonPath("$.mobilePin").value(standardCustomerMobileVerificationDetails().getMobilePin()))
+		          .andExpect(jsonPath("$.mobileVerificationAttempts").value(standardCustomerMobileVerificationDetails().getMobileVerificationAttempts()))
+		          .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileVerificationDetails().getResendCount()));
+		          
+	}
+
+	
+	@Test
 	public void updateMobilePinAndMobileVerificationAttemptsAndResendCount() throws Exception
 	{
 		

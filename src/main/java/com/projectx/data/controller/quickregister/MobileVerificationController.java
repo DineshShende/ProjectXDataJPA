@@ -13,6 +13,7 @@ import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileDTO;
+import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO;
 
 @RestController
@@ -50,6 +51,21 @@ public class MobileVerificationController {
 		return fetchedMobileVerificationDetails;
 		
 	}
+
+	@RequestMapping(value="/getMobileVerificationDetailsByMobile",method=RequestMethod.POST)
+	public MobileVerificationDetails getMobileVerificationDetailsByMobile(@RequestBody MobileDTO mobileDTO)
+	{
+		
+		MobileVerificationDetails fetchedMobileVerificationDetails=customerMobileVerificationDetailsRepository
+				.findByMobile(mobileDTO.getMobile());
+		
+		if(fetchedMobileVerificationDetails==null)
+			return new MobileVerificationDetails();
+		
+		return fetchedMobileVerificationDetails;
+		
+	}
+
 	
 	@RequestMapping(value="/updateMobilePinAndMobileVerificationAttemptsAndResendCount",method=RequestMethod.POST)
 	public Integer updateMobilePinAndMobileVerificationAttemptsAndResendCount

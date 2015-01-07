@@ -23,8 +23,9 @@ public interface EmailVerificationDetailsRepository extends CrudRepository<Email
 	
 	@Override
 	EmailVerificationDetails findOne(EmailVerificationKey id);
-	
-	//Optional<EmailVerificationDetails> findByCustomerIdAndEmail(Long customerId,String email);
+
+	@Query(value="select * from emailverificationdetails where email=:email",nativeQuery=true)
+	EmailVerificationDetails findByEmail(@Param("email")String email);
 	
 	@Transactional
 	@Modifying
