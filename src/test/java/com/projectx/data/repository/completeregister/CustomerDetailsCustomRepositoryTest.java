@@ -3,19 +3,28 @@ package com.projectx.data.repository.completeregister;
 import static com.projectx.data.fixtures.completeregister.AddressDataFixture.standardAddress;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.completeregister.Address;
 import com.projectx.data.domain.completeregister.CustomerDetails;
+import com.projectx.data.domain.quickregister.EmailVerificationDetails;
+import com.projectx.data.domain.quickregister.EmailVerificationKey;
+import com.projectx.data.domain.quickregister.MobileVerificationDetails;
+import com.projectx.data.domain.quickregister.MobileVerificationKey;
+import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
+import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,14 +34,21 @@ public class CustomerDetailsCustomRepositoryTest {
 
 	@Autowired
 	CustomerDetailsCustomRepository customerDetailsCustomRepository; 
+	
+	@Autowired
+	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
+	
+	@Autowired
+	EmailVerificationDetailsRepository emailVerificationDetailsRepository;
 		
 	@Before
 	public void clearTestData()
 	{
 		customerDetailsCustomRepository.deleteAll();
-		
+		emailVerificationDetailsRepository.deleteAll();
+		mobileVerificationDetailsRepository.deleteAll();
 	}
-	
+
 	@Test
 	public void environmentTest() {
 		
@@ -94,7 +110,51 @@ public class CustomerDetailsCustomRepositoryTest {
 	}
 	
 	
+	@Test
+	public void updateMobileVerifiedStatus()
+	{
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
+		
+		assertEquals(1, customerDetailsCustomRepository.count().intValue());
+		
+		assertEquals(1, customerDetailsCustomRepository.updateMobileAndVerificationStatusInMainEntity(savedEntity.getCustomerId(),standardCustomerDetails().getMobile(), true).intValue());
+		
+	}
 	
+	
+	
+	@Test
+	public void updateSecondaryMobileVerificationStatus()
+	{
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
+		
+		assertEquals(1, customerDetailsCustomRepository.count().intValue());
+		
+		assertEquals(1, customerDetailsCustomRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(savedEntity.getCustomerId(),savedEntity.getSecondaryMobile(), true).intValue());
+		
+	}
+	
+	@Test
+	public void updateEmailVerificationStatus()
+	{
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
+		
+		assertEquals(1, customerDetailsCustomRepository.count().intValue());
+		
+		assertEquals(1, customerDetailsCustomRepository.updateEmailAndVerificationStatusInMainEntity(savedEntity.getCustomerId(), savedEntity.getEmail(),true).intValue());
+		
+	}
+
+	
+}
+
+	/*
 	@Test
 	public void updateHomeAddress()
 	{
@@ -112,6 +172,7 @@ public class CustomerDetailsCustomRepositoryTest {
 		
 		
 	}
+	
 	
 	@Test
 	public void updateFirmAddress()
@@ -131,46 +192,4 @@ public class CustomerDetailsCustomRepositoryTest {
 		
 		
 	}
-	
-	@Test
-	public void updateMobileVerifiedStatus()
-	{
-		assertEquals(0, customerDetailsCustomRepository.count().intValue());
-		
-		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
-		
-		assertEquals(1, customerDetailsCustomRepository.count().intValue());
-		
-		assertEquals(1, customerDetailsCustomRepository.updateMobileVerificationStatus(savedEntity.getCustomerId(), true).intValue());
-		
-	}
-	
-	
-	
-	@Test
-	public void updateSecondaryMobileVerificationStatus()
-	{
-		assertEquals(0, customerDetailsCustomRepository.count().intValue());
-		
-		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
-		
-		assertEquals(1, customerDetailsCustomRepository.count().intValue());
-		
-		assertEquals(1, customerDetailsCustomRepository.updateSecondaryMobileVerificationStatus(savedEntity.getCustomerId(), true).intValue());
-		
-	}
-	
-	@Test
-	public void updateEmailVerificationStatus()
-	{
-		assertEquals(0, customerDetailsCustomRepository.count().intValue());
-		
-		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
-		
-		assertEquals(1, customerDetailsCustomRepository.count().intValue());
-		
-		assertEquals(1, customerDetailsCustomRepository.updateEmailVerificationStatus(savedEntity.getCustomerId(), true).intValue());
-		
-	}
-
-}
+	*/

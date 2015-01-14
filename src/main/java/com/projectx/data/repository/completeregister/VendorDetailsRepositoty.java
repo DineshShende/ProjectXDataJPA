@@ -16,14 +16,14 @@ public interface VendorDetailsRepositoty extends CrudRepository<VendorDetails, L
 
 	@Transactional
 	@Modifying
-	@Query(value="update vendordetails set ismobileverified=:isMobileVerified where vendorid=:vendorId",nativeQuery=true)
-	Integer updateIsMobileVerified(@Param("vendorId")Long vendorId,@Param("isMobileVerified")Boolean isMobileVerified);
+	@Query(value="update vendordetails set mobile=:mobile,ismobileverified=:isMobileVerified where vendorid=:vendorId",nativeQuery=true)
+	Integer updateIsMobileVerified(@Param("vendorId")Long vendorId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified);
 	
 	
 	@Transactional
 	@Modifying
-	@Query(value="update vendordetails set isemailverified=:isEmailVerified where vendorid=:vendorId",nativeQuery=true)
-	Integer updateIsEmailVerified(@Param("vendorId")Long vendorId,@Param("isEmailVerified")Boolean isEmailVerified);
+	@Query(value="update vendordetails set email=:email,isemailverified=:isEmailVerified where vendorid=:vendorId",nativeQuery=true)
+	Integer updateIsEmailVerified(@Param("vendorId")Long vendorId,@Param("email")String email,@Param("isEmailVerified")Boolean isEmailVerified);
 	
 	
 

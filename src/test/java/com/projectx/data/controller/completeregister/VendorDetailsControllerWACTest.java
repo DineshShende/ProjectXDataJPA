@@ -1,7 +1,7 @@
 package com.projectx.data.controller.completeregister;
 
 import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.*;
-import static com.projectx.data.fixtures.completeregister.DocumentDetailsDataFixture.standardJsonDocumentDetails;
+import static com.projectx.data.fixtures.completeregister.DocumentDetailsDataFixture.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -166,6 +166,7 @@ public class VendorDetailsControllerWACTest {
 
 	}
 	
+	
 	@Test
 	public void updateEmailVerificationStatus() throws Exception
 	{
@@ -186,7 +187,7 @@ public class VendorDetailsControllerWACTest {
 	    
 		this.mockMvc.perform(
 	            post("/vendor/updateEmailVerificationStatus")
-	                    .content(standardJsonUpdateVerificationStatus(standardUpdateVerificationStatusDTO()))
+	                    .content(standardJsonUpdateEmailVerificationStatus(standardEmailUpdateVerificationStatusDTO()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -195,6 +196,7 @@ public class VendorDetailsControllerWACTest {
 	    
 		
 	}
+	
 	
 	public void updateMobileVerificationStatus() throws Exception
 	{
@@ -215,7 +217,7 @@ public class VendorDetailsControllerWACTest {
 	    
 		this.mockMvc.perform(
 	            post("/vendor/updateMobileVerificationStatus")
-	                    .content(standardJsonUpdateVerificationStatus(standardUpdateVerificationStatusDTO()))
+	                    .content(standardJsonUpdateMobileVerificationStatus(standardUpdateMobileVerificationStatusDTO()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())

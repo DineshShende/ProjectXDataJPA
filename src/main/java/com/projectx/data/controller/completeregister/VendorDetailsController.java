@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.completeregister.VendorDetails;
 import com.projectx.data.repository.completeregister.VendorDetailsCustomRepository;
-import com.projectx.rest.domain.completeregister.UpdateVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
 
 
 @Component
@@ -45,18 +46,20 @@ public class VendorDetailsController {
 		return fetchedEntity;
 	}
 	
-	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
-	public Integer updateEmailVerificationStatus(@RequestBody UpdateVerificationStatusDTO updateVerificationStatusDTO)
+	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
+	public Integer updateMobileVerificationStatus(@RequestBody UpdateMobileVerificationStatusDTO updateVerificationStatusDTO)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateEmailVerificationStatus(updateVerificationStatusDTO.getCustomerId(), updateVerificationStatusDTO.getStatus());
+		Integer updateStatus=vendorDetailsRepository.updateMobileAndVerificationStatus(updateVerificationStatusDTO.getCustomerId(),
+				updateVerificationStatusDTO.getMobile(),updateVerificationStatusDTO.getStatus());
 		
 		return updateStatus;
 	}
 	
-	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
-	public Integer updateMobileVerificationStatus(@RequestBody UpdateVerificationStatusDTO updateVerificationStatusDTO)
+	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
+	public Integer updateEmailVerificationStatus(@RequestBody UpdateEmailVerificationStatusDTO updateVerificationStatusDTO)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateMobileVerificationStatus(updateVerificationStatusDTO.getCustomerId(), updateVerificationStatusDTO.getStatus());
+		Integer updateStatus=vendorDetailsRepository.updateEmailAndVerificationStatus(updateVerificationStatusDTO.getCustomerId(), 
+				updateVerificationStatusDTO.getEmail(),updateVerificationStatusDTO.getStatus());
 		
 		return updateStatus;
 	}

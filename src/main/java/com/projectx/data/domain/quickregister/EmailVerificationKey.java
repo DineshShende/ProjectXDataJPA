@@ -17,23 +17,22 @@ public class EmailVerificationKey implements Serializable{
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
-	@Column(name="EMAIL",unique=true)
-	private String email;
+	@Column(name="EMAILTYPE")
+	private Integer emailType;
 
 	public EmailVerificationKey() {
 		
 	}
 
 	public EmailVerificationKey(Long customerId, Integer customerType,
-			String email) {
-		super();
+			Integer emailType) {
+
 		this.customerId = customerId;
 		this.customerType = customerType;
-		this.email = email;
+		this.emailType = emailType;
 	}
 
-
-
+	
 	
 	public Long getCustomerId() {
 		return customerId;
@@ -51,18 +50,19 @@ public class EmailVerificationKey implements Serializable{
 		this.customerType = customerType;
 	}
 
-	public String getEmail() {
-		return email;
+	public Integer getEmailType() {
+		return emailType;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailType(Integer emailType) {
+		this.emailType = emailType;
 	}
 
 	@Override
 	public String toString() {
 		return "EmailVerificationKey [customerId=" + customerId
-				+ ", customerType=" + customerType + ", email=" + email + "]";
+				+ ", customerType=" + customerType + ", emailType=" + emailType
+				+ "]";
 	}
 
 	@Override
@@ -73,7 +73,8 @@ public class EmailVerificationKey implements Serializable{
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result
 				+ ((customerType == null) ? 0 : customerType.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result
+				+ ((emailType == null) ? 0 : emailType.hashCode());
 		return result;
 	}
 
@@ -96,13 +97,14 @@ public class EmailVerificationKey implements Serializable{
 				return false;
 		} else if (!customerType.equals(other.customerType))
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		if (emailType == null) {
+			if (other.emailType != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!emailType.equals(other.emailType))
 			return false;
 		return true;
 	}
 
+	
 	
 }

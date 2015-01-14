@@ -1,20 +1,25 @@
 package com.projectx.rest.domain.completeregister;
 
-public class UpdateVerificationStatusDTO {
+public class UpdateMobileVerificationStatusDTO {
 
 	private Long customerId;
 	
+	private Long mobile;
+	
 	private Boolean status;
 
-	public UpdateVerificationStatusDTO() {
+	public UpdateMobileVerificationStatusDTO() {
 
 	}
 
-	public UpdateVerificationStatusDTO(Long customerId, Boolean status) {
-		super();
+	public UpdateMobileVerificationStatusDTO(Long customerId, Long mobile,
+			Boolean status) {
 		this.customerId = customerId;
+		this.mobile = mobile;
 		this.status = status;
 	}
+
+
 
 	public Long getCustomerId() {
 		return customerId;
@@ -32,10 +37,20 @@ public class UpdateVerificationStatusDTO {
 		this.status = status;
 	}
 
+	
+	
+	public Long getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(Long mobile) {
+		this.mobile = mobile;
+	}
+
 	@Override
 	public String toString() {
 		return "UpdateMobileVerificationStatusDTO [customerId=" + customerId
-				+ ", status=" + status + "]";
+				+ ", mobile=" + mobile + ", status=" + status + "]";
 	}
 
 	@Override
@@ -44,6 +59,7 @@ public class UpdateVerificationStatusDTO {
 		int result = 1;
 		result = prime * result
 				+ ((customerId == null) ? 0 : customerId.hashCode());
+		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
@@ -56,11 +72,16 @@ public class UpdateVerificationStatusDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UpdateVerificationStatusDTO other = (UpdateVerificationStatusDTO) obj;
+		UpdateMobileVerificationStatusDTO other = (UpdateMobileVerificationStatusDTO) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;
 		} else if (!customerId.equals(other.customerId))
+			return false;
+		if (mobile == null) {
+			if (other.mobile != null)
+				return false;
+		} else if (!mobile.equals(other.mobile))
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -69,7 +90,7 @@ public class UpdateVerificationStatusDTO {
 			return false;
 		return true;
 	}
-	
+
 	
 	
 	

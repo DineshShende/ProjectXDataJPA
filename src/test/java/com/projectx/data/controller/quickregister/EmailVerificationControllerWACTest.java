@@ -63,9 +63,9 @@ public class EmailVerificationControllerWACTest {
 		        .andDo(print())
 	            .andExpect(status().isOk())
 	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
-	          .andExpect(jsonPath("$.key.email").value(standardEmailVerificationKey().getEmail()))
 	          .andExpect(jsonPath("$.key.customerType").value(standardEmailVerificationKey().getCustomerType()))
-	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
+	          .andExpect(jsonPath("$.key.emailType").value(standardEmailVerificationKey().getEmailType()))
+	          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
 	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
 	          .andExpect(jsonPath("$.emailHashSentTime").exists())
 	          .andExpect(jsonPath("$.insertTime").exists())
@@ -96,11 +96,16 @@ public class EmailVerificationControllerWACTest {
 		        .andDo(print())
 	            .andExpect(status().isOk())
 	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
-	          .andExpect(jsonPath("$.key.email").value(standardCustomerEmailVerificationDetails().getKey().getEmail()))
-	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
-	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
-	          .andExpect(jsonPath("$.emailHashSentTime").exists())
-	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
+	            .andExpect(jsonPath("$.key.customerType").value(standardEmailVerificationKey().getCustomerType()))
+		          .andExpect(jsonPath("$.key.emailType").value(standardEmailVerificationKey().getEmailType()))
+		          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
+		          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
+		          .andExpect(jsonPath("$.emailHashSentTime").exists())
+		          .andExpect(jsonPath("$.insertTime").exists())
+		          .andExpect(jsonPath("$.updateTime").exists())
+		          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()))
+		          .andExpect(jsonPath("$.updatedBy").value(standardCustomerEmailVerificationDetails().getUpdatedBy()));
+		            
 
 	}
 
@@ -125,12 +130,16 @@ public class EmailVerificationControllerWACTest {
 		        .andDo(print())
 	            .andExpect(status().isOk())
 	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
-	          .andExpect(jsonPath("$.key.email").value(standardCustomerEmailVerificationDetails().getKey().getEmail()))
-	          .andExpect(jsonPath("$.emailType").value(standardCustomerEmailVerificationDetails().getEmailType()))
-	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
-	          .andExpect(jsonPath("$.emailHashSentTime").exists())
-	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()));
-
+	            .andExpect(jsonPath("$.key.customerType").value(standardEmailVerificationKey().getCustomerType()))
+		          .andExpect(jsonPath("$.key.emailType").value(standardEmailVerificationKey().getEmailType()))
+		          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
+		          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
+		          .andExpect(jsonPath("$.emailHashSentTime").exists())
+		          .andExpect(jsonPath("$.insertTime").exists())
+		          .andExpect(jsonPath("$.updateTime").exists())
+		          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()))
+		          .andExpect(jsonPath("$.updatedBy").value(standardCustomerEmailVerificationDetails().getUpdatedBy()));
+		            
 	}
 
 	

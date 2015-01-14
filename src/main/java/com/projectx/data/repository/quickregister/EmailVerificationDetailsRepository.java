@@ -1,5 +1,5 @@
-package com.projectx.data.repository.quickregister;
 
+package com.projectx.data.repository.quickregister;
 import java.util.Date;
 import java.util.Optional;
 
@@ -26,19 +26,27 @@ public interface EmailVerificationDetailsRepository extends CrudRepository<Email
 
 	@Query(value="select * from emailverificationdetails where email=:email",nativeQuery=true)
 	EmailVerificationDetails findByEmail(@Param("email")String email);
+
+	@Transactional
+	@Modifying
+	@Query(value="update emailverificationdetails set EMAIL=:email,EMAILHASH=:emailHash,EMAILHASHSENTTIME=:emailHashSentTime,"
+			+ "RESENDCOUNT=:resendCount where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
+	Integer updateEmail(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("emailType")Integer emailType,@Param("email")String email,
+				@Param("emailHash")String emailHash, @Param("emailHashSentTime")Date emailHashSentTime,@Param("resendCount")Integer resendCount);
+
 	
 	@Transactional
 	@Modifying
 	@Query(value="update emailverificationdetails set EMAILHASH=:emailHash,EMAILHASHSENTTIME=:emailHashSentTime,"
-			+ "RESENDCOUNT=:resendCount where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAIL=:email",nativeQuery=true)
-	Integer resetEmailHashAndEmailHashSentTime(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("email")String email,
+			+ "RESENDCOUNT=:resendCount where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
+	Integer resetEmailHashAndEmailHashSentTime(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("emailType")Integer emailType,
 				@Param("emailHash")String emailHash, @Param("emailHashSentTime")Date emailHashSentTime,@Param("resendCount")Integer resendCount);
 	
 	
 	@Transactional
 	@Modifying
-	@Query(value="update emailverificationdetails set RESENDCOUNT=RESENDCOUNT+1 where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAIL=:email",nativeQuery=true)
-	Integer incrementResendCountByCustomerIdAndEmail(@Param ("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("email")String email);
+	@Query(value="update emailverificationdetails set RESENDCOUNT=RESENDCOUNT+1 where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
+	Integer incrementResendCountByCustomerIdAndEmail(@Param ("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("emailType")Integer emailType);
 
 
 	@Override

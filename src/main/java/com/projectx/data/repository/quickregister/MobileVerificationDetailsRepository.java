@@ -28,22 +28,31 @@ public interface MobileVerificationDetailsRepository extends
 	@Modifying
 	@Query(value="update mobileverificationdetails set MOBILEPIN=:mobilePin,"
 			+ "MOBILEVERIFICATIONATTEMPTS=:mobileVerificationAttempts,RESENDCOUNT=:resendCount"
-			+ " where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and MOBILE=:mobile",nativeQuery=true)
-	Integer updateMobilePinAndMobileVerificationAttemptsAndResendCount(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobile")Long mobile,
+			+ " where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and MOBILETYPE=:mobileType",nativeQuery=true)
+	Integer updateMobilePinAndMobileVerificationAttemptsAndResendCount(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobileType")Integer mobileType,
 			@Param("mobilePin")Integer mobilePin,@Param("mobileVerificationAttempts")Integer mobileVerificationAttempts,@Param("resendCount")Integer resendCount);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update mobileverificationdetails set MOBILE=:mobile,MOBILEPIN=:mobilePin,"
+			+ "MOBILEVERIFICATIONATTEMPTS=:mobileVerificationAttempts,RESENDCOUNT=:resendCount"
+			+ " where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and MOBILETYPE=:mobileType",nativeQuery=true)
+	Integer updateMobile(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobileType")Integer mobileType,@Param("mobile")Long mobile,
+			@Param("mobilePin")Integer mobilePin,@Param("mobileVerificationAttempts")Integer mobileVerificationAttempts,@Param("resendCount")Integer resendCount);
+	
 	
 	
 	@Transactional
 	@Modifying
 	@Query(value="update mobileverificationdetails set MOBILEVERIFICATIONATTEMPTS=MOBILEVERIFICATIONATTEMPTS+1"
-			+ " where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and MOBILE=:mobile",nativeQuery=true)
-	Integer incrementMobileVerificationAttempts(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobile")Long mobile);
+			+ " where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and MOBILETYPE=:mobileType",nativeQuery=true)
+	Integer incrementMobileVerificationAttempts(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobileType")Integer mobileType);
 	
 	@Transactional
 	@Modifying
 	@Query(value="update mobileverificationdetails set RESENDCOUNT=RESENDCOUNT+1 "
-			+ "where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and MOBILE=:mobile",nativeQuery=true)
-	Integer incrementResendCount(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobile")Long mobile);
+			+ "where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and MOBILETYPE=:mobileType",nativeQuery=true)
+	Integer incrementResendCount(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("mobileType")Integer mobileType);
 	
 	
 	@Override

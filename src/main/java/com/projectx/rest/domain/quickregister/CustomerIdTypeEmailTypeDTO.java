@@ -1,25 +1,26 @@
 package com.projectx.rest.domain.quickregister;
 
-public class CustomerIdTypeEmailDTO {
+public class CustomerIdTypeEmailTypeDTO {
 
 	private Long customerId;
 	
 	private Integer customerType;
 	
-	private String email;
+	private Integer emailType;
 	
 	
-	public CustomerIdTypeEmailDTO() {
+	public CustomerIdTypeEmailTypeDTO() {
 
 	}
 
-	public CustomerIdTypeEmailDTO(Long customerId, Integer customerType,
-			String email) {
+	public CustomerIdTypeEmailTypeDTO(Long customerId, Integer customerType,
+			Integer emailType) {
 		super();
 		this.customerId = customerId;
 		this.customerType = customerType;
-		this.email = email;
+		this.emailType = emailType;
 	}
+
 
 
 
@@ -32,14 +33,13 @@ public class CustomerIdTypeEmailDTO {
 		this.customerId = customerId;
 	}
 
-
-	public String getEmail() {
-		return email;
+	
+	public Integer getEmailType() {
+		return emailType;
 	}
 
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailType(Integer emailType) {
+		this.emailType = emailType;
 	}
 
 	public Integer getCustomerType() {
@@ -53,7 +53,7 @@ public class CustomerIdTypeEmailDTO {
 	@Override
 	public String toString() {
 		return "CustomerIdTypeEmailDTO [customerId=" + customerId
-				+ ", customerType=" + customerType + ", email=" + email + "]";
+				+ ", customerType=" + customerType + ", email=" + emailType + "]";
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class CustomerIdTypeEmailDTO {
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result
 				+ ((customerType == null) ? 0 : customerType.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((emailType == null) ? 0 : emailType.hashCode());
 		return result;
 	}
 
@@ -76,7 +76,7 @@ public class CustomerIdTypeEmailDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CustomerIdTypeEmailDTO other = (CustomerIdTypeEmailDTO) obj;
+		CustomerIdTypeEmailTypeDTO other = (CustomerIdTypeEmailTypeDTO) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;
@@ -87,10 +87,10 @@ public class CustomerIdTypeEmailDTO {
 				return false;
 		} else if (!customerType.equals(other.customerType))
 			return false;
-		if (email == null) {
-			if (other.email != null)
+		if (emailType == null) {
+			if (other.emailType != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!emailType.equals(other.emailType))
 			return false;
 		return true;
 	}

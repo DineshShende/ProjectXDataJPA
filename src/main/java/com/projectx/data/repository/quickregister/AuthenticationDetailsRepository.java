@@ -65,7 +65,17 @@ public interface AuthenticationDetailsRepository extends
 	@Query(value="update authenticationdetails set LASTUNSUCESSFULLATTEMPTS=LASTUNSUCESSFULLATTEMPTS+1 where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType",nativeQuery=true)
 	Integer incrementLastUnsucessfullAttempts(@Param("customerId") Long customerId,@Param("customerType")Integer customerType);
 
-	
+
+	@Transactional
+	@Modifying
+	@Query(value="update authenticationdetails set EMAIL=:email where CUSTOMERID=:customerId and CUSTOMERTYPE=:entityType",nativeQuery=true)
+	Integer updateEmail(@Param("customerId") Long customerId,@Param("entityType") Integer entityType,@Param("email")String email);
+
+	@Transactional
+	@Modifying
+	@Query(value="update authenticationdetails set MOBILE=:mobile where CUSTOMERID=:customerId and CUSTOMERTYPE=:entityType",nativeQuery=true)
+	Integer updateMobile(@Param("customerId") Long customerId,@Param("entityType") Integer entityType,@Param("mobile")Long mobile);
+
 
 //	CustomerAuthenticationDetails findByCustomerId();
 	

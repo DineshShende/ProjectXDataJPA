@@ -17,19 +17,19 @@ public class MobileVerificationKey implements Serializable{
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
-	@Column(name="MOBILE",unique=true)
-	private Long mobile;
+	@Column(name="MOBILETYPE")
+	private Integer mobileType;
 
 	public MobileVerificationKey() {
 		
 	}
 
 	public MobileVerificationKey(Long customerId, Integer customerType,
-			Long mobile) {
+			Integer mobileType) {
 		super();
 		this.customerId = customerId;
 		this.customerType = customerType;
-		this.mobile = mobile;
+		this.mobileType = mobileType;
 	}
 
 	public Long getCustomerId() {
@@ -40,11 +40,15 @@ public class MobileVerificationKey implements Serializable{
 		return customerType;
 	}
 
-	public Long getMobile() {
-		return mobile;
+	
+	public Integer getMobileType() {
+		return mobileType;
+	}
+	
+	public void setMobileType(Integer mobileType) {
+		this.mobileType = mobileType;
 	}
 
-	
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
@@ -53,14 +57,12 @@ public class MobileVerificationKey implements Serializable{
 		this.customerType = customerType;
 	}
 
-	public void setMobile(Long mobile) {
-		this.mobile = mobile;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "MobileVerificationKey [customerId=" + customerId
-				+ ", customerType=" + customerType + ", mobile=" + mobile + "]";
+				+ ", customerType=" + customerType + ", mobile=" + mobileType + "]";
 	}
 
 	@Override
@@ -71,7 +73,7 @@ public class MobileVerificationKey implements Serializable{
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result
 				+ ((customerType == null) ? 0 : customerType.hashCode());
-		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
+		result = prime * result + ((mobileType == null) ? 0 : mobileType.hashCode());
 		return result;
 	}
 
@@ -94,10 +96,10 @@ public class MobileVerificationKey implements Serializable{
 				return false;
 		} else if (!customerType.equals(other.customerType))
 			return false;
-		if (mobile == null) {
-			if (other.mobile != null)
+		if (mobileType == null) {
+			if (other.mobileType != null)
 				return false;
-		} else if (!mobile.equals(other.mobile))
+		} else if (!mobileType.equals(other.mobileType))
 			return false;
 		return true;
 	}

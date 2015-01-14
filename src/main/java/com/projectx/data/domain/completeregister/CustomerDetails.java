@@ -68,7 +68,7 @@ public class CustomerDetails {
 	private Address firmAddressId;
 	
 	@JsonIgnoreProperties(ignoreUnknown=true)
-	@Column(name="SECONARYMOBILE")
+	@Column(name="SECONDARYMOBILE")
 	private Long secondaryMobile;
 	
 	@JsonIgnoreProperties(ignoreUnknown=true)

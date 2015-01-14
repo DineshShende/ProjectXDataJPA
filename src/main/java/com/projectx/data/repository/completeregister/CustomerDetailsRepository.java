@@ -19,17 +19,17 @@ public interface CustomerDetailsRepository extends CrudRepository<CustomerDetail
 	
 	@Transactional
 	@Modifying
-	@Query(value="update customerdetails set ismobileverified=:isMobileVerified where customerid=:customerId",nativeQuery=true)
-	Integer updateIsMobileVerified(@Param("customerId")Long customerId,@Param("isMobileVerified")Boolean isMobileVerified);
+	@Query(value="update customerdetails set mobile=:mobile,ismobileverified=:isMobileVerified where customerid=:customerId",nativeQuery=true)
+	Integer updateMobileAndMobileVerificationStatus(@Param("customerId")Long customerId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified);
 	
 	@Transactional
 	@Modifying
-	@Query(value="update customerdetails set issecondarymobileverified=:isSeconadryMobileVerified where customerid=:customerId",nativeQuery=true)
-	Integer updateIsSecondaryMobileVerified(@Param("customerId")Long customerId,@Param("isSeconadryMobileVerified")Boolean isSecondaryMobileVerified);
+	@Query(value="update customerdetails set secondarymobile=:secondaryMobile,issecondarymobileverified=:isSeconadryMobileVerified where customerid=:customerId",nativeQuery=true)
+	Integer updateSecMobileAndSecMobileVerificationStatus(@Param("customerId")Long customerId,@Param("secondaryMobile")Long secondaryMobile, @Param("isSeconadryMobileVerified")Boolean isSecondaryMobileVerified);
 	
 	@Transactional
 	@Modifying
-	@Query(value="update customerdetails set isemailverified=:isEmailVerified where customerid=:customerId",nativeQuery=true)
-	Integer updateIsEmailVerified(@Param("customerId")Long customerId,@Param("isEmailVerified")Boolean isEmailVerified);
+	@Query(value="update customerdetails set email=:email,isemailverified=:isEmailVerified where customerid=:customerId",nativeQuery=true)
+	Integer updateEmailAndMEmailVerificationStatus(@Param("customerId")Long customerId,@Param("email")String email,@Param("isEmailVerified")Boolean isEmailVerified);
 		
 }

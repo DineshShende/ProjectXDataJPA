@@ -1,15 +1,20 @@
 package com.projectx.data.repository.completeregister;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import com.projectx.data.domain.completeregister.Address;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
+import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
 
@@ -19,6 +24,12 @@ public class CustomerDetailsCustomRepository {
 	
 	@Autowired
 	CustomerDetailsRepository customerDetailsRepository;
+	
+	@Autowired
+	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
+	
+	@Autowired
+	EmailVerificationDetailsRepository emailVerificationDetailsRepository;
 	
 	@Autowired
 	AddressRepository addressRepository;
@@ -33,65 +44,20 @@ public class CustomerDetailsCustomRepository {
 		return customerDetailsRepository.findOne(customerId);
 	}
 	
-	public CustomerDetails updateHomeAddress(UpdateAddressDTO addressDTO)
+	
+	public Integer updateMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status)
 	{
-		CustomerDetails fetchedEntity=customerDetailsRepository.findOne(addressDTO.getCustomerId());
-		
-		if(fetchedEntity!=null)
-		{
-			Address oldHomeAddress=fetchedEntity.getHomeAddressId();
-		
-			fetchedEntity.setHomeAddressId(addressDTO.getAddress());
-		
-			CustomerDetails updatedEntity=customerDetailsRepository.save(fetchedEntity);
-		
-			addressRepository.delete(oldHomeAddress.getAddressId());
-		
-			return updatedEntity;
-		}
-		else
-		{
-			return new CustomerDetails();
-		}
+		return customerDetailsRepository.updateMobileAndMobileVerificationStatus(customerId, mobile, status);
 	}
 	
-
-	public CustomerDetails updateFirmAddress(UpdateAddressDTO addressDTO)
+	public Integer updateSecondaryMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status)
 	{
-		CustomerDetails fetchedEntity=customerDetailsRepository.findOne(addressDTO.getCustomerId());
-		
-		if(fetchedEntity!=null)
-		{	
-			Address oldFirmAddress=fetchedEntity.getFirmAddressId();
-		
-			fetchedEntity.setFirmAddressId(addressDTO.getAddress());
-		
-			CustomerDetails updatedEntity=customerDetailsRepository.save(fetchedEntity);
-		
-			addressRepository.delete(oldFirmAddress.getAddressId());
-		
-			return updatedEntity;
-		}
-		else
-		{
-			return new CustomerDetails();
-		}
+		return customerDetailsRepository.updateSecMobileAndSecMobileVerificationStatus(customerId, mobile, status);
 	}
 	
-	
-	public Integer updateMobileVerificationStatus(Long customerId,Boolean status)
+	public Integer updateEmailAndVerificationStatusInMainEntity(Long customerId,String email,Boolean status)
 	{
-		return customerDetailsRepository.updateIsMobileVerified(customerId, status);
-	}
-	
-	public Integer updateSecondaryMobileVerificationStatus(Long customerId,Boolean status)
-	{
-		return customerDetailsRepository.updateIsSecondaryMobileVerified(customerId, status);
-	}
-	
-	public Integer updateEmailVerificationStatus(Long customerId,Boolean status)
-	{
-		return customerDetailsRepository.updateIsEmailVerified(customerId, status);
+		return customerDetailsRepository.updateEmailAndMEmailVerificationStatus(customerId, email, status);
 	}
 	
 	public Long count()

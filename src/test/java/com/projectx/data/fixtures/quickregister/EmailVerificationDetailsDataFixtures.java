@@ -7,7 +7,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
 
 
@@ -24,24 +24,24 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static EmailVerificationDetails standardCustomerEmailVerificationDetails()
 	{
-		return new EmailVerificationDetails(standardEmailVerificationKey(), CUST_EMAIL_TYPE_PRIMARY, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+		return new EmailVerificationDetails(standardEmailVerificationKey(), CUST_EMAIL, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
 	}
 	
 	
 	
 	public static UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO standardUpdateEmailHashAndEmailHashSentTimeDTO()
 	{
-		return new UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO(CUST_ID, CUST_TYPE_CUSTOMER,CUST_EMAIL, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME,CUST_RESEND_COUNT);
+		return new UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO(CUST_ID, CUST_TYPE_CUSTOMER,CUST_EMAIL_TYPE_PRIMARY, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME,CUST_RESEND_COUNT);
 	}
 	
-	public static CustomerIdTypeEmailDTO standardCustomerIdTypeEmailDTO()
+	public static CustomerIdTypeEmailTypeDTO standardCustomerIdTypeEmailDTO()
 	{
-		return new CustomerIdTypeEmailDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_EMAIL);
+		return new CustomerIdTypeEmailTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_EMAIL_TYPE_PRIMARY);
 	}
 	
 	public static EmailVerificationKey standardEmailVerificationKey()
 	{
-		return new EmailVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, CUST_EMAIL);
+		return new EmailVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, CUST_EMAIL_TYPE_PRIMARY);
 	}
 
 	
@@ -63,7 +63,7 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static String standardJsonEmail()
 	{
-		return "{\"email\":\""+standardCustomerEmailVerificationDetails().getKey().getEmail()+"\"}";
+		return "{\"email\":\""+standardCustomerEmailVerificationDetails().getEmail()+"\"}";
 	}
 	
 	public static String standardJsonEmailKey()

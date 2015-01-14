@@ -24,11 +24,22 @@ public class AuthenticationDetailsDataFixtures {
 		return new AuthenticationDetailsKey(CUST_ID, CUST_TYPE_CUSTOMER);
 	}
 	
+	public static AuthenticationDetailsKey standardAuthenticationDetailsKeyVendor()
+	{
+		return new AuthenticationDetailsKey(213L, CUST_TYPE_VENDER);
+	}
+	
     
 	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetails()
 	{
 		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
 		return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
+	}
+	
+	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetailsVendor()
+	{
+		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
+		return new AuthenticationDetails(standardAuthenticationDetailsKeyVendor(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
 	}
 	
 	public static AuthenticationDetails standardCustomerEmailAuthenticationDetails()

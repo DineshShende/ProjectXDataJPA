@@ -8,7 +8,8 @@ import com.projectx.data.domain.completeregister.VendorDetails;
 import static com.projectx.data.fixtures.completeregister.AddressDataFixture.*;
 
 import com.projectx.data.domain.completeregister.Address;
-import com.projectx.rest.domain.completeregister.UpdateVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
 
 public class VendorDetailsDataFixture {
 
@@ -48,9 +49,14 @@ public class VendorDetailsDataFixture {
 				VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE, VENDOR_DATE, VENDOR_DATE, VENDOR_UPDATEDBY);
 	}
 	
-	public static UpdateVerificationStatusDTO standardUpdateVerificationStatusDTO()
+	public static UpdateMobileVerificationStatusDTO standardUpdateMobileVerificationStatusDTO()
 	{
-		return new UpdateVerificationStatusDTO(VENDOR_ID, VENDOR_STATUS_TRUE);
+		return new UpdateMobileVerificationStatusDTO(VENDOR_ID,VENDOR_MOBILE, VENDOR_STATUS_TRUE);
+	}
+	
+	public static UpdateEmailVerificationStatusDTO standardEmailUpdateVerificationStatusDTO()
+	{
+		return new UpdateEmailVerificationStatusDTO(VENDOR_ID,VENDOR_EMAIL, VENDOR_STATUS_TRUE);
 	}
 	
 	public static String standardJsonVendor(VendorDetails vendorDetails)
@@ -60,7 +66,14 @@ public class VendorDetailsDataFixture {
 		return gson.toJson(vendorDetails);
 	}
 	
-	public static String standardJsonUpdateVerificationStatus(UpdateVerificationStatusDTO vendorDetails)
+	public static String standardJsonUpdateMobileVerificationStatus(UpdateMobileVerificationStatusDTO vendorDetails)
+	{
+		System.out.println(gson.toJson(vendorDetails));
+		
+		return gson.toJson(vendorDetails);
+	}
+	
+	public static String standardJsonUpdateEmailVerificationStatus(UpdateEmailVerificationStatusDTO vendorDetails)
 	{
 		System.out.println(gson.toJson(vendorDetails));
 		

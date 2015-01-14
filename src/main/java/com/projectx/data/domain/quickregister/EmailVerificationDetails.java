@@ -19,8 +19,8 @@ public class EmailVerificationDetails  {
 	@EmbeddedId
 	private EmailVerificationKey key;
 	
-	@Column(name="EMAILTYPE")
-	private Integer emailType;
+	@Column(name="EMAIL",unique=true)
+	private String email;
 	
 	@Column(name="EMAILHASH")
 	private String emailHash;
@@ -46,13 +46,12 @@ public class EmailVerificationDetails  {
 
 	}
 
-
-
-	public EmailVerificationDetails(EmailVerificationKey key, Integer emailType,
+	public EmailVerificationDetails(EmailVerificationKey key, String email,
 			String emailHash, Date emailHashSentTime, Integer resendCount,
 			Date insertTime, Date updateTime, String updatedBy) {
+		super();
 		this.key = key;
-		this.emailType = emailType;
+		this.email = email;
 		this.emailHash = emailHash;
 		this.emailHashSentTime = emailHashSentTime;
 		this.resendCount = resendCount;
@@ -60,7 +59,6 @@ public class EmailVerificationDetails  {
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
 	}
-
 
 
 	public EmailVerificationKey getKey() {
@@ -74,18 +72,13 @@ public class EmailVerificationDetails  {
 	}
 
 
-
-	public Integer getEmailType() {
-		return emailType;
+	public String getEmail() {
+		return email;
 	}
 
-
-
-	public void setEmailType(Integer emailType) {
-		this.emailType = emailType;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-
 
 	public String getEmailHash() {
 		return emailHash;
@@ -157,18 +150,14 @@ public class EmailVerificationDetails  {
 		this.updatedBy = updatedBy;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "EmailVerificationDetails [key=" + key + ", emailType="
-				+ emailType + ", emailHash=" + emailHash
-				+ ", emailHashSentTime=" + emailHashSentTime + ", resendCount="
-				+ resendCount + ", insertTime=" + insertTime + ", updateTime="
-				+ updateTime + ", updatedBy=" + updatedBy + "]";
+		return "EmailVerificationDetails [key=" + key + ", email=" + email
+				+ ", emailHash=" + emailHash + ", emailHashSentTime="
+				+ emailHashSentTime + ", resendCount=" + resendCount
+				+ ", insertTime=" + insertTime + ", updateTime=" + updateTime
+				+ ", updatedBy=" + updatedBy + "]";
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -181,7 +170,7 @@ public class EmailVerificationDetails  {
 				+ ((emailHashSentTime == null) ? 0 : emailHashSentTime
 						.hashCode());
 		result = prime * result
-				+ ((emailType == null) ? 0 : emailType.hashCode());
+				+ ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
@@ -215,10 +204,10 @@ public class EmailVerificationDetails  {
 				return false;
 		} else if (!emailHashSentTime.equals(other.emailHashSentTime))
 			return false;
-		if (emailType == null) {
-			if (other.emailType != null)
+		if (email == null) {
+			if (other.email != null)
 				return false;
-		} else if (!emailType.equals(other.emailType))
+		} else if (!email.equals(other.email))
 			return false;
 		if (insertTime == null) {
 			if (other.insertTime != null)

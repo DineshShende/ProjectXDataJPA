@@ -9,7 +9,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import com.projectx.data.util.serializer.*;
 
 @Entity
@@ -19,10 +18,10 @@ public class AuthenticationDetails  {
 	@EmbeddedId
 	private AuthenticationDetailsKey key;
 	
-	@Column(name="EMAIL")
+	@Column(name="EMAIL",unique=true)
 	private String email;
 	
-	@Column(name="MOBILE")
+	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	
 	@Column(name="PASSWORD")

@@ -1,5 +1,7 @@
 package com.projectx.data.repository.completeregister;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,7 @@ public class VendorDetailsCustomRepository {
 		return savedEntity;
 	}
 	
+	@Transactional
 	public VendorDetails update(VendorDetails vendorDetails)
 	{
 		VendorDetails oldEntity=vendorDetailsRepository.findOne(vendorDetails.getVendorId());
@@ -75,16 +78,16 @@ public class VendorDetailsCustomRepository {
 		return fetchedEntity;
 	}
 	
-	public Integer updateEmailVerificationStatus(Long vendorId,Boolean status)
+	public Integer updateEmailAndVerificationStatus(Long vendorId,String email,Boolean status)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateIsEmailVerified(vendorId, status);
+		Integer updateStatus=vendorDetailsRepository.updateIsEmailVerified(vendorId,email, status);
 		
 		return updateStatus;
 	}
 	
-	public Integer updateMobileVerificationStatus(Long vendorId,Boolean status)
+	public Integer updateMobileAndVerificationStatus(Long vendorId,Long mobile,Boolean status)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateIsMobileVerified(vendorId, status);
+		Integer updateStatus=vendorDetailsRepository.updateIsMobileVerified(vendorId,mobile, status);
 		
 		return updateStatus;
 	}

@@ -12,7 +12,7 @@ import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO;
 
@@ -38,9 +38,9 @@ public class MobileVerificationController {
 	}
 	
 	@RequestMapping(value="/getMobileVerificationDetailsByCustomerIdAndMobile",method=RequestMethod.POST)
-	public MobileVerificationDetails getMobileVerificationDetailsByCustomerIdAndMobile(@RequestBody CustomerIdTypeMobileDTO customerIdMobileDTO)
+	public MobileVerificationDetails getMobileVerificationDetailsByCustomerIdAndMobile(@RequestBody CustomerIdTypeMobileTypeDTO customerIdMobileDTO)
 	{
-		MobileVerificationKey key=new MobileVerificationKey(customerIdMobileDTO.getCustomerId(), customerIdMobileDTO.getCustomerType(), customerIdMobileDTO.getMobile());
+		MobileVerificationKey key=new MobileVerificationKey(customerIdMobileDTO.getCustomerId(), customerIdMobileDTO.getCustomerType(), customerIdMobileDTO.getMobileType());
 		
 		MobileVerificationDetails fetchedMobileVerificationDetails=customerMobileVerificationDetailsRepository
 				.findOne(key);
@@ -72,7 +72,7 @@ public class MobileVerificationController {
 			(@RequestBody UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO dto)
 	{
 		Integer updateStatus=customerMobileVerificationDetailsRepository
-				.updateMobilePinAndMobileVerificationAttemptsAndResendCount(dto.getCustomerId(),dto.getCustomerType(), dto.getMobile(),
+				.updateMobilePinAndMobileVerificationAttemptsAndResendCount(dto.getCustomerId(),dto.getCustomerType(), dto.getMobileType(),
 						dto.getMobilePin(),dto.getMobileVerificationAttempts(),dto.getResendCount());
 		
 		return updateStatus;
@@ -81,10 +81,10 @@ public class MobileVerificationController {
 	
 	@RequestMapping(value="/incrementMobileVerificationAttempts",method=RequestMethod.POST)
 	public Integer incrementMobileVerificationAttempts
-			(@RequestBody CustomerIdTypeMobileDTO mobileDTO)
+			(@RequestBody CustomerIdTypeMobileTypeDTO mobileDTO)
 	{
 		Integer updateStatus=customerMobileVerificationDetailsRepository
-				.incrementMobileVerificationAttempts(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(),mobileDTO.getMobile());
+				.incrementMobileVerificationAttempts(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(),mobileDTO.getMobileType());
 		
 		return updateStatus;
 		
@@ -92,10 +92,10 @@ public class MobileVerificationController {
 	
 	@RequestMapping(value="/incrementResendCount",method=RequestMethod.POST)
 	public Integer incrementResendCount
-			(@RequestBody CustomerIdTypeMobileDTO mobileDTO)
+			(@RequestBody CustomerIdTypeMobileTypeDTO mobileDTO)
 	{
 		Integer updateStatus=customerMobileVerificationDetailsRepository
-				.incrementResendCount(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(), mobileDTO.getMobile());
+				.incrementResendCount(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(), mobileDTO.getMobileType());
 		
 		return updateStatus;
 		
@@ -133,7 +133,7 @@ public class MobileVerificationController {
 	@RequestMapping(value="/test")
 	public MobileVerificationDetails getMobileVerificationDetails()
 	{
-		return new MobileVerificationDetails(new MobileVerificationKey(212L, 1, 9960821869L), 1, 10000, 0, 0, null, null, null);
+		return new MobileVerificationDetails(new MobileVerificationKey(212L, 1, 1), 9960821869L, 10000, 0, 0, null, null, null);
 	}
 	
 }

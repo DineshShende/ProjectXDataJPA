@@ -217,6 +217,33 @@ public class AuthenticationDetailsRepositoryTest {
 	}
 	
 	
+	@Test
+	public void updateEmail()
+	{
+		assertEquals(0,customerAuthenticationDetailsRepository.count());
+		
+		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
+		
+		assertEquals(1,customerAuthenticationDetailsRepository.count());
+		
+		assertEquals(1,customerAuthenticationDetailsRepository
+				.updateEmail(savedEntity.getKey().getCustomerId(), savedEntity.getKey().getCustomerType(), "other@gmail.com").intValue());
+		
+	}
+	
+	@Test
+	public void updateMobile()
+	{
+		assertEquals(0,customerAuthenticationDetailsRepository.count());
+		
+		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
+		
+		assertEquals(1,customerAuthenticationDetailsRepository.count());
+		
+		assertEquals(1,customerAuthenticationDetailsRepository
+				.updateMobile(savedEntity.getKey().getCustomerId(), savedEntity.getKey().getCustomerType(),9999999999L).intValue());
+		
+	}
 	
 	@Test
 	public void clearLoginDetailsForTesting()

@@ -5,7 +5,8 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 
 	private Long customerId;
 	private Integer customerType;
-	private Long mobile;
+	private Integer mobileType;
+	
 	private Integer mobilePin;
 	private Integer mobileVerificationAttempts;
 	private Integer resendCount;
@@ -17,16 +18,18 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 	}
 
 	public UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO(
-			Long customerId, Integer customerType, Long mobile, Integer mobilePin,
-			Integer mobileVerificationAttempts, Integer resendCount) {
-
+			Long customerId, Integer customerType, Integer mobileType,
+			Integer mobilePin, Integer mobileVerificationAttempts,
+			Integer resendCount) {
+		super();
 		this.customerId = customerId;
 		this.customerType = customerType;
-		this.mobile = mobile;
+		this.mobileType = mobileType;
 		this.mobilePin = mobilePin;
 		this.mobileVerificationAttempts = mobileVerificationAttempts;
 		this.resendCount = resendCount;
 	}
+
 
 
 
@@ -42,19 +45,13 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 		this.customerId = customerId;
 	}
 
-
-
-	public Long getMobile() {
-		return mobile;
+	public Integer getMobileType() {
+		return mobileType;
 	}
 
-
-
-	public void setMobile(Long mobile) {
-		this.mobile = mobile;
+	public void setMobileType(Integer mobileType) {
+		this.mobileType = mobileType;
 	}
-
-
 
 	public Integer getMobilePin() {
 		return mobilePin;
@@ -106,7 +103,7 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 				+ ", customerType="
 				+ customerType
 				+ ", mobile="
-				+ mobile
+				+ mobileType
 				+ ", mobilePin="
 				+ mobilePin
 				+ ", mobileVerificationAttempts="
@@ -122,7 +119,7 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result
 				+ ((customerType == null) ? 0 : customerType.hashCode());
-		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
+		result = prime * result + ((mobileType == null) ? 0 : mobileType.hashCode());
 		result = prime * result
 				+ ((mobilePin == null) ? 0 : mobilePin.hashCode());
 		result = prime
@@ -153,10 +150,10 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 				return false;
 		} else if (!customerType.equals(other.customerType))
 			return false;
-		if (mobile == null) {
-			if (other.mobile != null)
+		if (mobileType == null) {
+			if (other.mobileType != null)
 				return false;
-		} else if (!mobile.equals(other.mobile))
+		} else if (!mobileType.equals(other.mobileType))
 			return false;
 		if (mobilePin == null) {
 			if (other.mobilePin != null)

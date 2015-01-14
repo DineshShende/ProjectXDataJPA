@@ -31,8 +31,8 @@ import com.projectx.data.repository.quickregister.EmailVerificationDetailsReposi
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdDTO;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailDTO;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeDTO;
 import com.projectx.rest.domain.quickregister.EmailDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
@@ -167,7 +167,7 @@ public class QuickRegisterController {
 	@RequestMapping(value="/test")
 	public MobileVerificationDetails test()
 	{
-		return new MobileVerificationDetails(new MobileVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, CUST_MOBILE), 2, CUST_MOBILEPIN, ZERO_COUNT, ZERO_COUNT, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
+		return new MobileVerificationDetails(new MobileVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, 2), CUST_MOBILE, CUST_MOBILEPIN, ZERO_COUNT, ZERO_COUNT, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
 	}
 	
 	@RequestMapping(value="/customer")
