@@ -40,19 +40,19 @@ public interface AuthenticationDetailsRepository extends
 	//@Lock
 	@Modifying
 
-	@Query(value="update authenticationdetails set PASSWORD=:password,PASSWORDTYPE=:passwordType,"
+	@Query(value="update authenticationdetails set PASSWORD=:password,EMAILPASSWORD=:emailPassword,PASSWORDTYPE=:passwordType,"
 			+ "RESENDCOUNT=:resendCount,LASTUNSUCESSFULLATTEMPTS=:lastUnsucessfullAttempts where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType" ,nativeQuery = true)
-	Integer updatePasswordAndPasswordTypeAndCounts(@Param("customerId")Long customerId,@Param("customerType")Integer customerType,@Param("password")String password,
-			@Param("passwordType")String passwordType,@Param("resendCount")Integer resendCount,@Param("lastUnsucessfullAttempts")Integer lastUnsucessfullAttempts);
+	Integer updatePasswordEmailPasswordAndPasswordTypeAndCounts(@Param("customerId")Long customerId,@Param("customerType")Integer customerType,@Param("password")String password,
+			@Param("emailPassword")String emailPassword,@Param("passwordType")String passwordType,@Param("resendCount")Integer resendCount,@Param("lastUnsucessfullAttempts")Integer lastUnsucessfullAttempts);
 	
-	
+	/*
 	@Transactional
 	@Modifying
 	@Query(value="update authenticationdetails set EMAILPASSWORD=:emailPassword,PASSWORDTYPE=:passwordType,"
 			+ "RESENDCOUNT=:resendCount,LASTUNSUCESSFULLATTEMPTS=:lastUnsucessfullAttempts where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType",nativeQuery = true)
 	Integer updateEmailPasswordAndPasswordTypeAndCounts(@Param("customerId")Long customerId,@Param("customerType")Integer customerType,@Param("emailPassword")String emailPassword,
 			@Param("passwordType")String passwordType,@Param("resendCount")Integer resendCount,@Param("lastUnsucessfullAttempts")Integer lastUnsucessfullAttempts);
-	
+	*/
 	
 	@Transactional
 	@Modifying

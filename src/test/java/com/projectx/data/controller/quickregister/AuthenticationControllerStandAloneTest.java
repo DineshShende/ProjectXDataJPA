@@ -19,6 +19,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -36,7 +37,9 @@ public class AuthenticationControllerStandAloneTest {
 	AuthenticationDetailsRepository customerAuthenticationDetailsRepository;
 	
 	
-	private static final Integer ZERO_COUNT=0;
+	@Value("${ZERO_COUNT}")
+	private  Integer ZERO_COUNT;
+	
 	
 	private MockMvc mockMvc;
 	
@@ -84,16 +87,18 @@ public class AuthenticationControllerStandAloneTest {
 	
 	
 	@Test
-	public void updatePasswordAndPasswordTypeAndCounts() throws Exception
+	public void updatePasswordAndPasswordTypeAndCountsWithEmailPassword() throws Exception
 	{
-		when(customerAuthenticationDetailsRepository.updatePasswordAndPasswordTypeAndCounts
-				(standardUpdatePasswordAndPasswordTypeDTO().getCustomerId(),standardUpdatePasswordAndPasswordTypeDTO().getCustomerType(),
-						standardUpdatePasswordAndPasswordTypeDTO().getPassword(),
-						standardUpdatePasswordAndPasswordTypeDTO().getPasswordType(), ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
+		System.out.println(standardUpdatePasswordEmailPasswordTypeWithEmailPass());
+		
+		when(customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts
+				(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),
+						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getEmailPassword(),
+						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPasswordType(), ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/updatePasswordAndPasswordTypeAndCounts")
-	                    .content(standardJsonUpdatePasswordAndPasswordType())
+	            post("/customer/quickregister/customerAuthentication/updatePasswordEmailPasswordAndPasswordTypeAndCounts")
+	                    .content(standardJsonUpdatePasswordEmailPasswordAndPasswordType(standardUpdatePasswordEmailPasswordTypeWithEmailPass()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -105,15 +110,15 @@ public class AuthenticationControllerStandAloneTest {
 	
 	
 	@Test
-	public void updateEmailPasswordAndPasswordTypeAndCounts() throws Exception
+	public void updateEmailPasswordAndPasswordTypeAndCountsWithPass() throws Exception
 	{
-		when(customerAuthenticationDetailsRepository.updateEmailPasswordAndPasswordTypeAndCounts
-				(standardUpdateEmailPassword().getCustomerId(),standardUpdateEmailPassword().getCustomerType(), standardUpdateEmailPassword().getEmailPassword(),
-						"Default", ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
+		when(customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts
+				(standardUpdatePasswordEmailPasswordTypeWithPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithPass().getCustomerType(), standardUpdatePasswordEmailPasswordTypeWithPass().getPassword(),
+						standardUpdatePasswordEmailPasswordTypeWithPass().getEmailPassword(),standardUpdatePasswordEmailPasswordTypeWithPass().getPasswordType(), ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/updateEmailPasswordAndPasswordTypeAndCounts")
-	                    .content(standardJsonUpdateEmailPassword())
+	            post("/customer/quickregister/customerAuthentication/updatePasswordEmailPasswordAndPasswordTypeAndCounts")
+	                    .content(standardJsonUpdatePasswordEmailPasswordAndPasswordType(standardUpdatePasswordEmailPasswordTypeWithPass()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())

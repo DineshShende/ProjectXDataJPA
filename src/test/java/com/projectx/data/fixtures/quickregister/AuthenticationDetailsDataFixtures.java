@@ -10,7 +10,7 @@ import com.projectx.rest.domain.quickregister.CustomerIdTypeDTO;
 import com.projectx.rest.domain.quickregister.LoginVerificationDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailPassword;
-import com.projectx.rest.domain.quickregister.UpdatePasswordAndPasswordTypeDTO;
+import com.projectx.rest.domain.quickregister.UpdatePasswordEmailPasswordAndPasswordTypeDTO;
 
 
 public class AuthenticationDetailsDataFixtures {
@@ -70,14 +70,14 @@ public class AuthenticationDetailsDataFixtures {
 	
 	
 	
-	public static UpdatePasswordAndPasswordTypeDTO standardUpdatePasswordAndPasswordTypeDTO()
+	public static UpdatePasswordEmailPasswordAndPasswordTypeDTO standardUpdatePasswordEmailPasswordTypeWithEmailPass()
 	{
-		return new UpdatePasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED, CUST_PASSWORD_TYPE_CHANGED);
+		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,CUST_EMAILHASH_UPDATED ,CUST_PASSWORD_TYPE_CHANGED);
 	}
 
-	public static UpdateEmailPassword standardUpdateEmailPassword()
+	public static UpdatePasswordEmailPasswordAndPasswordTypeDTO standardUpdatePasswordEmailPasswordTypeWithPass()
 	{
-		return new UpdateEmailPassword(CUST_ID,CUST_TYPE_CUSTOMER, CUST_EMAILHASH_UPDATED);
+		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,null ,CUST_PASSWORD_TYPE_CHANGED);
 	}
 	
 	
@@ -172,21 +172,22 @@ public class AuthenticationDetailsDataFixtures {
 	}
 	
 	
-	public static String standardJsonUpdatePasswordAndPasswordType()
+	public static String standardJsonUpdatePasswordEmailPasswordAndPasswordType(UpdatePasswordEmailPasswordAndPasswordTypeDTO dto)
 	{
-		System.out.println(standardUpdatePasswordAndPasswordTypeDTO());
+		System.out.println(gson.toJson(dto));
 		
-		return gson.toJson(standardUpdatePasswordAndPasswordTypeDTO());
+		return gson.toJson(dto);
 		
 	}
 	
+	/*
 	public static String standardJsonUpdateEmailPassword()
 	{
 		System.out.println(standardUpdateEmailPassword());
 		
 		return gson.toJson(standardUpdateEmailPassword());
 	}
-	
+	*/
 	
 	public static String standardJsonCustomerIdForLoginDetails(Long customerId) {
 		

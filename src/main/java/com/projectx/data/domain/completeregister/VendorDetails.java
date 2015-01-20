@@ -37,13 +37,13 @@ public class VendorDetails {
 	@JoinColumn(name="FIRMADDRESSID")
 	private Address firmAddress;
 	
-	@Column(name="MOBILE")
+	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	
 	@Column(name="ISMOBILEVERIFIED")
 	private Boolean isMobileVerified;
 	
-	@Column(name="EMAIL")
+	@Column(name="EMAIL",unique=true)
 	private String email;
 	
 	@Column(name="ISEMAILVERIFIED")

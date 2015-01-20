@@ -1,28 +1,33 @@
 package com.projectx.rest.domain.quickregister;
 
-public class UpdatePasswordAndPasswordTypeDTO {
+public class UpdatePasswordEmailPasswordAndPasswordTypeDTO {
 
 	private Long customerId;
+	
 	private Integer customerType;
 	
 	private String password;
+	
+	private String emailPassword;
+	
 	private String passwordType;
 	
 	
-	public UpdatePasswordAndPasswordTypeDTO() {
+	public UpdatePasswordEmailPasswordAndPasswordTypeDTO() {
 		
 	}
 
+	public UpdatePasswordEmailPasswordAndPasswordTypeDTO(Long customerId,
+			Integer customerType, String password, String emailPassword,
+			String passwordType) {
 
-
-	public UpdatePasswordAndPasswordTypeDTO(Long customerId,
-			Integer customerType, String password, String passwordType) {
-		super();
 		this.customerId = customerId;
 		this.customerType = customerType;
 		this.password = password;
+		this.emailPassword = emailPassword;
 		this.passwordType = passwordType;
 	}
+
 
 
 
@@ -66,16 +71,21 @@ public class UpdatePasswordAndPasswordTypeDTO {
 		this.customerType = customerType;
 	}
 
+	public String getEmailPassword() {
+		return emailPassword;
+	}
 
+	public void setEmailPassword(String emailPassword) {
+		this.emailPassword = emailPassword;
+	}
 
 	@Override
 	public String toString() {
 		return "UpdatePasswordAndPasswordTypeDTO [customerId=" + customerId
 				+ ", customerType=" + customerType + ", password=" + password
-				+ ", passwordType=" + passwordType + "]";
+				+ ", emailPassword=" + emailPassword + ", passwordType="
+				+ passwordType + "]";
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -86,13 +96,13 @@ public class UpdatePasswordAndPasswordTypeDTO {
 		result = prime * result
 				+ ((customerType == null) ? 0 : customerType.hashCode());
 		result = prime * result
+				+ ((emailPassword == null) ? 0 : emailPassword.hashCode());
+		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
 		result = prime * result
 				+ ((passwordType == null) ? 0 : passwordType.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -102,7 +112,7 @@ public class UpdatePasswordAndPasswordTypeDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UpdatePasswordAndPasswordTypeDTO other = (UpdatePasswordAndPasswordTypeDTO) obj;
+		UpdatePasswordEmailPasswordAndPasswordTypeDTO other = (UpdatePasswordEmailPasswordAndPasswordTypeDTO) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;
@@ -112,6 +122,11 @@ public class UpdatePasswordAndPasswordTypeDTO {
 			if (other.customerType != null)
 				return false;
 		} else if (!customerType.equals(other.customerType))
+			return false;
+		if (emailPassword == null) {
+			if (other.emailPassword != null)
+				return false;
+		} else if (!emailPassword.equals(other.emailPassword))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -125,7 +140,6 @@ public class UpdatePasswordAndPasswordTypeDTO {
 			return false;
 		return true;
 	}
-
 
 	
 }

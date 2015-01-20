@@ -1,5 +1,7 @@
 package com.projectx.data.controller.completeregister;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,11 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.domain.completeregister.VendorDetails;
+import com.projectx.data.domain.quickregister.EmailVerificationDetails;
+import com.projectx.data.domain.quickregister.MobileVerificationDetails;
+import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 import com.projectx.data.repository.completeregister.CustomerDetailsCustomRepository;
 import com.projectx.data.repository.completeregister.TransactionalUpdatesRepository;
 import com.projectx.data.repository.completeregister.VendorDetailsCustomRepository;
+import com.projectx.rest.domain.completeregister.CustomerOrVendorDetailsDTO;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeDTO;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerQuickRegisterEmailMobileVerificationEntity;
 
 @RestController
 @RequestMapping(value="/transactional")
@@ -93,5 +100,44 @@ public class TransactionUpdatesController {
 			return false;
 		}
 		return updatedStatus;
+	}
+	
+	@RequestMapping(value="/saveNewQuickRegisterEntity",method=RequestMethod.POST)
+	public CustomerQuickRegisterEmailMobileVerificationEntity saveNewQuickRegisterEntity(@RequestBody QuickRegisterEntity quickRegisterEntity)
+	{
+		CustomerQuickRegisterEmailMobileVerificationEntity returnEntity=null;
+		
+		try
+		{
+			returnEntity=transactionalUpdatesRepository.saveNewQuickRegisterEntity(quickRegisterEntity);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			EmailVerificationDetails emailVerificationDetails=new EmailVerificationDetails();
+			MobileVerificationDetails mobileVerificationDetails=new MobileVerificationDetails();
+			QuickRegisterEntity quickRegisterEntity2=new QuickRegisterEntity();
+			
+			return new CustomerQuickRegisterEmailMobileVerificationEntity(quickRegisterEntity2, emailVerificationDetails, mobileVerificationDetails);
+		}
+		
+		return returnEntity;
+	}
+	
+	@RequestMapping(value="/deleteQuickRegisterEntityCreateDetails",method=RequestMethod.POST)
+	public CustomerOrVendorDetailsDTO deleteQuickRegisterEntityCreateDetails(@RequestBody QuickRegisterEntity quickRegisterEntity)
+	{
+		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=new CustomerOrVendorDetailsDTO();
+		
+		try{
+			
+			customerOrVendorDetailsDTO=transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+		}
+		catch(DataIntegrityViolationException e)
+		{
+			
+			return customerOrVendorDetailsDTO;
+		}
+		
+		return customerOrVendorDetailsDTO;
 	}
 }

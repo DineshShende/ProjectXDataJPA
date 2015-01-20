@@ -30,6 +30,12 @@ import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFi
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
 
 import com.projectx.data.config.Application;
+import com.projectx.data.repository.completeregister.CustomerDetailsCustomRepository;
+import com.projectx.data.repository.completeregister.VendorDetailsCustomRepository;
+import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
+import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
+import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
+import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 
 
 
@@ -45,6 +51,9 @@ public class QuickRegisterControllerWACTest {
 	
 	MockMvc mockMvc;
 	
+	@Autowired
+	QuickRegisterRepository quickRegisterRepository;
+	
 	@Before
 	
 	public void setUp() throws Exception
@@ -55,15 +64,43 @@ public class QuickRegisterControllerWACTest {
 	
 	
 	@Before
-	public void clearTestData() throws Exception
+	@After
+	public void clearTestData()
 	{
+		quickRegisterRepository.deleteAll();
+		
+	}
+
+	@Test
+	public void saveNewEmailMobileCustomerWithErrorsNew() throws Exception {
+		
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
-				get("/customer/quickregister/clearForTesting"));
+	            post("/customer/quickregister")
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomerWithErrors()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+   	            .andExpect(jsonPath("$.firstName").doesNotExist())
+	            .andExpect(jsonPath("$.lastName").doesNotExist())
+	            .andExpect(jsonPath("$.mobile").doesNotExist())
+	            .andExpect(jsonPath("$.email").doesNotExist())
+	            .andExpect(jsonPath("$.pincode").doesNotExist())
+				.andExpect(jsonPath("$.isEmailVerified").doesNotExist())
+				.andExpect(jsonPath("$.isMobileVerified").doesNotExist())
+				.andExpect(jsonPath("$.insertTime").doesNotExist())
+				.andExpect(jsonPath("$.updateTime").doesNotExist())
+				.andExpect(jsonPath("$.updatedBy").doesNotExist());
 
 	}
 	
+	/*
 	@Test
 	public void saveNewEmailMobileCustomerDebug() throws Exception {
+		
+		quickRegisterRepository.deleteAll();
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/responseEntity")
@@ -75,22 +112,14 @@ public class QuickRegisterControllerWACTest {
 			 
 	}
 
-	@Test
-	public void saveNewEmailMobileCustomerWithErrorsNew() throws Exception {
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister")
-	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomerWithErrors()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk());
-	}
+
 	
 	
 	@Test
 	public void getCustomerByCustomerId() throws Exception
 	{
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/getEntityByCustomerId")
 	                    .content(standardJsonCustomerId(CUST_ID))
@@ -114,6 +143,8 @@ public class QuickRegisterControllerWACTest {
 	
 	@Test
 	public void saveNewEmailMobileCustomerWithErrors() throws Exception {
+		
+		quickRegisterRepository.deleteAll();
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
@@ -139,6 +170,8 @@ public class QuickRegisterControllerWACTest {
 	@Test
 	public void saveNewEmailMobileCustomer() throws Exception {
 		
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
@@ -163,6 +196,8 @@ public class QuickRegisterControllerWACTest {
 	@Test
 	public void saveNewEmailCustomer() throws Exception {
 		
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailCustomer()))
@@ -185,6 +220,8 @@ public class QuickRegisterControllerWACTest {
 
 	@Test
 	public void saveNewMobileCustomer() throws Exception {
+		
+		quickRegisterRepository.deleteAll();
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
@@ -210,6 +247,8 @@ public class QuickRegisterControllerWACTest {
 	@Test
 	public void getAllCustomerWithEmaiMobileAndEmailCustomer() throws Exception
 	{
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
@@ -258,6 +297,8 @@ public class QuickRegisterControllerWACTest {
 	@Test
 	public void getCustomerQuickRegisterEntityByEmailAndMobileWithEmailMobileCustomer() throws Exception
 	{
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
@@ -308,6 +349,8 @@ public class QuickRegisterControllerWACTest {
 	@Test
 	public void getCustomerQuickRegisterEntityByEmailWithEmailCustomer() throws Exception
 	{
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailCustomer()))
@@ -338,6 +381,8 @@ public class QuickRegisterControllerWACTest {
 	@Test
 	public void getCustomerQuickRegisterEntityByMobileWithMobileCustomer() throws Exception
 	{
+		quickRegisterRepository.deleteAll();
+		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
 	                    .content(standardJsonQuickRegisterCustomer(standardMobileCustomer()))
@@ -371,6 +416,7 @@ public class QuickRegisterControllerWACTest {
 	@Test
 	public void clearTestingData() throws Exception
 	{
+		quickRegisterRepository.deleteAll();
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister")
@@ -403,6 +449,6 @@ public class QuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.firstName").doesNotExist());
 	
 	}
-	
+	*/
 	
 }

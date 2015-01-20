@@ -39,13 +39,13 @@ public class CustomerDetails {
 	@JoinColumn(name="HOMEADDRESSID")
 	private Address homeAddressId;
 	
-	@Column(name="MOBILE")
+	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	
 	@Column(name="ISMOBILEVERIFIED")
 	private Boolean isMobileVerified ;
 	
-	@Column(name="EMAIL")
+	@Column(name="EMAIL",unique=true)
 	private String  email;
 	
 	@Column(name="ISEMAILVERIFIED")
@@ -68,7 +68,7 @@ public class CustomerDetails {
 	private Address firmAddressId;
 	
 	@JsonIgnoreProperties(ignoreUnknown=true)
-	@Column(name="SECONDARYMOBILE")
+	@Column(name="SECONDARYMOBILE",unique=true)
 	private Long secondaryMobile;
 	
 	@JsonIgnoreProperties(ignoreUnknown=true)

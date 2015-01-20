@@ -70,12 +70,8 @@ public class VendorDetailsCustomRepository {
 	
 	public VendorDetails findOne(Long vendorId)
 	{
-		VendorDetails fetchedEntity=vendorDetailsRepository.findOne(vendorId);
 		
-		if(fetchedEntity==null)
-			return new VendorDetails();
-		
-		return fetchedEntity;
+		return vendorDetailsRepository.findOne(vendorId);
 	}
 	
 	public Integer updateEmailAndVerificationStatus(Long vendorId,String email,Boolean status)

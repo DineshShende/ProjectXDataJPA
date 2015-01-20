@@ -25,10 +25,7 @@ public class CustomerDetailsController {
 	@RequestMapping(method=RequestMethod.POST)
 	public CustomerDetails saveCustomerDetails(@RequestBody CustomerDetails customerDetails)
 	{
-		//System.out.println(customerDetails);
 		CustomerDetails details=customerDetailsCustomRepository.save(customerDetails);
-		
-		//System.out.println(details);
 		
 		return details;
 	}
@@ -43,25 +40,6 @@ public class CustomerDetailsController {
 			return new CustomerDetails();
 	}
 	
-	/*
-	@RequestMapping(value="/updateFirmAddress",method=RequestMethod.POST)
-	public CustomerDetails updateFirmAddress(@RequestBody UpdateAddressDTO addressDTO)
-	{
-		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateFirmAddress(addressDTO);
-		
-		return updatedEntity;
-	}
-	
-	@RequestMapping(value="/updateHomeAddress",method=RequestMethod.POST)
-	public CustomerDetails updateHomeAddress(@RequestBody UpdateAddressDTO addressDTO)
-	{
-		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateHomeAddress(addressDTO);
-		
-		//System.out.println(updatedEntity);
-		
-		return updatedEntity;
-	}
-	*/
 	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
 	public Integer updateMobileVerificationStatus(@RequestBody UpdateMobileVerificationStatusDTO verificationStatusDTO)
 	{
@@ -101,4 +79,25 @@ public class CustomerDetailsController {
 		customerDetailsCustomRepository.deleteAll();
 		return true;
 	}
+	
+	/*
+	@RequestMapping(value="/updateFirmAddress",method=RequestMethod.POST)
+	public CustomerDetails updateFirmAddress(@RequestBody UpdateAddressDTO addressDTO)
+	{
+		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateFirmAddress(addressDTO);
+		
+		return updatedEntity;
+	}
+	
+	@RequestMapping(value="/updateHomeAddress",method=RequestMethod.POST)
+	public CustomerDetails updateHomeAddress(@RequestBody UpdateAddressDTO addressDTO)
+	{
+		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateHomeAddress(addressDTO);
+		
+		//System.out.println(updatedEntity);
+		
+		return updatedEntity;
+	}
+	*/
+
 }

@@ -275,6 +275,7 @@ public class QuickRegisterEntity {
 				return false;
 		} else if (!customerId.equals(other.customerId))
 			return false;
+			
 		if (customerType == null) {
 			if (other.customerType != null)
 				return false;
@@ -293,7 +294,7 @@ public class QuickRegisterEntity {
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (!insertTime.equals(other.insertTime))
+		} else if (Math.abs(insertTime.getTime()-other.insertTime.getTime())>100000)
 			return false;
 		if (isEmailVerified == null) {
 			if (other.isEmailVerified != null)
@@ -323,7 +324,7 @@ public class QuickRegisterEntity {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (!updateTime.equals(other.updateTime))
+		} else if (Math.abs(updateTime.getTime()-other.updateTime.getTime())>100000)
 			return false;
 		if (updatedBy == null) {
 			if (other.updatedBy != null)

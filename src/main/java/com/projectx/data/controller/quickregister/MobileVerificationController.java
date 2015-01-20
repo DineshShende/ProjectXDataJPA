@@ -130,10 +130,11 @@ public class MobileVerificationController {
 	
 	//***********************Highly Dangerous***************************************/
 	
+	/*
 	@RequestMapping(value="/test")
 	public MobileVerificationDetails getMobileVerificationDetails()
 	{
 		return new MobileVerificationDetails(new MobileVerificationKey(212L, 1, 1), 9960821869L, 10000, 0, 0, null, null, null);
 	}
-	
+	*/
 }

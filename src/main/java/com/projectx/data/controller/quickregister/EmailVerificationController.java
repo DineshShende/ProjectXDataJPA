@@ -40,7 +40,7 @@ public class EmailVerificationController {
 		
 		EmailVerificationDetails fetchedEmailVerificationDetails=customerEmailVerificationDetailsRepository
 				.findOne(key);
-				//.findByCustomerIdAndEmail(customerIdEmailDTO.getCustomerId(), customerIdEmailDTO.getEmail());
+				
 		
 		if(fetchedEmailVerificationDetails==null)
 			return new EmailVerificationDetails();
@@ -117,10 +117,11 @@ public class EmailVerificationController {
 	
 	//***********************Highly Dangerous***************************************/
 	
+	/*
 	@RequestMapping(value="/test")
 	public EmailVerificationDetails getEmailVerificationDetails()
 	{
 		return new EmailVerificationDetails(new EmailVerificationKey(212L,1, 2) , "dineshshe@gmail.com", "skjgwjhsgfjguriueyiryeyriuyeiur", new Date(), 0,new Date(), new Date(), "ME");
 	}
-	
+	*/
 }

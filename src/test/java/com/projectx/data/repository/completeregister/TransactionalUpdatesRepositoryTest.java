@@ -4,6 +4,8 @@ package com.projectx.data.repository.completeregister;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
 import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.*;
+import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
+import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
 import static org.junit.Assert.*;
 
 import java.util.Date;
@@ -28,9 +30,13 @@ import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
+import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
+import com.projectx.data.repository.quickregister.QuickRegisterRepository;
+import com.projectx.rest.domain.completeregister.CustomerOrVendorDetailsDTO;
+import com.projectx.rest.domain.quickregister.CustomerQuickRegisterEmailMobileVerificationEntity;
 
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.*;
@@ -47,6 +53,8 @@ public class TransactionalUpdatesRepositoryTest {
 	@Autowired
 	VendorDetailsCustomRepository vendorDetailsCustomRepository;
 	
+	@Autowired
+	QuickRegisterRepository quickRegisterRepository;
 	
 	@Autowired
 	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
@@ -68,6 +76,7 @@ public class TransactionalUpdatesRepositoryTest {
 		mobileVerificationDetailsRepository.deleteAll();
 		vendorDetailsCustomRepository.deleteAll();
 		authenticationDetailsRepository.deleteAll();
+		quickRegisterRepository.deleteAll();
 	}
 
 	@Test
@@ -256,23 +265,7 @@ public class TransactionalUpdatesRepositoryTest {
 		CustomerDetails savedEntity=customerDetailsCustomRepository.save(standardCustomerDetails());
 		
 		CustomerDetails oldEntity=customerDetailsCustomRepository.findOne(savedEntity.getCustomerId());
-		/*
-		MobileVerificationDetails mobileVerificationDetails=
-				new MobileVerificationDetails(new MobileVerificationDetailsKey(CUST_ID, CUST_TYPE_CUSTOMER, 1),
-						CUST_MOBILE, CUST_MOBILEPIN, 0, 0, new Date(), new Date(), "CUST_ONLINE");
 		
-		MobileVerificationDetails mobileVerificationDetailsSec=
-				new MobileVerificationDetails(new MobileVerificationDetailsKey(CUST_ID, CUST_TYPE_CUSTOMER, 2),
-						CUST_SEC_MOBILE, CUST_MOBILEPIN, 0, 0, new Date(), new Date(), "CUST_ONLINE");
-		
-		EmailVerificationDetails emailVerificationDetails=
-				new EmailVerificationDetails(new EmailVerificationDetailsKey(CUST_ID, CUST_TYPE_CUSTOMER, 1),
-						CUST_EMAIL, CUST_EMAILHASH, new Date(), 0, new Date(), new Date(), "CUST_ONLINE");
-		
-		mobileVerificationDetailsRepository.save(mobileVerificationDetails);
-		mobileVerificationDetailsRepository.save(mobileVerificationDetailsSec);
-		emailVerificationDetailsRepository.save(emailVerificationDetails);
-		*/
 		savedEntity.setMobile(CUST_MOBILE_NEW);
 		savedEntity.setSecondaryMobile(CUST_MOBILE_SEC_NEW);
 		savedEntity.setEmail(CUST_EMAIL_OTHER);
@@ -476,13 +469,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		VendorDetails oldEntity=vendorDetailsCustomRepository.findOne(standardVendor().getVendorId());
 		
-		/*
-		EmailVerificationDetails emailVerificationDetails=
-				new EmailVerificationDetails(new EmailVerificationKey(standardVendor().getVendorId(), CUST_TYPE_VENDER, 1),
-						standardVendor().getEmail(), CUST_EMAILHASH, new Date(), 0, new Date(), new Date(), "CUST_ONLINE");
 		
-		emailVerificationDetailsRepository.save(emailVerificationDetails);
-		*/
 		
 		savedEntity.setEmail(CUST_EMAIL_OTHER);
 		
@@ -975,4 +962,261 @@ public class TransactionalUpdatesRepositoryTest {
 	}
 
 
+	@Test
+	public void saveNewQuickRegisterEntity()
+	{
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0,mobileVerificationDetailsRepository.count());
+		
+		assertEquals(0,emailVerificationDetailsRepository.count());
+		
+		assertEquals(0,authenticationDetailsRepository.count());
+		
+		
+		CustomerQuickRegisterEmailMobileVerificationEntity savedEntity=transactionalUpdatesRepository.saveNewQuickRegisterEntity(standardEmailMobileCustomer());
+		
+		//assertEquals(standardEmailMobileCustomer(), savedEntity.getCustomerQuickRegisterEntity());
+		
+		//assertEquals(standardCustomerMobileVerificationDetails(), savedEntity.getCustomerMobileVerificationDetails());
+		
+		//assertEquals(standardCustomerEmailVerificationDetails(), savedEntity.getCustomerEmailVerificationDetails());
+		
+		
+		
+		assertEquals(1,quickRegisterRepository.count());
+		
+		assertEquals(1,mobileVerificationDetailsRepository.count());
+		
+		assertEquals(1,emailVerificationDetailsRepository.count());
+		
+		assertEquals(1,authenticationDetailsRepository.count());
+		
+	}
+	
+	@Test
+	public void saveNewQuickRegisterEntityFailedCase()
+	{
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0,mobileVerificationDetailsRepository.count());
+		
+		assertEquals(0,emailVerificationDetailsRepository.count());
+		
+		assertEquals(0,authenticationDetailsRepository.count());
+		
+		authenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
+		
+		CustomerQuickRegisterEmailMobileVerificationEntity savedEntity=null;
+		
+		try{
+		savedEntity=transactionalUpdatesRepository.saveNewQuickRegisterEntity(standardEmailMobileCustomer());
+		}
+		catch(DataIntegrityViolationException e)
+		{
+			
+		}
+		//assertEquals(standardEmailMobileCustomer(), savedEntity.getCustomerQuickRegisterEntity());
+		
+		//assertEquals(standardCustomerMobileVerificationDetails(), savedEntity.getCustomerMobileVerificationDetails());
+		
+		//assertEquals(standardCustomerEmailVerificationDetails(), savedEntity.getCustomerEmailVerificationDetails());
+		finally
+		{
+		
+		System.out.println(savedEntity);
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0,mobileVerificationDetailsRepository.count());
+		
+		assertEquals(0,emailVerificationDetailsRepository.count());
+		
+		assertEquals(1,authenticationDetailsRepository.count());
+		}
+		
+	}
+
+	
+	@Test
+	public void deleteQuickRegisterEntityCreateDetailsWithCustomerEntity()
+	{
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		assertEquals(1,quickRegisterRepository.count());
+		
+		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+		
+		assertNull(customerOrVendorDetailsDTO.getVendorDetails());
+		
+		assertNotNull(customerOrVendorDetailsDTO.getCustomerDetails());
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(1, customerDetailsCustomRepository.count().intValue());
+		
+	}
+
+	@Test
+	public void deleteQuickRegisterEntityCreateDetailsWithCustomerEntityWithFailure()
+	{
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX", "ASD", null, null, CUST_MOBILE,null, CUST_EMAIL, null, 
+				null, null, null, null, null, null, null, null, null, null));
+		
+		
+		assertEquals(1,quickRegisterRepository.count());
+		
+		assertEquals(1, customerDetailsCustomRepository.count().intValue());
+		
+		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO = null;
+		
+		try
+		{
+			customerOrVendorDetailsDTO=
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+		}
+		catch(DataIntegrityViolationException e)
+		{
+			
+		}
+		finally
+		{
+			assertNull(customerOrVendorDetailsDTO);
+		
+			//assertNull(customerOrVendorDetailsDTO.getCustomerDetails());
+		
+			assertEquals(1,quickRegisterRepository.count());
+		
+			assertEquals(1, customerDetailsCustomRepository.count().intValue());
+		}
+	}
+	
+	@Test
+	public void deleteQuickRegisterEntityCreateDetailsWithVendorEntity()
+	{
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0, vendorDetailsCustomRepository.count().intValue());
+		
+		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileVendor());
+		
+		assertEquals(1,quickRegisterRepository.count());
+		
+		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+		
+		assertNotNull(customerOrVendorDetailsDTO.getVendorDetails());
+		
+		assertNull(customerOrVendorDetailsDTO.getCustomerDetails());
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(1, vendorDetailsCustomRepository.count().intValue());
+		
+	}
+
+	@Test
+	public void deleteQuickRegisterEntityCreateDetailsWithVendorEntityWithFailure()
+	{
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0, vendorDetailsCustomRepository.count().intValue());
+		
+		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileVendor());
+		
+		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD", "AES",null, null, CUST_MOBILE, null, CUST_EMAIL, null, 
+				null, null, null, null));
+		
+		
+		assertEquals(1,quickRegisterRepository.count());
+		
+		assertEquals(1, vendorDetailsCustomRepository.count().intValue());
+		
+		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO = null;
+		
+		try
+		{
+			customerOrVendorDetailsDTO=
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+		}
+		catch(DataIntegrityViolationException e)
+		{
+			
+		}
+		finally
+		{
+			assertNull(customerOrVendorDetailsDTO);
+		
+			//assertNull(customerOrVendorDetailsDTO.getCustomerDetails());
+		
+			assertEquals(1,quickRegisterRepository.count());
+		
+			assertEquals(1, vendorDetailsCustomRepository.count().intValue());
+		}
+	}
+	
+	@Test
+	public void deleteQuickRegisterEntityCreateDetailsWithCustomerEntityWithQuickRec()
+	{
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+		//QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(standardEmailMobileCustomer());
+		
+		assertNull(customerOrVendorDetailsDTO.getVendorDetails());
+		
+		assertNull(customerOrVendorDetailsDTO.getCustomerDetails());
+		
+		assertEquals(0,quickRegisterRepository.count());
+		
+		assertEquals(0, customerDetailsCustomRepository.count().intValue());
+		
+	}
+	
+	@Test
+	public void updateVendorWithoutQuickEntity()
+	{
+		assertEquals(0, vendorDetailsCustomRepository.count().intValue());
+		
+		assertEquals(0, mobileVerificationDetailsRepository.count());
+		
+		assertEquals(0, emailVerificationDetailsRepository.count());
+		
+		assertEquals(0, authenticationDetailsRepository.count());
+		
+		
+		transactionalUpdatesRepository.updateVendorDetails(standardVendor());
+		
+		assertEquals(1, vendorDetailsCustomRepository.count().intValue());
+		
+		assertEquals(1, mobileVerificationDetailsRepository.count());
+		
+		assertEquals(1, emailVerificationDetailsRepository.count());
+		
+		assertEquals(1, authenticationDetailsRepository.count());
+		
+		
+	}
 }

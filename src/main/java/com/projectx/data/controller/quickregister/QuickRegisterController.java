@@ -39,9 +39,8 @@ import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTim
 import com.projectx.rest.domain.quickregister.UpdateEmailMobileVerificationStatus;
 import com.projectx.rest.domain.quickregister.UpdateEmailPassword;
 import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO;
-import com.projectx.rest.domain.quickregister.UpdatePasswordAndPasswordTypeDTO;
+import com.projectx.rest.domain.quickregister.UpdatePasswordEmailPasswordAndPasswordTypeDTO;
 
-import static com.projectx.data.fixtures.quickregister.CustomerQuickRegisterEntityDataFixture.*;
 
 @RestController
 @RequestMapping(value="/customer/quickregister")
@@ -59,9 +58,7 @@ public class QuickRegisterController {
         binder.setValidator(validator);
     }
 
-    private final Integer ZERO_COUNT=0;
-
-    
+       
 	@RequestMapping(method=RequestMethod.POST)
 	public QuickRegisterEntity saveNewCustomer(@Valid @RequestBody  QuickRegisterEntity customerEntity,BindingResult result)
 	{
@@ -70,25 +67,6 @@ public class QuickRegisterController {
 			return new QuickRegisterEntity();
 		}
 		return customerQuickRegisterRepository.save(customerEntity);
-				
-	}
-	
-	@RequestMapping(value="/responseEntity",method=RequestMethod.POST)
-	public ResponseEntity<QuickRegisterEntity> saveNewCustomerWithResponseEntity(@Valid @RequestBody  QuickRegisterEntity customerEntity,BindingResult result)
-	{
-		QuickRegisterEntity newEntity;
-		
-		if(result.hasErrors())
-		{
-			newEntity=new QuickRegisterEntity();
-			return new ResponseEntity<QuickRegisterEntity>(newEntity, HttpStatus.CONFLICT);
-		}
-		else
-		{
-			newEntity=customerQuickRegisterRepository.save(customerEntity);
-			return new ResponseEntity<QuickRegisterEntity>(newEntity, HttpStatus.CREATED);
-		}
-		
 				
 	}
 	
@@ -163,7 +141,31 @@ public class QuickRegisterController {
 	}
 	//***********************Highly Dangerous***************************************/
 	
-	
+
+	/*
+	 * 
+	 
+		
+	@RequestMapping(value="/responseEntity",method=RequestMethod.POST)
+	public ResponseEntity<QuickRegisterEntity> saveNewCustomerWithResponseEntity(@Valid @RequestBody  QuickRegisterEntity customerEntity,BindingResult result)
+	{
+		QuickRegisterEntity newEntity;
+		
+		if(result.hasErrors())
+		{
+			newEntity=new QuickRegisterEntity();
+			return new ResponseEntity<QuickRegisterEntity>(newEntity, HttpStatus.CONFLICT);
+		}
+		else
+		{
+			newEntity=customerQuickRegisterRepository.save(customerEntity);
+			return new ResponseEntity<QuickRegisterEntity>(newEntity, HttpStatus.CREATED);
+		}
+		
+				
+	}
+ 
+	 
 	@RequestMapping(value="/test")
 	public MobileVerificationDetails test()
 	{
@@ -176,6 +178,6 @@ public class QuickRegisterController {
 		return standardEmailMobileCustomer();
 				
 	}
-	
+	*/
 	
 }

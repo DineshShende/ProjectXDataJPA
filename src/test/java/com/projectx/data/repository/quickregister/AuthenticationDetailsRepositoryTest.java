@@ -5,8 +5,8 @@ import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsData
 import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerEmailMobileAuthenticationDetails;
 import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerIdTypeDTO;
 import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerMobileAuthenticationDetails;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardUpdateEmailPassword;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardUpdatePasswordAndPasswordTypeDTO;
+
+import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardUpdatePasswordEmailPasswordTypeWithEmailPass;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_COUNT_ZERO;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_EMAIL;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_MOBILE;
@@ -145,13 +145,13 @@ public class AuthenticationDetailsRepositoryTest {
 	
 	@Test
 	//@Rollback(value=false)
-	public void updatePasswordAndPasswordType()
+	public void updatePasswordAndPasswordTypeForPassword()
 	{
 		assertEquals(0,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(0, customerAuthenticationDetailsRepository.
-				updatePasswordAndPasswordTypeAndCounts(standardUpdatePasswordAndPasswordTypeDTO().getCustomerId(),standardUpdatePasswordAndPasswordTypeDTO().getCustomerType(),
-						standardUpdatePasswordAndPasswordTypeDTO().getPassword(),standardUpdatePasswordAndPasswordTypeDTO().getPasswordType(),
+				updatePasswordEmailPasswordAndPasswordTypeAndCounts(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),
+						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),null,standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPasswordType(),
 						CUST_COUNT_ZERO,CUST_COUNT_ZERO).intValue());
 		
 		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
@@ -159,29 +159,28 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(1,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(1, customerAuthenticationDetailsRepository.
-				updatePasswordAndPasswordTypeAndCounts(standardUpdatePasswordAndPasswordTypeDTO().getCustomerId(),standardUpdatePasswordAndPasswordTypeDTO().getCustomerType(),
-						standardUpdatePasswordAndPasswordTypeDTO().getPassword(),standardUpdatePasswordAndPasswordTypeDTO().getPasswordType(),
+				updatePasswordEmailPasswordAndPasswordTypeAndCounts(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),
+						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),null,standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPasswordType(),
 						CUST_COUNT_ZERO,CUST_COUNT_ZERO).intValue());
 		
 	}
 	
 	@Test
-	public void updateEmailPasswordAndPasswordTypeAndCounts()
+	public void updateEmailPasswordAndPasswordTypeAndCountsForEmailPassword()
 	{
 		assertEquals(0,customerAuthenticationDetailsRepository.count());
 		
-		assertEquals(0, customerAuthenticationDetailsRepository.updateEmailPasswordAndPasswordTypeAndCounts(standardUpdateEmailPassword().getCustomerId(),
-				standardUpdateEmailPassword().getCustomerType(),
-				standardUpdateEmailPassword().getEmailPassword(), CUST_PASSWORD_TYPE_DEFAULT, CUST_COUNT_ZERO, CUST_COUNT_ZERO).intValue());
+		assertEquals(0, customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),
+				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),null,
+				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getEmailPassword(), CUST_PASSWORD_TYPE_DEFAULT, CUST_COUNT_ZERO, CUST_COUNT_ZERO).intValue());
 		
 		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
 		assertEquals(1,customerAuthenticationDetailsRepository.count());
 		
-		assertEquals(1, customerAuthenticationDetailsRepository.updateEmailPasswordAndPasswordTypeAndCounts(standardUpdateEmailPassword().getCustomerId(),
-				standardUpdateEmailPassword().getCustomerType(),
-				standardUpdateEmailPassword().getEmailPassword(), CUST_PASSWORD_TYPE_DEFAULT, CUST_COUNT_ZERO, CUST_COUNT_ZERO).intValue());
-		
+		assertEquals(1, customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts(savedEntity.getKey().getCustomerId(),
+				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),
+				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getEmailPassword(), CUST_PASSWORD_TYPE_DEFAULT, CUST_COUNT_ZERO, CUST_COUNT_ZERO).intValue());
 	}
 	
 	

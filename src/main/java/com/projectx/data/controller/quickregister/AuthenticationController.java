@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +18,7 @@ import com.projectx.rest.domain.quickregister.CustomerIdTypeDTO;
 import com.projectx.rest.domain.quickregister.EmailDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailPassword;
-import com.projectx.rest.domain.quickregister.UpdatePasswordAndPasswordTypeDTO;
+import com.projectx.rest.domain.quickregister.UpdatePasswordEmailPasswordAndPasswordTypeDTO;
 
 
 @RestController
@@ -27,7 +28,8 @@ public class AuthenticationController {
 	@Autowired
 	AuthenticationDetailsRepository customerAuthenticationDetailsRepository;
 
-	private final Integer ZERO_COUNT=0;
+	@Value("${ZERO_COUNT}")
+	private  Integer ZERO_COUNT;
 	
 	@RequestMapping(value="/saveLoginDetails",method=RequestMethod.POST)
 	public AuthenticationDetails saveLoginDetails(@RequestBody AuthenticationDetails customerAuthenticationDetails)
@@ -72,24 +74,15 @@ public class AuthenticationController {
 	}
 	
 	
-	@RequestMapping(value="/updatePasswordAndPasswordTypeAndCounts",method=RequestMethod.POST)
-	public Integer updatePasswordAndPasswordTypeAndCounts(@RequestBody UpdatePasswordAndPasswordTypeDTO passwordAndPasswordTypeDTO)
+	@RequestMapping(value="/updatePasswordEmailPasswordAndPasswordTypeAndCounts",method=RequestMethod.POST)
+	public Integer updatePasswordAndPasswordTypeAndCounts(@RequestBody UpdatePasswordEmailPasswordAndPasswordTypeDTO passwordAndPasswordTypeDTO)
 	{
+		
+		
 		Integer updateStatus=customerAuthenticationDetailsRepository
-				.updatePasswordAndPasswordTypeAndCounts(passwordAndPasswordTypeDTO.getCustomerId(),passwordAndPasswordTypeDTO.getCustomerType(),
-						passwordAndPasswordTypeDTO.getPassword(),
+				.updatePasswordEmailPasswordAndPasswordTypeAndCounts(passwordAndPasswordTypeDTO.getCustomerId(),passwordAndPasswordTypeDTO.getCustomerType(),
+						passwordAndPasswordTypeDTO.getPassword(),passwordAndPasswordTypeDTO.getEmailPassword(),
 						passwordAndPasswordTypeDTO.getPasswordType(), ZERO_COUNT, ZERO_COUNT);
-		
-		
-		return updateStatus;
-	}
-	
-	@RequestMapping(value="/updateEmailPasswordAndPasswordTypeAndCounts",method=RequestMethod.POST)
-	public Integer updateEmailPasswordAndPasswordTypeAndCounts(@RequestBody UpdateEmailPassword emailPassword)
-	{
-		Integer updateStatus=customerAuthenticationDetailsRepository
-				.updateEmailPasswordAndPasswordTypeAndCounts(emailPassword.getCustomerId(),emailPassword.getCustomerType(),emailPassword.getEmailPassword(),
-						"Default", ZERO_COUNT, ZERO_COUNT);
 		
 		
 		return updateStatus;
@@ -133,6 +126,19 @@ public class AuthenticationController {
 	//***********************Highly Dangerous***************************************/
 	
 	
+	/*
+	@RequestMapping(value="/updateEmailPasswordAndPasswordTypeAndCounts",method=RequestMethod.POST)
+	public Integer updateEmailPasswordAndPasswordTypeAndCounts(@RequestBody UpdateEmailPassword emailPassword)
+	{
+		Integer updateStatus=customerAuthenticationDetailsRepository
+				.updateEmailPasswordAndPasswordTypeAndCounts(emailPassword.getCustomerId(),emailPassword.getCustomerType(),emailPassword.getEmailPassword(),
+						"Default", ZERO_COUNT, ZERO_COUNT);
+		
+		
+		return updateStatus;
+	}
+	
+	
 	@RequestMapping(value="/test")
 	public AuthenticationDetails returnAuthenticationDetails()
 	{
@@ -140,5 +146,5 @@ public class AuthenticationController {
 		
 		//return new AuthenticationDetails(key, "dienshshe@gmail.com", 9960821869L, password, passwordType, emailPassword, resendCount, lastUnsucessfullAttempts)
 	}
-	
+	*/
 }
