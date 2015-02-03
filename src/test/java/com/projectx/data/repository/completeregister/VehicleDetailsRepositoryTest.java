@@ -5,6 +5,8 @@ import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixt
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +21,7 @@ import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
 @ActiveProfiles("Prod")
+@Transactional
 public class VehicleDetailsRepositoryTest {
 
 	@Autowired
@@ -43,7 +46,9 @@ public class VehicleDetailsRepositoryTest {
 		
 		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
 		
-		assertEquals(savedEntity, vehicleDetailsRepository.findOne(savedEntity.getVehicleId()));
+		VehicleDetailsDTO fetchedEntity=vehicleDetailsRepository.findOne(savedEntity.getVehicleId());
+		
+		assertEquals(savedEntity,fetchedEntity );
 		
 		assertEquals(1, vehicleDetailsRepository.count());
 	}
@@ -55,14 +60,18 @@ public class VehicleDetailsRepositoryTest {
 		
 		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
 		
-		assertEquals(savedEntity, vehicleDetailsRepository.findOne(savedEntity.getVehicleId()));
+		VehicleDetailsDTO fetchedEntity=vehicleDetailsRepository.findOne(savedEntity.getVehicleId());
+		
+		assertEquals(savedEntity, fetchedEntity);
 		
 		savedEntity.setPermitType(VEHICLE_PERMIT_TYPE_STATE);
 		savedEntity.setVehicleBodyType(VEHICLE_BODY_TYPE_CLOSED);
 		
 		vehicleDetailsRepository.save(savedEntity);
 		
-		assertEquals(savedEntity, vehicleDetailsRepository.findOne(savedEntity.getVehicleId()));
+		fetchedEntity=vehicleDetailsRepository.findOne(savedEntity.getVehicleId());
+		
+		assertEquals(savedEntity, fetchedEntity);
 		
 		assertEquals(1, vehicleDetailsRepository.count());
 	}
@@ -95,5 +104,10 @@ public class VehicleDetailsRepositoryTest {
 		assertEquals(2, vehicleList.size());
 		
 	}
-	
+
+	@Test
+	public void joinTest()
+	{
+		
+	}
 }

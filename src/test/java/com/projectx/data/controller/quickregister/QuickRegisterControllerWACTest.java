@@ -111,7 +111,7 @@ public class QuickRegisterControllerWACTest {
 	            .andExpect(status().isConflict());
 			 
 	}
-
+*/
 
 	
 	
@@ -449,6 +449,6 @@ public class QuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.firstName").doesNotExist());
 	
 	}
-	*/
+	
 	
 }

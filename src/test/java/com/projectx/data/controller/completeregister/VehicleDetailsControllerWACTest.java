@@ -27,13 +27,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
+import com.projectx.data.domain.completeregister.VehicleBrandDetails;
 import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.repository.completeregister.VehicleBrandDetailsRepositoty;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@Transactional
+
 @ActiveProfiles(value="Prod")
 
 public class VehicleDetailsControllerWACTest {
@@ -47,6 +49,9 @@ public class VehicleDetailsControllerWACTest {
 	@Autowired
 	VehicleDetailsRepository vehicleDetailsRepository;
 	
+	@Autowired
+	VehicleBrandDetailsRepositoty vehicleBrandDetailsRepositoty;
+	
 	@Before
 	public void setUp() throws Exception
 	{
@@ -59,6 +64,7 @@ public class VehicleDetailsControllerWACTest {
 	@After
 	public void ClearTestData() {
 		vehicleDetailsRepository.deleteAll();
+		vehicleBrandDetailsRepositoty.deleteAll();
 	}
 	
 	
@@ -66,6 +72,7 @@ public class VehicleDetailsControllerWACTest {
 	public void save() throws Exception
 	{
 		vehicleDetailsRepository.deleteAll();
+		
 		
 		this.mockMvc.perform(
 	            post("/vehicle")
