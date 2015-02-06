@@ -1,5 +1,6 @@
 package com.projectx.data.controller.request;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projectx.data.domain.completeregister.VehicleBrandDetails;
 import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
 import com.projectx.data.domain.completeregister.VehicleTypeDetails;
+import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.TestRequest;
 import com.projectx.data.repository.request.TestRequestRepository;
+import com.projectx.data.service.request.FreightRequestByVendorService;
+import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 
 
 @RestController
@@ -24,22 +28,30 @@ public class TestRquestController {
 	@Autowired
 	TestRequestRepository testRequestRepository;
 	
-	
+	@Autowired
+	FreightRequestByVendorService freightRequestByVendorService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public TestRequest save(@RequestBody TestRequest freightRequestByVendor)
+	public FreightRequestByVendorDTO save(@RequestBody FreightRequestByVendorDTO freightRequestByVendor)
 	{
-		TestRequest savedEntity=testRequestRepository.save(freightRequestByVendor);
-		
-		return savedEntity;
+		TestRequest savedEntity=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
+		try
+		{
+			savedEntity=testRequestRepository.save(savedEntity);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		return freightRequestByVendorService.toFreightRequestByVendorDTO(savedEntity);
 	}
 	
 	@RequestMapping(value="/getById/{requestId}",method=RequestMethod.GET)
-	public TestRequest getById(@PathVariable Long requestId)
+	public FreightRequestByVendorDTO getById(@PathVariable Long requestId)
 	{
 		TestRequest savedEntity=testRequestRepository.findOne(requestId);
 		
-		return savedEntity;
+		return freightRequestByVendorService.toFreightRequestByVendorDTO(savedEntity);
 	}
 	
 	@RequestMapping(value="/deleteById/{requestId}")
@@ -68,13 +80,34 @@ public class TestRquestController {
 	}
 	
 	@RequestMapping(value="/findByVendorId/{vendorId}")
-	public List<TestRequest> findByVendorId(@PathVariable Long vendorId)
+	public List<FreightRequestByVendorDTO> findByVendorId(@PathVariable Long vendorId)
 	{
 		List<TestRequest> requestList=testRequestRepository.findByVendorId(vendorId);
 		
-		return requestList;
+		List<FreightRequestByVendorDTO> returnList=new ArrayList<FreightRequestByVendorDTO>();
+	
+		for(int i=0;i<requestList.size();i++)
+			returnList.add(freightRequestByVendorService.toFreightRequestByVendorDTO(requestList.get(i)));
+		
+		return returnList;
 	}
 	
+	
+	@RequestMapping(value="/getMatchingVendorReqFromCustomerReq",method=RequestMethod.POST)
+	public List<FreightRequestByVendorDTO> getMatchingVendorReqFromCustomerReq(@RequestBody FreightRequestByCustomer freightRequestByCustomer)
+	{
+		List<TestRequest> requestList=testRequestRepository.getMatchingVendorRequest(freightRequestByCustomer);
+		
+		List<FreightRequestByVendorDTO> returnList=new ArrayList<FreightRequestByVendorDTO>();
+		
+		for(int i=0;i<requestList.size();i++)
+			returnList.add(freightRequestByVendorService.toFreightRequestByVendorDTO(requestList.get(i)));
+		
+		return returnList;
+	}
+	
+	
+	/*
 	@RequestMapping(value="/test")
 	public TestRequest test()
 	{
@@ -85,4 +118,5 @@ public class TestRquestController {
 		
 		return count;
 	}
+	*/
 }

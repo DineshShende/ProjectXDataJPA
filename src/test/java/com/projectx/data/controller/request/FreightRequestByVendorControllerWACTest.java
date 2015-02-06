@@ -51,6 +51,7 @@ public class FreightRequestByVendorControllerWACTest {
 	@Autowired
 	VehicleDetailsRepository vehicleDetailsRepository;
 	
+	
 	@Before
 	public void setUp() throws Exception
 	{
@@ -59,13 +60,14 @@ public class FreightRequestByVendorControllerWACTest {
 		
 	}
 	
-	/*
+	
 	@Test
 	public void environmentTest()
 	{
 		
 	}
 	
+	/*
 	@Test
 	@Transactional
 	public void save() throws Exception

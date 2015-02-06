@@ -147,6 +147,46 @@ public class VehicleDetailsControllerWACTest {
 	            
 	            		
 	}
+
+	@Test
+	public void getByRegistrationNumber() throws Exception
+	{
+		vehicleDetailsRepository.deleteAll();
+		
+		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		
+		this.mockMvc.perform(
+	            get("/vehicle/getByRegistrationNumber/"+vehicleDetails.getRegistrationNumber())
+	                )
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            
+	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
+		
+		 		.andExpect(jsonPath("$.ownerFirstName").value(standardVehicleDetails().getOwnerFirstName()))
+		 		.andExpect(jsonPath("$.ownerMiddleName").value(standardVehicleDetails().getOwnerMiddleName()))
+		 		.andExpect(jsonPath("$.ownerLastName").value(standardVehicleDetails().getOwnerLastName()))
+		 		.andExpect(jsonPath("$.vehicleTypeId.vehicleTypeName").value(standVehicleTypeDetails().getVehicleTypeName()))
+	            .andExpect(jsonPath("$.vehicleBrandId.vehicleBrandName").value(standardVehicleBrandDetails().getVehicleBrandName()))
+	            .andExpect(jsonPath("$.vehicleBrandId.modelNumber").value(standardVehicleBrandDetails().getModelNumber()))
+	            .andExpect(jsonPath("$.vehicleBrandId.vehicleTypeId.vehicleTypeName").value(standVehicleTypeDetails().getVehicleTypeName()))
+	            .andExpect(jsonPath("$.vehicleBodyType").value(standardVehicleDetails().getVehicleBodyType()))
+	            .andExpect(jsonPath("$.isBodyTypeFlexible").value(standardVehicleDetails().getIsBodyTypeFlexible()))
+	            .andExpect(jsonPath("$.registrationNumber").value(standardVehicleDetails().getRegistrationNumber()))
+	            .andExpect(jsonPath("$.chassisNumber").value(standardVehicleDetails().getChassisNumber()))
+	            .andExpect(jsonPath("$.loadCapacityInTons").value(standardVehicleDetails().getLoadCapacityInTons()))
+	            .andExpect(jsonPath("$.numberOfWheels").value(standardVehicleDetails().getNumberOfWheels()))
+	            .andExpect(jsonPath("$.permitType").value(standardVehicleDetails().getPermitType()))
+	            .andExpect(jsonPath("$.insuranceStatus").value(standardVehicleDetails().getInsuranceStatus()))
+	            .andExpect(jsonPath("$.insuranceNumber").value(standardVehicleDetails().getInsuranceNumber()))
+	            .andExpect(jsonPath("$.insuranceCompany").value(standardVehicleDetails().getInsuranceCompany()))
+	            .andExpect(jsonPath("$.updatedBy").value(standardVehicleDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.insertTime").exists())
+	            .andExpect(jsonPath("$.updateTime").exists());
+	            
+	            		
+	}
+
 	
 	@Test
 	public void deleteById() throws Exception

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,12 +18,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.domain.request.TestRequest;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 
 import static com.projectx.data.fixtures.request.TestRequestDataFixtures.*;
-
+import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFixture.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)   
@@ -40,7 +42,9 @@ public class TestRequestRepositoryTest {
 	@Autowired
 	VehicleDetailsRepository vehicleDetailsRepository;
 	
+	
 	@Before
+	@After
 	public void cleanUp()
 	{
 		testRequestRepository.deleteAll();
@@ -136,9 +140,39 @@ public class TestRequestRepositoryTest {
 	
 
 	@Test
-	public void getMatchingVendorRequest()
+	public void getMatchingVendorRequestFullTruckLoad()
 	{
+		TestRequest savedEntity=testRequestRepository.save(standardTestRequest());
 		
+		testRequestRepository.save(standardTestRequestOpen());
+		
+		testRequestRepository.save(standardTestRequestClosed());
+		
+		testRequestRepository.save(standardTestRequestFlexible());
+		
+		FreightRequestByCustomer freightRequestByCustomer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
+		
+		List<TestRequest> matchList=testRequestRepository.getMatchingVendorRequest(freightRequestByCustomer);
+		
+		assertEquals(1, matchList.size());
+	}
+	
+	@Test
+	public void getMatchingVendorRequestLessThanTruckLoad()
+	{
+		TestRequest savedEntity=testRequestRepository.save(standardTestRequest());
+		
+		testRequestRepository.save(standardTestRequestOpen());
+		
+		testRequestRepository.save(standardTestRequestClosed());
+		
+		testRequestRepository.save(standardTestRequestFlexible());
+		
+		FreightRequestByCustomer freightRequestByCustomer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoad());
+		
+		List<TestRequest> matchList=testRequestRepository.getMatchingVendorRequest(freightRequestByCustomer);
+		
+		assertEquals(2, matchList.size());
 	}
 	
 

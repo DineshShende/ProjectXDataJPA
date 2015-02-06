@@ -35,14 +35,17 @@ public class VehicleDetailsController {
 		return vehicleDetailsList;
 	}
 
-	
-	@RequestMapping(value="/deleteById/{vehicleId}")
-	public Boolean deleteById(@PathVariable Long vehicleId)
+
+
+	@RequestMapping(value="/getByRegistrationNumber/{registrationNumber}")
+	public VehicleDetailsDTO findRegistrationNumber(@PathVariable String registrationNumber)
 	{
-		vehicleDetailsRepository.delete(vehicleId);
+		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.findByRegistrationNumber(registrationNumber);
 		
-		return true;
+		return vehicleDetails;
 	}
+
+	
 	
 	@RequestMapping(value="/getById/{vehicleId}")
 	public VehicleDetailsDTO findOne(@PathVariable Long vehicleId)
@@ -51,6 +54,15 @@ public class VehicleDetailsController {
 		
 		return vehicleDetails;
 	}
+	
+	@RequestMapping(value="/deleteById/{vehicleId}")
+	public Boolean deleteById(@PathVariable Long vehicleId)
+	{
+		vehicleDetailsRepository.delete(vehicleId);
+		
+		return true;
+	}
+
 	
 	@RequestMapping(value="/count")
 	public Integer count()

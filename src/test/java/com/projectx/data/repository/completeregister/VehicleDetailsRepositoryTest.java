@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,6 +29,7 @@ public class VehicleDetailsRepositoryTest {
 	VehicleDetailsRepository vehicleDetailsRepository;
 	
 	@Before
+	@After
 	public  void setUp()
 	{
 		vehicleDetailsRepository.deleteAll();
@@ -106,8 +108,14 @@ public class VehicleDetailsRepositoryTest {
 	}
 
 	@Test
-	public void joinTest()
+	public void findByRegistrationNumber()
 	{
+		assertEquals(0, vehicleDetailsRepository.count());
 		
+		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
+		
+		assertEquals(savedEntity, vehicleDetailsRepository.findByRegistrationNumber(savedEntity.getRegistrationNumber()));
+		
+		assertEquals(1, vehicleDetailsRepository.count());
 	}
 }

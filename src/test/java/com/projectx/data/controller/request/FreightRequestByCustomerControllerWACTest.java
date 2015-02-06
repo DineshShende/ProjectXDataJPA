@@ -1,6 +1,7 @@
 package com.projectx.data.controller.request;
 
 import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFixture.*;
+import static com.projectx.data.fixtures.request.TestRequestDataFixtures.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -26,7 +27,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
+import com.projectx.data.domain.request.TestRequest;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
+import com.projectx.data.repository.request.TestRequestRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -42,6 +45,9 @@ public class FreightRequestByCustomerControllerWACTest {
 	
 	@Autowired
 	FreightRequestByCustomerRepository freightRequestByCustomerRepository;
+	
+	@Autowired
+	TestRequestRepository testRequestRepository;
 	
 	@Before
 	public void setUp() throws Exception
@@ -197,6 +203,62 @@ public class FreightRequestByCustomerControllerWACTest {
 	    
 	}
 
-	
+	@Test
+	public void getMatchingCustReqForVendorReq() throws Exception
+	{
+		
+		freightRequestByCustomerRepository.deleteAll();
+		
+		FreightRequestByCustomer savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad110());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoadClosedAcerReq());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoadOpenTataReq());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoad15());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenAcer());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenTata());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrand());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrandAndNoModel());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoModel());
+		
+		//FreightRequestByVendor vendorRequest=freightRequestByVendorRepository.save(standardFreightRequestByVendor());
+		
+		TestRequest testRequest=testRequestRepository.save(standardTestRequest());
+		
+		
+		
+		this.mockMvc.perform(
+	            post("/request/freightByRequestCustomer/getMatchingCustReqForVendorReq")
+	                    .content(stanardJsonFreightRequestByVendorDTO(standardFreightRequestByVendorDTO()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk());/*
+	            .andExpect(jsonPath("$.[0].source").value(standardFreightRequestByCustomerFullTruckLoad().getSource()))
+	            .andExpect(jsonPath("$.[0].destination").value(standardFreightRequestByCustomerFullTruckLoad().getDestination()))
+	            .andExpect(jsonPath("$.[0].noOfVehicles").value(standardFreightRequestByCustomerFullTruckLoad().getNoOfVehicles()));
+	          //  .andExpect(jsonPath("$.[0].isFullTruckLoad").value(standardFreightRequestByCustomerFullTruckLoad().getIsFullTruckLoad()))
+	          //  .andExpect(jsonPath("$.[0].isLessThanTruckLoad").value(standardFreightRequestByCustomerFullTruckLoad().getIsLessThanTruckLoad()))
+	            .andExpect(jsonPath("$.[0].bodyType").value(standardFreightRequestByCustomerFullTruckLoad().getBodyType()))
+	            .andExpect(jsonPath("$.[0].length").doesNotExist())
+	            .andExpect(jsonPath("$.[0].width").doesNotExist())
+	            .andExpect(jsonPath("$.[0].height").doesNotExist())
+	            .andExpect(jsonPath("$.[0].vehicleBrand").value(standardFreightRequestByCustomerFullTruckLoad().getVehicleBrand()))
+	            .andExpect(jsonPath("$.[0].model").value(standardFreightRequestByCustomerFullTruckLoad().getModel()))
+	            .andExpect(jsonPath("$.[0].commodity").value(standardFreightRequestByCustomerFullTruckLoad().getCommodity()))
+	            .andExpect(jsonPath("$.[0].pickupTime").value(standardFreightRequestByCustomerFullTruckLoad().getPickupTime()))
+	            .andExpect(jsonPath("$.[0].updatedBy").value(standardFreightRequestByCustomerFullTruckLoad().getUpdatedBy()))
+	            .andExpect(jsonPath("$.[0].pickupDate").exists())
+	            .andExpect(jsonPath("$.[0].insertTime").exists())
+	            .andExpect(jsonPath("$.[0].updateTime").exists());
+	    */
+	    
+	}
 	
 }

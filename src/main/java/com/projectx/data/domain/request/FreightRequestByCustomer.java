@@ -98,7 +98,7 @@ public class FreightRequestByCustomer {
 
 	}
 
-	public FreightRequestByCustomer(Integer source, Integer destination,
+	public FreightRequestByCustomer(Long requestId,Integer source, Integer destination,
 			Date pickupDate, Integer noOfVehicles, Boolean isFullTruckLoad,
 			Boolean isLessThanTruckLoad, Integer capacity, String bodyType,
 			Integer grossWeight, Integer length, Integer width, Integer height,
@@ -106,6 +106,7 @@ public class FreightRequestByCustomer {
 			String pickupTime, Date insertTime, Date updateTime,
 			String updatedBy) {
 		super();
+		this.requestId=requestId;
 		this.source = source;
 		this.destination = destination;
 		this.pickupDate = pickupDate;
@@ -426,7 +427,7 @@ public class FreightRequestByCustomer {
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (!insertTime.equals(other.insertTime))
+		} else if (Math.abs(insertTime.getTime()-other.insertTime.getTime())>1000000)
 			return false;
 		if (isFullTruckLoad == null) {
 			if (other.isFullTruckLoad != null)
@@ -456,7 +457,7 @@ public class FreightRequestByCustomer {
 		if (pickupDate == null) {
 			if (other.pickupDate != null)
 				return false;
-		} else if (!pickupDate.equals(other.pickupDate))
+		} else if (Math.abs(pickupDate.getTime()-other.pickupDate.getTime())>1000000)
 			return false;
 		if (pickupTime == null) {
 			if (other.pickupTime != null)
@@ -481,7 +482,7 @@ public class FreightRequestByCustomer {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (!updateTime.equals(other.updateTime))
+		} else if (Math.abs(updateTime.getTime()-other.updateTime.getTime())>1000000)
 			return false;
 		if (updatedBy == null) {
 			if (other.updatedBy != null)

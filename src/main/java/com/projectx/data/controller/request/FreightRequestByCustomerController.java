@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.request.FreightRequestByCustomer;
+import com.projectx.data.domain.request.TestRequest;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
+import com.projectx.data.service.request.FreightRequestByVendorService;
+import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 
 @RestController
 @RequestMapping("/request/freightByRequestCustomer")
@@ -22,6 +25,9 @@ public class FreightRequestByCustomerController {
 	
 	@Autowired
 	FreightRequestByCustomerRepository freightRequestByCustomerRepository;
+	
+	@Autowired
+	FreightRequestByVendorService freightRequestByVendorService;
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public FreightRequestByCustomer save(@RequestBody FreightRequestByCustomer freightRequestByCustomer)
@@ -72,7 +78,15 @@ public class FreightRequestByCustomerController {
 		return requestList;
 	}
 
-	
+	@RequestMapping(value="/getMatchingCustReqForVendorReq",method=RequestMethod.POST)
+	public List<FreightRequestByCustomer> getMatchingCustReqForVendorReq(@RequestBody FreightRequestByVendorDTO freightRequestByVendor)
+	{
+		TestRequest testRequest=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
+		
+		List<FreightRequestByCustomer> resultList=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
+		
+		return resultList;
+	}
 	
 	@RequestMapping(value="/test-get-sucess/{id}")
 	public ResponseEntity<FreightRequestByCustomer> test(@PathVariable Long id) throws Exception

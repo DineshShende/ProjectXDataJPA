@@ -57,7 +57,7 @@ public class TestControllerWACTest {
 	            get("/testing/save/test")
 	                    )
 	            .andDo(print())
-	            .andExpect(status().isOk());
+	            .andExpect(status().isAlreadyReported());
    	    
 		
 	}

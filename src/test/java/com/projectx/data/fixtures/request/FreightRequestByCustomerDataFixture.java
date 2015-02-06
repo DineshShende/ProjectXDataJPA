@@ -36,7 +36,7 @@ public class FreightRequestByCustomerDataFixture {
 	
 	public static Integer CREQ_HEIGHT=10;
 	
-	public static String CREQ_VEHICLE_BRAND="Tata";
+	public static String CREQ_VEHICLE_BRAND="Tata Tempo";
 	
 	public static String CREQ_VEHICLE_MODEL="407";
 	
@@ -56,15 +56,36 @@ public class FreightRequestByCustomerDataFixture {
 	
 	public static FreightRequestByCustomer standardFreightRequestByCustomerFullTruckLoad()
 	{
-		return new FreightRequestByCustomer(CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
-				CREQ_CAPACITY,CREQ_BODYTYPE_OPEN,null , null, null,null, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY,
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
+				100,CREQ_BODYTYPE_OPEN,null , null, null,null, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY,
+				CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerFullTruckLoad110()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
+				110,CREQ_BODYTYPE_OPEN,null , null, null,null, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY,
+				CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerFullTruckLoadOpenTataReq()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
+				CREQ_CAPACITY,CREQ_BODYTYPE_OPEN,null , null, null,null, CREQ_VEHICLE_BRAND, "307", CREQ_COMMITITY,
+				CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerFullTruckLoadClosedAcerReq()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
+				CREQ_CAPACITY,CREQ_BODYTYPE_CLOSED,null , null, null,null, "Acer", "507", CREQ_COMMITITY,
 				CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
 	}
 	
 	
 	public static FreightRequestByCustomer standardFreightRequestByCustomerFullTruckLoadUpdated()
 	{
-		return new FreightRequestByCustomer(CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
 				CREQ_CAPACITY,CREQ_BODYTYPE_CLOSED, null, null, null,null, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY,
 				CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS, CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
 	}
@@ -72,11 +93,52 @@ public class FreightRequestByCustomerDataFixture {
 	
 	public static FreightRequestByCustomer standardFreightRequestByCustomerLessThanTruckLoad()
 	{
-		return new FreightRequestByCustomer(CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
-				null, CREQ_BODYTYPE_CLOSED, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	CREQ_HEIGHT, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
+				null, CREQ_BODYTYPE_CLOSED, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	10, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
 				CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
 	}
 	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerLessThanTruckLoad15()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
+				null, CREQ_BODYTYPE_CLOSED, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	15, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
+				CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrandAndNoModel()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
+				null, CREQ_BODYTYPE_OPEN, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	CREQ_HEIGHT, "", "", CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
+				CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrand()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
+				null, CREQ_BODYTYPE_OPEN, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	CREQ_HEIGHT, "", "307", CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
+				CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerLessThanTruckLoadOpenNoModel()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
+				null, CREQ_BODYTYPE_OPEN, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	CREQ_HEIGHT, CREQ_VEHICLE_BRAND, "", CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
+				CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerLessThanTruckLoadOpenTata()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
+				null, CREQ_BODYTYPE_OPEN, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	CREQ_HEIGHT, CREQ_VEHICLE_BRAND, CREQ_VEHICLE_MODEL, CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
+				CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
+	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerLessThanTruckLoadOpenAcer()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_FALSE, CREQ_BOOL_TRUE,
+				null, CREQ_BODYTYPE_OPEN, CREQ_GROSS_WEIGHT, CREQ_LENGTH, CREQ_WIDTH,	CREQ_HEIGHT, "Acer", "507", CREQ_COMMITITY, CREQ_CUST_ID,CREQ_PICKUP_TIME, CREQ_STATUS,
+				CREQ_DATE, CREQ_DATE, CREQ_UPDATED_BY);
+	}
 	
 	public static String standardJsonFreightRequestByCustomer(FreightRequestByCustomer freightRequestByCustomer)
 	{

@@ -1,6 +1,6 @@
 package com.projectx.data.fixtures.request;
 
-import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.standardVehicleDetails;
+import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.*;
 
 import java.util.Date;
 
@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.domain.request.TestRequest;
+import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 
 public class TestRequestDataFixtures {
 	
@@ -42,11 +43,54 @@ public static VehicleDetailsDTO REQ_VEHICLE=standardVehicleDetails();
 	
 	private static Gson gson=new Gson();
 	
+	public static FreightRequestByVendorDTO standardFreightRequestByVendorDTO()
+	{
+		return new FreightRequestByVendorDTO(1L, standardVehicleDetails().getRegistrationNumber(),
+				REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+	}
+	
 	public static TestRequest standardTestRequest()
 	{
 		
 		
 		return new TestRequest(1L,standardVehicleDetails(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+		
+	}
+	
+	public static TestRequest standardTestRequestOpen()
+	{
+		
+		
+		return new TestRequest(100L,standardVehicleDetailsOpen(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+		
+	}
+	
+	public static TestRequest standardTestRequestOpen307()
+	{
+		
+		
+		return new TestRequest(100L,standardVehicleDetailsOpen307(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+		
+	}
+	
+	public static TestRequest standardTestRequestClosed()
+	{
+		
+		
+		return new TestRequest(120L,standardVehicleDetailsClosed(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+		
+	}
+	
+	public static TestRequest standardTestRequestFlexible()
+	{
+		
+		
+		return new TestRequest(110L,standardVehicleDetailsFlexible(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
 				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
@@ -65,5 +109,13 @@ public static VehicleDetailsDTO REQ_VEHICLE=standardVehicleDetails();
 		return gson.toJson(freightRequestByVendor);
 	}
 
+	
+	
+	public static String stanardJsonFreightRequestByVendorDTO(FreightRequestByVendorDTO freightRequestByVendor)
+	{
+		System.out.println(gson.toJson(freightRequestByVendor));
+		
+		return gson.toJson(freightRequestByVendor);
+	}
 
 }

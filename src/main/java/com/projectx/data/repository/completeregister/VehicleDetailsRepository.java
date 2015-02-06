@@ -17,4 +17,6 @@ public interface VehicleDetailsRepository extends
 	@Query(value="select * from vehicledetails where vendorid=:vendorId",nativeQuery=true)
 	List<VehicleDetailsDTO> getVehiclesByVendorId(@Param("vendorId")Long vendorId);
 	
+	VehicleDetailsDTO findByRegistrationNumber(String registrationNumber);
+	
 }
