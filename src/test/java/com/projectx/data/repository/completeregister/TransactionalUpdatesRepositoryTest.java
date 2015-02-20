@@ -1051,7 +1051,7 @@ public class TransactionalUpdatesRepositoryTest {
 		assertEquals(1,quickRegisterRepository.count());
 		
 		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=
-				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetailsEntity(quickRegisterEntity);
 		
 		assertNull(customerOrVendorDetailsDTO.getVendorDetails());
 		
@@ -1086,7 +1086,7 @@ public class TransactionalUpdatesRepositoryTest {
 		try
 		{
 			customerOrVendorDetailsDTO=
-				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetailsEntity(quickRegisterEntity);
 		}
 		catch(DataIntegrityViolationException e)
 		{
@@ -1117,7 +1117,7 @@ public class TransactionalUpdatesRepositoryTest {
 		assertEquals(1,quickRegisterRepository.count());
 		
 		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=
-				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetailsEntity(quickRegisterEntity);
 		
 		assertNotNull(customerOrVendorDetailsDTO.getVendorDetails());
 		
@@ -1152,7 +1152,7 @@ public class TransactionalUpdatesRepositoryTest {
 		try
 		{
 			customerOrVendorDetailsDTO=
-				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetailsEntity(quickRegisterEntity);
 		}
 		catch(DataIntegrityViolationException e)
 		{
@@ -1183,7 +1183,7 @@ public class TransactionalUpdatesRepositoryTest {
 		assertEquals(0,quickRegisterRepository.count());
 		
 		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=
-				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(standardEmailMobileCustomer());
+				transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetailsEntity(standardEmailMobileCustomer());
 		
 		assertNull(customerOrVendorDetailsDTO.getVendorDetails());
 		

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,38 +24,46 @@ public class DriverDetailsContoller {
 	DriverDetailsCustomRepository driverDetailsRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public DriverDetails save(@RequestBody DriverDetails driverDetails)
+	public ResponseEntity<DriverDetails> save(@RequestBody DriverDetails driverDetails)
 	{
+		ResponseEntity<DriverDetails> savedEntityResponse=null;
+		
 		DriverDetails savedEntity=null;
 		
 		try
 		{
 			savedEntity=driverDetailsRepository.save(driverDetails);
+			
+			savedEntityResponse=new ResponseEntity<DriverDetails>(savedEntity, HttpStatus.CREATED);
 		}
 		catch(DataIntegrityViolationException e)
 		{
-			return new DriverDetails();
+			savedEntityResponse=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
 		}
 		
-		return savedEntity;
+		return savedEntityResponse;
 				
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public DriverDetails update(@RequestBody DriverDetails driverDetails)
+	public ResponseEntity<DriverDetails> update(@RequestBody DriverDetails driverDetails)
 	{
+		ResponseEntity<DriverDetails> result=null;
+		
 		DriverDetails savedEntity=new DriverDetails();
 		
 		try
 		{
 			savedEntity=driverDetailsRepository.update(driverDetails);
+			
+			result=new ResponseEntity<DriverDetails>(savedEntity, HttpStatus.OK);
 		}
 		catch(DataIntegrityViolationException e)
 		{
-			return driverDetailsRepository.findOne(driverDetails.getDriverId());
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
 		}
 		
-		return savedEntity;
+		return result;
 				
 	}
 	
@@ -76,11 +86,24 @@ public class DriverDetailsContoller {
 	}
 	
 	@RequestMapping(value="/getById/{driverId}")
-	public DriverDetails findOne(@PathVariable Long driverId)
+	public ResponseEntity<DriverDetails> findOne(@PathVariable Long driverId)
 	{
-		DriverDetails driverDetails=driverDetailsRepository.findOne(driverId);
+		ResponseEntity<DriverDetails> result=null;
 		
-		return driverDetails;
+		DriverDetails driverDetails=null;
+		
+		driverDetails=driverDetailsRepository.findOne(driverId);
+		
+		if(driverDetails==null)
+		{
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		else
+		{
+			result=new ResponseEntity<DriverDetails>(driverDetails, HttpStatus.FOUND);
+		}
+			
+		return result;
 	}
 	
 	@RequestMapping(value="/deleteById/{driverId}")

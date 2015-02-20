@@ -3,6 +3,8 @@ package com.projectx.data.controller.completeregister;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,21 +40,45 @@ public class VehicleDetailsController {
 
 
 	@RequestMapping(value="/getByRegistrationNumber/{registrationNumber}")
-	public VehicleDetailsDTO findRegistrationNumber(@PathVariable String registrationNumber)
+	public ResponseEntity<VehicleDetailsDTO> findRegistrationNumber(@PathVariable String registrationNumber)
 	{
+		ResponseEntity<VehicleDetailsDTO> result=null;
+		
 		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.findByRegistrationNumber(registrationNumber);
 		
-		return vehicleDetails;
+		if(vehicleDetails ==null)
+		{
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
+		}
+		else
+		{
+			result=new ResponseEntity<VehicleDetailsDTO>(vehicleDetails, HttpStatus.FOUND);
+		}
+		
+		return result;
 	}
 
 	
 	
 	@RequestMapping(value="/getById/{vehicleId}")
-	public VehicleDetailsDTO findOne(@PathVariable Long vehicleId)
+	public ResponseEntity<VehicleDetailsDTO> findOne(@PathVariable Long vehicleId)
 	{
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.findOne(vehicleId);
+		ResponseEntity<VehicleDetailsDTO> result=null;
 		
-		return vehicleDetails;
+		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.findOne(vehicleId);
+	
+		if(vehicleDetails ==null)
+		{
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
+		}
+		else
+		{
+			result=new ResponseEntity<VehicleDetailsDTO>(vehicleDetails, HttpStatus.FOUND);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/deleteById/{vehicleId}")

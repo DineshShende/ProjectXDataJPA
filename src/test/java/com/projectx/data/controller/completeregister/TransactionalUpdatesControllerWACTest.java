@@ -227,7 +227,7 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            .andExpect(jsonPath("$.customerQuickRegisterEntity.firstName").value(standardEmailMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.customerQuickRegisterEntity.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.customerQuickRegisterEntity.mobile").value(standardEmailMobileCustomer().getMobile()))
@@ -276,7 +276,8 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isAlreadyReported());
+		/*
 	            .andExpect(jsonPath("$.customerQuickRegisterEntity.firstName").doesNotExist())
 	            .andExpect(jsonPath("$.customerQuickRegisterEntity.lastName").doesNotExist())
 	            .andExpect(jsonPath("$.customerQuickRegisterEntity.mobile").doesNotExist())
@@ -305,7 +306,7 @@ public class TransactionalUpdatesControllerWACTest {
 		          .andExpect(jsonPath("$.customerEmailVerificationDetails.updateTime").doesNotExist())
 		          .andExpect(jsonPath("$.customerEmailVerificationDetails.resendCount").doesNotExist())
 		          .andExpect(jsonPath("$.customerEmailVerificationDetails.updatedBy").doesNotExist());
-	        
+	      */  
 		
 	}
 	
@@ -323,7 +324,7 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.customerDetails.firstName").value(standardCustomerDetails().getFirstName()))
 	            .andExpect(jsonPath("$.customerDetails.lastName").value(standardCustomerDetails().getLastName()))
 	            .andExpect(jsonPath("$.customerDetails.homeAddressId").doesNotExist())
@@ -364,11 +365,12 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isAlreadyReported());
+		/*
                 .andExpect(jsonPath("$.vendorDetails").doesNotExist())
 	            .andExpect(jsonPath("$.customerDetails").doesNotExist());
 	            	
-
+		 */
 	    
 		
 	}
@@ -386,7 +388,7 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.vendorDetails.firstName").value(standardEmailMobileVendor().getFirstName()))
 		 		.andExpect(jsonPath("$.vendorDetails.lastName").value(standardEmailMobileVendor().getLastName()))
 		 		.andExpect(jsonPath("$.vendorDetails.firmAddress").doesNotExist())
@@ -422,10 +424,11 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isAlreadyReported());
+		/*
                 .andExpect(jsonPath("$.vendorDetails").doesNotExist())
 	            .andExpect(jsonPath("$.customerDetails").doesNotExist());
-	            
+	    */        
 	    
 		
 	}
@@ -442,7 +445,7 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.vendorDetails").doesNotExist())
 	            .andExpect(jsonPath("$.customerDetails").doesNotExist());
 	            		

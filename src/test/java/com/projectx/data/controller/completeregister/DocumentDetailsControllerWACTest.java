@@ -82,6 +82,15 @@ public class DocumentDetailsControllerWACTest {
 	@Test
 	public void getCustomerDetailsByKey() throws Exception
 	{
+
+		this.mockMvc.perform(
+	            post("/document/getCustomerDocumentByKey")
+	                    .content(standardJsonDocumentKey())
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNoContent());
+		
 		this.mockMvc.perform(
 	            post("/document/saveCustomerDocument")
 	                    .content(standardJsonDocumentDetails(standardDocumentDetailsWithDummyDocument()))
@@ -94,7 +103,7 @@ public class DocumentDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isFound())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 	            .andExpect(jsonPath("$.key.customerType").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerType()))

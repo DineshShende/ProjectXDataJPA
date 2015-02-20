@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.request.FreightRequestByCustomer;
-import com.projectx.data.domain.request.TestRequest;
+import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
 import com.projectx.data.service.request.FreightRequestByVendorService;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
@@ -38,11 +38,22 @@ public class FreightRequestByCustomerController {
 	}
 	
 	@RequestMapping(value="/getById/{requestId}",method=RequestMethod.GET)
-	public FreightRequestByCustomer getById(@PathVariable Long requestId)
+	public ResponseEntity<FreightRequestByCustomer> getById(@PathVariable Long requestId)
 	{
-		FreightRequestByCustomer savedEntity=freightRequestByCustomerRepository.findOne(requestId);
+		ResponseEntity<FreightRequestByCustomer> result=null;
 		
-		return savedEntity;
+		FreightRequestByCustomer fetchedEntity=freightRequestByCustomerRepository.findOne(requestId);
+		
+		if(fetchedEntity==null)
+		{
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		else
+		{
+			result=new ResponseEntity<FreightRequestByCustomer>(fetchedEntity, HttpStatus.FOUND);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/deleteById/{requestId}")
@@ -81,7 +92,7 @@ public class FreightRequestByCustomerController {
 	@RequestMapping(value="/getMatchingCustReqForVendorReq",method=RequestMethod.POST)
 	public List<FreightRequestByCustomer> getMatchingCustReqForVendorReq(@RequestBody FreightRequestByVendorDTO freightRequestByVendor)
 	{
-		TestRequest testRequest=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
+		FreightRequestByVendor testRequest=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
 		
 		List<FreightRequestByCustomer> resultList=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
 		
@@ -91,8 +102,6 @@ public class FreightRequestByCustomerController {
 	@RequestMapping(value="/test-get-sucess/{id}")
 	public ResponseEntity<FreightRequestByCustomer> test(@PathVariable Long id) throws Exception
 	{
-		//return new FreightRequestByCustomer(requestId, source, destination, pickupDate, noOfVehicles, isFullTruckLoad, isLessThanTruckLoad, capacity, bodyType, grossWeight, length, width, height, vehicleBrand, model, commodity, pickupTime, insertTime, updateTime, updatedBy)
-		
 		FreightRequestByCustomer result=freightRequestByCustomerRepository.findOne(id);
 		
 		

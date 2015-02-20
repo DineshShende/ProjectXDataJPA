@@ -120,7 +120,7 @@ public class VehicleDetailsControllerWACTest {
 	            get("/vehicle/getById/"+vehicleDetails.getVehicleId())
 	                )
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isFound())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		
@@ -153,13 +153,19 @@ public class VehicleDetailsControllerWACTest {
 	{
 		vehicleDetailsRepository.deleteAll();
 		
+		this.mockMvc.perform(
+	            get("/vehicle/getByRegistrationNumber/"+"212")
+	                )
+	            .andDo(print())
+	            .andExpect(status().isNoContent());
+		
 		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		this.mockMvc.perform(
 	            get("/vehicle/getByRegistrationNumber/"+vehicleDetails.getRegistrationNumber())
 	                )
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isFound())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		

@@ -133,6 +133,12 @@ public class VendorDetailsControllerWACTest {
 	public void getById() throws Exception
 	{
 		this.mockMvc.perform(
+	            get("/vendor/getById/"+standardVendor().getVendorId())
+									)
+	            .andDo(print())
+	            .andExpect(status().isNoContent());
+		
+		this.mockMvc.perform(
 	            post("/vendor/save")
 	                    .content(standardJsonVendor(standardVendor()))
 	                    .contentType(MediaType.APPLICATION_JSON)
@@ -143,7 +149,7 @@ public class VendorDetailsControllerWACTest {
 	            get("/vendor/getById/"+standardVendor().getVendorId())
 									)
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isFound())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		

@@ -84,7 +84,7 @@ public class QuickRegisterControllerStandAloneTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isFound())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))

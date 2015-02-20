@@ -1,6 +1,9 @@
 package com.projectx.data.controller.completeregister;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,21 +26,40 @@ public class CustomerDetailsController {
 	CustomerDetailsCustomRepository customerDetailsCustomRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public CustomerDetails saveCustomerDetails(@RequestBody CustomerDetails customerDetails)
+	public ResponseEntity<CustomerDetails> saveCustomerDetails(@RequestBody CustomerDetails customerDetails)
 	{
-		CustomerDetails details=customerDetailsCustomRepository.save(customerDetails);
+		ResponseEntity<CustomerDetails> result=null;
 		
-		return details;
+		try{		
+		
+			CustomerDetails details=customerDetailsCustomRepository.save(customerDetails);
+			result=new ResponseEntity<CustomerDetails>(details, HttpStatus.CREATED);
+		
+		}
+		catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		return result;
 	}
 	@RequestMapping(value="/{customerId}",method=RequestMethod.GET)
-	public CustomerDetails findOne(@PathVariable("customerId")Long customerId )
+	public ResponseEntity<CustomerDetails> findOne(@PathVariable("customerId")Long customerId )
 	{
+		ResponseEntity<CustomerDetails> result=null;
+		
 		CustomerDetails fetchedEntity=customerDetailsCustomRepository.findOne(customerId);
 		
 		if(fetchedEntity!=null)
-			return fetchedEntity;
+		{
+			result=new ResponseEntity<CustomerDetails>(fetchedEntity, HttpStatus.FOUND);
+		}
+		
 		else
-			return new CustomerDetails();
+		{	
+			result=new ResponseEntity<CustomerDetails>(HttpStatus.NO_CONTENT);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
@@ -80,24 +102,5 @@ public class CustomerDetailsController {
 		return true;
 	}
 	
-	/*
-	@RequestMapping(value="/updateFirmAddress",method=RequestMethod.POST)
-	public CustomerDetails updateFirmAddress(@RequestBody UpdateAddressDTO addressDTO)
-	{
-		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateFirmAddress(addressDTO);
-		
-		return updatedEntity;
-	}
-	
-	@RequestMapping(value="/updateHomeAddress",method=RequestMethod.POST)
-	public CustomerDetails updateHomeAddress(@RequestBody UpdateAddressDTO addressDTO)
-	{
-		CustomerDetails updatedEntity=customerDetailsCustomRepository.updateHomeAddress(addressDTO);
-		
-		//System.out.println(updatedEntity);
-		
-		return updatedEntity;
-	}
-	*/
 
 }

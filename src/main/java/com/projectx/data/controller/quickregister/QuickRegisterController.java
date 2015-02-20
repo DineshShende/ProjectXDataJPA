@@ -60,13 +60,17 @@ public class QuickRegisterController {
 
        
 	@RequestMapping(method=RequestMethod.POST)
-	public QuickRegisterEntity saveNewCustomer(@Valid @RequestBody  QuickRegisterEntity customerEntity,BindingResult result)
+	public ResponseEntity<QuickRegisterEntity> saveNewCustomer(@Valid @RequestBody  QuickRegisterEntity customerEntity,BindingResult result)
 	{
+		ResponseEntity<QuickRegisterEntity> resultResponse=null;
+		
 		if(result.hasErrors())
 		{
-			return new QuickRegisterEntity();
+			resultResponse=new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			return resultResponse;
 		}
-		return customerQuickRegisterRepository.save(customerEntity);
+		
+		return new ResponseEntity<QuickRegisterEntity>(customerQuickRegisterRepository.save(customerEntity), HttpStatus.CREATED);
 				
 	}
 	
@@ -77,38 +81,49 @@ public class QuickRegisterController {
 	}
 	
 	@RequestMapping(value="/getEntityByCustomerId",method=RequestMethod.POST)
-	public QuickRegisterEntity getCustomerByCustomerId(@RequestBody CustomerIdDTO customerDTO)
+	public ResponseEntity<QuickRegisterEntity> getCustomerByCustomerId(@RequestBody CustomerIdDTO customerDTO)
 	{
+		ResponseEntity<QuickRegisterEntity> result=null;
 		
 		Optional<QuickRegisterEntity> fetchedEntity= customerQuickRegisterRepository.findByCustomerId(customerDTO.getCustomerId());
 		
 		if(!fetchedEntity.isPresent())
-			return new QuickRegisterEntity();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<QuickRegisterEntity>(fetchedEntity.get(), HttpStatus.FOUND);
 		
-		return fetchedEntity.get();
+		return result;
 	}
 	
 	@RequestMapping(value="/getCustomerQuickRegisterEntityByEmail",method=RequestMethod.POST)
-	public QuickRegisterEntity getCustomerQuickRegisterEntityByEmail(@RequestBody EmailDTO getByEmailDTO)
+	public ResponseEntity<QuickRegisterEntity> getCustomerQuickRegisterEntityByEmail(@RequestBody EmailDTO getByEmailDTO)
 	{
+		ResponseEntity<QuickRegisterEntity> result=null;
+		
 		Optional<QuickRegisterEntity> fetchedEntity=customerQuickRegisterRepository.findByEmail(getByEmailDTO.getEmail());
 		
 		if(!fetchedEntity.isPresent())
-			return new QuickRegisterEntity();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<QuickRegisterEntity>(fetchedEntity.get(), HttpStatus.FOUND);
 		
-		return fetchedEntity.get();
+		return result;
 	}
 	
 	
 	@RequestMapping(value="/getCustomerQuickRegisterEntityByMobile",method=RequestMethod.POST)
-	public QuickRegisterEntity getCustomerQuickRegisterEntityByMobile(@RequestBody MobileDTO getByMobileDTO)
+	public ResponseEntity<QuickRegisterEntity> getCustomerQuickRegisterEntityByMobile(@RequestBody MobileDTO getByMobileDTO)
 	{
+		ResponseEntity<QuickRegisterEntity> result=null;
+		
 		Optional<QuickRegisterEntity> fetchedEntity=customerQuickRegisterRepository.findByMobile(getByMobileDTO.getMobile());
 		
 		if(!fetchedEntity.isPresent())
-			return new QuickRegisterEntity();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<QuickRegisterEntity>(fetchedEntity.get(), HttpStatus.FOUND);
 		
-		return fetchedEntity.get();
+		return result;
 	}
 	
 	
@@ -141,43 +156,5 @@ public class QuickRegisterController {
 	}
 	//***********************Highly Dangerous***************************************/
 	
-
-	/*
-	 * 
-	 
-		
-	@RequestMapping(value="/responseEntity",method=RequestMethod.POST)
-	public ResponseEntity<QuickRegisterEntity> saveNewCustomerWithResponseEntity(@Valid @RequestBody  QuickRegisterEntity customerEntity,BindingResult result)
-	{
-		QuickRegisterEntity newEntity;
-		
-		if(result.hasErrors())
-		{
-			newEntity=new QuickRegisterEntity();
-			return new ResponseEntity<QuickRegisterEntity>(newEntity, HttpStatus.CONFLICT);
-		}
-		else
-		{
-			newEntity=customerQuickRegisterRepository.save(customerEntity);
-			return new ResponseEntity<QuickRegisterEntity>(newEntity, HttpStatus.CREATED);
-		}
-		
-				
-	}
- 
-	 
-	@RequestMapping(value="/test")
-	public MobileVerificationDetails test()
-	{
-		return new MobileVerificationDetails(new MobileVerificationKey(CUST_ID, CUST_TYPE_CUSTOMER, 2), CUST_MOBILE, CUST_MOBILEPIN, ZERO_COUNT, ZERO_COUNT, CUST_INSERT_TIME, CUST_UPDATE_TIME, CUST_UPDATED_BY);
-	}
-	
-	@RequestMapping(value="/customer")
-	public QuickRegisterEntity show()
-	{
-		return standardEmailMobileCustomer();
-				
-	}
-	*/
 	
 }

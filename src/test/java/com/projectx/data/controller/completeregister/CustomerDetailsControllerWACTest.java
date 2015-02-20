@@ -62,8 +62,8 @@ public class CustomerDetailsControllerWACTest {
 	                    .content(standardJsonCustomerDetails(standardCustomerDetailsCopiedFromQuickRegisterEntity()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	          //  .andDo(print())
+	            .andExpect(status().isCreated())
 	            
 	          //  .andExpect(jsonPath("$.customerId").value(standardCustomerDetailsFirstPart().getCustomerId()))
 	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetailsCopiedFromQuickRegisterEntity().getFirstName()))
@@ -100,8 +100,8 @@ public class CustomerDetailsControllerWACTest {
 	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	          //  .andDo(print())
+	            .andExpect(status().isCreated())
 	            
 	          //  .andExpect(jsonPath("$.customerId").value(standardCustomerDetailsFirstPart().getCustomerId()))
 	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetails().getFirstName()))
@@ -150,14 +150,14 @@ public class CustomerDetailsControllerWACTest {
 	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk());
+	           // .andDo(print())
+	            .andExpect(status().isCreated());
 	 
 		
 		this.mockMvc.perform(
 	            get("/customer/completeregister/212"))
-	             .andDo(print())
-	            .andExpect(status().isOk())
+	            // .andDo(print())
+	            .andExpect(status().isFound())
 	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetails().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardCustomerDetails().getLastName()))
 	            .andExpect(jsonPath("$.homeAddressId.customerType").value(standardCustomerDetails().getHomeAddressId().getCustomerType()))
@@ -204,16 +204,20 @@ public class CustomerDetailsControllerWACTest {
 	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk());
+	           // .andDo(print())
+	            .andExpect(status().isCreated());
 	 
+		this.mockMvc.perform(
+				get("/customer/completeregister/count")
+				);
+		
 	
 		this.mockMvc.perform(
 	            post("/customer/completeregister/updateMobileVerificationStatus")
 	                    .content(standardJsonUpdateVerificationStatus())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
+	           // .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("1"));
 		
@@ -227,16 +231,20 @@ public class CustomerDetailsControllerWACTest {
 	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk());
+	          //  .andDo(print())
+	            .andExpect(status().isCreated());
 	 
+		this.mockMvc.perform(
+				get("/customer/completeregister/count")
+				);
+		
 	
 		this.mockMvc.perform(
 	            post("/customer/completeregister/updateSecondaryMobileVerificationStatus")
 	                    .content(standardJsonUpdateVerificationStatus())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
+	           // .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("1"));
 		
@@ -250,74 +258,27 @@ public class CustomerDetailsControllerWACTest {
 	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk());
+	          //  .andDo(print())
+	            .andExpect(status().isCreated());
 	 
 	
+		this.mockMvc.perform(
+				get("/customer/completeregister/count")
+				);
+		
+		
 		this.mockMvc.perform(
 	            post("/customer/completeregister/updateEmailVerificationStatus")
 	                    .content(standardJsonEmailUpdateVerificationStatus())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
+	           // .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("1"));
 		
 	}
 
-	/*
-	@Test
-	public void updateFirmAddress() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/completeregister")
-	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk());
-	 
 	
-		this.mockMvc.perform(
-	            post("/customer/completeregister/updateFirmAddress")
-	                    .content(standardJsonUpdateAddress())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())	            
-	            .andExpect(jsonPath("$.firmAddressId.addressLine").value(standardUpdateAddressDTO().getAddress().getAddressLine()))
-	            .andExpect(jsonPath("$.firmAddressId.city").value(standardUpdateAddressDTO().getAddress().getCity()))
-	            .andExpect(jsonPath("$.firmAddressId.district").value(standardUpdateAddressDTO().getAddress().getDistrict()))
-	            .andExpect(jsonPath("$.firmAddressId.state").value(standardUpdateAddressDTO().getAddress().getState()));
-		
-	}
-	
-	@Test
-	public void updateHomeAddress() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/completeregister")
-	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk());
-	 
-	
-		this.mockMvc.perform(
-	            post("/customer/completeregister/updateHomeAddress")
-	                    .content(standardJsonUpdateAddress())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())	            
-	            .andExpect(jsonPath("$.homeAddressId.addressLine").value(standardUpdateAddressDTO().getAddress().getAddressLine()))
-	            .andExpect(jsonPath("$.homeAddressId.city").value(standardUpdateAddressDTO().getAddress().getCity()))
-	            .andExpect(jsonPath("$.homeAddressId.district").value(standardUpdateAddressDTO().getAddress().getDistrict()))
-	            .andExpect(jsonPath("$.homeAddressId.state").value(standardUpdateAddressDTO().getAddress().getState()));
-		
-	}
-*/	
 
 }
 

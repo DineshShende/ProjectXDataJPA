@@ -1,7 +1,7 @@
 package com.projectx.data.controller.request;
 
 import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFixture.*;
-import static com.projectx.data.fixtures.request.TestRequestDataFixtures.*;
+import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -27,9 +27,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
-import com.projectx.data.domain.request.TestRequest;
+import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
-import com.projectx.data.repository.request.TestRequestRepository;
+import com.projectx.data.repository.request.FreightRequestByVendorRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -47,7 +47,7 @@ public class FreightRequestByCustomerControllerWACTest {
 	FreightRequestByCustomerRepository freightRequestByCustomerRepository;
 	
 	@Autowired
-	TestRequestRepository testRequestRepository;
+	FreightRequestByVendorRepository testRequestRepository;
 	
 	@Before
 	public void setUp() throws Exception
@@ -100,13 +100,19 @@ public class FreightRequestByCustomerControllerWACTest {
 	@Test
 	public void getById() throws Exception
 	{
+		this.mockMvc.perform(
+	            get("/request/freightByRequestCustomer/getById/"+"123"))
+	            
+	            .andDo(print())
+	            .andExpect(status().isNoContent());
+		
 		FreightRequestByCustomer customer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
 		
 		this.mockMvc.perform(
 	            get("/request/freightByRequestCustomer/getById/"+customer.getRequestId()))
 	            
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isFound())
 	            .andExpect(jsonPath("$.source").value(standardFreightRequestByCustomerFullTruckLoad().getSource()))
 	            .andExpect(jsonPath("$.destination").value(standardFreightRequestByCustomerFullTruckLoad().getDestination()))
 	            .andExpect(jsonPath("$.noOfVehicles").value(standardFreightRequestByCustomerFullTruckLoad().getNoOfVehicles()))
@@ -229,7 +235,7 @@ public class FreightRequestByCustomerControllerWACTest {
 		
 		//FreightRequestByVendor vendorRequest=freightRequestByVendorRepository.save(standardFreightRequestByVendor());
 		
-		TestRequest testRequest=testRequestRepository.save(standardTestRequest());
+		FreightRequestByVendor testRequest=testRequestRepository.save(standardTestRequest());
 		
 		
 		

@@ -6,7 +6,9 @@ import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 
 public interface FreightRequestByVendorCustomRepository {
-
-	List<FreightRequestByVendor> getMatchingVendorRequest(FreightRequestByCustomer freightRequestByCustomer);
 	
+	
+	
+	List<FreightRequestByVendor> getMatchingVendorRequest(FreightRequestByCustomer freightRequestByCustomer);
+
 }

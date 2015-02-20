@@ -17,17 +17,16 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
-
-
 @Entity
 @Table(name="FREIGHTREQUESTBYVENDOR")
 public class FreightRequestByVendor {
 
+	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="REQUESTID")
 	private Long requestId;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="VEHICLEDETAILSID")
 	private VehicleDetailsDTO vehicleDetailsId;
 	
@@ -69,13 +68,13 @@ public class FreightRequestByVendor {
 
 	}
 
-	public FreightRequestByVendor(
-			VehicleDetailsDTO vehicleDetailsId, Integer source,
-			Integer destination, Long driverId, Date availableDate,
-			String availableTime, Integer pickupRangeInKm, Long vendorId,
-			String status, Date insertTime, Date updateTime, String updatedBy) {
-		super();
-		
+	public FreightRequestByVendor(Long requestId, VehicleDetailsDTO vehicleDetailsId,
+			Integer source, Integer destination, Long driverId,
+			Date availableDate, String availableTime, Integer pickupRangeInKm,
+			Long vendorId, String status, Date insertTime, Date updateTime,
+			String updatedBy) {
+
+		this.requestId = requestId;
 		this.vehicleDetailsId = vehicleDetailsId;
 		this.source = source;
 		this.destination = destination;
@@ -90,6 +89,8 @@ public class FreightRequestByVendor {
 		this.updatedBy = updatedBy;
 	}
 
+	
+	
 	public Long getRequestId() {
 		return requestId;
 	}
@@ -130,19 +131,20 @@ public class FreightRequestByVendor {
 		this.driverId = driverId;
 	}
 
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getAvailableDate() {
 		return availableDate;
 	}
 
+	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setAvailableDate(Date availableDate) {
 		this.availableDate = availableDate;
 	}
-	@JsonSerialize(using=JsonDateSerializer.class)
+
 	public String getAvailableTime() {
 		return availableTime;
 	}
 
-	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setAvailableTime(String availableTime) {
 		this.availableTime = availableTime;
 	}
@@ -201,14 +203,14 @@ public class FreightRequestByVendor {
 
 	@Override
 	public String toString() {
-		return "FreightRequestByVendor [requestId=" + requestId
-				+ ", vehicleDetailsId=" + vehicleDetailsId + ", source="
-				+ source + ", destination=" + destination + ", driverId="
-				+ driverId + ", availableDate=" + availableDate
-				+ ", availableTime=" + availableTime + ", pickupRangeInKm="
-				+ pickupRangeInKm + ", vendorId=" + vendorId + ", status="
-				+ status + ", insertTime=" + insertTime + ", updateTime="
-				+ updateTime + ", updatedBy=" + updatedBy + "]";
+		return "TestRequest [requestId=" + requestId + ", vehicleDetailsId="
+				+ vehicleDetailsId + ", source=" + source + ", destination="
+				+ destination + ", driverId=" + driverId + ", availableDate="
+				+ availableDate + ", availableTime=" + availableTime
+				+ ", pickupRangeInKm=" + pickupRangeInKm + ", vendorId="
+				+ vendorId + ", status=" + status + ", insertTime="
+				+ insertTime + ", updateTime=" + updateTime + ", updatedBy="
+				+ updatedBy + "]";
 	}
 
 	@Override
@@ -255,7 +257,7 @@ public class FreightRequestByVendor {
 		if (availableDate == null) {
 			if (other.availableDate != null)
 				return false;
-		} else if (!availableDate.equals(other.availableDate))
+		} else if (Math.abs(availableDate.getTime()-other.availableDate.getTime())>1000000)
 			return false;
 		if (availableTime == null) {
 			if (other.availableTime != null)
@@ -275,18 +277,18 @@ public class FreightRequestByVendor {
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (!insertTime.equals(other.insertTime))
+		 } else if (Math.abs(insertTime.getTime()-other.insertTime.getTime())>1000000)
 			return false;
 		if (pickupRangeInKm == null) {
 			if (other.pickupRangeInKm != null)
 				return false;
 		} else if (!pickupRangeInKm.equals(other.pickupRangeInKm))
 			return false;
-		if (requestId == null) {
+		/*if (requestId == null) {
 			if (other.requestId != null)
 				return false;
 		} else if (!requestId.equals(other.requestId))
-			return false;
+			return false;*/
 		if (source == null) {
 			if (other.source != null)
 				return false;
@@ -300,7 +302,7 @@ public class FreightRequestByVendor {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (!updateTime.equals(other.updateTime))
+		} else if (Math.abs(updateTime.getTime()-other.updateTime.getTime())>1000000)
 			return false;
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
@@ -321,5 +323,5 @@ public class FreightRequestByVendor {
 	}
 
 	
-	
+		
 }

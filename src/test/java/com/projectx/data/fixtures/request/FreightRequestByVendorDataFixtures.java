@@ -6,11 +6,11 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+
 import com.projectx.data.domain.request.FreightRequestByVendor;
-import com.projectx.data.domain.request.TestRequest;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 
-public class TestRequestDataFixtures {
+public class FreightRequestByVendorDataFixtures {
 	
 	
 public static VehicleDetailsDTO REQ_VEHICLE=standardVehicleDetails();
@@ -50,59 +50,59 @@ public static VehicleDetailsDTO REQ_VEHICLE=standardVehicleDetails();
 				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 	}
 	
-	public static TestRequest standardTestRequest()
+	public static FreightRequestByVendor standardTestRequest()
 	{
 		
 		
-		return new TestRequest(1L,standardVehicleDetails(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+		return new FreightRequestByVendor(1L,standardVehicleDetails(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
 				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
-	public static TestRequest standardTestRequestOpen()
+	public static FreightRequestByVendor standardTestRequestOpen()
 	{
 		
 		
-		return new TestRequest(100L,standardVehicleDetailsOpen(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+		return new FreightRequestByVendor(100L,standardVehicleDetailsOpen(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
 				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
-	public static TestRequest standardTestRequestOpen307()
+	public static FreightRequestByVendor standardTestRequestOpen307()
 	{
 		
 		
-		return new TestRequest(100L,standardVehicleDetailsOpen307(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+		return new FreightRequestByVendor(100L,standardVehicleDetailsOpen307(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
 				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
-	public static TestRequest standardTestRequestClosed()
+	public static FreightRequestByVendor standardTestRequestClosed()
 	{
 		
 		
-		return new TestRequest(120L,standardVehicleDetailsClosed(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+		return new FreightRequestByVendor(120L,standardVehicleDetailsClosed(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
 				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
-	public static TestRequest standardTestRequestFlexible()
+	public static FreightRequestByVendor standardTestRequestFlexible()
 	{
 		
 		
-		return new TestRequest(110L,standardVehicleDetailsFlexible(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
+		return new FreightRequestByVendor(110L,standardVehicleDetailsFlexible(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
 				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
-	public static TestRequest standardTestRequestUpdated()
+	public static FreightRequestByVendor standardTestRequestUpdated()
 	{
-		return new TestRequest(1L,standardVehicleDetails(), REQ_SOURCE, REQ_DESTINATION_UPDATED, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME_UPDATED,
+		return new FreightRequestByVendor(1L,standardVehicleDetails(), REQ_SOURCE, REQ_DESTINATION_UPDATED, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME_UPDATED,
 				REQ_PICK_UP_RANGE_UPDATED,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
-	public static String stanardJsonTestRequest(TestRequest freightRequestByVendor)
+	public static String stanardJsonTestRequest(FreightRequestByVendor freightRequestByVendor)
 	{
 		System.out.println(gson.toJson(freightRequestByVendor));
 		

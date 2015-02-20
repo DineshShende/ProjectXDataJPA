@@ -4,6 +4,8 @@ package com.projectx.data.controller.completeregister;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,108 +38,126 @@ public class TransactionUpdatesController {
 	VendorDetailsCustomRepository vendorDetailsCustomRepository;
 
 	@RequestMapping(value="/updateCustomerDetails",method=RequestMethod.POST)
-	public CustomerDetails updateCustomerDetails(@RequestBody CustomerDetails customerDetails)
+	public ResponseEntity<CustomerDetails> updateCustomerDetails(@RequestBody CustomerDetails customerDetails)
 	{
 		
+		ResponseEntity<CustomerDetails> result=null;
 		CustomerDetails updatedEntity=null;
 		try
 		{
 			updatedEntity=transactionalUpdatesRepository.updateCustomerDetails(customerDetails);
+			result=new ResponseEntity<CustomerDetails>(updatedEntity, HttpStatus.OK);
 		}
 		catch(DataIntegrityViolationException e)
 		{
-			return customerDetailsCustomRepository.findOne(customerDetails.getCustomerId());
+			//return customerDetailsCustomRepository.findOne(customerDetails.getCustomerId());
+			result=new ResponseEntity<CustomerDetails>(HttpStatus.NOT_MODIFIED);
 		}
-			
-		return updatedEntity;
+		return result;
 		
 	}
 	
 	@RequestMapping(value="/updateVendorDetails",method=RequestMethod.POST)
-	public VendorDetails updateVendorDetails(@RequestBody VendorDetails vendorDetails)
+	public ResponseEntity<VendorDetails> updateVendorDetails(@RequestBody VendorDetails vendorDetails)
 	{
 		VendorDetails updatedEntity=null;
+		ResponseEntity<VendorDetails> result=null;
+		
 		
 		try{		
 			
 			updatedEntity=transactionalUpdatesRepository.updateVendorDetails(vendorDetails);
 			
+			result=new ResponseEntity<VendorDetails>(updatedEntity, HttpStatus.OK);
+			
+			
 		}catch(DataIntegrityViolationException e)
 		{
-			return vendorDetailsCustomRepository.findOne(vendorDetails.getVendorId());
+			result=new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
 		}
 		
-		return updatedEntity;
+		return result;
 	}
 	
 	@RequestMapping(value="/updateMobileInDetailsEnityAndAuthenticationDetails",method=RequestMethod.POST)
-	public Boolean updateMobileInDetailsEnityAndAuthenticationDetails(@RequestBody CustomerIdTypeMobileTypeDTO customerIdTypeMobileTypeDTO)
+	public ResponseEntity<Boolean> updateMobileInDetailsEnityAndAuthenticationDetails(@RequestBody CustomerIdTypeMobileTypeDTO customerIdTypeMobileTypeDTO)
 	{
 		Boolean updatedStatus=null;
 		
+		ResponseEntity<Boolean> result=null;
+		
 		try{
-		updatedStatus=transactionalUpdatesRepository
+			updatedStatus=transactionalUpdatesRepository
 				.updateMobileInDetailsEnityAndAuthenticationDetails(customerIdTypeMobileTypeDTO.getCustomerId(), customerIdTypeMobileTypeDTO.getCustomerType(),
 						customerIdTypeMobileTypeDTO.getMobileType());
+			
+			result=new ResponseEntity<Boolean>(updatedStatus, HttpStatus.OK);
+			
 		}catch(DataIntegrityViolationException e)
 		{
-			return false;
+			result=new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
 		}
-		return updatedStatus;
+		return result;
 	}
 	
 	@RequestMapping(value="/updateEmailInDetailsEnityAndAuthenticationDetails",method=RequestMethod.POST)
-	public Boolean updateEmailInDetailsEnityAndAuthenticationDetails(@RequestBody CustomerIdTypeEmailTypeDTO customerIdTypeEmailTypeDTO)
+	public ResponseEntity<Boolean> updateEmailInDetailsEnityAndAuthenticationDetails(@RequestBody CustomerIdTypeEmailTypeDTO customerIdTypeEmailTypeDTO)
 	{
 		Boolean updatedStatus=null;
+		ResponseEntity<Boolean> result=null;
 		
 		try{
 		 updatedStatus=transactionalUpdatesRepository
 				.updateEmailInDetailsEnityAndAuthenticationDetails(customerIdTypeEmailTypeDTO.getCustomerId(), customerIdTypeEmailTypeDTO.getCustomerType(),
 						customerIdTypeEmailTypeDTO.getEmailType());
+		 result=new ResponseEntity<Boolean>(updatedStatus, HttpStatus.OK);
+		 
 		}catch(DataIntegrityViolationException e)
 		{
-			return false;
+			result=new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
 		}
-		return updatedStatus;
+		return result;
 	}
 	
 	@RequestMapping(value="/saveNewQuickRegisterEntity",method=RequestMethod.POST)
-	public CustomerQuickRegisterEmailMobileVerificationEntity saveNewQuickRegisterEntity(@RequestBody QuickRegisterEntity quickRegisterEntity)
+	public ResponseEntity<CustomerQuickRegisterEmailMobileVerificationEntity> saveNewQuickRegisterEntity(@RequestBody QuickRegisterEntity quickRegisterEntity)
 	{
+		
+		ResponseEntity<CustomerQuickRegisterEmailMobileVerificationEntity> result=null;
+		
 		CustomerQuickRegisterEmailMobileVerificationEntity returnEntity=null;
 		
 		try
 		{
 			returnEntity=transactionalUpdatesRepository.saveNewQuickRegisterEntity(quickRegisterEntity);
+			result=new ResponseEntity<CustomerQuickRegisterEmailMobileVerificationEntity>(returnEntity, HttpStatus.CREATED);
 			
 		}catch(DataIntegrityViolationException e)
 		{
-			EmailVerificationDetails emailVerificationDetails=new EmailVerificationDetails();
-			MobileVerificationDetails mobileVerificationDetails=new MobileVerificationDetails();
-			QuickRegisterEntity quickRegisterEntity2=new QuickRegisterEntity();
-			
-			return new CustomerQuickRegisterEmailMobileVerificationEntity(quickRegisterEntity2, emailVerificationDetails, mobileVerificationDetails);
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
 		}
 		
-		return returnEntity;
+		return result;
 	}
 	
 	@RequestMapping(value="/deleteQuickRegisterEntityCreateDetails",method=RequestMethod.POST)
-	public CustomerOrVendorDetailsDTO deleteQuickRegisterEntityCreateDetails(@RequestBody QuickRegisterEntity quickRegisterEntity)
+	public ResponseEntity<CustomerOrVendorDetailsDTO> deleteQuickRegisterEntityCreateDetails(@RequestBody QuickRegisterEntity quickRegisterEntity)
 	{
-		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=new CustomerOrVendorDetailsDTO();
+		ResponseEntity<CustomerOrVendorDetailsDTO> result=null;
+		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=null;
 		
 		try{
 			
-			customerOrVendorDetailsDTO=transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetails(quickRegisterEntity);
+			customerOrVendorDetailsDTO=transactionalUpdatesRepository.deleteQuickRegisterEntityCreateDetailsEntity(quickRegisterEntity);
+			result=new ResponseEntity<CustomerOrVendorDetailsDTO>(customerOrVendorDetailsDTO, HttpStatus.CREATED);
+			
 		}
 		catch(DataIntegrityViolationException e)
 		{
 			
-			return customerOrVendorDetailsDTO;
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
 		}
 		
-		return customerOrVendorDetailsDTO;
+		return result;
 	}
 }

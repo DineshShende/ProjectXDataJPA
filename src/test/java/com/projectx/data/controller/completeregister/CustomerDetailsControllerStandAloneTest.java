@@ -64,7 +64,7 @@ public class CustomerDetailsControllerStandAloneTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	          //  .andExpect(jsonPath("$.customerId").value(standardCustomerDetailsFirstPart().getCustomerId()))
 	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetailsCopiedFromQuickRegisterEntity().getFirstName()))
@@ -97,7 +97,7 @@ public class CustomerDetailsControllerStandAloneTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	          //  .andExpect(jsonPath("$.customerId").value(standardCustomerDetailsFirstPart().getCustomerId()))
 	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetails().getFirstName()))
@@ -138,45 +138,5 @@ public class CustomerDetailsControllerStandAloneTest {
 		
 	}
 
-	/*	
-	@Test
-	public void saveCustomerDetailsFirst() throws Exception
-	{
-		
-		when(customerDetailsRepository.save(standardCustomerDetailsFirstPart())).thenReturn(standardCustomerDetailsFirstPart());
-		
-		this.mockMvc.perform(
-	            post("/customer/completeregister")
-	                    .content(standardJsonCustomerDetails(standardCustomerDetailsFirstPart()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            
-	          //  .andExpect(jsonPath("$.customerId").value(standardCustomerDetailsFirstPart().getCustomerId()))
-	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetailsFirstPart().getFirstName()))
-	            .andExpect(jsonPath("$.lastName").value(standardCustomerDetailsFirstPart().getLastName()))
-	            .andExpect(jsonPath("$.homeAddressId.customerType").value(standardCustomerDetailsFirstPart().getHomeAddressId().getCustomerType()))
-	            .andExpect(jsonPath("$.homeAddressId.addressLine").value(standardCustomerDetailsFirstPart().getHomeAddressId().getAddressLine()))
-	            .andExpect(jsonPath("$.homeAddressId.city").value(standardCustomerDetailsFirstPart().getHomeAddressId().getCity()))
-	            .andExpect(jsonPath("$.homeAddressId.district").value(standardCustomerDetailsFirstPart().getHomeAddressId().getDistrict()))
-	            .andExpect(jsonPath("$.homeAddressId.state").value(standardCustomerDetailsFirstPart().getHomeAddressId().getState()))
-	            .andExpect(jsonPath("$.homeAddressId.pincode").value(standardCustomerDetailsFirstPart().getHomeAddressId().getPincode()))
-	            .andExpect(jsonPath("$.homeAddressId.updatedBy").value(standardCustomerDetailsFirstPart().getHomeAddressId().getUpdatedBy()))
-	            .andExpect(jsonPath("$.homeAddressId.insertTime").exists())
-	            .andExpect(jsonPath("$.homeAddressId.updateTime").exists())
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerDetailsFirstPart().getMobile()))
-	            .andExpect(jsonPath("$.isMobileVerified").value(standardCustomerDetailsFirstPart().getIsMobileVerified()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerDetailsFirstPart().getEmail()))
-	            .andExpect(jsonPath("$.isEmailVerified").value(standardCustomerDetailsFirstPart().getIsEmailVerified()))
-	            .andExpect(jsonPath("$.language").value(standardCustomerDetailsFirstPart().getLanguage()))
-	            .andExpect(jsonPath("$.updatedBy").value(standardCustomerDetailsFirstPart().getUpdatedBy()))
-	            .andExpect(jsonPath("$.insertTime").exists())
-	            .andExpect(jsonPath("$.updateTime").exists());		
-	            
-	            
-		
-	}
-	*/
 
 }

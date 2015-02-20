@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,39 +40,51 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(value="/getLoginDetailsByCustomerIdType",method=RequestMethod.POST)
-	public AuthenticationDetails getLoginDetailsByCustomerId(@RequestBody CustomerIdTypeDTO customerIdDTO)
+	public ResponseEntity<AuthenticationDetails> getLoginDetailsByCustomerId(@RequestBody CustomerIdTypeDTO customerIdDTO)
 	{
+		ResponseEntity<AuthenticationDetails> result=null;
+		
 		AuthenticationDetailsKey key=new AuthenticationDetailsKey(customerIdDTO.getCustomerId(), customerIdDTO.getCustomerType());
 		
 		AuthenticationDetails fetchedEntity=customerAuthenticationDetailsRepository.findOne(key);
 		
 		if(fetchedEntity==null)
-			return new AuthenticationDetails();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<AuthenticationDetails>(fetchedEntity, HttpStatus.FOUND);
 		
-		return fetchedEntity;
+		return result;
 	}
 	
 	
 	@RequestMapping(value="/getLoginDetailsByEmail",method=RequestMethod.POST)
-	public AuthenticationDetails getLoginDetailsByEmail(@RequestBody EmailDTO emailDTO)
+	public ResponseEntity<AuthenticationDetails> getLoginDetailsByEmail(@RequestBody EmailDTO emailDTO)
 	{
+		ResponseEntity<AuthenticationDetails> result=null;
+		
 		Optional<AuthenticationDetails> fetchedEntity=customerAuthenticationDetailsRepository.findByEmail(emailDTO.getEmail());
 		
 		if(!fetchedEntity.isPresent())
-			return new AuthenticationDetails();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<AuthenticationDetails>(fetchedEntity.get(), HttpStatus.FOUND);
 		
-		return fetchedEntity.get();
+		return result;
 	}
 	
 	@RequestMapping(value="/getLoginDetailsByMobile",method=RequestMethod.POST)
-	public AuthenticationDetails getLoginDetailsByMobile(@RequestBody MobileDTO mobileDTO)
+	public ResponseEntity<AuthenticationDetails> getLoginDetailsByMobile(@RequestBody MobileDTO mobileDTO)
 	{
+		ResponseEntity<AuthenticationDetails> result=null;
+		
 		Optional<AuthenticationDetails> fetchedEntity=customerAuthenticationDetailsRepository.findByMobile(mobileDTO.getMobile());
 		
 		if(!fetchedEntity.isPresent())
-			return new AuthenticationDetails();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<AuthenticationDetails>(fetchedEntity.get(), HttpStatus.FOUND);
 		
-		return fetchedEntity.get();
+		return result;
 	}
 	
 	
@@ -125,26 +139,5 @@ public class AuthenticationController {
 	
 	//***********************Highly Dangerous***************************************/
 	
-	
-	/*
-	@RequestMapping(value="/updateEmailPasswordAndPasswordTypeAndCounts",method=RequestMethod.POST)
-	public Integer updateEmailPasswordAndPasswordTypeAndCounts(@RequestBody UpdateEmailPassword emailPassword)
-	{
-		Integer updateStatus=customerAuthenticationDetailsRepository
-				.updateEmailPasswordAndPasswordTypeAndCounts(emailPassword.getCustomerId(),emailPassword.getCustomerType(),emailPassword.getEmailPassword(),
-						"Default", ZERO_COUNT, ZERO_COUNT);
-		
-		
-		return updateStatus;
-	}
-	
-	
-	@RequestMapping(value="/test")
-	public AuthenticationDetails returnAuthenticationDetails()
-	{
-		return new AuthenticationDetails(new AuthenticationDetailsKey(212L, 1), "dienshshe@gmail.com", 9960821869L, "123456", "Default","1234356ujhgfdghjh", 0, 0,new Date(),new Date(),"CUST_ONLINE");
-		
-		//return new AuthenticationDetails(key, "dienshshe@gmail.com", 9960821869L, password, passwordType, emailPassword, resendCount, lastUnsucessfullAttempts)
-	}
-	*/
+
 }

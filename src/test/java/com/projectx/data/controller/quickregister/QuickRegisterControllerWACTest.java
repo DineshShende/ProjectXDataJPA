@@ -81,8 +81,9 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomerWithErrors()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	            //.andDo(print())
+	            .andExpect(status().isNotAcceptable());
+		/*
    	            .andExpect(jsonPath("$.firstName").doesNotExist())
 	            .andExpect(jsonPath("$.lastName").doesNotExist())
 	            .andExpect(jsonPath("$.mobile").doesNotExist())
@@ -93,7 +94,7 @@ public class QuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.insertTime").doesNotExist())
 				.andExpect(jsonPath("$.updateTime").doesNotExist())
 				.andExpect(jsonPath("$.updatedBy").doesNotExist());
-
+		*/
 	}
 	
 	/*
@@ -125,8 +126,9 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonCustomerId(CUST_ID))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	           // .andDo(print())
+	            .andExpect(status().isNoContent());
+		/*
 	            .andExpect(jsonPath("$.firstName").doesNotExist())
 	            .andExpect(jsonPath("$.lastName").doesNotExist())
 	            .andExpect(jsonPath("$.mobile").doesNotExist())
@@ -137,7 +139,7 @@ public class QuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.insertTime").doesNotExist())
 				.andExpect(jsonPath("$.updateTime").doesNotExist())
 				.andExpect(jsonPath("$.updatedBy").doesNotExist());
-
+		*/
 	}
 	
 	
@@ -151,8 +153,9 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomerWithErrors()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	           // .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+		/*
 	            .andExpect(jsonPath("$.firstName").doesNotExist())
 	            .andExpect(jsonPath("$.lastName").doesNotExist())
 	            .andExpect(jsonPath("$.mobile").doesNotExist())
@@ -163,7 +166,7 @@ public class QuickRegisterControllerWACTest {
 				.andExpect(jsonPath("$.insertTime").doesNotExist())
 				.andExpect(jsonPath("$.updateTime").doesNotExist())
 				.andExpect(jsonPath("$.updatedBy").doesNotExist());
-				 
+		*/		 
 	}
 
 	
@@ -177,8 +180,8 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	         //   .andDo(print())
+	            .andExpect(status().isCreated())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
@@ -203,8 +206,8 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonQuickRegisterCustomer(standardEmailCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	         //   .andDo(print())
+	            .andExpect(status().isCreated())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailCustomer().getMobile()))
@@ -228,8 +231,8 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonQuickRegisterCustomer(standardMobileCustomer()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	        //    .andDo(print())
+	            .andExpect(status().isCreated())
 	            .andExpect(jsonPath("$.firstName").value(standardMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardMobileCustomer().getMobile()))
@@ -264,7 +267,7 @@ public class QuickRegisterControllerWACTest {
 	
 		this.mockMvc.perform(
 				get("/customer/quickregister/getAll"))
-					.andDo(print())
+				//	.andDo(print())
 					.andExpect(status().isOk())
 					.andExpect(jsonPath("$[0].['firstName']").value(standardEmailMobileCustomer().getFirstName()))
 					.andExpect(jsonPath("$[0].['lastName']").value(standardEmailMobileCustomer().getLastName()))
@@ -310,8 +313,8 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	            //.andDo(print())
+	            .andExpect(status().isFound())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
@@ -329,8 +332,8 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	           // .andDo(print())
+	            .andExpect(status().isFound())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailMobileCustomer().getMobile()))
@@ -362,8 +365,8 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonEmailDTO(CUST_EMAIL))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	           // .andDo(print())
+	            .andExpect(status().isFound())
 	            .andExpect(jsonPath("$.firstName").value(standardEmailCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardEmailCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardEmailCustomer().getMobile()))
@@ -395,8 +398,8 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
+	           // .andDo(print())
+	            .andExpect(status().isFound())
 	            .andExpect(jsonPath("$.firstName").value(standardMobileCustomer().getFirstName()))
 	            .andExpect(jsonPath("$.lastName").value(standardMobileCustomer().getLastName()))
 	            .andExpect(jsonPath("$.mobile").value(standardMobileCustomer().getMobile()))
@@ -431,7 +434,7 @@ public class QuickRegisterControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 				.andDo(print())
-				.andExpect(status().isOk())
+				.andExpect(status().isFound())
 				.andExpect(jsonPath("$.firstName").value(standardMobileCustomer().getFirstName()));
 		
 		this.mockMvc.perform(
@@ -444,9 +447,9 @@ public class QuickRegisterControllerWACTest {
 	                    .content(standardJsonMobileDTO(CUST_MOBILE))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.firstName").doesNotExist());
+				//.andDo(print())
+				.andExpect(status().isNoContent());
+				//.andExpect(jsonPath("$.firstName").doesNotExist());
 	
 	}
 	

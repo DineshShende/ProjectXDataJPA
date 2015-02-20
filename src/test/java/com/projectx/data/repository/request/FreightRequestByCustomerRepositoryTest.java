@@ -2,8 +2,8 @@ package com.projectx.data.repository.request;
 
 import static org.junit.Assert.*;
 import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFixture.*;
-import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixture.*;
-import static com.projectx.data.fixtures.request.TestRequestDataFixtures.*;
+
+import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.*;
 import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.*;
 
 import java.util.List;
@@ -21,8 +21,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
+
 import com.projectx.data.domain.request.FreightRequestByVendor;
-import com.projectx.data.domain.request.TestRequest;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 import com.projectx.data.repository.completeregister.VendorDetailsRepositoty;
 
@@ -42,7 +42,7 @@ public class FreightRequestByCustomerRepositoryTest {
 	VendorDetailsRepositoty vendorDetailsRepositoty;
 	
 	@Autowired
-	TestRequestRepository testRequestRepository;
+	FreightRequestByVendorRepository testRequestRepository;
 	
 	@Autowired
 	VehicleDetailsRepository vehicleDetailsRepository;
@@ -175,7 +175,7 @@ public class FreightRequestByCustomerRepositoryTest {
 		
 		//FreightRequestByVendor vendorRequest=freightRequestByVendorRepository.save(standardFreightRequestByVendor());
 		
-		TestRequest testRequest=testRequestRepository.save(standardTestRequest());
+		FreightRequestByVendor testRequest=testRequestRepository.save(standardTestRequest());
 		
 		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
 		
@@ -205,7 +205,7 @@ public class FreightRequestByCustomerRepositoryTest {
 		
 		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenTata());
 		
-		TestRequest testRequest=testRequestRepository.save(standardTestRequestOpen307());
+		FreightRequestByVendor testRequest=testRequestRepository.save(standardTestRequestOpen307());
 		
 		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
 		

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,8 +35,10 @@ public class EmailVerificationController {
 	}
 	
 	@RequestMapping(value="/getEmailVerificationDetailsByCustomerIdAndEmail",method=RequestMethod.POST)
-	public EmailVerificationDetails getEmailVerificationDetailsByCustomerIdAndEmail(@RequestBody CustomerIdTypeEmailTypeDTO customerIdEmailDTO)
+	public ResponseEntity<EmailVerificationDetails> getEmailVerificationDetailsByCustomerIdAndEmail(@RequestBody CustomerIdTypeEmailTypeDTO customerIdEmailDTO)
 	{
+		ResponseEntity<EmailVerificationDetails> result=null;
+		
 		EmailVerificationKey key=new EmailVerificationKey(customerIdEmailDTO.getCustomerId(), customerIdEmailDTO.getCustomerType(),
 				customerIdEmailDTO.getEmailType());
 		
@@ -42,24 +46,31 @@ public class EmailVerificationController {
 				.findOne(key);
 				
 		
-		if(fetchedEmailVerificationDetails==null)
-			return new EmailVerificationDetails();
+		if(fetchedEmailVerificationDetails!=null)
+			result=new ResponseEntity<EmailVerificationDetails>(fetchedEmailVerificationDetails, HttpStatus.FOUND);
+		else
+			result=new  ResponseEntity<>(HttpStatus.NO_CONTENT);
+				
 		
-		return fetchedEmailVerificationDetails;
+		return result;
 		
 	}
 	
 	
 	@RequestMapping(value="/getEmailVerificationDetailsByEmail",method=RequestMethod.POST)
-	public EmailVerificationDetails getEmailVerificationDetailsByEmail(@RequestBody EmailDTO emailDTO)
+	public ResponseEntity<EmailVerificationDetails> getEmailVerificationDetailsByEmail(@RequestBody EmailDTO emailDTO)
 	{
+		ResponseEntity<EmailVerificationDetails> result=null;
+		
 		EmailVerificationDetails fetchedEmailVerificationDetails=customerEmailVerificationDetailsRepository
 				.findByEmail(emailDTO.getEmail());
 		
 		if(fetchedEmailVerificationDetails==null)
-			return new EmailVerificationDetails();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<EmailVerificationDetails>(fetchedEmailVerificationDetails, HttpStatus.FOUND);
 		
-		return fetchedEmailVerificationDetails;
+		return result;
 		
 	}
 
@@ -77,9 +88,6 @@ public class EmailVerificationController {
 	@RequestMapping(value="/incrementResendCountByCustomerIdAndEmail",method=RequestMethod.POST)
 	public Integer incrementResendCountByCustomerIdAndEmail(@RequestBody CustomerIdTypeEmailTypeDTO customerIdEmailDTO)
 	{
-		System.out.println("Received:"+customerIdEmailDTO);
-		
-		
 		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
 				.incrementResendCountByCustomerIdAndEmail(customerIdEmailDTO.getCustomerId(),customerIdEmailDTO.getCustomerType(), customerIdEmailDTO.getEmailType());

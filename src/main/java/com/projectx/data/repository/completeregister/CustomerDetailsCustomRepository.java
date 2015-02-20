@@ -31,8 +31,7 @@ public class CustomerDetailsCustomRepository {
 	@Autowired
 	EmailVerificationDetailsRepository emailVerificationDetailsRepository;
 	
-	@Autowired
-	AddressRepository addressRepository;
+	
 		
 	public CustomerDetails save(CustomerDetails customerDetails)
 	{

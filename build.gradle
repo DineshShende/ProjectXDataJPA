@@ -1,9 +1,14 @@
 apply plugin: 'java'
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
 apply plugin: 'war'
 
+
+mainClassName = 'com.projectx.data.config.Application'
 
 buildscript {
     repositories {
@@ -12,7 +17,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.9.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
     }
 }
 
@@ -27,7 +32,7 @@ sourceSets {
 
 
 
-jar {
+war {
     baseName = 'gs-accessing-data-jpa'
     version =  '0.1.0'
 }
@@ -40,19 +45,26 @@ repositories {
 }
 
 configurations {
-    providedRuntime
-  	querydslapt
+    querydslapt
+    provided
+  	
 }
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web")
+	provided("org.springframework.boot:spring-boot-starter-tomcat")
+	provided('javax.servlet:javax.servlet-api:3.0.1')
  	compile('com.google.code.gson:gson:2.3')     
     compile("org.springframework.plugin:spring-plugin-core:1.1.0.RELEASE")
     compile("com.jayway.jsonpath:json-path:0.9.1")
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    
+    
 
 	compile("com.github.springtestdbunit:spring-test-dbunit:1.1.0")
 	compile('org.dbunit:dbunit:2.5.0')
+	
+	compile ('org.springframework.boot:spring-boot-starter-aop')
 	
 	compile('org.glassfish:javax.json:1.0.4')
 	

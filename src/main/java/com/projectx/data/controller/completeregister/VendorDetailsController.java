@@ -1,6 +1,8 @@
 package com.projectx.data.controller.completeregister;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,11 +41,22 @@ public class VendorDetailsController {
 	}
 	
 	@RequestMapping(value="/getById/{vendorId}")
-	public VendorDetails findOne(@PathVariable("vendorId") Long vendorId)
+	public ResponseEntity<VendorDetails> findOne(@PathVariable("vendorId") Long vendorId)
 	{
+		ResponseEntity<VendorDetails> result=null;
+		
 		VendorDetails fetchedEntity=vendorDetailsRepository.findOne(vendorId);
 		
-		return fetchedEntity;
+		if(fetchedEntity==null)
+		{
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
+		}
+		else
+		{
+			result=new ResponseEntity<VendorDetails>(fetchedEntity, HttpStatus.FOUND);
+		}
+		return result;
 	}
 	
 	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)

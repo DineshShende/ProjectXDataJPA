@@ -15,10 +15,9 @@ import com.projectx.data.domain.completeregister.QVehicleBrandDetails;
 import com.projectx.data.domain.completeregister.QVehicleDetailsDTO;
 import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
-import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.domain.request.QFreightRequestByCustomer;
 import com.projectx.data.domain.request.QFreightRequestByVendor;
-import com.projectx.data.domain.request.TestRequest;
+import com.projectx.data.domain.request.FreightRequestByVendor;
 
 public class FreightRequestByCustomerRepositoryImpl extends
 		QueryDslRepositorySupport implements
@@ -35,7 +34,7 @@ public class FreightRequestByCustomerRepositoryImpl extends
 
 
 	@Override
-	public List<FreightRequestByCustomer> getMatchingCustomerRequest(TestRequest freightRequestByVendor) {
+	public List<FreightRequestByCustomer> getMatchingCustomerRequest(FreightRequestByVendor freightRequestByVendor) {
 
 		System.out.println("Request Matching:"+freightRequestByVendor);
 		

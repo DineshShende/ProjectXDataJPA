@@ -127,30 +127,21 @@ public class TransactionalUpdatesRepository {
 				//Will update changed value when verification is successful
 				if(  customerDetails.getIsMobileVerified()==null)
 				{
-					//if(customerDetails.getMobile().equals(oldEntity.getMobile()))
 						customerDetails.setIsMobileVerified(oldEntity.getIsMobileVerified());
-					//else
-						//customerDetails.setIsMobileVerified(false);
 				}	
 				
 				
 				if(customerDetails.getIsEmailVerified()==null)
 				{
-					//if(customerDetails.getEmail().equals(oldEntity.getEmail()))
 						customerDetails.setIsEmailVerified(oldEntity.getIsEmailVerified());
-					//else
-						//customerDetails.setIsEmailVerified(false);
 				}
 					
 				
 				if(customerDetails.getIsSecondaryMobileVerified()==null)
 				{
-					//if(customerDetails.getSecondaryMobile().equals(oldEntity.getSecondaryMobile()))
+
 						customerDetails.setIsSecondaryMobileVerified(oldEntity.getIsSecondaryMobileVerified());
-					//else
-						//customerDetails.setIsSecondaryMobileVerified(false);
-					
-					
+			
 				}
 				
 				customerDetails.setMobile(oldEntity.getMobile());
@@ -407,7 +398,7 @@ public class TransactionalUpdatesRepository {
 	}
 	
 	@Transactional
-	public CustomerOrVendorDetailsDTO deleteQuickRegisterEntityCreateDetails(QuickRegisterEntity quickRegisterEntity)
+	public CustomerOrVendorDetailsDTO deleteQuickRegisterEntityCreateDetailsEntity(QuickRegisterEntity quickRegisterEntity)
 	{
 		CustomerOrVendorDetailsDTO customerOrVendorDetailsDTO=new CustomerOrVendorDetailsDTO();
 

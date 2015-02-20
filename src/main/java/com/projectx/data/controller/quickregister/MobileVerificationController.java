@@ -3,6 +3,8 @@ package com.projectx.data.controller.quickregister;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,42 +29,45 @@ public class MobileVerificationController {
 	@RequestMapping(value="/saveMobileVerificationDetails",method=RequestMethod.POST)
 	public MobileVerificationDetails saveMobileVerificationEntity(@RequestBody MobileVerificationDetails mobileVerificationDetails)
 	{
-		System.out.println(mobileVerificationDetails);
-		
 		MobileVerificationDetails savedmobileVerificationDetails=customerMobileVerificationDetailsRepository.save(mobileVerificationDetails);
-		
-		System.out.println(mobileVerificationDetails);
 		
 		return savedmobileVerificationDetails;
 		
 	}
 	
 	@RequestMapping(value="/getMobileVerificationDetailsByCustomerIdAndMobile",method=RequestMethod.POST)
-	public MobileVerificationDetails getMobileVerificationDetailsByCustomerIdAndMobile(@RequestBody CustomerIdTypeMobileTypeDTO customerIdMobileDTO)
+	public ResponseEntity<MobileVerificationDetails> getMobileVerificationDetailsByCustomerIdAndMobile(@RequestBody CustomerIdTypeMobileTypeDTO customerIdMobileDTO)
 	{
+		ResponseEntity<MobileVerificationDetails> result=null;
+		
 		MobileVerificationKey key=new MobileVerificationKey(customerIdMobileDTO.getCustomerId(), customerIdMobileDTO.getCustomerType(), customerIdMobileDTO.getMobileType());
 		
 		MobileVerificationDetails fetchedMobileVerificationDetails=customerMobileVerificationDetailsRepository
 				.findOne(key);
 		
 		if(fetchedMobileVerificationDetails==null)
-			return new MobileVerificationDetails();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<MobileVerificationDetails>(fetchedMobileVerificationDetails, HttpStatus.FOUND);
 		
-		return fetchedMobileVerificationDetails;
+		return result;
 		
 	}
 
 	@RequestMapping(value="/getMobileVerificationDetailsByMobile",method=RequestMethod.POST)
-	public MobileVerificationDetails getMobileVerificationDetailsByMobile(@RequestBody MobileDTO mobileDTO)
+	public ResponseEntity<MobileVerificationDetails> getMobileVerificationDetailsByMobile(@RequestBody MobileDTO mobileDTO)
 	{
+		ResponseEntity<MobileVerificationDetails> result=null;
 		
 		MobileVerificationDetails fetchedMobileVerificationDetails=customerMobileVerificationDetailsRepository
 				.findByMobile(mobileDTO.getMobile());
 		
 		if(fetchedMobileVerificationDetails==null)
-			return new MobileVerificationDetails();
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<MobileVerificationDetails>(fetchedMobileVerificationDetails, HttpStatus.FOUND);
 		
-		return fetchedMobileVerificationDetails;
+		return result;
 		
 	}
 
@@ -112,8 +117,6 @@ public class MobileVerificationController {
 	@RequestMapping(value="/getCount")
 	public Integer mobileVerificationCount()
 	{
-		System.out.println("In controller:");
-		System.out.println(customerMobileVerificationDetailsRepository.count());
 		
 		return new Integer((int) customerMobileVerificationDetailsRepository
 				.count());

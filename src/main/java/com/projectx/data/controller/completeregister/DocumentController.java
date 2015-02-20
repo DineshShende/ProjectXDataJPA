@@ -1,6 +1,8 @@
 package com.projectx.data.controller.completeregister;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,14 +31,22 @@ public class DocumentController {
 	}
 	
 	@RequestMapping(value="/getCustomerDocumentByKey",method=RequestMethod.POST)
-	public DocumentDetails getCustomerDocumentById(@RequestBody DocumentKey documentKey)
+	public ResponseEntity<DocumentDetails> getCustomerDocumentById(@RequestBody DocumentKey documentKey)
 	{
+		ResponseEntity<DocumentDetails> result=null;
+		
 		DocumentDetails fetchedEntity= customerDocumentRepository.findOne(documentKey);
 
-		if(fetchedEntity==null)
-			return new DocumentDetails();
+		if(fetchedEntity!=null)
+		{
+			result=new ResponseEntity<DocumentDetails>(fetchedEntity, HttpStatus.FOUND);
+		}
+		else
+		{
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
 		
-		return fetchedEntity;
+		return result;
 	}
 	
 	@RequestMapping(value="/count",method=RequestMethod.GET)
