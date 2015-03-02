@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.projectx.data.config.Application;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
 
 import com.projectx.data.domain.request.FreightRequestByVendor;

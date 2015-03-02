@@ -27,7 +27,7 @@ import com.projectx.rest.domain.completeregister.CustomerOrVendorDetailsDTO;
 import com.projectx.rest.domain.quickregister.CustomerQuickRegisterEmailMobileVerificationEntity;
 
 @Component
-@Profile(value={"Prod","Test"}) 
+@Profile(value={"Test","Dev","Prod"})
 public class TransactionalUpdatesRepository {
 	
 	@Autowired
@@ -63,8 +63,7 @@ public class TransactionalUpdatesRepository {
 	@Value("${ENTITY_TYPE_SECONDARY}")
 	private  Integer ENTITY_TYPE_SECONDARY;
 	
-	@Value("${UPDATED_BY_CUST_ONLINE}")
-	private  String UPDATED_BY_CUST_ONLINE;
+	
 	
 	@Value("${ZERO_COUNT}")
 	private  Integer ZERO_COUNT;
@@ -82,15 +81,18 @@ public class TransactionalUpdatesRepository {
 				if(customerDetails.getMobile()!=null && !customerDetails.getMobile().equals(oldEntity.getMobile()))
 				{
 					
-					if(mobileVerificationDetailsRepository.findOne(new MobileVerificationKey(customerDetails.getCustomerId(), ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY))!=null)
+					if(mobileVerificationDetailsRepository
+							.findOne(new MobileVerificationKey(customerDetails.getCustomerId(), ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY))!=null)
 					{	
-						mobileVerificationDetailsRepository.updateMobile(customerDetails.getCustomerId(),ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY,
-								customerDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT);
+						mobileVerificationDetailsRepository
+						.updateMobile(customerDetails.getCustomerId(),ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY,
+								customerDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),customerDetails.getUpdatedBy());
 					}
 					else
 					{
-						MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(customerDetails.getCustomerId(), 
-								ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY), customerDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), "CUST_ONLINE");
+						MobileVerificationDetails newRecord=new MobileVerificationDetails
+								(new MobileVerificationKey(customerDetails.getCustomerId(),ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY),
+										customerDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
 						
 						mobileVerificationDetailsRepository.save(newRecord);
 					}
@@ -98,25 +100,29 @@ public class TransactionalUpdatesRepository {
 				
 				if(customerDetails.getEmail()!=null && !customerDetails.getEmail().equals(oldEntity.getEmail()))
 				{
-					if(emailVerificationDetailsRepository.findOne(new EmailVerificationKey(customerDetails.getCustomerId(), ENTITY_TYPE_CUSTOMER,ENTITY_TYPE_PRIMARY))!=null)
+					if(emailVerificationDetailsRepository.findOne(new EmailVerificationKey(customerDetails.getCustomerId(),
+							ENTITY_TYPE_CUSTOMER,ENTITY_TYPE_PRIMARY))!=null)
 						emailVerificationDetailsRepository.updateEmail(customerDetails.getCustomerId(), ENTITY_TYPE_CUSTOMER,
-								ENTITY_TYPE_PRIMARY, customerDetails.getEmail(), null, new Date(), ZERO_COUNT);
+								ENTITY_TYPE_PRIMARY, customerDetails.getEmail(), null, new Date(), ZERO_COUNT,new Date(),customerDetails.getUpdatedBy());
 					else
 					{
 						EmailVerificationDetails newRecord=new EmailVerificationDetails(new EmailVerificationKey(customerDetails.getCustomerId(),
-								ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY), customerDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), "CUST_ONLINE");
+								ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY), customerDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(),customerDetails.getUpdatedBy());
 						emailVerificationDetailsRepository.save(newRecord);
 					}
 				}
 				
-				if(customerDetails.getSecondaryMobile()!=null && !customerDetails.getSecondaryMobile().equals(oldEntity.getSecondaryMobile()))
+				if(customerDetails.getSecondaryMobile()!=null && !customerDetails.getSecondaryMobile()
+						.equals(oldEntity.getSecondaryMobile()))
 				{
-					if(mobileVerificationDetailsRepository.findOne(new MobileVerificationKey(customerDetails.getCustomerId(), ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY))!=null)
-						mobileVerificationDetailsRepository.updateMobile(customerDetails.getCustomerId(),ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY, customerDetails.getSecondaryMobile(), null, 0, 0);
+					if(mobileVerificationDetailsRepository.findOne(new MobileVerificationKey(customerDetails.getCustomerId(), 
+							ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY))!=null)
+						mobileVerificationDetailsRepository.updateMobile(customerDetails.getCustomerId(),
+								ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY, customerDetails.getSecondaryMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),customerDetails.getUpdatedBy());
 					else
 					{
-						MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(customerDetails.getCustomerId(), 
-								ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY), customerDetails.getSecondaryMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), "CUST_ONLINE");
+						MobileVerificationDetails newRecord=new MobileVerificationDetails
+								(new MobileVerificationKey(customerDetails.getCustomerId(),ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY), customerDetails.getSecondaryMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
 						
 						mobileVerificationDetailsRepository.save(newRecord);
 					}
@@ -156,7 +162,7 @@ public class TransactionalUpdatesRepository {
 			if(customerDetails.getMobile()!=null)
 			{
 					MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(customerDetails.getCustomerId(), 
-							ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY), customerDetails.getMobile(), null, 0, 0, new Date(), new Date(), "CUST_ONLINE");
+							ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY), customerDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
 					
 					mobileVerificationDetailsRepository.save(newRecord);
 				
@@ -165,7 +171,7 @@ public class TransactionalUpdatesRepository {
 			if(customerDetails.getEmail()!=null )
 			{
 					EmailVerificationDetails newRecord=new EmailVerificationDetails(new EmailVerificationKey(customerDetails.getCustomerId(),
-							ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY), customerDetails.getEmail(), null, null, 0, new Date(), new Date(), "CUST_ONLINE");
+							ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_PRIMARY), customerDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
 					emailVerificationDetailsRepository.save(newRecord);
 				
 			}
@@ -173,14 +179,14 @@ public class TransactionalUpdatesRepository {
 			if(customerDetails.getSecondaryMobile()!=null)
 			{
 				MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(customerDetails.getCustomerId(), 
-						ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY), customerDetails.getSecondaryMobile(), null, 0, 0, new Date(), new Date(), "CUST_ONLINE");
+						ENTITY_TYPE_CUSTOMER, ENTITY_TYPE_SECONDARY), customerDetails.getSecondaryMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
 					
 					mobileVerificationDetailsRepository.save(newRecord);
 					
 			}
 		
 			AuthenticationDetails authenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(customerDetails.getCustomerId(), ENTITY_TYPE_CUSTOMER),
-					customerDetails.getEmail(), customerDetails.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), UPDATED_BY_CUST_ONLINE);
+					customerDetails.getEmail(), customerDetails.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
 			
 			authenticationDetailsRepository.save(authenticationDetails);
 			
@@ -211,12 +217,12 @@ public class TransactionalUpdatesRepository {
 				if(mobileVerificationDetailsRepository.findOne(new MobileVerificationKey(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY))!=null)
 				{	
 					mobileVerificationDetailsRepository.updateMobile(vendorDetails.getVendorId(),ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY,
-							vendorDetails.getMobile(), null, 0, 0);
+							vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),vendorDetails.getUpdatedBy());
 				}
 				else
 				{
 					MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(vendorDetails.getVendorId(), 
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, 0, 0, new Date(), new Date(), "CUST_ONLINE");
+							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					
 					mobileVerificationDetailsRepository.save(newRecord);
 				}
@@ -228,11 +234,11 @@ public class TransactionalUpdatesRepository {
 				
 				if(emailVerificationDetailsRepository.findOne(new EmailVerificationKey(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR,ENTITY_TYPE_PRIMARY))!=null)
 					emailVerificationDetailsRepository.updateEmail(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR,
-							ENTITY_TYPE_PRIMARY, vendorDetails.getEmail(), null, new Date(), 0);
+							ENTITY_TYPE_PRIMARY, vendorDetails.getEmail(), null, new Date(), ZERO_COUNT,new Date(),vendorDetails.getUpdatedBy());
 				else
 				{
 					EmailVerificationDetails newRecord=new EmailVerificationDetails(new EmailVerificationKey(vendorDetails.getVendorId(),
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, 0, new Date(), new Date(), "CUST_ONLINE");
+							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					emailVerificationDetailsRepository.save(newRecord);
 				}
 				
@@ -257,7 +263,7 @@ public class TransactionalUpdatesRepository {
 			if(vendorDetails.getMobile()!=null )
 			{
 					MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(vendorDetails.getVendorId(), 
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, 0, 0, new Date(), new Date(), "CUST_ONLINE");
+							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					
 					mobileVerificationDetailsRepository.save(newRecord);
 			}
@@ -265,13 +271,13 @@ public class TransactionalUpdatesRepository {
 			if(vendorDetails.getEmail()!=null )
 			{
 					EmailVerificationDetails newRecord=new EmailVerificationDetails(new EmailVerificationKey(vendorDetails.getVendorId(),
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, 0, new Date(), new Date(), "CUST_ONLINE");
+							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					emailVerificationDetailsRepository.save(newRecord);			
 				
 			}
 			
 			AuthenticationDetails authenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR),
-					vendorDetails.getEmail(), vendorDetails.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), UPDATED_BY_CUST_ONLINE);
+					vendorDetails.getEmail(), vendorDetails.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 			
 			authenticationDetailsRepository.save(authenticationDetails);
 
@@ -282,7 +288,7 @@ public class TransactionalUpdatesRepository {
 	}
 
 	@Transactional
-	public Boolean updateMobileInDetailsEnityAndAuthenticationDetails(Long entityId,Integer entityType,Integer mobileType)
+	public Boolean updateMobileInDetailsEnityAndAuthenticationDetails(Long entityId,Integer entityType,Integer mobileType,String updatedBy)
 	{
 		
 		MobileVerificationDetails mobileVerificationEntity=mobileVerificationDetailsRepository
@@ -297,18 +303,18 @@ public class TransactionalUpdatesRepository {
 			{
 				if(mobileType.equals(ENTITY_TYPE_PRIMARY))
 				{
-					detailsTableUpdateStatus=customerDetailsRepository.updateMobileAndVerificationStatusInMainEntity(entityId,mobileVerificationEntity.getMobile(), true);
-					authenticationTableUpdateStatus=authenticationDetailsRepository.updateMobile(entityId, entityType, mobileVerificationEntity.getMobile());
+					detailsTableUpdateStatus=customerDetailsRepository.updateMobileAndVerificationStatusInMainEntity(entityId,mobileVerificationEntity.getMobile(), true,updatedBy);
+					authenticationTableUpdateStatus=authenticationDetailsRepository.updateMobile(entityId, entityType, mobileVerificationEntity.getMobile(),new Date(),updatedBy);
 				}
 				else if(mobileType.equals(ENTITY_TYPE_SECONDARY))
 				{
-					detailsTableUpdateStatus=customerDetailsRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(entityId,mobileVerificationEntity.getMobile(), true);
+					detailsTableUpdateStatus=customerDetailsRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(entityId,mobileVerificationEntity.getMobile(), true,updatedBy);
 				}
 			}
 			else if(entityType.equals(ENTITY_TYPE_VENDOR))
 			{
-				detailsTableUpdateStatus=vendorDetailsRepository.updateMobileAndVerificationStatus(entityId,mobileVerificationEntity.getMobile(), true);
-				authenticationTableUpdateStatus=authenticationDetailsRepository.updateMobile(entityId, entityType, mobileVerificationEntity.getMobile());
+				detailsTableUpdateStatus=vendorDetailsRepository.updateMobileAndVerificationStatus(entityId,mobileVerificationEntity.getMobile(), true,updatedBy);
+				authenticationTableUpdateStatus=authenticationDetailsRepository.updateMobile(entityId, entityType, mobileVerificationEntity.getMobile(),new Date(),updatedBy);
 				
 			}
 				
@@ -323,7 +329,7 @@ public class TransactionalUpdatesRepository {
 	}
 	
 	@Transactional
-	public Boolean updateEmailInDetailsEnityAndAuthenticationDetails(Long entityId,Integer entityType,Integer emailType)
+	public Boolean updateEmailInDetailsEnityAndAuthenticationDetails(Long entityId,Integer entityType,Integer emailType,String updatedBy)
 	{
 		EmailVerificationDetails emailVerificationEntity=emailVerificationDetailsRepository
 				.findOne(new EmailVerificationKey(entityId, entityType, emailType));
@@ -336,14 +342,14 @@ public class TransactionalUpdatesRepository {
 			if(entityType.equals(ENTITY_TYPE_CUSTOMER))
 			{
 				
-				detailsTableUpdateStatus=customerDetailsRepository.updateEmailAndVerificationStatusInMainEntity(entityId, emailVerificationEntity.getEmail(), true);
-				authenticationTableUpdateStatus=authenticationDetailsRepository.updateEmail(entityId, entityType, emailVerificationEntity.getEmail());
+				detailsTableUpdateStatus=customerDetailsRepository.updateEmailAndVerificationStatusInMainEntity(entityId, emailVerificationEntity.getEmail(), true,updatedBy);
+				authenticationTableUpdateStatus=authenticationDetailsRepository.updateEmail(entityId, entityType, emailVerificationEntity.getEmail(),new Date(),updatedBy);
 				
 			}
 			else if(entityType.equals(ENTITY_TYPE_VENDOR))
 			{
-				detailsTableUpdateStatus=vendorDetailsRepository.updateEmailAndVerificationStatus(entityId, emailVerificationEntity.getEmail(),true);
-				authenticationTableUpdateStatus=authenticationDetailsRepository.updateEmail(entityId, entityType, emailVerificationEntity.getEmail());
+				detailsTableUpdateStatus=vendorDetailsRepository.updateEmailAndVerificationStatus(entityId, emailVerificationEntity.getEmail(),true,updatedBy);
+				authenticationTableUpdateStatus=authenticationDetailsRepository.updateEmail(entityId, entityType, emailVerificationEntity.getEmail(),new Date(),updatedBy);
 				
 			}
 				
@@ -370,7 +376,7 @@ public class TransactionalUpdatesRepository {
 		{
 			EmailVerificationDetails newCustomerEmailVerificationDetails=
 					new EmailVerificationDetails(new EmailVerificationKey(savedQuickRegisterEntity.getCustomerId(),savedQuickRegisterEntity.getCustomerType(), 
-							ENTITY_TYPE_PRIMARY),savedQuickRegisterEntity.getEmail(), null, new Date(), 0, new Date(), new Date(), "CUST_ONLINE");
+							ENTITY_TYPE_PRIMARY),savedQuickRegisterEntity.getEmail(), null, new Date(), ZERO_COUNT, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
 						
 			savedCustomerEmailVerificationDetails=emailVerificationDetailsRepository.save(newCustomerEmailVerificationDetails);
 		}
@@ -379,7 +385,7 @@ public class TransactionalUpdatesRepository {
 		{
 			MobileVerificationDetails newCustomerMobileVerificationDetails=
 					new MobileVerificationDetails(new MobileVerificationKey(savedQuickRegisterEntity.getCustomerId(),savedQuickRegisterEntity.getCustomerType(), ENTITY_TYPE_PRIMARY),
-							savedQuickRegisterEntity.getMobile(), null, 0, 0, new Date(), new Date(), "CUST_ONLINE");
+							savedQuickRegisterEntity.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
 			
 			
 			savedCustomerMobileVerificationDetails=mobileVerificationDetailsRepository.save(newCustomerMobileVerificationDetails);
@@ -388,7 +394,7 @@ public class TransactionalUpdatesRepository {
 		}
 		
 		AuthenticationDetails customerAuthenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(savedQuickRegisterEntity.getCustomerId(),savedQuickRegisterEntity.getCustomerType()),
-				savedQuickRegisterEntity.getEmail(), savedQuickRegisterEntity.getMobile(), null, null, null, 0, 0, new Date(), new Date(), "CUST_ONLINE");
+				savedQuickRegisterEntity.getEmail(), savedQuickRegisterEntity.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
 		
 		
 		authenticationDetailsRepository.save(customerAuthenticationDetails);
@@ -411,7 +417,7 @@ public class TransactionalUpdatesRepository {
 		{
 			CustomerDetails customerDetails=new CustomerDetails(quickRegisterEntity.getCustomerId(), quickRegisterEntity.getFirstName(),
 					quickRegisterEntity.getLastName(), null, null, quickRegisterEntity.getMobile(), quickRegisterEntity.getIsMobileVerified(),
-					quickRegisterEntity.getEmail(), quickRegisterEntity.getIsEmailVerified(), null, null, null, null, null, false, null, new Date(), new Date(), UPDATED_BY_CUST_ONLINE);
+					quickRegisterEntity.getEmail(), quickRegisterEntity.getIsEmailVerified(), null, null, null, null, null, false, null, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
 			
 						
 			CustomerDetails savedCustomerDetails=customerDetailsRepository.save(customerDetails);
@@ -425,7 +431,7 @@ public class TransactionalUpdatesRepository {
 			
 			VendorDetails vendorDetails=new VendorDetails(quickRegisterEntity.getCustomerId(), quickRegisterEntity.getFirstName(),
 					quickRegisterEntity.getLastName(), null, null, quickRegisterEntity.getMobile(), quickRegisterEntity.getIsMobileVerified(),
-					quickRegisterEntity.getEmail(),quickRegisterEntity.getIsEmailVerified(), null, new Date(), new Date(),UPDATED_BY_CUST_ONLINE);
+					quickRegisterEntity.getEmail(),quickRegisterEntity.getIsEmailVerified(), null, new Date(), new Date(),quickRegisterEntity.getUpdatedBy());
 			
 			VendorDetails savedVendorDetails=vendorDetailsRepository.save(vendorDetails);
 			

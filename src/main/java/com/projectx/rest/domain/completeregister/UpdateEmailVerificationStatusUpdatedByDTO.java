@@ -1,23 +1,36 @@
 package com.projectx.rest.domain.completeregister;
 
-public class UpdateEmailVerificationStatusDTO {
+import javax.validation.constraints.NotNull;
+
+public class UpdateEmailVerificationStatusUpdatedByDTO {
 	
 	private Long customerId;
 	
+	@NotNull
 	private String email;
 	
+	@NotNull
 	private Boolean status;
+	
+	@NotNull
+	private String updatedBy;
 
-	public UpdateEmailVerificationStatusDTO() {
+	public UpdateEmailVerificationStatusUpdatedByDTO() {
 
 	}
 
-	public UpdateEmailVerificationStatusDTO(Long customerId, String email,
-			Boolean status) {
+	
+
+	public UpdateEmailVerificationStatusUpdatedByDTO(Long customerId,
+			String email, Boolean status, String updatedBy) {
+		super();
 		this.customerId = customerId;
 		this.email = email;
 		this.status = status;
+		this.updatedBy = updatedBy;
 	}
+
+
 
 	public Long getCustomerId() {
 		return customerId;
@@ -42,12 +55,25 @@ public class UpdateEmailVerificationStatusDTO {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+	
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "UpdateEmailVerificationStatusDTO [customerId=" + customerId
-				+ ", email=" + email + ", status=" + status + "]";
+		return "UpdateEmailVerificationStatusUpdatedByDTO [customerId="
+				+ customerId + ", email=" + email + ", status=" + status
+				+ ", updatedBy=" + updatedBy + "]";
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -57,8 +83,12 @@ public class UpdateEmailVerificationStatusDTO {
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result
+				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -68,7 +98,7 @@ public class UpdateEmailVerificationStatusDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UpdateEmailVerificationStatusDTO other = (UpdateEmailVerificationStatusDTO) obj;
+		UpdateEmailVerificationStatusUpdatedByDTO other = (UpdateEmailVerificationStatusUpdatedByDTO) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;
@@ -84,11 +114,14 @@ public class UpdateEmailVerificationStatusDTO {
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
+		if (updatedBy == null) {
+			if (other.updatedBy != null)
+				return false;
+		} else if (!updatedBy.equals(other.updatedBy))
+			return false;
 		return true;
 	}
 
-	
-	
 	
 
 }

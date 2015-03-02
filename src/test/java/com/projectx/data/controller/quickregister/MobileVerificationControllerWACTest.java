@@ -67,7 +67,7 @@ public class MobileVerificationControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	             .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
 	          .andExpect(jsonPath("$.key.customerType").value(standardCustomerMobileVerificationDetails().getKey().getCustomerType()))
 	          .andExpect(jsonPath("$.key.mobileType").value(standardCustomerMobileVerificationDetails().getKey().getMobileType()))

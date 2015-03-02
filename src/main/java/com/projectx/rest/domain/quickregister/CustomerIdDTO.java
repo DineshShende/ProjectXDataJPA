@@ -1,5 +1,8 @@
 package com.projectx.rest.domain.quickregister;
 
+import com.projectx.data.util.annotation.CustomerDetailsValid;
+
+
 public class CustomerIdDTO {
 
 	private Long customerId;

@@ -10,6 +10,7 @@ import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.domain.Persistable;
 
@@ -27,7 +28,7 @@ public class MobileVerificationDetails {
 	@EmbeddedId
 	private MobileVerificationKey key;
 	
-
+	@NotNull
 	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	

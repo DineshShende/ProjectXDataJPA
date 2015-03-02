@@ -73,7 +73,7 @@ public class FreightRequestByCustomerControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            .andExpect(jsonPath("$.source").value(standardFreightRequestByCustomerFullTruckLoad().getSource()))
 	            .andExpect(jsonPath("$.destination").value(standardFreightRequestByCustomerFullTruckLoad().getDestination()))
 	            .andExpect(jsonPath("$.noOfVehicles").value(standardFreightRequestByCustomerFullTruckLoad().getNoOfVehicles()))

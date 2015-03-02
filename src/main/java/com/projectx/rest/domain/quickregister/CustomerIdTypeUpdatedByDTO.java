@@ -1,27 +1,23 @@
 package com.projectx.rest.domain.quickregister;
 
-public class CustomerIdTypeMobileTypeDTO {
+public class CustomerIdTypeUpdatedByDTO {
 	
 	private Long customerId;
 	
 	private Integer customerType;
 	
-	private Integer mobileType;
-	
-	public CustomerIdTypeMobileTypeDTO() {
-		
+	private String updatedBy;
+
+	public CustomerIdTypeUpdatedByDTO() {
+
 	}
 
-	public CustomerIdTypeMobileTypeDTO(Long customerId, Integer customerType,
-			Integer mobileType) {
-		super();
+	public CustomerIdTypeUpdatedByDTO(Long customerId, Integer customerType,
+			String updatedBy) {
 		this.customerId = customerId;
 		this.customerType = customerType;
-		this.mobileType = mobileType;
+		this.updatedBy = updatedBy;
 	}
-
-
-
 
 	public Long getCustomerId() {
 		return customerId;
@@ -30,30 +26,28 @@ public class CustomerIdTypeMobileTypeDTO {
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
-	
-	public Integer getMobileType() {
-		return mobileType;
-	}
-
-	public void setMobileType(Integer mobileType) {
-		this.mobileType = mobileType;
-	}
 
 	public Integer getCustomerType() {
 		return customerType;
 	}
 
-
-
 	public void setCustomerType(Integer customerType) {
 		this.customerType = customerType;
 	}
 
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
 	@Override
 	public String toString() {
-		return "CustomerIdTypeMobileTypeDTO [customerId=" + customerId
-				+ ", customerType=" + customerType + ", mobileType="
-				+ mobileType + "]";
+		return "CustomerIdTypeUpdatedBy [customerId=" + customerId
+				+ ", customerType=" + customerType + ", updatedBy=" + updatedBy
+				+ "]";
 	}
 
 	@Override
@@ -65,7 +59,7 @@ public class CustomerIdTypeMobileTypeDTO {
 		result = prime * result
 				+ ((customerType == null) ? 0 : customerType.hashCode());
 		result = prime * result
-				+ ((mobileType == null) ? 0 : mobileType.hashCode());
+				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		return result;
 	}
 
@@ -77,7 +71,7 @@ public class CustomerIdTypeMobileTypeDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CustomerIdTypeMobileTypeDTO other = (CustomerIdTypeMobileTypeDTO) obj;
+		CustomerIdTypeUpdatedByDTO other = (CustomerIdTypeUpdatedByDTO) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;
@@ -88,17 +82,15 @@ public class CustomerIdTypeMobileTypeDTO {
 				return false;
 		} else if (!customerType.equals(other.customerType))
 			return false;
-		if (mobileType == null) {
-			if (other.mobileType != null)
+		if (updatedBy == null) {
+			if (other.updatedBy != null)
 				return false;
-		} else if (!mobileType.equals(other.mobileType))
+		} else if (!updatedBy.equals(other.updatedBy))
 			return false;
 		return true;
 	}
 
-
-
-
-		
 	
+	
+
 }

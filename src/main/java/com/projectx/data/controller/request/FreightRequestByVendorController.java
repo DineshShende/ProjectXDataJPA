@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.completeregister.VehicleBrandDetails;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.domain.completeregister.VehicleTypeDetails;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
+import com.projectx.data.exception.request.VehicleDetailsNotFoundException;
 import com.projectx.data.repository.request.FreightRequestByVendorRepository;
 import com.projectx.data.service.request.FreightRequestByVendorService;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
@@ -35,13 +39,32 @@ public class FreightRequestByVendorController {
 	FreightRequestByVendorService freightRequestByVendorService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public FreightRequestByVendorDTO save(@RequestBody FreightRequestByVendorDTO freightRequestByVendor)
+	public ResponseEntity<FreightRequestByVendorDTO> save(@Valid @RequestBody FreightRequestByVendorDTO freightRequestByVendor,
+			BindingResult bindingResult)
 	{
-		FreightRequestByVendor savedEntity=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		savedEntity=testRequestRepository.save(savedEntity);
+		ResponseEntity<FreightRequestByVendorDTO> result=null;
 		
-		return freightRequestByVendorService.toFreightRequestByVendorDTO(savedEntity);
+		FreightRequestByVendor savedEntity=null;
+		try{
+			savedEntity=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
+		}catch(VehicleDetailsNotFoundException e)
+		{
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		try{
+			savedEntity=testRequestRepository.save(savedEntity);
+			result=new ResponseEntity<FreightRequestByVendorDTO>(freightRequestByVendorService.toFreightRequestByVendorDTO(savedEntity),
+					HttpStatus.CREATED);
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/getById/{requestId}",method=RequestMethod.GET)
@@ -60,11 +83,17 @@ public class FreightRequestByVendorController {
 	}
 	
 	@RequestMapping(value="/deleteById/{requestId}")
-	public Boolean deleteById(@PathVariable Long requestId)
+	public ResponseEntity<Boolean> deleteById(@PathVariable Long requestId)
 	{
-		testRequestRepository.delete(requestId);
+				
+		try{
+			testRequestRepository.delete(requestId);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}catch(DataIntegrityViolationException e)
+		{
+			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
 		
-		return true;
 	}
 	
 	@RequestMapping(value="/clearTestData")
@@ -112,16 +141,4 @@ public class FreightRequestByVendorController {
 	}
 	
 	
-	/*
-	@RequestMapping(value="/test")
-	public TestRequest test()
-	{
-		TestRequest count=new TestRequest(1L, new VehicleDetailsDTO(1L, "ownerFirstName", "ownerMiddleName", "ownerLastName", 
-				new VehicleTypeDetails(1L, "vehicleTypeName"), new VehicleBrandDetails(1L, new VehicleTypeDetails(1L, "vehicleTypeName"), "vehicleBrandName", "modelNumber"), "vehicleBodyType", true, "registrationNumber", "chassisNumber", 20, 100, 40, 10, 8, "permitType",
-				false, "insuranceNumber", "insuranceCompany", 234L, new Date(), new Date(), "updatedBy"),
-				2134, 5643, 234L, new Date(), "(9:00PM", 10, 234L, "NEW", new Date(), new Date(), "updatedBy");
-		
-		return count;
-	}
-	*/
 }

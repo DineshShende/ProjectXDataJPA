@@ -104,6 +104,12 @@ public class DocumentDetailsDataFixture {
 				DOCUMENT_VERIFICATION_REMARKS, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
 	}
 	
+	public static DocumentDetails standardDocumentDetailsWithDummyDocumentWithError()
+	{
+		return new DocumentDetails(standardDocumentKey(), documentDummy(), null, DOCUMENT_VERIFICATION_STATUS,
+				DOCUMENT_VERIFICATION_REMARKS, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+	}
+	
 	public static DocumentDetails standardDocumentDetailsWithDummyDocumentWithNewVerificationStatusAndRemark()
 	{
 		return new DocumentDetails(standardDocumentKey(), documentDummy(), DOCUMENT_CONTENT_TYPE_DUMMY, DOCUMENT_VERIFICATION_STATUS_FAILED,

@@ -7,7 +7,8 @@ import java.util.Date;
 import com.google.gson.Gson;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileType;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeUpdatedByDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO;
 
@@ -23,7 +24,7 @@ public class MobileVericationDetailsFixtures {
 	
 	
 	public static Date CUST_DATE=new Date();
-	public static String CUST_UPDATED_BY="CUST_ONLINE";
+	
 	
 	
 	
@@ -50,14 +51,18 @@ public class MobileVericationDetailsFixtures {
 	
 	public static UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO standardUpdateMobilePinAndMobileVerificationAttemptsDTO()
 	{
-		return new UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY, CUST_MOBILEPIN_UPDATED, CUST_MOBILE_VERIFICATION_ATTEMPTS+1,CUST_RESEND_COUNT+1);
+		return new UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY, CUST_MOBILEPIN_UPDATED, CUST_MOBILE_VERIFICATION_ATTEMPTS+1,CUST_RESEND_COUNT+1,CUST_UPDATED_BY);
 	}
 	
 
-	
-	public static CustomerIdTypeMobileTypeDTO standardCustomerIdMobileDTO()
+	public static CustomerIdTypeMobileType standardCustomerIdMobileDTO()
 	{
-		return new CustomerIdTypeMobileTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY);
+		return new CustomerIdTypeMobileType(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY);
+	}
+	
+	public static CustomerIdTypeMobileTypeUpdatedByDTO standardCustomerIdMobileUpdatedByDTO()
+	{
+		return new CustomerIdTypeMobileTypeUpdatedByDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY,CUST_UPDATED_BY);
 	}
 	
 	public static String standardJsonCustomerMobileVerificationDetails()

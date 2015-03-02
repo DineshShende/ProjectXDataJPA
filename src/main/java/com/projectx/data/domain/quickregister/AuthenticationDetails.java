@@ -9,8 +9,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.annotation.AuthenticationDetailsValid;
 import com.projectx.data.util.serializer.*;
 
+@AuthenticationDetailsValid
 @Entity
 @Table(name="AUTHENTICATIONDETAILS")
 public class AuthenticationDetails  {

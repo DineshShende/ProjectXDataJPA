@@ -7,16 +7,16 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 
 @Repository
 public interface VehicleDetailsRepository extends
-		CrudRepository<VehicleDetailsDTO, Long> {
+		CrudRepository<VehicleDetails, Long> {
 	
 	
 	@Query(value="select * from vehicledetails where vendorid=:vendorId",nativeQuery=true)
-	List<VehicleDetailsDTO> getVehiclesByVendorId(@Param("vendorId")Long vendorId);
+	List<VehicleDetails> getVehiclesByVendorId(@Param("vendorId")Long vendorId);
 	
-	VehicleDetailsDTO findByRegistrationNumber(String registrationNumber);
+	VehicleDetails findByRegistrationNumber(String registrationNumber);
 	
 }

@@ -10,12 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.annotation.VendorDetailsValid;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
 
+@VendorDetailsValid
 @Entity
 @Table(name="VENDORDETAILS")
 public class VendorDetails {
@@ -24,11 +27,14 @@ public class VendorDetails {
 	@Column(name="VENDORID")
 	private Long vendorId;
 	
+	@NotNull
 	@Column(name="FIRSTNAME")
 	private String firstName;
 	
+	@NotNull
 	@Column(name="LASTNAME")
 	private String lastName;
+	
 	
 	@Column(name="DATEOFBIRTH")
 	private Date dateOfBirth;
@@ -40,14 +46,17 @@ public class VendorDetails {
 	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	
+	@NotNull
 	@Column(name="ISMOBILEVERIFIED")
 	private Boolean isMobileVerified;
 	
 	@Column(name="EMAIL",unique=true)
 	private String email;
 	
+	@NotNull
 	@Column(name="ISEMAILVERIFIED")
 	private Boolean isEmailVerified;
+	
 	
 	@Column(name="LANGUAGE")
 	private String laguage;

@@ -57,11 +57,11 @@ public class EmailVerificationControllerWACTest {
 	{
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
 	          .andExpect(jsonPath("$.key.customerType").value(standardEmailVerificationKey().getCustomerType()))
 	          .andExpect(jsonPath("$.key.emailType").value(standardEmailVerificationKey().getEmailType()))
@@ -74,7 +74,20 @@ public class EmailVerificationControllerWACTest {
 	          .andExpect(jsonPath("$.updatedBy").value(standardCustomerEmailVerificationDetails().getUpdatedBy()));
 	            
 	}
+
 	
+	
+	@Test
+	public void saveEmailVerificationEntityError() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetailsWithError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+		        .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	}
 
 	@Test
 	public void getEmailVerificationDetailsByCustomerIdAndEmail() throws Exception
@@ -82,7 +95,7 @@ public class EmailVerificationControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 		
@@ -116,7 +129,7 @@ public class EmailVerificationControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 		
@@ -149,7 +162,7 @@ public class EmailVerificationControllerWACTest {
 	{
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
@@ -174,7 +187,7 @@ public class EmailVerificationControllerWACTest {
 	{
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
@@ -198,7 +211,7 @@ public class EmailVerificationControllerWACTest {
 	{
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	
@@ -215,7 +228,7 @@ public class EmailVerificationControllerWACTest {
 	
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails())
+	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON));
 	

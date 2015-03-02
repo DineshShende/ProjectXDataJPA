@@ -67,7 +67,7 @@ public class VendorDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		
@@ -88,6 +88,18 @@ public class VendorDetailsControllerWACTest {
 	            .andExpect(jsonPath("$.insertTime").exists())
 	            .andExpect(jsonPath("$.updateTime").exists());		
 
+	}
+	
+	@Test
+	public void saveWithError() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/vendor/save")
+	                    .content(standardJsonVendor(standardVendorError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
 	}
 	
 	@Test

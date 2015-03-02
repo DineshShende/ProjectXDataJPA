@@ -2,6 +2,8 @@ package com.projectx.rest.domain.quickregister;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
@@ -11,10 +13,13 @@ public class UpdateEmailMobileVerificationStatus {
 
 	private Long customerId;
 	
+	@NotNull
 	private Boolean status;
 	
+	@NotNull
 	private Date updateTime;
 	
+	@NotNull
 	private String updatedBy;
 
 	public UpdateEmailMobileVerificationStatus() {

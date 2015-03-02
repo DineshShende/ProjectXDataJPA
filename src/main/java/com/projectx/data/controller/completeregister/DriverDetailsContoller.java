@@ -2,10 +2,13 @@ package com.projectx.data.controller.completeregister;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.domain.completeregister.DriverDetails;
 import com.projectx.data.repository.completeregister.DriverDetailsCustomRepository;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
 @RestController
 @RequestMapping(value="/driver")
@@ -24,8 +27,11 @@ public class DriverDetailsContoller {
 	DriverDetailsCustomRepository driverDetailsRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<DriverDetails> save(@RequestBody DriverDetails driverDetails)
+	public ResponseEntity<DriverDetails> save(@Valid @RequestBody DriverDetails driverDetails,BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<DriverDetails> savedEntityResponse=null;
 		
 		DriverDetails savedEntity=null;
@@ -46,8 +52,11 @@ public class DriverDetailsContoller {
 	}
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public ResponseEntity<DriverDetails> update(@RequestBody DriverDetails driverDetails)
+	public ResponseEntity<DriverDetails> update(@Valid @RequestBody DriverDetails driverDetails,BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<DriverDetails> result=null;
 		
 		DriverDetails savedEntity=new DriverDetails();
@@ -68,21 +77,28 @@ public class DriverDetailsContoller {
 	}
 	
 	@RequestMapping(value="/updateMobileAndMobileVerificationStatus",method=RequestMethod.POST)
-	public Integer updateMobileAndMobileVerificationStatus(@RequestBody UpdateMobileVerificationStatusDTO mobileVerificationStatusDTO)
+	public ResponseEntity<Integer> updateMobileAndMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO,BindingResult bindingResult)
 	{
-		Integer result=driverDetailsRepository
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
+		ResponseEntity<Integer> result=null;
+		
+		Integer status=driverDetailsRepository
 				.updateMobileAndMobileVerificationStatus(mobileVerificationStatusDTO.getCustomerId(), mobileVerificationStatusDTO.getMobile(),
-						mobileVerificationStatusDTO.getStatus());
+						mobileVerificationStatusDTO.getStatus(),mobileVerificationStatusDTO.getUpdatedBy());
+		
+		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
 		
 		return result;
 	}
 	
 	@RequestMapping(value="/getDriversByVendorId/{vendorId}")
-	public List<DriverDetails> getDriversByVendorId(@PathVariable Long vendorId)
+	public ResponseEntity<List<DriverDetails>> getDriversByVendorId(@PathVariable Long vendorId)
 	{
 		List<DriverDetails> driverList=driverDetailsRepository.getDriverListByVendorId(vendorId);
 		
-		return driverList;
+		return new ResponseEntity<List<DriverDetails>>(driverList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="/getById/{driverId}")
@@ -90,28 +106,28 @@ public class DriverDetailsContoller {
 	{
 		ResponseEntity<DriverDetails> result=null;
 		
-		DriverDetails driverDetails=null;
-		
-		driverDetails=driverDetailsRepository.findOne(driverId);
+		DriverDetails driverDetails=driverDetailsRepository.findOne(driverId);
 		
 		if(driverDetails==null)
-		{
 			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
 		else
-		{
 			result=new ResponseEntity<DriverDetails>(driverDetails, HttpStatus.FOUND);
-		}
 			
 		return result;
 	}
 	
 	@RequestMapping(value="/deleteById/{driverId}")
-	public Boolean deleteById(@PathVariable Long driverId)
+	public ResponseEntity<Boolean> deleteById(@PathVariable Long driverId)
 	{
-		driverDetailsRepository.deleteByKey(driverId);
-		
-		return true;
+		try
+		{
+			driverDetailsRepository.deleteByKey(driverId);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}catch(DataIntegrityViolationException e)
+		{
+			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+			
 	}
 	
 	

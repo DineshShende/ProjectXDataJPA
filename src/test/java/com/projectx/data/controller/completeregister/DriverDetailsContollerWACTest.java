@@ -32,7 +32,7 @@ import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.completeregister.DriverDetailsCustomRepository;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -62,8 +62,6 @@ public class DriverDetailsContollerWACTest {
 		
 
 	}
-
-	
 
 	@Test
 	public void save() throws Exception
@@ -101,6 +99,19 @@ public class DriverDetailsContollerWACTest {
 	            .andExpect(jsonPath("$.updateTime").exists());
 		
 	}
+	
+	@Test
+	public void saveWithError() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/driver")
+	                    .content(standardDriverJson(standardDriverDetailsWithError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	}
 
 	@Test
 	public void saveWithFailure() throws Exception
@@ -114,23 +125,7 @@ public class DriverDetailsContollerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isAlreadyReported());/*
-		 		.andExpect(jsonPath("$.firstName").doesNotExist())
-		 		.andExpect(jsonPath("$.middleName").doesNotExist())
-		 		.andExpect(jsonPath("$.lastName").doesNotExist())
-		 		.andExpect(jsonPath("$.bloodGroup").doesNotExist())
-		 		.andExpect(jsonPath("$.homeAddress").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.isMobileVerified").doesNotExist())
-	            .andExpect(jsonPath("$.homeContactNumber").doesNotExist())
-	            .andExpect(jsonPath("$.isFreightRequestPermissionGiven").doesNotExist())
-	            .andExpect(jsonPath("$.isDealFinalizationPermissionGiven").doesNotExist())
-	            .andExpect(jsonPath("$.licenceNumber").doesNotExist())
-	            .andExpect(jsonPath("$.language").doesNotExist())
-	            .andExpect(jsonPath("$.updatedBy").doesNotExist())
-	            .andExpect(jsonPath("$.insertTime").doesNotExist())
-	            .andExpect(jsonPath("$.updateTime").doesNotExist());
-	*/
+	            .andExpect(status().isAlreadyReported());
 	    
 	}
 
@@ -323,7 +318,7 @@ public class DriverDetailsContollerWACTest {
 		
 		DriverDetails driverDetails=driverDetailsCustomRepository.save(standardDriverDetails());
 		
-		UpdateMobileVerificationStatusDTO mobileVerificationStatusDTO=new UpdateMobileVerificationStatusDTO(driverDetails.getDriverId(), driverDetails.getMobile(), true);
+		UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO=new UpdateMobileVerificationStatusUpdatedByDTO(driverDetails.getDriverId(), driverDetails.getMobile(), true,DRIVER_UPDATED_BY);
 		
 		
 		this.mockMvc.perform(

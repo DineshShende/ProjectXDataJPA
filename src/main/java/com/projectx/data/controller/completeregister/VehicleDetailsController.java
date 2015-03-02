@@ -2,16 +2,20 @@ package com.projectx.data.controller.completeregister;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 
 @RestController
@@ -22,71 +26,80 @@ public class VehicleDetailsController {
 	VehicleDetailsRepository vehicleDetailsRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public VehicleDetailsDTO save(@RequestBody VehicleDetailsDTO vehicleDetails)
+	public ResponseEntity<VehicleDetails> save(@Valid @RequestBody VehicleDetails vehicleDetails,BindingResult bindingResult)
 	{
-		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(vehicleDetails);
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		return savedEntity;
+		ResponseEntity<VehicleDetails> result=null;
+		
+		try{
+			VehicleDetails savedEntity=vehicleDetailsRepository.save(vehicleDetails);
+			result=new ResponseEntity<VehicleDetails>(savedEntity, HttpStatus.CREATED);
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/getVehiclesByVendorId/{vendorId}")
-	public List<VehicleDetailsDTO> getVehiclesByVendorId(@PathVariable Long vendorId)
+	public ResponseEntity<List<VehicleDetails>> getVehiclesByVendorId(@PathVariable Long vendorId)
 	{
-		List<VehicleDetailsDTO> vehicleDetailsList=vehicleDetailsRepository.getVehiclesByVendorId(vendorId);
+		List<VehicleDetails> vehicleDetailsList=vehicleDetailsRepository.getVehiclesByVendorId(vendorId);
 		
-		return vehicleDetailsList;
+		return new ResponseEntity<List<VehicleDetails>>(vehicleDetailsList, HttpStatus.OK);
 	}
 
 
 
 	@RequestMapping(value="/getByRegistrationNumber/{registrationNumber}")
-	public ResponseEntity<VehicleDetailsDTO> findRegistrationNumber(@PathVariable String registrationNumber)
+	public ResponseEntity<VehicleDetails> findRegistrationNumber(@PathVariable String registrationNumber)
 	{
-		ResponseEntity<VehicleDetailsDTO> result=null;
+		ResponseEntity<VehicleDetails> result=null;
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.findByRegistrationNumber(registrationNumber);
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.findByRegistrationNumber(registrationNumber);
 		
 		if(vehicleDetails ==null)
-		{
 			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			
-		}
 		else
-		{
-			result=new ResponseEntity<VehicleDetailsDTO>(vehicleDetails, HttpStatus.FOUND);
-		}
-		
+			result=new ResponseEntity<VehicleDetails>(vehicleDetails, HttpStatus.FOUND);
+				
 		return result;
 	}
 
 	
 	
 	@RequestMapping(value="/getById/{vehicleId}")
-	public ResponseEntity<VehicleDetailsDTO> findOne(@PathVariable Long vehicleId)
+	public ResponseEntity<VehicleDetails> findOne(@PathVariable Long vehicleId)
 	{
-		ResponseEntity<VehicleDetailsDTO> result=null;
+		ResponseEntity<VehicleDetails> result=null;
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.findOne(vehicleId);
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.findOne(vehicleId);
 	
 		if(vehicleDetails ==null)
-		{
 			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			
-		}
 		else
-		{
-			result=new ResponseEntity<VehicleDetailsDTO>(vehicleDetails, HttpStatus.FOUND);
-		}
+			result=new ResponseEntity<VehicleDetails>(vehicleDetails, HttpStatus.FOUND);
 		
 		return result;
 	}
 	
 	@RequestMapping(value="/deleteById/{vehicleId}")
-	public Boolean deleteById(@PathVariable Long vehicleId)
+	public ResponseEntity<Boolean> deleteById(@PathVariable Long vehicleId)
 	{
-		vehicleDetailsRepository.delete(vehicleId);
+		ResponseEntity<Boolean> result=null;
 		
-		return true;
+		try{
+		vehicleDetailsRepository.delete(vehicleId);
+		result=new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+		
+		return result;
 	}
 
 	

@@ -11,16 +11,16 @@ import com.mysema.query.types.path.PathInits;
 
 
 /**
- * QVehicleDetailsDTO is a Querydsl query type for VehicleDetailsDTO
+ * QVehicleDetails is a Querydsl query type for VehicleDetails
  */
 @Generated("com.mysema.query.codegen.EntitySerializer")
-public class QVehicleDetailsDTO extends EntityPathBase<VehicleDetailsDTO> {
+public class QVehicleDetails extends EntityPathBase<VehicleDetails> {
 
-    private static final long serialVersionUID = -1762637345L;
+    private static final long serialVersionUID = -1028279328L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QVehicleDetailsDTO vehicleDetailsDTO = new QVehicleDetailsDTO("vehicleDetailsDTO");
+    public static final QVehicleDetails vehicleDetails = new QVehicleDetails("vehicleDetails");
 
     public final StringPath chassisNumber = createString("chassisNumber");
 
@@ -68,23 +68,23 @@ public class QVehicleDetailsDTO extends EntityPathBase<VehicleDetailsDTO> {
 
     public final NumberPath<Integer> width = createNumber("width", Integer.class);
 
-    public QVehicleDetailsDTO(String variable) {
-        this(VehicleDetailsDTO.class, forVariable(variable), INITS);
+    public QVehicleDetails(String variable) {
+        this(VehicleDetails.class, forVariable(variable), INITS);
     }
 
-    public QVehicleDetailsDTO(Path<? extends VehicleDetailsDTO> path) {
+    public QVehicleDetails(Path<? extends VehicleDetails> path) {
         this(path.getType(), path.getMetadata(), path.getMetadata().isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QVehicleDetailsDTO(PathMetadata<?> metadata) {
+    public QVehicleDetails(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QVehicleDetailsDTO(PathMetadata<?> metadata, PathInits inits) {
-        this(VehicleDetailsDTO.class, metadata, inits);
+    public QVehicleDetails(PathMetadata<?> metadata, PathInits inits) {
+        this(VehicleDetails.class, metadata, inits);
     }
 
-    public QVehicleDetailsDTO(Class<? extends VehicleDetailsDTO> type, PathMetadata<?> metadata, PathInits inits) {
+    public QVehicleDetails(Class<? extends VehicleDetails> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.vehicleBrandId = inits.isInitialized("vehicleBrandId") ? new QVehicleBrandDetails(forProperty("vehicleBrandId"), inits.get("vehicleBrandId")) : null;
         this.vehicleTypeId = inits.isInitialized("vehicleTypeId") ? new QVehicleTypeDetails(forProperty("vehicleTypeId")) : null;

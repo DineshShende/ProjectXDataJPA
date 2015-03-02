@@ -6,40 +6,21 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectx.data.domain.completeregister.DocumentDetails;
-import com.projectx.data.domain.quickregister.AuthenticationDetails;
-import com.projectx.data.domain.quickregister.EmailVerificationDetails;
-import com.projectx.data.domain.quickregister.MobileVerificationDetails;
-import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
-import com.projectx.data.repository.completeregister.DocumetDetailsRepository;
-import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
-import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
-import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdDTO;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeDTO;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeDTO;
 import com.projectx.rest.domain.quickregister.EmailDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
-import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailMobileVerificationStatus;
-import com.projectx.rest.domain.quickregister.UpdateEmailPassword;
-import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO;
-import com.projectx.rest.domain.quickregister.UpdatePasswordEmailPasswordAndPasswordTypeDTO;
 
 
 @RestController
@@ -49,18 +30,10 @@ public class QuickRegisterController {
 	@Autowired
 	QuickRegisterRepository customerQuickRegisterRepository;
 	
-	@Autowired
-    @Qualifier("customerQuickRegisterValidator")
-    private Validator validator;
- 	
-	@InitBinder("customerQuickRegisterEntity")
-    private void initBinder(WebDataBinder binder) {
-        binder.setValidator(validator);
-    }
-
        
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<QuickRegisterEntity> saveNewCustomer(@Valid @RequestBody  QuickRegisterEntity customerEntity,BindingResult result)
+	public ResponseEntity<QuickRegisterEntity> saveNewCustomer(@Valid @RequestBody  QuickRegisterEntity quickRegisterEntity,
+			BindingResult result)
 	{
 		ResponseEntity<QuickRegisterEntity> resultResponse=null;
 		
@@ -70,14 +43,22 @@ public class QuickRegisterController {
 			return resultResponse;
 		}
 		
-		return new ResponseEntity<QuickRegisterEntity>(customerQuickRegisterRepository.save(customerEntity), HttpStatus.CREATED);
+		try{
+			QuickRegisterEntity savedEntity=customerQuickRegisterRepository.save(quickRegisterEntity);
+			resultResponse=new ResponseEntity<QuickRegisterEntity>(savedEntity, HttpStatus.CREATED);
+		}catch(DataIntegrityViolationException e)
+		{
+			resultResponse=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		return resultResponse;
 				
 	}
 	
 	@RequestMapping(value="/getAll",method=RequestMethod.GET)
-	public List<QuickRegisterEntity> getAllCustomer()
+	public ResponseEntity<List<QuickRegisterEntity>> getAllCustomer()
 	{
-		return customerQuickRegisterRepository.findAll(); 
+		return new  ResponseEntity<List<QuickRegisterEntity>>(customerQuickRegisterRepository.findAll(), HttpStatus.OK); 
 	}
 	
 	@RequestMapping(value="/getEntityByCustomerId",method=RequestMethod.POST)
@@ -128,19 +109,32 @@ public class QuickRegisterController {
 	
 	
 	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
-	public Integer updateMobileVerificationStatus(@RequestBody UpdateEmailMobileVerificationStatus updateStatus) throws InterruptedException
+	public ResponseEntity<Integer> updateMobileVerificationStatus(@Valid @RequestBody UpdateEmailMobileVerificationStatus updateStatus,
+			BindingResult bindingResult) throws InterruptedException
 	{
-		Integer result=customerQuickRegisterRepository.updateMobileVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
+		ResponseEntity<Integer> result=null;
+		
+		Integer status=customerQuickRegisterRepository.updateMobileVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
 													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy());
+		
+		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
+		
 		return result;
 	}
 	
 	
 	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
-	public Integer updateEmailVerificationStatus(@RequestBody UpdateEmailMobileVerificationStatus updateStatus) throws InterruptedException
+	public ResponseEntity<Integer> updateEmailVerificationStatus(@RequestBody UpdateEmailMobileVerificationStatus updateStatus) throws InterruptedException
 	{
-		Integer result=customerQuickRegisterRepository.updateEmailVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
+		ResponseEntity<Integer> result=null;
+		
+		Integer status=customerQuickRegisterRepository.updateEmailVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
 													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy());
+		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
+		
 		return result;
 	}
 	

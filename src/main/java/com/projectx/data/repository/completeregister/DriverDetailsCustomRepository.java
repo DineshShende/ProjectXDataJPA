@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepos
 
 
 @Component
+@Profile(value={"Test","Dev","Prod"})
 public class DriverDetailsCustomRepository {
 
 	@Autowired
@@ -82,7 +84,7 @@ public class DriverDetailsCustomRepository {
 				else
 				{
 					mobileVerificationDetailsRepository.updateMobile(driverDetails.getDriverId(), ENTITY_TYPE_DRIVER,
-							ENTITY_TYPE_PRIMARY, driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT);
+							ENTITY_TYPE_PRIMARY, driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),driverDetails.getUpdatedBy());
 					
 				}
 				
@@ -113,9 +115,9 @@ public class DriverDetailsCustomRepository {
 		
 	}
 	
-	public Integer updateMobileAndMobileVerificationStatus(Long driverId,Long mobile,Boolean isMobileVerified)
+	public Integer updateMobileAndMobileVerificationStatus(Long driverId,Long mobile,Boolean isMobileVerified,String updatedBy)
 	{
-		return driverDetailsRepository.updateMobileAndMobileVerificationStaus(driverId, mobile, isMobileVerified);
+		return driverDetailsRepository.updateMobileAndMobileVerificationStaus(driverId, mobile, isMobileVerified,new Date(),updatedBy);
 	}
 	
 	public List<DriverDetails> getDriverListByVendorId(Long vendorId)

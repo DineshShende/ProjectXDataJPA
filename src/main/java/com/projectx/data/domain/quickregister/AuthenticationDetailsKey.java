@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 
 @Embeddable
@@ -12,9 +13,11 @@ public class AuthenticationDetailsKey implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
+	@NotNull
 	@Column(name="CUSTOMERID")
 	private Long customerId;
 	
+	@NotNull
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 

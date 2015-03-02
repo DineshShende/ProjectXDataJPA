@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
 @Entity
@@ -28,7 +28,7 @@ public class FreightRequestByVendor {
 	
 	@OneToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="VEHICLEDETAILSID")
-	private VehicleDetailsDTO vehicleDetailsId;
+	private VehicleDetails vehicleDetailsId;
 	
 	
 	@Column(name="SOURCE")
@@ -68,7 +68,7 @@ public class FreightRequestByVendor {
 
 	}
 
-	public FreightRequestByVendor(Long requestId, VehicleDetailsDTO vehicleDetailsId,
+	public FreightRequestByVendor(Long requestId, VehicleDetails vehicleDetailsId,
 			Integer source, Integer destination, Long driverId,
 			Date availableDate, String availableTime, Integer pickupRangeInKm,
 			Long vendorId, String status, Date insertTime, Date updateTime,
@@ -99,11 +99,11 @@ public class FreightRequestByVendor {
 		this.requestId = requestId;
 	}
 
-	public VehicleDetailsDTO getVehicleDetailsId() {
+	public VehicleDetails getVehicleDetailsId() {
 		return vehicleDetailsId;
 	}
 
-	public void setVehicleDetailsId(VehicleDetailsDTO vehicleDetailsId) {
+	public void setVehicleDetailsId(VehicleDetails vehicleDetailsId) {
 		this.vehicleDetailsId = vehicleDetailsId;
 	}
 

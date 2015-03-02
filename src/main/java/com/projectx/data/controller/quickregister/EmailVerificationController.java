@@ -3,9 +3,13 @@ package com.projectx.data.controller.quickregister;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +19,7 @@ import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeUpdatedByDTO;
 import com.projectx.rest.domain.quickregister.EmailDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
 
@@ -26,11 +31,23 @@ public class EmailVerificationController {
 	EmailVerificationDetailsRepository customerEmailVerificationDetailsRepository;
 	
 	@RequestMapping(value="/saveEmailVerificationDetails",method=RequestMethod.POST)
-	public EmailVerificationDetails saveEmailVerificationEntity(@RequestBody EmailVerificationDetails emailVerificationDetails)
+	public ResponseEntity<EmailVerificationDetails> saveEmailVerificationEntity(@Valid @RequestBody EmailVerificationDetails emailVerificationDetails,
+			BindingResult resultValid)
 	{
-		EmailVerificationDetails savedEmailVerificationDetails=customerEmailVerificationDetailsRepository.save(emailVerificationDetails);
+		if(resultValid.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); 
 		
-		return savedEmailVerificationDetails;
+		ResponseEntity<EmailVerificationDetails> result=null;
+		
+		try{
+			EmailVerificationDetails savedEmailVerificationDetails=customerEmailVerificationDetailsRepository.save(emailVerificationDetails);
+			result=new ResponseEntity<EmailVerificationDetails>(savedEmailVerificationDetails, HttpStatus.CREATED);
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+				
+		return result;
 		
 	}
 	
@@ -75,34 +92,50 @@ public class EmailVerificationController {
 	}
 
 	@RequestMapping(value="/resetEmailHashAndEmailHashSentTime",method=RequestMethod.POST)
-	public Integer resetEmailHashAndEmailHashSentTime(@RequestBody UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO dto)
+	public ResponseEntity<Integer> resetEmailHashAndEmailHashSentTime(@RequestBody UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO dto)
 	{
+		ResponseEntity<Integer> result=null;
+		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
 				.resetEmailHashAndEmailHashSentTime(dto.getCustomerId(),dto.getCustomerType(), dto.getEmailType(), dto.getEmailHash(), dto.getEmailHashSentTime(),
-						dto.getResendCount());
+						dto.getResendCount(),new Date(),dto.getUpdatedBy());
 		
-		return updateStatus;
+		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
+		
+		return result;
 		
 	}
 	
 	@RequestMapping(value="/incrementResendCountByCustomerIdAndEmail",method=RequestMethod.POST)
-	public Integer incrementResendCountByCustomerIdAndEmail(@RequestBody CustomerIdTypeEmailTypeDTO customerIdEmailDTO)
+	public ResponseEntity<Integer> incrementResendCountByCustomerIdAndEmail(@RequestBody CustomerIdTypeEmailTypeUpdatedByDTO customerIdEmailDTO)
 	{
+		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
-				.incrementResendCountByCustomerIdAndEmail(customerIdEmailDTO.getCustomerId(),customerIdEmailDTO.getCustomerType(), customerIdEmailDTO.getEmailType());
+				.incrementResendCountByCustomerIdAndEmail(customerIdEmailDTO.getCustomerId(),customerIdEmailDTO.getCustomerType(), customerIdEmailDTO.getEmailType(),
+						new Date(),customerIdEmailDTO.getUpdatedBy());
 		
+		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		
-		return updateStatus;
+		return result;
 		
 	}
 	
 	@RequestMapping(value="/deleteByKey",method=RequestMethod.POST)
-	public Boolean deleteByKey(@RequestBody EmailVerificationKey key)
+	public ResponseEntity<Boolean> deleteByKey(@RequestBody EmailVerificationKey key)
 	{
-		customerEmailVerificationDetailsRepository.delete(key);
+		ResponseEntity<Boolean> result=null;
 		
-		return true;
+		try{
+			customerEmailVerificationDetailsRepository.delete(key);
+			result=new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/getCount")

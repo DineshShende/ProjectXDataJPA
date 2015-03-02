@@ -178,7 +178,7 @@ public class DriverDetailsRepositoryTest {
 		
 		assertEquals(1, driverDetailsRepository.count().intValue());
 		
-		assertEquals(1, driverDetailsRepository.updateMobileAndMobileVerificationStatus(savedEntity.getDriverId(), 988776655443L, true).intValue());
+		assertEquals(1, driverDetailsRepository.updateMobileAndMobileVerificationStatus(savedEntity.getDriverId(), 988776655443L, true,DRIVER_UPDATED_BY).intValue());
 		
 		
 	}

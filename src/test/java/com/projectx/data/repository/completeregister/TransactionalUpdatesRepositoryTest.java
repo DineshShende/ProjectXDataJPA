@@ -1,16 +1,34 @@
 package com.projectx.data.repository.completeregister;
 
 
-import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
-import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
-import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.*;
-import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
-import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
-import static org.junit.Assert.*;
+import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.CUST_MOBILE_NEW;
+import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.CUST_MOBILE_SEC_NEW;
+import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.CUST_SEC_MOBILE;
+import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.standardCustomerDetails;
+import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.VENDOR_ID;
+import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.standardVendor;
+import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerEmailMobileAuthenticationDetails;
+import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerEmailMobileAuthenticationDetailsVendor;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_EMAIL;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_UPDATED_BY;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_EMAILHASH;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_EMAIL_OTHER;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_ID;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_MOBILE;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_MOBILEPIN;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_PASSWORD_CHANGED;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_PASSWORD_TYPE_CHANGED;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_TYPE_CUSTOMER;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_TYPE_VENDER;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.standardEmailMobileCustomer;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.standardEmailMobileVendor;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
-
-import javax.transaction.Transactional;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,10 +55,6 @@ import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepos
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 import com.projectx.rest.domain.completeregister.CustomerOrVendorDetailsDTO;
 import com.projectx.rest.domain.quickregister.CustomerQuickRegisterEmailMobileVerificationEntity;
-
-import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.*;
-import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
@@ -587,7 +601,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		assertFalse(authenticationDetailsRepository.findByMobile(CUST_MOBILE_NEW).isPresent());
 		
-		assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1));
+		assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1,CUST_UPDATED_BY));
 		
 		assertEquals(1, customerDetailsCustomRepository.count().intValue());
 		
@@ -639,7 +653,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		try
 		{
-			assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1));
+			assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1,CUST_UPDATED_BY));
 		}
 		catch(DataIntegrityViolationException e)
 		{
@@ -688,7 +702,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		assertFalse(authenticationDetailsRepository.findByMobile(CUST_MOBILE_NEW).isPresent());
 		
-		assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1));
+		assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1,CUST_UPDATED_BY));
 		
 		assertEquals(1, vendorDetailsCustomRepository.count().intValue());
 		
@@ -740,7 +754,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		try
 		{
-			assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1));
+			assertTrue(transactionalUpdatesRepository.updateMobileInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1,CUST_UPDATED_BY));
 		}
 		catch(DataIntegrityViolationException e)
 		{
@@ -788,7 +802,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		assertFalse(authenticationDetailsRepository.findByEmail(CUST_EMAIL_OTHER).isPresent());
 		
-		assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1));
+		assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1,CUST_UPDATED_BY));
 		
 		assertEquals(1, customerDetailsCustomRepository.count().intValue());
 		
@@ -841,7 +855,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		try
 		{
-			assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1));
+			assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedCustomer.getCustomerId(), 1, 1,CUST_UPDATED_BY));
 		}
 		catch(DataIntegrityViolationException e)
 		{
@@ -888,7 +902,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		assertFalse(authenticationDetailsRepository.findByEmail(CUST_EMAIL_OTHER).isPresent());
 		
-		assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1));
+		assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1,CUST_UPDATED_BY));
 		
 		assertEquals(1, vendorDetailsCustomRepository.count().intValue());
 		
@@ -940,7 +954,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		try
 		{
-			assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1));
+			assertTrue(transactionalUpdatesRepository.updateEmailInDetailsEnityAndAuthenticationDetails(savedVendor.getVendorId(), 2, 1,CUST_UPDATED_BY));
 		}
 		catch(DataIntegrityViolationException e)
 		{
@@ -1139,7 +1153,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileVendor());
 		
-		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD", "AES",null, null, CUST_MOBILE, null, CUST_EMAIL, null, 
+		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD", "AES",null, null, CUST_MOBILE, false, CUST_EMAIL, false, 
 				null, null, null, null));
 		
 		

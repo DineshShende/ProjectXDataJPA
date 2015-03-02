@@ -2,18 +2,18 @@ package com.projectx.data.controller.quickregister;
 
 import static org.junit.Assert.*;
 
-import javax.net.ssl.SSLEngineResult.Status;
+
 import javax.transaction.Transactional;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
+
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -30,11 +30,6 @@ import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFi
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
 
 import com.projectx.data.config.Application;
-import com.projectx.data.repository.completeregister.CustomerDetailsCustomRepository;
-import com.projectx.data.repository.completeregister.VendorDetailsCustomRepository;
-import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
-import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
-import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 
 
@@ -83,36 +78,24 @@ public class QuickRegisterControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            //.andDo(print())
 	            .andExpect(status().isNotAcceptable());
-		/*
-   	            .andExpect(jsonPath("$.firstName").doesNotExist())
-	            .andExpect(jsonPath("$.lastName").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.pincode").doesNotExist())
-				.andExpect(jsonPath("$.isEmailVerified").doesNotExist())
-				.andExpect(jsonPath("$.isMobileVerified").doesNotExist())
-				.andExpect(jsonPath("$.insertTime").doesNotExist())
-				.andExpect(jsonPath("$.updateTime").doesNotExist())
-				.andExpect(jsonPath("$.updatedBy").doesNotExist());
-		*/
+		
 	}
 	
-	/*
+	
 	@Test
-	public void saveNewEmailMobileCustomerDebug() throws Exception {
+	public void saveNewEmailMobileCustomerWithErrorsNullFirstName() throws Exception {
 		
 		quickRegisterRepository.deleteAll();
 		
 		this.mockMvc.perform(
-	            post("/customer/quickregister/responseEntity")
-	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileCustomerWithErrors()))
+	            post("/customer/quickregister")
+	                    .content(standardJsonQuickRegisterCustomer(standardEmailMobileVendorWithErrorNullFirstName()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isConflict());
-			 
+	            //.andDo(print())
+	            .andExpect(status().isNotAcceptable());
+		
 	}
-*/
 
 	
 	
@@ -155,18 +138,6 @@ public class QuickRegisterControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	           // .andDo(print())
 	            .andExpect(status().isNotAcceptable());
-		/*
-	            .andExpect(jsonPath("$.firstName").doesNotExist())
-	            .andExpect(jsonPath("$.lastName").doesNotExist())
-	            .andExpect(jsonPath("$.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.email").doesNotExist())
-	            .andExpect(jsonPath("$.pincode").doesNotExist())
-				.andExpect(jsonPath("$.isEmailVerified").doesNotExist())
-				.andExpect(jsonPath("$.isMobileVerified").doesNotExist())
-				.andExpect(jsonPath("$.insertTime").doesNotExist())
-				.andExpect(jsonPath("$.updateTime").doesNotExist())
-				.andExpect(jsonPath("$.updatedBy").doesNotExist());
-		*/		 
 	}
 
 	

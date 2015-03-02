@@ -56,6 +56,20 @@ public class DocumentDetailsControllerWACTest {
 	}
 	
 	@Test
+	public void saveCustomerDocumentWithError() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/document/saveCustomerDocument")
+	                    .content(standardJsonDocumentDetails(standardDocumentDetailsWithDummyDocumentWithError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable())
+	            ;
+		
+	}
+	
+	@Test
 	public void saveCustomerDocument() throws Exception
 	{
 		this.mockMvc.perform(
@@ -64,7 +78,7 @@ public class DocumentDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 	            .andExpect(jsonPath("$.key.customerType").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerType()))
@@ -133,7 +147,7 @@ public class DocumentDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 	            .andExpect(jsonPath("$.key.customerType").value(standardDocumentDetailsWithDummyDocumentWithNewVerificationStatusAndRemark().getKey().getCustomerType()))
@@ -164,7 +178,7 @@ public class DocumentDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 	            .andExpect(jsonPath("$.key.customerType").value(standardDocumentDetailsWithDummyDocumentWithNewDocument().getKey().getCustomerType()))

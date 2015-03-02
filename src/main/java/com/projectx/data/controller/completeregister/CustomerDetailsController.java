@@ -1,9 +1,14 @@
 package com.projectx.data.controller.completeregister;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.repository.completeregister.CustomerDetailsCustomRepository;
 import com.projectx.data.repository.completeregister.CustomerDetailsRepository;
+import com.projectx.data.util.validator.AuthenticationDetailsValidator;
+import com.projectx.data.util.validator.CustomerDetailsValidator;
 import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
-import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusDTO;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusUpdatedByDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
 
 @RestController
@@ -26,8 +33,11 @@ public class CustomerDetailsController {
 	CustomerDetailsCustomRepository customerDetailsCustomRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<CustomerDetails> saveCustomerDetails(@RequestBody CustomerDetails customerDetails)
+	public ResponseEntity<CustomerDetails> saveCustomerDetails(@Valid @RequestBody CustomerDetails customerDetails,BindingResult resultValid)
 	{
+		if(resultValid.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<CustomerDetails> result=null;
 		
 		try{		
@@ -42,6 +52,7 @@ public class CustomerDetailsController {
 		}
 		return result;
 	}
+	
 	@RequestMapping(value="/{customerId}",method=RequestMethod.GET)
 	public ResponseEntity<CustomerDetails> findOne(@PathVariable("customerId")Long customerId )
 	{
@@ -50,43 +61,85 @@ public class CustomerDetailsController {
 		CustomerDetails fetchedEntity=customerDetailsCustomRepository.findOne(customerId);
 		
 		if(fetchedEntity!=null)
-		{
 			result=new ResponseEntity<CustomerDetails>(fetchedEntity, HttpStatus.FOUND);
-		}
-		
 		else
-		{	
 			result=new ResponseEntity<CustomerDetails>(HttpStatus.NO_CONTENT);
-		}
+		
 		
 		return result;
 	}
 	
 	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
-	public Integer updateMobileVerificationStatus(@RequestBody UpdateMobileVerificationStatusDTO verificationStatusDTO)
+	public ResponseEntity<Integer> updateMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO verificationStatusDTO,
+			BindingResult bindingResult)
 	{
-		Integer updateStatus=customerDetailsCustomRepository.updateMobileAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
-				verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus());
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		return updateStatus;
+		ResponseEntity<Integer> result=null;
+	
+		try{
+		
+			Integer updateStatus=customerDetailsCustomRepository.updateMobileAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
+					verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy());
+			
+			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/updateSecondaryMobileVerificationStatus",method=RequestMethod.POST)
-	public Integer updateSecondaryMobileVerificationStatus(@RequestBody UpdateMobileVerificationStatusDTO verificationStatusDTO)
+	public ResponseEntity<Integer> updateSecondaryMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO verificationStatusDTO,
+			BindingResult bindingResult)
 	{
-		Integer updateStatus=customerDetailsCustomRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
-				verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus());
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		return updateStatus;
+		ResponseEntity<Integer> result=null;
+		
+		try{
+		
+			Integer updateStatus=customerDetailsCustomRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
+					verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy());
+			
+			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
-	public Integer updateEmailVerificationStatus(@RequestBody UpdateEmailVerificationStatusDTO verificationStatusDTO)
+	public ResponseEntity<Integer> updateEmailVerificationStatus(@Valid @RequestBody UpdateEmailVerificationStatusUpdatedByDTO verificationStatusDTO,
+			BindingResult bindingResult)
 	{
-		Integer updateStatus=customerDetailsCustomRepository.updateEmailAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
-				verificationStatusDTO.getEmail(),verificationStatusDTO.getStatus());
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		return updateStatus;
+		ResponseEntity<Integer> result=null;
+		
+		try{
+			Integer updateStatus=customerDetailsCustomRepository.updateEmailAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
+					verificationStatusDTO.getEmail(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy());
+			
+			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/count",method=RequestMethod.GET)

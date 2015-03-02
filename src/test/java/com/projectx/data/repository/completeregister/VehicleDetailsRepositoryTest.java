@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.projectx.data.config.Application;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
@@ -46,9 +46,9 @@ public class VehicleDetailsRepositoryTest {
 	{
 		assertEquals(0, vehicleDetailsRepository.count());
 		
-		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
 		
-		VehicleDetailsDTO fetchedEntity=vehicleDetailsRepository.findOne(savedEntity.getVehicleId());
+		VehicleDetails fetchedEntity=vehicleDetailsRepository.findOne(savedEntity.getVehicleId());
 		
 		assertEquals(savedEntity,fetchedEntity );
 		
@@ -60,9 +60,9 @@ public class VehicleDetailsRepositoryTest {
 	{
 		assertEquals(0, vehicleDetailsRepository.count());
 		
-		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
 		
-		VehicleDetailsDTO fetchedEntity=vehicleDetailsRepository.findOne(savedEntity.getVehicleId());
+		VehicleDetails fetchedEntity=vehicleDetailsRepository.findOne(savedEntity.getVehicleId());
 		
 		assertEquals(savedEntity, fetchedEntity);
 		
@@ -83,7 +83,7 @@ public class VehicleDetailsRepositoryTest {
 	{
 		assertEquals(0, vehicleDetailsRepository.count());
 		
-		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		assertEquals(1, vehicleDetailsRepository.count());
 		
@@ -97,11 +97,11 @@ public class VehicleDetailsRepositoryTest {
 	{
 		assertEquals(0, vehicleDetailsRepository.count());
 		
-		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
 		
-		VehicleDetailsDTO savedEntityOther=vehicleDetailsRepository.save(standardVehicleDetailsOther());
+		VehicleDetails savedEntityOther=vehicleDetailsRepository.save(standardVehicleDetailsOther());
 		
-		List<VehicleDetailsDTO> vehicleList=vehicleDetailsRepository.getVehiclesByVendorId(standardVehicleDetails().getVendorId());
+		List<VehicleDetails> vehicleList=vehicleDetailsRepository.getVehiclesByVendorId(standardVehicleDetails().getVendorId());
 		
 		assertEquals(2, vehicleList.size());
 		
@@ -112,7 +112,7 @@ public class VehicleDetailsRepositoryTest {
 	{
 		assertEquals(0, vehicleDetailsRepository.count());
 		
-		VehicleDetailsDTO savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		assertEquals(savedEntity, vehicleDetailsRepository.findByRegistrationNumber(savedEntity.getRegistrationNumber()));
 		

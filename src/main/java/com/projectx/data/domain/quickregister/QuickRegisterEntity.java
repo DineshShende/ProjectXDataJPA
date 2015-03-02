@@ -16,8 +16,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.util.annotation.Pincode;
+import com.projectx.data.util.annotation.QuickRegisterEntityValid;
 import com.projectx.data.util.serializer.*;
 
+@QuickRegisterEntityValid
 @Entity
 @Table(name="QUICKREGISTERENTITY")
 public class QuickRegisterEntity {

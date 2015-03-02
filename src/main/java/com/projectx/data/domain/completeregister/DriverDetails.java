@@ -11,11 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
+
 
 @Entity
 @Table(name="DRIVERDETAILS")
@@ -25,18 +27,21 @@ public class DriverDetails {
 	@Column(name="DRIVERID")
 	private Long driverId;
 	
+	@NotNull
 	@Column(name="FIRSTNAME")
 	private String firstName;
 	
 	@Column(name="MIDDLENAME")
 	private String middleName;
 	
+	@NotNull
 	@Column(name="LASTNAME")
 	private String lastName;
 	
 	@Column(name="DATEOFBIRTH")
 	private Date dateOfBirth;
 	
+	@NotNull
 	@Column(name="BLOODGROUP")
 	private String bloodGroup;
 	
@@ -50,28 +55,35 @@ public class DriverDetails {
 	@Column(name="ISMOBILEVERIFIED")
 	private Boolean isMobileVerified;
 	
+	@NotNull
 	@Column(name="HOMECONTACTNUMBER")
 	private Long homeContactNumber;
+	
 	
 	@Column(name="LICENCENUMBER",unique=true)
 	private String licenceNumber;
 	
+	
 	@Column(name="DRIVINGSINCE")
 	private Date drivingSince;
+	
 	
 	@Column(name="EMPLOYEDSINCE")
 	private Date employedSince;
 	
+	@NotNull
 	@Column(name="ISFREIGHTREQUESTPERMISSIONGIVEN")
 	private Boolean isFreightRequestPermissionGiven;
 	
+	@NotNull
 	@Column(name="ISDEALFINALIZATIONPERMISSIONGIVEN")
 	private Boolean isDealFinalizationPermissionGiven;
 
+	@NotNull
 	@Column(name="LANGUAGE")
 	private String language;
 	
-	
+	@NotNull
 	@Column(name="VENDERID")
 	private Long vendorId;
 	

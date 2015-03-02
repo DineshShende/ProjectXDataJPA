@@ -26,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.completeregister.VehicleBrandDetails;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
@@ -89,7 +89,7 @@ public class FreightRequestByVendorControllerWACTest {
 	public void save() throws Exception
 	{
 		
-		VehicleDetailsDTO vehicleBrandDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails vehicleBrandDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		
 		this.mockMvc.perform(
@@ -98,7 +98,7 @@ public class FreightRequestByVendorControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            .andExpect(jsonPath("$.vehicleRegistrationNumber").value(standardTestRequest().getVehicleDetailsId().getRegistrationNumber()))
 	            .andExpect(jsonPath("$.source").value(standardTestRequest().getSource()))
 	            .andExpect(jsonPath("$.destination").value(standardTestRequest().getDestination()))

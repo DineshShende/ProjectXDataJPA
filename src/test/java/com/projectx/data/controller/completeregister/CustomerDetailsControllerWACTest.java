@@ -46,7 +46,6 @@ public class CustomerDetailsControllerWACTest {
 	
 	}
 
-
 	@Test
 	public void environmentTest() {
 		
@@ -77,6 +76,68 @@ public class CustomerDetailsControllerWACTest {
 	            .andExpect(jsonPath("$.updatedBy").value(standardCustomerDetailsCopiedFromQuickRegisterEntity().getUpdatedBy()))
 	            .andExpect(jsonPath("$.insertTime").exists())
 	            .andExpect(jsonPath("$.updateTime").exists());		
+	            
+	            
+		
+	}
+	
+	
+	@Test
+	public void saveCustomerDetailsCopiedFromQuickRegisterEntityError() throws Exception
+	{
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsCopiedFromQuickRegisterEntityError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	          //  .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	            
+	            
+		
+	}
+	
+	@Test
+	public void saveCustomerDetailsCopiedFromQuickRegisterEntityErrorAlreadyReported() throws Exception
+	{
+		
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsCopiedFromQuickRegisterEntity()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	          ;
+	           
+		this.mockMvc.perform(
+				get("/customer/completeregister/count")
+				);
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsCopiedFromQuickRegisterEntityNew()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	          .andExpect(status().isAlreadyReported());        
+		
+	}
+	
+	@Test
+	public void saveCustomerDetailsCopiedFromQuickRegisterEntityErrorWithFirstNameNull() throws Exception
+	{
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsCopiedFromQuickRegisterEntityFirstNull()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	          //  .andDo(print())
+	            .andExpect(status().isNotAcceptable());
 	            
 	            
 		

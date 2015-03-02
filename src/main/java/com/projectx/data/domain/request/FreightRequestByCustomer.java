@@ -8,13 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.annotation.FreightRequestByCustomerValid;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
 
+@FreightRequestByCustomerValid
 @Entity
 @Table(name="FREIGHTREQUESTBYCUSTOMER")
 public class FreightRequestByCustomer {
@@ -23,17 +26,22 @@ public class FreightRequestByCustomer {
 	@Column(name="REQUESTID")
 	private Long requestId;
 	
+	@NotNull
 	@Column(name="SOURCE")
 	private Integer source;
 	
+	@NotNull
 	@Column(name="DESTINATION")
 	private Integer destination;
 	
+	@NotNull
 	@Column(name="PICKUPDATE")
 	private Date pickupDate;
 	
+	@NotNull
 	@Column(name="NOOFVEHICLES")
 	private Integer noOfVehicles;
+	
 	
 	@Column(name="ISFULLTRUCKLOAD")
 	private Boolean isFullTruckLoad;
@@ -77,6 +85,7 @@ public class FreightRequestByCustomer {
 	@Column(name="PICKUPTIME")
 	private  String pickupTime;
 
+	@NotNull
 	@Column(name="CUSTOMERID")
 	private Long customerId;
 	

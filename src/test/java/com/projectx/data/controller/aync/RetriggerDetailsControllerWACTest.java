@@ -70,7 +70,7 @@ public class RetriggerDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            .andExpect(jsonPath("$.service").value(standardRetriggerDetails().getService()))
 	            .andExpect(jsonPath("$.data").value(standardRetriggerDetails().getData()));
 

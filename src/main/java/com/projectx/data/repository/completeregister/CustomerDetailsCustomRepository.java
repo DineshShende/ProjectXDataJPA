@@ -19,7 +19,7 @@ import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepos
 import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
 
 @Repository
-@Profile(value="Prod")
+@Profile(value={"Test","Dev","Prod"})
 public class CustomerDetailsCustomRepository {
 	
 	@Autowired
@@ -44,19 +44,19 @@ public class CustomerDetailsCustomRepository {
 	}
 	
 	
-	public Integer updateMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status)
+	public Integer updateMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status,String updatedBy)
 	{
-		return customerDetailsRepository.updateMobileAndMobileVerificationStatus(customerId, mobile, status);
+		return customerDetailsRepository.updateMobileAndMobileVerificationStatus(customerId, mobile, status,new Date(),updatedBy);
 	}
 	
-	public Integer updateSecondaryMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status)
+	public Integer updateSecondaryMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status,String updatedBy)
 	{
-		return customerDetailsRepository.updateSecMobileAndSecMobileVerificationStatus(customerId, mobile, status);
+		return customerDetailsRepository.updateSecMobileAndSecMobileVerificationStatus(customerId, mobile, status,new Date(),updatedBy);
 	}
 	
-	public Integer updateEmailAndVerificationStatusInMainEntity(Long customerId,String email,Boolean status)
+	public Integer updateEmailAndVerificationStatusInMainEntity(Long customerId,String email,Boolean status,String updatedBy)
 	{
-		return customerDetailsRepository.updateEmailAndMEmailVerificationStatus(customerId, email, status);
+		return customerDetailsRepository.updateEmailAndMEmailVerificationStatus(customerId, email, status,new Date(),updatedBy);
 	}
 	
 	public Long count()

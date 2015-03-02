@@ -1,7 +1,12 @@
 package com.projectx.rest.domain.quickregister;
 
+
+
+
+
 public class EmailDTO {
 
+	
 	private String email;
 
 	public EmailDTO() {

@@ -1,5 +1,7 @@
 package com.projectx.data.repository.completeregister;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,14 +18,18 @@ public interface VendorDetailsRepositoty extends CrudRepository<VendorDetails, L
 
 	@Transactional
 	@Modifying
-	@Query(value="update vendordetails set mobile=:mobile,ismobileverified=:isMobileVerified where vendorid=:vendorId",nativeQuery=true)
-	Integer updateIsMobileVerified(@Param("vendorId")Long vendorId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified);
+	@Query(value="update vendordetails set mobile=:mobile,ismobileverified=:isMobileVerified,"
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy where vendorid=:vendorId",nativeQuery=true)
+	Integer updateIsMobileVerified(@Param("vendorId")Long vendorId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified,
+			@Param("updateTime") Date updateTime,@Param("updatedBy") String updatedBy);
 	
 	
 	@Transactional
 	@Modifying
-	@Query(value="update vendordetails set email=:email,isemailverified=:isEmailVerified where vendorid=:vendorId",nativeQuery=true)
-	Integer updateIsEmailVerified(@Param("vendorId")Long vendorId,@Param("email")String email,@Param("isEmailVerified")Boolean isEmailVerified);
+	@Query(value="update vendordetails set email=:email,isemailverified=:isEmailVerified,"
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy where vendorid=:vendorId",nativeQuery=true)
+	Integer updateIsEmailVerified(@Param("vendorId")Long vendorId,@Param("email")String email,@Param("isEmailVerified")Boolean isEmailVerified,
+			@Param("updateTime") Date updateTime,@Param("updatedBy") String updatedBy);
 	
 	
 

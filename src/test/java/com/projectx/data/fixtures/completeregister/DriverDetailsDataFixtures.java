@@ -6,7 +6,7 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.DriverDetails;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
 public class DriverDetailsDataFixtures {
 	
@@ -60,6 +60,15 @@ public class DriverDetailsDataFixtures {
 		
 	}
 	
+	public static DriverDetails standardDriverDetailsWithError()
+	{
+		return new DriverDetails(1L, DRIVER_FIRST_NAME, DRIVER_MIDDLE_NAME, null, DRIVER_DATE, DRIVER_BLOOD_GROUP, standardAddress(),
+				DRIVER_MOBILE,DRIVER_BOOLEAN_FALSE, DRIVER_HOME_NUMBER, DRIVER_LICENCE_NUMBER, DRIVER_DATE, DRIVER_DATE, DRIVER_BOOLEAN_FALSE,
+				DRIVER_BOOLEAN_FALSE, DRIVER_LANGUAGE, DRIVER_VENDOR_ID, DRIVER_DATE, DRIVER_DATE, DRIVER_UPDATED_BY);
+		
+		
+	}
+	
 	public static DriverDetails standardDriverDetailsOther()
 	{
 		return new DriverDetails(1L, DRIVER_FIRST_NAME_OTHER, DRIVER_MIDDLE_NAME_OTHER, DRIVER_LAST_NAME_OTHER, DRIVER_DATE, DRIVER_BLOOD_GROUP, standardAddress(),
@@ -87,7 +96,7 @@ public class DriverDetailsDataFixtures {
 	
 	
 	
-	public static String standardUpdateMobileVerificationStatusDTOJson(UpdateMobileVerificationStatusDTO dto)
+	public static String standardUpdateMobileVerificationStatusDTOJson(UpdateMobileVerificationStatusUpdatedByDTO dto)
 	{
 		System.out.println(gson.toJson(dto));
 		

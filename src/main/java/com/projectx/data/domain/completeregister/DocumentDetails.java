@@ -8,11 +8,13 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
+
 
 @Entity
 @Table(name="DOCUMENTDETAILS")
@@ -25,9 +27,11 @@ public class DocumentDetails {
 	@Column(name="DOCUMENT")
 	private byte[] document;
 	
+	@NotNull
 	@Column(name="CONTENETTYPE")
 	private String contentType;
 	
+	@NotNull
 	@Column(name="VERIFICATIONSTATUS")
 	private Integer verificationStatus;
 	

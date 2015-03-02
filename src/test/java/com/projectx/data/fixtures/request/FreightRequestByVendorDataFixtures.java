@@ -5,7 +5,7 @@ import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixt
 import java.util.Date;
 
 import com.google.gson.Gson;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
@@ -13,7 +13,7 @@ import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 public class FreightRequestByVendorDataFixtures {
 	
 	
-public static VehicleDetailsDTO REQ_VEHICLE=standardVehicleDetails();
+public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 	
 	public static Integer REQ_SOURCE=411045;
 	

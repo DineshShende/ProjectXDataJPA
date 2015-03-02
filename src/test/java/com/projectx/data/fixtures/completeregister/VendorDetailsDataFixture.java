@@ -8,8 +8,8 @@ import com.projectx.data.domain.completeregister.VendorDetails;
 import static com.projectx.data.fixtures.completeregister.AddressDataFixture.*;
 
 import com.projectx.data.domain.completeregister.Address;
-import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusDTO;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusUpdatedByDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
 public class VendorDetailsDataFixture {
 
@@ -43,20 +43,26 @@ public class VendorDetailsDataFixture {
 				VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE, VENDOR_DATE, VENDOR_DATE, VENDOR_UPDATEDBY);
 	}
 	
+	public static VendorDetails standardVendorError()
+	{
+		return new VendorDetails(VENDOR_ID, null, VENDER_LASTNAME, VENDOR_DATE, VENDOR_ADDRESS, VENDOR_MOBILE, VENDOR_STATUS_FALSE,
+				VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE, VENDOR_DATE, VENDOR_DATE, VENDOR_UPDATEDBY);
+	}
+	
 	public static VendorDetails standardVendorUpdatedFirstLastName()
 	{
 		return new VendorDetails(VENDOR_ID, "Updated", "Updated", VENDOR_DATE, VENDOR_ADDRESS, VENDOR_MOBILE, VENDOR_STATUS_FALSE,
 				VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE, VENDOR_DATE, VENDOR_DATE, VENDOR_UPDATEDBY);
 	}
 	
-	public static UpdateMobileVerificationStatusDTO standardUpdateMobileVerificationStatusDTO()
+	public static UpdateMobileVerificationStatusUpdatedByDTO standardUpdateMobileVerificationStatusDTO()
 	{
-		return new UpdateMobileVerificationStatusDTO(VENDOR_ID,VENDOR_MOBILE, VENDOR_STATUS_TRUE);
+		return new UpdateMobileVerificationStatusUpdatedByDTO(VENDOR_ID,VENDOR_MOBILE, VENDOR_STATUS_TRUE,VENDOR_UPDATEDBY);
 	}
 	
-	public static UpdateEmailVerificationStatusDTO standardEmailUpdateVerificationStatusDTO()
+	public static UpdateEmailVerificationStatusUpdatedByDTO standardEmailUpdateVerificationStatusDTO()
 	{
-		return new UpdateEmailVerificationStatusDTO(VENDOR_ID,VENDOR_EMAIL, VENDOR_STATUS_TRUE);
+		return new UpdateEmailVerificationStatusUpdatedByDTO(VENDOR_ID,VENDOR_EMAIL, VENDOR_STATUS_TRUE,VENDOR_UPDATEDBY);
 	}
 	
 	public static String standardJsonVendor(VendorDetails vendorDetails)
@@ -66,14 +72,14 @@ public class VendorDetailsDataFixture {
 		return gson.toJson(vendorDetails);
 	}
 	
-	public static String standardJsonUpdateMobileVerificationStatus(UpdateMobileVerificationStatusDTO vendorDetails)
+	public static String standardJsonUpdateMobileVerificationStatus(UpdateMobileVerificationStatusUpdatedByDTO vendorDetails)
 	{
 		System.out.println(gson.toJson(vendorDetails));
 		
 		return gson.toJson(vendorDetails);
 	}
 	
-	public static String standardJsonUpdateEmailVerificationStatus(UpdateEmailVerificationStatusDTO vendorDetails)
+	public static String standardJsonUpdateEmailVerificationStatus(UpdateEmailVerificationStatusUpdatedByDTO vendorDetails)
 	{
 		System.out.println(gson.toJson(vendorDetails));
 		

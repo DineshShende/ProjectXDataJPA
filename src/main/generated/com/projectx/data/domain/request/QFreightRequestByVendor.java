@@ -44,7 +44,7 @@ public class QFreightRequestByVendor extends EntityPathBase<FreightRequestByVend
 
     public final DateTimePath<java.util.Date> updateTime = createDateTime("updateTime", java.util.Date.class);
 
-    public final com.projectx.data.domain.completeregister.QVehicleDetailsDTO vehicleDetailsId;
+    public final com.projectx.data.domain.completeregister.QVehicleDetails vehicleDetailsId;
 
     public final NumberPath<Long> vendorId = createNumber("vendorId", Long.class);
 
@@ -66,7 +66,7 @@ public class QFreightRequestByVendor extends EntityPathBase<FreightRequestByVend
 
     public QFreightRequestByVendor(Class<? extends FreightRequestByVendor> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.vehicleDetailsId = inits.isInitialized("vehicleDetailsId") ? new com.projectx.data.domain.completeregister.QVehicleDetailsDTO(forProperty("vehicleDetailsId"), inits.get("vehicleDetailsId")) : null;
+        this.vehicleDetailsId = inits.isInitialized("vehicleDetailsId") ? new com.projectx.data.domain.completeregister.QVehicleDetails(forProperty("vehicleDetailsId"), inits.get("vehicleDetailsId")) : null;
     }
 
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 
 @Repository
-@Profile(value = { "Test", "Prod" })
+@Profile(value={"Test","Dev","Prod"})
 
 public interface QuickRegisterRepository extends
 		CrudRepository<QuickRegisterEntity,Long > {

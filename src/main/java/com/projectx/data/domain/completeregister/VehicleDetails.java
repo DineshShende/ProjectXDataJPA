@@ -11,27 +11,31 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.annotation.VehicleDetailsValid;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
 
-
+@VehicleDetailsValid
 @Entity
 @Table(name="VEHICLEDETAILS")
-public class VehicleDetailsDTO {
+public class VehicleDetails {
 
 	@Id @GeneratedValue(strategy=GenerationType.AUTO) 
 	@Column(name="VEHICLEID")
 	private Long vehicleId;
 	
+	@NotNull
 	@Column(name="OWNERFIRSTNAME")
 	private String ownerFirstName;
 	
 	@Column(name="OWNERMIDDLENAME")
 	private String ownerMiddleName;
 	
+	@NotNull
 	@Column(name="OWNERLASTNAME")
 	private String ownerLastName;
 	
@@ -44,33 +48,43 @@ public class VehicleDetailsDTO {
 	@JoinColumn(name="VEHICLEBRANDID")
 	private VehicleBrandDetails vehicleBrandId;
 	
+	@NotNull
 	@Column(name="VEHICLEBODYTYPE")
 	private String vehicleBodyType;
 	
+	@NotNull
 	@Column(name="ISBODYTYPEFLEXIBLE")
 	private Boolean isBodyTypeFlexible;
 	
+	@NotNull
 	@Column(name="REGISTRATIONNUMBER",unique=true)
 	private String registrationNumber;
 	
+	@NotNull
 	@Column(name="CHASSISNUMBER",unique=true)
 	private String chassisNumber;
 	
+	@NotNull
 	@Column(name="LOADCAPCITYINTONS")
 	private Integer loadCapacityInTons;
 	
+	@NotNull
 	@Column(name="LENGTH")
 	private Integer length;
 	
+	@NotNull
 	@Column(name="WIDTH")
 	private Integer width;
 	
+	@NotNull
 	@Column(name="HEIGHT")
 	private Integer height;
 	
+	@NotNull
 	@Column(name="NUMBEROFWHEELS")
 	private Integer numberOfWheels;
 	
+	@NotNull
 	@Column(name="PERMITTYPE")
 	private String permitType;
 	
@@ -83,6 +97,7 @@ public class VehicleDetailsDTO {
 	@Column(name="INSURANCECOMPANY")
 	private String insuranceCompany;
 	
+	@NotNull
 	@Column(name="VENDORID")
 	private Long vendorId;
 	
@@ -95,11 +110,11 @@ public class VehicleDetailsDTO {
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 
-	public VehicleDetailsDTO() {
+	public VehicleDetails() {
 
 	}
 
-	public VehicleDetailsDTO(Long vehicleId, String ownerFirstName,
+	public VehicleDetails(Long vehicleId, String ownerFirstName,
 			String ownerMiddleName, String ownerLastName,
 			VehicleTypeDetails vehicleTypeId,
 			VehicleBrandDetails vehicleBrandId, String vehicleBodyType,
@@ -488,7 +503,7 @@ public class VehicleDetailsDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		VehicleDetailsDTO other = (VehicleDetailsDTO) obj;
+		VehicleDetails other = (VehicleDetails) obj;
 		if (chassisNumber == null) {
 			if (other.chassisNumber != null)
 				return false;

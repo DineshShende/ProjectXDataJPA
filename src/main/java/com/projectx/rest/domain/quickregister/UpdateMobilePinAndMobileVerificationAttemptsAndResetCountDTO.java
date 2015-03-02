@@ -10,7 +10,7 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 	private Integer mobilePin;
 	private Integer mobileVerificationAttempts;
 	private Integer resendCount;
-	
+	private String updatedBy;
 	
 	
 	public UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO() {
@@ -20,7 +20,7 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 	public UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO(
 			Long customerId, Integer customerType, Integer mobileType,
 			Integer mobilePin, Integer mobileVerificationAttempts,
-			Integer resendCount) {
+			Integer resendCount, String updatedBy) {
 		super();
 		this.customerId = customerId;
 		this.customerType = customerType;
@@ -28,7 +28,9 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 		this.mobilePin = mobilePin;
 		this.mobileVerificationAttempts = mobileVerificationAttempts;
 		this.resendCount = resendCount;
+		this.updatedBy = updatedBy;
 	}
+
 
 
 
@@ -96,19 +98,31 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 		this.customerType = customerType;
 	}
 
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
 	@Override
 	public String toString() {
 		return "UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO [customerId="
 				+ customerId
 				+ ", customerType="
 				+ customerType
-				+ ", mobile="
+				+ ", mobileType="
 				+ mobileType
 				+ ", mobilePin="
 				+ mobilePin
 				+ ", mobileVerificationAttempts="
 				+ mobileVerificationAttempts
-				+ ", resendCount=" + resendCount + "]";
+				+ ", resendCount="
+				+ resendCount
+				+ ", updatedBy="
+				+ updatedBy
+				+ "]";
 	}
 
 	@Override
@@ -119,15 +133,18 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result
 				+ ((customerType == null) ? 0 : customerType.hashCode());
-		result = prime * result + ((mobileType == null) ? 0 : mobileType.hashCode());
 		result = prime * result
 				+ ((mobilePin == null) ? 0 : mobilePin.hashCode());
+		result = prime * result
+				+ ((mobileType == null) ? 0 : mobileType.hashCode());
 		result = prime
 				* result
 				+ ((mobileVerificationAttempts == null) ? 0
 						: mobileVerificationAttempts.hashCode());
 		result = prime * result
 				+ ((resendCount == null) ? 0 : resendCount.hashCode());
+		result = prime * result
+				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		return result;
 	}
 
@@ -150,15 +167,15 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 				return false;
 		} else if (!customerType.equals(other.customerType))
 			return false;
-		if (mobileType == null) {
-			if (other.mobileType != null)
-				return false;
-		} else if (!mobileType.equals(other.mobileType))
-			return false;
 		if (mobilePin == null) {
 			if (other.mobilePin != null)
 				return false;
 		} else if (!mobilePin.equals(other.mobilePin))
+			return false;
+		if (mobileType == null) {
+			if (other.mobileType != null)
+				return false;
+		} else if (!mobileType.equals(other.mobileType))
 			return false;
 		if (mobileVerificationAttempts == null) {
 			if (other.mobileVerificationAttempts != null)
@@ -171,8 +188,13 @@ public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 				return false;
 		} else if (!resendCount.equals(other.resendCount))
 			return false;
+		if (updatedBy == null) {
+			if (other.updatedBy != null)
+				return false;
+		} else if (!updatedBy.equals(other.updatedBy))
+			return false;
 		return true;
 	}
 
-		
+			
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import com.projectx.data.domain.quickregister.AuthenticationDetails;
 import com.projectx.data.domain.quickregister.AuthenticationDetailsKey;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeUpdatedByDTO;
 import com.projectx.rest.domain.quickregister.LoginVerificationDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailPassword;
@@ -34,6 +35,12 @@ public class AuthenticationDetailsDataFixtures {
 	{
 		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
 		return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
+	}
+	
+	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetailsWithError()
+	{
+		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
+		return new AuthenticationDetails(standardAuthenticationDetailsKey(), null,null, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
 	}
 	
 	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetailsVendor()
@@ -72,14 +79,23 @@ public class AuthenticationDetailsDataFixtures {
 	
 	public static UpdatePasswordEmailPasswordAndPasswordTypeDTO standardUpdatePasswordEmailPasswordTypeWithEmailPass()
 	{
-		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,CUST_EMAILHASH_UPDATED ,CUST_PASSWORD_TYPE_CHANGED);
+		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,CUST_EMAILHASH_UPDATED ,CUST_PASSWORD_TYPE_CHANGED,CUST_UPDATED_BY);
 	}
 
-	public static UpdatePasswordEmailPasswordAndPasswordTypeDTO standardUpdatePasswordEmailPasswordTypeWithPass()
+	public static UpdatePasswordEmailPasswordAndPasswordTypeDTO standardUpdatePasswordEmailPasswordTypeWithEmailPass(Long customerId)
 	{
-		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,null ,CUST_PASSWORD_TYPE_CHANGED);
+		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(customerId,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,CUST_EMAILHASH_UPDATED ,CUST_PASSWORD_TYPE_CHANGED,CUST_UPDATED_BY);
 	}
 	
+	public static UpdatePasswordEmailPasswordAndPasswordTypeDTO standardUpdatePasswordEmailPasswordTypeWithPass()
+	{
+		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,null ,CUST_PASSWORD_TYPE_CHANGED,CUST_UPDATED_BY);
+	}
+	
+	public static UpdatePasswordEmailPasswordAndPasswordTypeDTO standardUpdatePasswordEmailPasswordTypeWithPass(Long customerId)
+	{
+		return new UpdatePasswordEmailPasswordAndPasswordTypeDTO(customerId,CUST_TYPE_CUSTOMER, CUST_PASSWORD_CHANGED,null ,CUST_PASSWORD_TYPE_CHANGED,CUST_UPDATED_BY);
+	}
 	
 	
 	public static LoginVerificationDTO standardLoginVerificationWithEmail()
@@ -106,6 +122,16 @@ public class AuthenticationDetailsDataFixtures {
 	public static CustomerIdTypeDTO standardCustomerIdTypeDTO()
 	{
 		return new CustomerIdTypeDTO(CUST_ID, CUST_TYPE_CUSTOMER);
+	}
+	
+	public static CustomerIdTypeUpdatedByDTO standardCustomerIdTypeUpdatedByDTO()
+	{
+		return new CustomerIdTypeUpdatedByDTO(CUST_ID, CUST_TYPE_CUSTOMER,CUST_UPDATED_BY);
+	}
+	
+	public static CustomerIdTypeUpdatedByDTO standardCustomerIdTypeUpdatedByDTO(Long customerId)
+	{
+		return new CustomerIdTypeUpdatedByDTO(customerId, CUST_TYPE_CUSTOMER,CUST_UPDATED_BY);
 	}
 	
 	public static String standardJsonCustomerAuthenticationDetails(AuthenticationDetails standardCustomer)
@@ -159,6 +185,11 @@ public class AuthenticationDetailsDataFixtures {
 	}
 	
 	public static String standardJsonCustomerIdType(CustomerIdTypeDTO idTypeDTO)
+	{
+		return gson.toJson(idTypeDTO);
+	}
+	
+	public static String standardJsonCustomerIdTypeUpdatedBy(CustomerIdTypeUpdatedByDTO idTypeDTO)
 	{
 		return gson.toJson(idTypeDTO);
 	}

@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeUpdatedByDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO;
 
 
@@ -18,7 +19,7 @@ public class EmailVerificationDetailsDataFixtures {
 	public static Integer CUST_RESEND_COUNT=0;
 	
 	public static Date CUST_DATE=new Date();
-	public static String CUST_UPDATED_BY="CUST_ONLINE";
+	
 
 	public static Gson gson=new Gson();
 	
@@ -28,15 +29,26 @@ public class EmailVerificationDetailsDataFixtures {
 	}
 	
 	
+	public static EmailVerificationDetails standardCustomerEmailVerificationDetailsWithError()
+	{
+		return new EmailVerificationDetails(standardEmailVerificationKey(), null, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+	}
 	
 	public static UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO standardUpdateEmailHashAndEmailHashSentTimeDTO()
 	{
-		return new UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO(CUST_ID, CUST_TYPE_CUSTOMER,CUST_EMAIL_TYPE_PRIMARY, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME,CUST_RESEND_COUNT);
+		return new UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO(CUST_ID, CUST_TYPE_CUSTOMER,CUST_EMAIL_TYPE_PRIMARY, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME,CUST_RESEND_COUNT,CUST_UPDATED_BY);
 	}
 	
 	public static CustomerIdTypeEmailTypeDTO standardCustomerIdTypeEmailDTO()
 	{
 		return new CustomerIdTypeEmailTypeDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_EMAIL_TYPE_PRIMARY);
+	}
+	
+	
+	
+	public static CustomerIdTypeEmailTypeUpdatedByDTO standardCustomerIdTypeEmailTypeUpdatedByDTO()
+	{
+		return new CustomerIdTypeEmailTypeUpdatedByDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_EMAIL_TYPE_PRIMARY,CUST_UPDATED_BY);
 	}
 	
 	public static EmailVerificationKey standardEmailVerificationKey()
@@ -45,18 +57,18 @@ public class EmailVerificationDetailsDataFixtures {
 	}
 
 	
-	public static String standardJsonCustomerEmailVerificationDetails()
+	public static String standardJsonCustomerEmailVerificationDetails(EmailVerificationDetails emailVerificationDetails)
 	{
 			
-		System.out.println(gson.toJson(standardCustomerEmailVerificationDetails()));
 		
-		return gson.toJson(standardCustomerEmailVerificationDetails());
+		
+		return gson.toJson(emailVerificationDetails);
 	}
 	
 	public static String standardJsonCustomerIdTypeEmail()
 	{
 		
-		System.out.println(gson.toJson(standardCustomerIdTypeEmailDTO()));
+		
 		
 		return gson.toJson(standardCustomerIdTypeEmailDTO());
 	}
@@ -68,7 +80,7 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static String standardJsonEmailKey()
 	{
-		System.out.println(gson.toJson(standardCustomerEmailVerificationDetails().getKey()));
+		
 		
 		return gson.toJson(standardCustomerEmailVerificationDetails().getKey());
 	}
@@ -76,7 +88,7 @@ public class EmailVerificationDetailsDataFixtures {
 	public static String standardJsonUpdateEmailHashAndEmailHashSentTimeAndResendCountDTO()
 	{
 				
-		System.out.println(gson.toJson(standardUpdateEmailHashAndEmailHashSentTimeDTO()));
+		
 		
 		return gson.toJson(standardUpdateEmailHashAndEmailHashSentTimeDTO());
 		

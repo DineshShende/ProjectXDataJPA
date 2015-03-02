@@ -1,23 +1,14 @@
 package com.projectx.data.repository.request;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.Join;
 
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 
 import com.mysema.query.jpa.JPQLQuery;
-import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Predicate;
-import com.projectx.data.domain.completeregister.QVehicleBrandDetails;
-import com.projectx.data.domain.completeregister.QVehicleDetailsDTO;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
-import com.projectx.data.domain.request.QFreightRequestByCustomer;
-import com.projectx.data.domain.request.QFreightRequestByVendor;
 import com.projectx.data.domain.request.FreightRequestByVendor;
+import com.projectx.data.domain.request.QFreightRequestByCustomer;
 
 public class FreightRequestByCustomerRepositoryImpl extends
 		QueryDslRepositorySupport implements

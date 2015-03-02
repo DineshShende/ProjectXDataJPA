@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -86,81 +87,6 @@ public class AuthenticationControllerStandAloneTest {
 	}
 	
 	
-	@Test
-	public void updatePasswordAndPasswordTypeAndCountsWithEmailPassword() throws Exception
-	{
-		System.out.println(standardUpdatePasswordEmailPasswordTypeWithEmailPass());
-		
-		when(customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts
-				(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),
-						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getEmailPassword(),
-						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPasswordType(), ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/updatePasswordEmailPasswordAndPasswordTypeAndCounts")
-	                    .content(standardJsonUpdatePasswordEmailPasswordAndPasswordType(standardUpdatePasswordEmailPasswordTypeWithEmailPass()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-		
-	}
-	
-	
-	@Test
-	public void updateEmailPasswordAndPasswordTypeAndCountsWithPass() throws Exception
-	{
-		when(customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts
-				(standardUpdatePasswordEmailPasswordTypeWithPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithPass().getCustomerType(), standardUpdatePasswordEmailPasswordTypeWithPass().getPassword(),
-						standardUpdatePasswordEmailPasswordTypeWithPass().getEmailPassword(),standardUpdatePasswordEmailPasswordTypeWithPass().getPasswordType(), ZERO_COUNT, ZERO_COUNT)).thenReturn(1);
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/updatePasswordEmailPasswordAndPasswordTypeAndCounts")
-	                    .content(standardJsonUpdatePasswordEmailPasswordAndPasswordType(standardUpdatePasswordEmailPasswordTypeWithPass()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-		
-	}
-	
-	
-	@Test
-	public void incrementResendCount() throws Exception
-	{
-		when(customerAuthenticationDetailsRepository.incrementResendCount(standardCustomerId().getCustomerId(),standardCustomerIdTypeDTO().getCustomerType())).thenReturn(1);
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/incrementResendCount")
-	                    .content(standardJsonCustomerIdType(standardCustomerIdTypeDTO()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-		
-	}
-	
-	@Test
-	public void incrementLastUnsucessfullAttempts() throws Exception
-	{
-		when(customerAuthenticationDetailsRepository.incrementLastUnsucessfullAttempts(standardCustomerIdTypeDTO().getCustomerId(),standardCustomerIdTypeDTO().getCustomerType())).thenReturn(1);
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/incrementLastUnsucessfullAttempts")
-	                    .content(standardJsonCustomerIdType(standardCustomerIdTypeDTO()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-		
-	}
+
 	
 }

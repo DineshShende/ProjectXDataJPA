@@ -1,22 +1,32 @@
 package com.projectx.rest.domain.completeregister;
 
-public class UpdateMobileVerificationStatusDTO {
+import javax.validation.constraints.NotNull;
+
+public class UpdateMobileVerificationStatusUpdatedByDTO {
 
 	private Long customerId;
 	
+	@NotNull
 	private Long mobile;
 	
+	@NotNull
 	private Boolean status;
+	
+	@NotNull
+	private String updatedBy;
 
-	public UpdateMobileVerificationStatusDTO() {
+	public UpdateMobileVerificationStatusUpdatedByDTO() {
 
 	}
 
-	public UpdateMobileVerificationStatusDTO(Long customerId, Long mobile,
-			Boolean status) {
+	
+
+	public UpdateMobileVerificationStatusUpdatedByDTO(Long customerId,
+			Long mobile, Boolean status, String updatedBy) {
 		this.customerId = customerId;
 		this.mobile = mobile;
 		this.status = status;
+		this.updatedBy = updatedBy;
 	}
 
 
@@ -47,11 +57,25 @@ public class UpdateMobileVerificationStatusDTO {
 		this.mobile = mobile;
 	}
 
+	
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "UpdateMobileVerificationStatusDTO [customerId=" + customerId
-				+ ", mobile=" + mobile + ", status=" + status + "]";
+		return "UpdateMobileVerificationStatusUpdatedByDTO [customerId="
+				+ customerId + ", mobile=" + mobile + ", status=" + status
+				+ ", updatedBy=" + updatedBy + "]";
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -61,8 +85,12 @@ public class UpdateMobileVerificationStatusDTO {
 				+ ((customerId == null) ? 0 : customerId.hashCode());
 		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result
+				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -72,7 +100,7 @@ public class UpdateMobileVerificationStatusDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UpdateMobileVerificationStatusDTO other = (UpdateMobileVerificationStatusDTO) obj;
+		UpdateMobileVerificationStatusUpdatedByDTO other = (UpdateMobileVerificationStatusUpdatedByDTO) obj;
 		if (customerId == null) {
 			if (other.customerId != null)
 				return false;
@@ -88,10 +116,15 @@ public class UpdateMobileVerificationStatusDTO {
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
+		if (updatedBy == null) {
+			if (other.updatedBy != null)
+				return false;
+		} else if (!updatedBy.equals(other.updatedBy))
+			return false;
 		return true;
 	}
 
-	
+
 	
 	
 }

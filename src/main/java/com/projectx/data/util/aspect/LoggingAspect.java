@@ -24,8 +24,8 @@ public class LoggingAspect {
 	
 	
 	
-	 @Pointcut("within(com.projectx.data.repository.completeregister..*) "
-	 		+ "|| within(com.projectx.data.repository.request..*) || within(com.projectx.data.repository.quickregister..*)")
+	 @Pointcut("within(com.projectx.data.repository.completeregister..*) || within(com.projectx.data.repository.quickregister..*) "
+	 		+ " || within(com.projectx.data.repository.request..*) ")
 	    public void loggingPoincutRespository() {}
 	
 	 

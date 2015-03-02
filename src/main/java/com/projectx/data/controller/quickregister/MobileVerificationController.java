@@ -1,10 +1,15 @@
 package com.projectx.data.controller.quickregister;
 
+import java.util.Date;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +19,7 @@ import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeUpdatedByDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO;
 
@@ -27,16 +32,28 @@ public class MobileVerificationController {
 	
 
 	@RequestMapping(value="/saveMobileVerificationDetails",method=RequestMethod.POST)
-	public MobileVerificationDetails saveMobileVerificationEntity(@RequestBody MobileVerificationDetails mobileVerificationDetails)
+	public ResponseEntity<MobileVerificationDetails> saveMobileVerificationEntity(@Valid @RequestBody MobileVerificationDetails mobileVerificationDetails,
+			BindingResult resultValid)
 	{
-		MobileVerificationDetails savedmobileVerificationDetails=customerMobileVerificationDetailsRepository.save(mobileVerificationDetails);
+		if(resultValid.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		return savedmobileVerificationDetails;
+		ResponseEntity<MobileVerificationDetails> result=null;
+		
+		try{
+			MobileVerificationDetails savedmobileVerificationDetails=customerMobileVerificationDetailsRepository.save(mobileVerificationDetails);
+			result=new ResponseEntity<MobileVerificationDetails>(savedmobileVerificationDetails, HttpStatus.CREATED);
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		return result;
 		
 	}
 	
 	@RequestMapping(value="/getMobileVerificationDetailsByCustomerIdAndMobile",method=RequestMethod.POST)
-	public ResponseEntity<MobileVerificationDetails> getMobileVerificationDetailsByCustomerIdAndMobile(@RequestBody CustomerIdTypeMobileTypeDTO customerIdMobileDTO)
+	public ResponseEntity<MobileVerificationDetails> getMobileVerificationDetailsByCustomerIdAndMobile(@RequestBody CustomerIdTypeMobileTypeUpdatedByDTO customerIdMobileDTO)
 	{
 		ResponseEntity<MobileVerificationDetails> result=null;
 		
@@ -73,45 +90,64 @@ public class MobileVerificationController {
 
 	
 	@RequestMapping(value="/updateMobilePinAndMobileVerificationAttemptsAndResendCount",method=RequestMethod.POST)
-	public Integer updateMobilePinAndMobileVerificationAttemptsAndResendCount
+	public ResponseEntity<Integer> updateMobilePinAndMobileVerificationAttemptsAndResendCount
 			(@RequestBody UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO dto)
 	{
+		ResponseEntity<Integer> result=null;
+		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
 				.updateMobilePinAndMobileVerificationAttemptsAndResendCount(dto.getCustomerId(),dto.getCustomerType(), dto.getMobileType(),
-						dto.getMobilePin(),dto.getMobileVerificationAttempts(),dto.getResendCount());
+						dto.getMobilePin(),dto.getMobileVerificationAttempts(),dto.getResendCount(),new Date(),dto.getUpdatedBy());
 		
-		return updateStatus;
+		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
+		
+		return result;
 		
 	}
 	
 	@RequestMapping(value="/incrementMobileVerificationAttempts",method=RequestMethod.POST)
-	public Integer incrementMobileVerificationAttempts
-			(@RequestBody CustomerIdTypeMobileTypeDTO mobileDTO)
+	public ResponseEntity<Integer> incrementMobileVerificationAttempts
+			(@RequestBody CustomerIdTypeMobileTypeUpdatedByDTO mobileDTO)
 	{
-		Integer updateStatus=customerMobileVerificationDetailsRepository
-				.incrementMobileVerificationAttempts(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(),mobileDTO.getMobileType());
+		ResponseEntity<Integer> result=null;
 		
-		return updateStatus;
+		Integer updateStatus=customerMobileVerificationDetailsRepository
+				.incrementMobileVerificationAttempts(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(),mobileDTO.getMobileType(),new Date(),mobileDTO.getUpdatedBy());
+		
+		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
+		
+		return result;
 		
 	}
 	
 	@RequestMapping(value="/incrementResendCount",method=RequestMethod.POST)
-	public Integer incrementResendCount
-			(@RequestBody CustomerIdTypeMobileTypeDTO mobileDTO)
+	public ResponseEntity<Integer> incrementResendCount
+			(@RequestBody CustomerIdTypeMobileTypeUpdatedByDTO mobileDTO)
 	{
+		ResponseEntity<Integer> result=null;
+		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
-				.incrementResendCount(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(), mobileDTO.getMobileType());
+				.incrementResendCount(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(), mobileDTO.getMobileType(),new Date(),mobileDTO.getUpdatedBy());
 		
-		return updateStatus;
+		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		
+		return result;
 	}
 	
 	@RequestMapping(value="/deleteByKey",method=RequestMethod.POST)
-	public Boolean deleteByKey(@RequestBody MobileVerificationKey key)
+	public ResponseEntity<Boolean> deleteByKey(@RequestBody MobileVerificationKey key)
 	{
-		customerMobileVerificationDetailsRepository.delete(key);
+		ResponseEntity<Boolean> result=null;
 		
-		return true;
+		try{
+			customerMobileVerificationDetailsRepository.delete(key);
+			result=new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+		
+		return result;
 	}
 		
 	@RequestMapping(value="/getCount")

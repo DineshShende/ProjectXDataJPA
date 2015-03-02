@@ -1,8 +1,11 @@
 package com.projectx.data.controller.completeregister;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,11 +26,22 @@ public class DocumentController {
 	
 	
 	@RequestMapping(value="/saveCustomerDocument",method=RequestMethod.POST)
-	public DocumentDetails saveCustomerDocument(@RequestBody DocumentDetails customerDocumet)
+	public ResponseEntity<DocumentDetails> saveCustomerDocument(@Valid @RequestBody DocumentDetails customerDocumet,BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
+		ResponseEntity<DocumentDetails> result=null;
+		
+		
 		DocumentDetails savedEntity= customerDocumentRepository.save(customerDocumet);
 		
-		return savedEntity;
+		if(savedEntity!=null)
+			result=new ResponseEntity<DocumentDetails>(savedEntity, HttpStatus.CREATED);
+		else
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/getCustomerDocumentByKey",method=RequestMethod.POST)
@@ -38,13 +52,9 @@ public class DocumentController {
 		DocumentDetails fetchedEntity= customerDocumentRepository.findOne(documentKey);
 
 		if(fetchedEntity!=null)
-		{
 			result=new ResponseEntity<DocumentDetails>(fetchedEntity, HttpStatus.FOUND);
-		}
 		else
-		{
 			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
 		
 		return result;
 	}

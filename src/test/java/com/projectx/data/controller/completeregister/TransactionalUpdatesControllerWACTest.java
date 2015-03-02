@@ -152,6 +152,19 @@ public class TransactionalUpdatesControllerWACTest {
 	
 	}
 
+	@Test
+	public void updateCustomerDetailsWithError() throws Exception
+	{
+		CustomerDetails savedEnity=customerDetailsCustomRepository.save(standardCustomerDetails());
+		
+		this.mockMvc.perform(
+	            post("/transactional/updateCustomerDetails")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	}
 	
 	@Test
 	public void updateVendorDetails() throws Exception
@@ -188,16 +201,31 @@ public class TransactionalUpdatesControllerWACTest {
 	}
 	
 	@Test
+	public void updateVendorDetailsError() throws Exception
+	{
+		VendorDetails vendorDetails=vendorDetailsCustomRepository.save(standardVendor());
+		
+		this.mockMvc.perform(
+	            post("/transactional/updateVendorDetails")
+	                    .content(standardJsonVendor(standardVendorError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	}
+	
+	@Test
 	public void updateMobileInDetailsEnityAndAuthenticationDetails() throws Exception
 	{
 		this.mockMvc.perform(
 	            post("/transactional/updateMobileInDetailsEnityAndAuthenticationDetails")
-	                    .content(standardJsonCustomerIdTypeMobileTypeDTO())
+	                    .content(standardJsonCustomerIdTypeMobileUpdatedByTypeDTO())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("false"));
+	            
 	    
 	}
 	
@@ -206,12 +234,13 @@ public class TransactionalUpdatesControllerWACTest {
 	{
 		this.mockMvc.perform(
 	            post("/transactional/updateEmailInDetailsEnityAndAuthenticationDetails")
-	                    .content(standardJsonCustomerIdTypeEmailTypeDTO())
+	                    .content(standardJsonCustomerIdTypeMobileUpdatedByTypeDTO())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	            .andExpect(content().string("false"));
+	            
 	    
 	}
 
@@ -277,36 +306,6 @@ public class TransactionalUpdatesControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isAlreadyReported());
-		/*
-	            .andExpect(jsonPath("$.customerQuickRegisterEntity.firstName").doesNotExist())
-	            .andExpect(jsonPath("$.customerQuickRegisterEntity.lastName").doesNotExist())
-	            .andExpect(jsonPath("$.customerQuickRegisterEntity.mobile").doesNotExist())
-	            .andExpect(jsonPath("$.customerQuickRegisterEntity.email").doesNotExist())
-	            .andExpect(jsonPath("$.customerQuickRegisterEntity.pincode").doesNotExist())
-				.andExpect(jsonPath("$.customerQuickRegisterEntity.isEmailVerified").doesNotExist())
-				.andExpect(jsonPath("$.customerQuickRegisterEntity.isMobileVerified").doesNotExist())
-				.andExpect(jsonPath("$.customerQuickRegisterEntity.insertTime").doesNotExist())
-				.andExpect(jsonPath("$.customerQuickRegisterEntity.updateTime").doesNotExist())
-				.andExpect(jsonPath("$.customerQuickRegisterEntity.updatedBy").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.key.customerType").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.key.mobileType").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.mobile").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.mobilePin").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.mobileVerificationAttempts").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.resendCount").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.insertTime").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.updateTime").doesNotExist())
-				 .andExpect(jsonPath("$.customerMobileVerificationDetails.updatedBy").doesNotExist())
-				 .andExpect(jsonPath("$.customerEmailVerificationDetails.key.customerType").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.key.emailType").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.email").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.emailHash").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.emailHashSentTime").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.insertTime").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.updateTime").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.resendCount").doesNotExist())
-		          .andExpect(jsonPath("$.customerEmailVerificationDetails.updatedBy").doesNotExist());
-	      */  
 		
 	}
 	
@@ -414,8 +413,9 @@ public class TransactionalUpdatesControllerWACTest {
 		
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileVendor());
 		
-		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD", "AES",null, null, CUST_MOBILE, null, CUST_EMAIL, null, 
+		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD", "AES",null, null, CUST_MOBILE, false, CUST_EMAIL, false, 
 				null, null, null, null));
+		
 		
 		
 		this.mockMvc.perform(

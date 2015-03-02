@@ -28,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.completeregister.VehicleBrandDetails;
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.repository.completeregister.VehicleBrandDetailsRepositoty;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 
@@ -80,7 +80,7 @@ public class VehicleDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		
@@ -108,13 +108,51 @@ public class VehicleDetailsControllerWACTest {
 	            		
 	}
 	
+	@Test
+	public void saveWithError() throws Exception
+	{
+		vehicleDetailsRepository.deleteAll();
+		
+		
+		this.mockMvc.perform(
+	            post("/vehicle")
+	                    .content((standardVehicleJson(standardVehicleDetailsError())))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	            
+	}
+	
+	@Test
+	public void saveAlreadyReported() throws Exception
+	{
+		vehicleDetailsRepository.deleteAll();
+		
+		
+		this.mockMvc.perform(
+	            post("/vehicle")
+	                    .content((standardVehicleJson(standardVehicleDetails())))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+	    
+		
+		this.mockMvc.perform(
+	            post("/vehicle")
+	                    .content((standardVehicleJson(standardVehicleDetails())))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isAlreadyReported());
+	            
+	}
 
 	@Test
 	public void getById() throws Exception
 	{
 		vehicleDetailsRepository.deleteAll();
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		this.mockMvc.perform(
 	            get("/vehicle/getById/"+vehicleDetails.getVehicleId())
@@ -159,7 +197,7 @@ public class VehicleDetailsControllerWACTest {
 	            .andDo(print())
 	            .andExpect(status().isNoContent());
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		this.mockMvc.perform(
 	            get("/vehicle/getByRegistrationNumber/"+vehicleDetails.getRegistrationNumber())
@@ -199,7 +237,7 @@ public class VehicleDetailsControllerWACTest {
 	{
 		vehicleDetailsRepository.deleteAll();
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		this.mockMvc.perform(
 	            get("/vehicle/deleteById/"+vehicleDetails.getVehicleId())
@@ -217,7 +255,7 @@ public class VehicleDetailsControllerWACTest {
 	{
 		vehicleDetailsRepository.deleteAll();
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		this.mockMvc.perform(
 	            get("/vehicle/clearTestData")
@@ -235,7 +273,7 @@ public class VehicleDetailsControllerWACTest {
 	{
 		vehicleDetailsRepository.deleteAll();
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
 		this.mockMvc.perform(
 	            get("/vehicle/count")
@@ -253,9 +291,9 @@ public class VehicleDetailsControllerWACTest {
 	{
 		vehicleDetailsRepository.deleteAll();
 		
-		VehicleDetailsDTO vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
 		
-		VehicleDetailsDTO vehicleDetailsOther=vehicleDetailsRepository.save(standardVehicleDetailsOther());
+		VehicleDetails vehicleDetailsOther=vehicleDetailsRepository.save(standardVehicleDetailsOther());
 		
 		this.mockMvc.perform(
 	            get("/vehicle/getVehiclesByVendorId/"+vehicleDetails.getVendorId())

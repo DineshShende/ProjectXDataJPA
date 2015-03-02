@@ -3,8 +3,9 @@ package com.projectx.data.service.request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.projectx.data.domain.completeregister.VehicleDetailsDTO;
+import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.domain.request.FreightRequestByVendor;
+import com.projectx.data.exception.request.VehicleDetailsNotFoundException;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 
@@ -20,7 +21,10 @@ public class FreightRequestByVendorHandler implements
 			FreightRequestByVendorDTO freightRequestByVendorDTO) {
 
 
-		VehicleDetailsDTO vehicleDetailsDTO=vehicleDetailsRepository.findByRegistrationNumber(freightRequestByVendorDTO.getVehicleRegistrationNumber());
+		VehicleDetails vehicleDetailsDTO=vehicleDetailsRepository.findByRegistrationNumber(freightRequestByVendorDTO.getVehicleRegistrationNumber());
+		
+		if(vehicleDetailsDTO==null)
+			throw new VehicleDetailsNotFoundException();
 		
 		FreightRequestByVendor testRequest=new FreightRequestByVendor(freightRequestByVendorDTO.getRequestId(), vehicleDetailsDTO,
 				freightRequestByVendorDTO.getSource(),freightRequestByVendorDTO.getDestination(),freightRequestByVendorDTO.getDriverId(),

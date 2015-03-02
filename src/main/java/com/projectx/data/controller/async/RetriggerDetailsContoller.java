@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +24,15 @@ public class RetriggerDetailsContoller {
 	RetriggerDetailsRepository retriggerDetailsRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public RetriggerDetails save(@RequestBody RetriggerDetails retriggerDetails )
+	public ResponseEntity<RetriggerDetails> save(@RequestBody RetriggerDetails retriggerDetails )
 	{
 		RetriggerDetails savedEntity=retriggerDetailsRepository.save(retriggerDetails);
 		
-		return savedEntity;
+		return new ResponseEntity<RetriggerDetails>(savedEntity, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/findAll",method=RequestMethod.GET)
-	public List<RetriggerDetails> findAll()
+	public ResponseEntity<List<RetriggerDetails>> findAll()
 	{
 		List<RetriggerDetails> list=new ArrayList<RetriggerDetails>();
 		
@@ -37,14 +40,29 @@ public class RetriggerDetailsContoller {
 		
 		iterator.forEach(e->list.add(e));
 		
-		return list;
+		return new ResponseEntity<List<RetriggerDetails>>(list, HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/deleteById/{retriggerId}",method=RequestMethod.GET)
-	public Boolean deleteById(@PathVariable Long retriggerId)
+	public ResponseEntity<Boolean> deleteById(@PathVariable Long retriggerId)
 	{
+		try{
 		retriggerDetailsRepository.delete(retriggerId);
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}catch(DataIntegrityViolationException e)
+		{
+			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+		
+		
+	}
+	
+	@RequestMapping(value="/clearTestData",method=RequestMethod.GET)
+	public Boolean clearTestData()
+	{
+		retriggerDetailsRepository.deleteAll();
 		
 		return true;
 	}
+	
 }

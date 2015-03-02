@@ -1,5 +1,7 @@
 package com.projectx.data.repository.completeregister;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.projectx.data.domain.completeregister.VendorDetails;
 
 @Component
-@Profile(value={"Test","Prod"})
+@Profile(value={"Test","Prod","Dev"})
 public class VendorDetailsCustomRepository {
 
 	@Autowired
@@ -74,16 +76,16 @@ public class VendorDetailsCustomRepository {
 		return vendorDetailsRepository.findOne(vendorId);
 	}
 	
-	public Integer updateEmailAndVerificationStatus(Long vendorId,String email,Boolean status)
+	public Integer updateEmailAndVerificationStatus(Long vendorId,String email,Boolean status,String updatedBy)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateIsEmailVerified(vendorId,email, status);
+		Integer updateStatus=vendorDetailsRepository.updateIsEmailVerified(vendorId,email, status,new Date(),updatedBy);
 		
 		return updateStatus;
 	}
 	
-	public Integer updateMobileAndVerificationStatus(Long vendorId,Long mobile,Boolean status)
+	public Integer updateMobileAndVerificationStatus(Long vendorId,Long mobile,Boolean status,String updatedBy)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateIsMobileVerified(vendorId,mobile, status);
+		Integer updateStatus=vendorDetailsRepository.updateIsMobileVerified(vendorId,mobile, status,new Date(),updatedBy);
 		
 		return updateStatus;
 	}

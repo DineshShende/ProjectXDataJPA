@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.projectx.data.util.serializer.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,19 +17,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import com.projectx.data.util.annotation.CustomerDetailsValid;
 
 
-
+@CustomerDetailsValid
 @Entity
 @Table(name="CUSTOMERDETAILS")
+
 public class CustomerDetails {
 
 	@Id @Column(name="CUSTOMERID")
 	private Long customerId;
 	
+	@NotNull
 	@Column(name="FIRSTNAME")
 	private String firstName;
 	
+	@NotNull
 	@Column(name="LASTNAME")
 	private String lastName;
 	

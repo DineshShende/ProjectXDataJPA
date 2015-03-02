@@ -1,5 +1,6 @@
 package com.projectx.data.repository.completeregister;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -19,8 +20,10 @@ public interface DriverDetailsRepository extends
 	
 	@Transactional
 	@Modifying
-	@Query(value="update driverdetails set mobile=:mobile,ismobileverified=:isMobileVerified where driverid=:driverId",nativeQuery=true)
-	Integer updateMobileAndMobileVerificationStaus(@Param("driverId")Long driverId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified);
+	@Query(value="update driverdetails set mobile=:mobile,ismobileverified=:isMobileVerified,"
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy where driverid=:driverId",nativeQuery=true)
+	Integer updateMobileAndMobileVerificationStaus(@Param("driverId")Long driverId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified,
+			@Param("updateTime") Date updateTime,@Param("updatedBy") String updatedBy);
 	
 	@Query(value="select * from driverdetails where venderid=:vendorId",nativeQuery=true)
 	List<DriverDetails> getDriverListByVendorId(@Param("vendorId") Long vendorId);

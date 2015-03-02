@@ -1,11 +1,14 @@
 package com.projectx.data.controller.request;
 
-import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +33,23 @@ public class FreightRequestByCustomerController {
 	FreightRequestByVendorService freightRequestByVendorService;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public FreightRequestByCustomer save(@RequestBody FreightRequestByCustomer freightRequestByCustomer)
+	public ResponseEntity<FreightRequestByCustomer> save(@Valid @RequestBody FreightRequestByCustomer freightRequestByCustomer,BindingResult bindingResult)
 	{
-		FreightRequestByCustomer savedEntity=freightRequestByCustomerRepository.save(freightRequestByCustomer);
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		return savedEntity;
+		ResponseEntity<FreightRequestByCustomer> result=null;
+		
+		try{
+			FreightRequestByCustomer savedEntity=freightRequestByCustomerRepository.save(freightRequestByCustomer);
+			result=new ResponseEntity<FreightRequestByCustomer>(savedEntity, HttpStatus.CREATED);
+		}catch(DataIntegrityViolationException e)
+		{
+			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		
+		return result;
 	}
 	
 	@RequestMapping(value="/getById/{requestId}",method=RequestMethod.GET)
@@ -45,23 +60,25 @@ public class FreightRequestByCustomerController {
 		FreightRequestByCustomer fetchedEntity=freightRequestByCustomerRepository.findOne(requestId);
 		
 		if(fetchedEntity==null)
-		{
 			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
 		else
-		{
 			result=new ResponseEntity<FreightRequestByCustomer>(fetchedEntity, HttpStatus.FOUND);
-		}
 		
 		return result;
 	}
 	
 	@RequestMapping(value="/deleteById/{requestId}")
-	public Boolean deleteById(@PathVariable Long requestId)
+	public ResponseEntity<Boolean> deleteById(@PathVariable Long requestId)
 	{
-		freightRequestByCustomerRepository.delete(requestId);
 		
-		return true;
+		try{
+			freightRequestByCustomerRepository.delete(requestId);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		}catch(DataIntegrityViolationException e)
+		{
+			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+		}
+		
 	}
 	
 	@RequestMapping(value="/clearTestData")
@@ -82,37 +99,23 @@ public class FreightRequestByCustomerController {
 	}
 	
 	@RequestMapping(value="/findByCustomer/{customerId}")
-	public List<FreightRequestByCustomer> findByCustomer(@PathVariable Long customerId)
+	public ResponseEntity<List<FreightRequestByCustomer>> findByCustomer(@PathVariable Long customerId)
 	{
 		List<FreightRequestByCustomer> requestList=freightRequestByCustomerRepository.findByCustomerId(customerId);
 		
-		return requestList;
+		return new ResponseEntity<List<FreightRequestByCustomer>>(requestList, HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/getMatchingCustReqForVendorReq",method=RequestMethod.POST)
-	public List<FreightRequestByCustomer> getMatchingCustReqForVendorReq(@RequestBody FreightRequestByVendorDTO freightRequestByVendor)
+	public ResponseEntity<List<FreightRequestByCustomer>> getMatchingCustReqForVendorReq(@RequestBody FreightRequestByVendorDTO freightRequestByVendor)
 	{
 		FreightRequestByVendor testRequest=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
 		
 		List<FreightRequestByCustomer> resultList=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
 		
-		return resultList;
+		return new ResponseEntity<List<FreightRequestByCustomer>>(resultList, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/test-get-sucess/{id}")
-	public ResponseEntity<FreightRequestByCustomer> test(@PathVariable Long id) throws Exception
-	{
-		FreightRequestByCustomer result=freightRequestByCustomerRepository.findOne(id);
-		
-		
-		ResponseEntity<FreightRequestByCustomer> res;
-		
-		if(result.getRequestId()!=null)
-		      res=new ResponseEntity<FreightRequestByCustomer>(result, HttpStatus.OK);
-		else
-			throw new Exception();	
-		
-		return res;
-	}
+	
 	
 }

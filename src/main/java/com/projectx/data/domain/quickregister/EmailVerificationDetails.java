@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -19,6 +20,7 @@ public class EmailVerificationDetails  {
 	@EmbeddedId
 	private EmailVerificationKey key;
 	
+	@NotNull
 	@Column(name="EMAIL",unique=true)
 	private String email;
 	

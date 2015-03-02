@@ -16,10 +16,12 @@ import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.Address;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
-import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusDTO;
-import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusDTO;
+import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusUpdatedByDTO;
+import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeDTO;
-import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeEmailTypeUpdatedByDTO;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileType;
+import com.projectx.rest.domain.quickregister.CustomerIdTypeMobileTypeUpdatedByDTO;
 
 
 
@@ -62,6 +64,33 @@ public class CustomerDetailsDataFixtures {
 				null, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
 	}
 	
+	public static CustomerDetails standardCustomerDetailsCopiedFromQuickRegisterEntityNew()
+	{
+		return new CustomerDetails(333L, standardEmailMobileCustomer().getFirstName(),
+				standardEmailMobileCustomer().getLastName(), null, null, standardEmailMobileCustomer().getMobile(), 
+				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
+				standardEmailMobileCustomer().getIsEmailVerified(), null, null, null, null, null, null,
+				null, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+	}
+	
+	public static CustomerDetails standardCustomerDetailsCopiedFromQuickRegisterEntityError()
+	{
+		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),
+				standardEmailMobileCustomer().getLastName(), null, null, null, 
+				standardEmailMobileCustomer().getIsEmailVerified(),null,
+				standardEmailMobileCustomer().getIsEmailVerified(), null, null, null, null, null, null,
+				null, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+	}
+	
+	public static CustomerDetails standardCustomerDetailsCopiedFromQuickRegisterEntityFirstNull()
+	{
+		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), null,
+				standardEmailMobileCustomer().getLastName(), null, null, standardEmailMobileCustomer().getMobile(), 
+				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
+				standardEmailMobileCustomer().getIsEmailVerified(), null, null, null, null, null, null,
+				null, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+	}
+	
 	public static CustomerDetails standardCustomerDetailsFirstPart()
 	{
 		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),
@@ -77,6 +106,16 @@ public class CustomerDetailsDataFixtures {
 		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),
 				standardEmailMobileCustomer().getLastName(), CUST_DATE, standardAddress(), standardEmailMobileCustomer().getMobile(), 
 				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
+				standardEmailMobileCustomer().getIsEmailVerified(), CUST_LANG, CUST_BUSINESS_DOMAIN, CUST_NAME_OF_FIRM, standardAddress(),
+				CUST_SEC_MOBILE, null,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+		
+	}
+	
+	public static CustomerDetails standardCustomerDetailsError()
+	{
+		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),
+				standardEmailMobileCustomer().getLastName(), CUST_DATE, standardAddress(), null, 
+				standardEmailMobileCustomer().getIsEmailVerified(),null,
 				standardEmailMobileCustomer().getIsEmailVerified(), CUST_LANG, CUST_BUSINESS_DOMAIN, CUST_NAME_OF_FIRM, standardAddress(),
 				CUST_SEC_MOBILE, null,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
 		
@@ -100,9 +139,9 @@ public class CustomerDetailsDataFixtures {
 				new Date(), new Date(), "CUST_ONLINE"));
 	}
 	
-	public static UpdateMobileVerificationStatusDTO standardMobileVerificationStatusDTO()
+	public static UpdateMobileVerificationStatusUpdatedByDTO standardMobileVerificationStatusDTO()
 	{
-		return new UpdateMobileVerificationStatusDTO(CUST_ID,CUST_MOBILE, true);
+		return new UpdateMobileVerificationStatusUpdatedByDTO(CUST_ID,CUST_MOBILE, true,CUST_UPDATED_BY);
 	}
 	
 	
@@ -158,32 +197,54 @@ public class CustomerDetailsDataFixtures {
 	{
 		return new CustomerIdTypeEmailTypeDTO(CUST_ID, CUST_TYPE_CUSTOMER, 1);
 	}
+	
+	public static CustomerIdTypeEmailTypeUpdatedByDTO standardCustomerIdTypeEmailTypeUpdatedByDTO()
+	{
+		return new CustomerIdTypeEmailTypeUpdatedByDTO(CUST_ID, CUST_TYPE_CUSTOMER, 1,CUST_UPDATED_BY);
+	}
 
 	public static String standardJsonCustomerIdTypeEmailTypeDTO()
 	{
 		return gson.toJson(standardCustomerIdTypeEmailTypeDTO());
 	}
 	
-	public static CustomerIdTypeMobileTypeDTO standardCustomerIdTypeMobileTypeDTO()
+	public static String standardJsonCustomerIdTypeEmailTypeUpdatedByDTO()
 	{
-		return new CustomerIdTypeMobileTypeDTO(CUST_ID, CUST_TYPE_CUSTOMER, 1);
+		return gson.toJson(standardCustomerIdTypeEmailTypeUpdatedByDTO());
+	}
+	
+	public static CustomerIdTypeMobileType standardCustomerIdTypeMobileTypeDTO()
+	{
+		return new CustomerIdTypeMobileType(CUST_ID, CUST_TYPE_CUSTOMER, 1);
+	}
+	
+	public static CustomerIdTypeMobileTypeUpdatedByDTO standardCustomerIdTypeMobileTypeUpdatedDTO()
+	{
+		return new CustomerIdTypeMobileTypeUpdatedByDTO(CUST_ID, CUST_TYPE_CUSTOMER, 1,CUST_UPDATED_BY);
 	}
 
+	
+	
 	public static String standardJsonCustomerIdTypeMobileTypeDTO()
 	{
 		return gson.toJson(standardCustomerIdTypeMobileTypeDTO());
 	}
 	
+	public static String standardJsonCustomerIdTypeMobileUpdatedByTypeDTO()
+	{
+		return gson.toJson(standardCustomerIdTypeMobileTypeUpdatedDTO());
+	}
+	
 	public static String standardJsonUpdateVerificationStatus()
 	{
-		System.out.println(gson.toJson(standardMobileVerificationStatusDTO()));
+		
 		
 		return gson.toJson(standardMobileVerificationStatusDTO());
 	}
 	
-	public static UpdateEmailVerificationStatusDTO standardUpdateEmailVerificationStatusDTO()
+	public static UpdateEmailVerificationStatusUpdatedByDTO standardUpdateEmailVerificationStatusDTO()
 	{
-		return new UpdateEmailVerificationStatusDTO(CUST_ID, CUST_EMAIL, true);
+		return new UpdateEmailVerificationStatusUpdatedByDTO(CUST_ID, CUST_EMAIL, true,CUST_UPDATED_BY);
 	}
 	
 	public static String standardJsonEmailUpdateVerificationStatus()
