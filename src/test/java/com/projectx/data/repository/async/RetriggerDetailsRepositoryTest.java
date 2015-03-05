@@ -1,6 +1,7 @@
 package com.projectx.data.repository.async;
 
 import static org.junit.Assert.*;
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import com.projectx.data.domain.async.RetriggerDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class RetriggerDetailsRepositoryTest {
 
 	@Autowired

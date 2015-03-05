@@ -31,6 +31,7 @@ import com.projectx.data.repository.quickregister.EmailVerificationDetailsReposi
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.*;
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.standardCustomerEmailVerificationDetails;
@@ -48,7 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 //@Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 
 public class TransactionalUpdatesControllerWACTest {
 
@@ -354,8 +355,8 @@ public class TransactionalUpdatesControllerWACTest {
 
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
 		
-		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX", "ASD", null, null, CUST_MOBILE,null, CUST_EMAIL, null, 
-				null, null, null, null, null, null, null, null, null, null));
+		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX", "ASD", null, null, CUST_MOBILE,false, CUST_EMAIL, false, 
+				null, null, null, null, null, null, null, new Date(), new Date(), "CUST_ONLINE"));
 		
 		
 		this.mockMvc.perform(

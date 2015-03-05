@@ -47,6 +47,7 @@ public class QuickRegisterEntity {
 	@NotNull(message="Pincode Should Not be Null")
 	@Pincode(message="Pincode range should be in between 100000 and 999999")
 	private Integer pincode;
+
 	
 	@Column(name="ISEMAILVERIFIED")
 	private Boolean isEmailVerified;
@@ -54,16 +55,20 @@ public class QuickRegisterEntity {
 	
 	@Column(name="ISMOBILEVERIFIED")
 	private Boolean isMobileVerified;
-		
+	
+	@NotNull
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
+	@NotNull
 	@Column(name="INSERTIME")
 	private Date insertTime;
 	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 

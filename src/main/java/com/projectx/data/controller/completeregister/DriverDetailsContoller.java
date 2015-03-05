@@ -1,5 +1,7 @@
 package com.projectx.data.controller.completeregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
+
 import java.util.List;
 
 import javax.validation.Valid;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.completeregister.DriverDetails;
 import com.projectx.data.repository.completeregister.DriverDetailsCustomRepository;
 import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
@@ -23,6 +26,9 @@ import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusU
 @RequestMapping(value="/driver")
 public class DriverDetailsContoller {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	DriverDetailsCustomRepository driverDetailsRepository;
 	
@@ -142,7 +148,8 @@ public class DriverDetailsContoller {
 	@RequestMapping(value="/clearTestData")
 	public Boolean clearTestData()
 	{
-		driverDetailsRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			driverDetailsRepository.deleteAll();
 		
 		return true;
 	}

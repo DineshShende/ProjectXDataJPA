@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +16,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
+import static com.projectx.data.config.Constants.*;
 
 @RestController
 @RequestMapping(value="/vehicle")
+@PropertySource(value="classpath:/application.properties")
 public class VehicleDetailsController {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	VehicleDetailsRepository vehicleDetailsRepository;
 	
@@ -114,7 +121,8 @@ public class VehicleDetailsController {
 	@RequestMapping(value="/clearTestData")
 	public Boolean clearTestData()
 	{
-		vehicleDetailsRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			vehicleDetailsRepository.deleteAll();
 		
 		return true;
 	}

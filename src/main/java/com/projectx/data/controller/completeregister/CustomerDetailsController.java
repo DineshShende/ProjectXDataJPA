@@ -3,6 +3,9 @@ package com.projectx.data.controller.completeregister;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.repository.completeregister.CustomerDetailsCustomRepository;
 import com.projectx.data.repository.completeregister.CustomerDetailsRepository;
@@ -24,11 +28,16 @@ import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
 import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusUpdatedByDTO;
 import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
+import static com.projectx.data.config.Constants.*;
+
 
 @RestController
 @RequestMapping(value="/customer/completeregister")
 public class CustomerDetailsController {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	CustomerDetailsCustomRepository customerDetailsCustomRepository;
 	
@@ -151,7 +160,9 @@ public class CustomerDetailsController {
 	@RequestMapping(value="/clearTestData",method=RequestMethod.GET)
 	public Boolean clearTestData()
 	{
-		customerDetailsCustomRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			customerDetailsCustomRepository.deleteAll();
+		
 		return true;
 	}
 	

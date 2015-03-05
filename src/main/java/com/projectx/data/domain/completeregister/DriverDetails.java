@@ -52,6 +52,7 @@ public class DriverDetails {
 	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	
+	@NotNull
 	@Column(name="ISMOBILEVERIFIED")
 	private Boolean isMobileVerified;
 	
@@ -59,7 +60,7 @@ public class DriverDetails {
 	@Column(name="HOMECONTACTNUMBER")
 	private Long homeContactNumber;
 	
-	
+	@NotNull
 	@Column(name="LICENCENUMBER",unique=true)
 	private String licenceNumber;
 	
@@ -87,12 +88,15 @@ public class DriverDetails {
 	@Column(name="VENDERID")
 	private Long vendorId;
 	
+	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 

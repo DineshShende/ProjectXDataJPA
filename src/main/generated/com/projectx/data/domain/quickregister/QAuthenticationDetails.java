@@ -42,7 +42,7 @@ public class QAuthenticationDetails extends EntityPathBase<AuthenticationDetails
 
     public final StringPath updatedBy = createString("updatedBy");
 
-    public final DateTimePath<java.util.Date> UpdateTime = createDateTime("UpdateTime", java.util.Date.class);
+    public final DateTimePath<java.util.Date> updateTime = createDateTime("updateTime", java.util.Date.class);
 
     public QAuthenticationDetails(String variable) {
         this(AuthenticationDetails.class, forVariable(variable), INITS);

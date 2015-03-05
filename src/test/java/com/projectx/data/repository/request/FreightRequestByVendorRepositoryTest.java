@@ -19,17 +19,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
-
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.*;
 import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFixture.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 
 public class FreightRequestByVendorRepositoryTest {
 

@@ -1,7 +1,8 @@
 package com.projectx.data.controller.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
+
 import java.util.Date;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectx.data.domain.quickregister.EmailVerificationKey;
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
@@ -27,6 +28,9 @@ import com.projectx.rest.domain.quickregister.UpdateMobilePinAndMobileVerificati
 @RequestMapping(value="/customer/quickregister/mobileVerification")
 public class MobileVerificationController {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	MobileVerificationDetailsRepository customerMobileVerificationDetailsRepository;
 	
@@ -91,8 +95,11 @@ public class MobileVerificationController {
 	
 	@RequestMapping(value="/updateMobilePinAndMobileVerificationAttemptsAndResendCount",method=RequestMethod.POST)
 	public ResponseEntity<Integer> updateMobilePinAndMobileVerificationAttemptsAndResendCount
-			(@RequestBody UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO dto)
+			(@Valid @RequestBody UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO dto,BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
@@ -107,8 +114,11 @@ public class MobileVerificationController {
 	
 	@RequestMapping(value="/incrementMobileVerificationAttempts",method=RequestMethod.POST)
 	public ResponseEntity<Integer> incrementMobileVerificationAttempts
-			(@RequestBody CustomerIdTypeMobileTypeUpdatedByDTO mobileDTO)
+			(@Valid @RequestBody CustomerIdTypeMobileTypeUpdatedByDTO mobileDTO,BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
@@ -122,8 +132,11 @@ public class MobileVerificationController {
 	
 	@RequestMapping(value="/incrementResendCount",method=RequestMethod.POST)
 	public ResponseEntity<Integer> incrementResendCount
-			(@RequestBody CustomerIdTypeMobileTypeUpdatedByDTO mobileDTO)
+			(@Valid @RequestBody CustomerIdTypeMobileTypeUpdatedByDTO mobileDTO,BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
@@ -162,18 +175,13 @@ public class MobileVerificationController {
 	@RequestMapping(value="/clearForTesting")
 	public Boolean clearMobileVerificationForTesting()
 	{
-		customerMobileVerificationDetailsRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			customerMobileVerificationDetailsRepository.deleteAll();
 		
 		return true;
 	}
 	
 	//***********************Highly Dangerous***************************************/
 	
-	/*
-	@RequestMapping(value="/test")
-	public MobileVerificationDetails getMobileVerificationDetails()
-	{
-		return new MobileVerificationDetails(new MobileVerificationKey(212L, 1, 1), 9960821869L, 10000, 0, 0, null, null, null);
-	}
-	*/
+	
 }

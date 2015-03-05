@@ -1,17 +1,23 @@
 package com.projectx.rest.domain.quickregister;
 
+import javax.validation.constraints.NotNull;
+
 public class UpdatePasswordEmailPasswordAndPasswordTypeDTO {
 
 	private Long customerId;
 	
 	private Integer customerType;
 	
+	
 	private String password;
+	
 	
 	private String emailPassword;
 	
+	@NotNull
 	private String passwordType;
 	
+	@NotNull
 	private String updatedBy;
 	
 	

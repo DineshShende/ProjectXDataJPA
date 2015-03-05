@@ -1,15 +1,24 @@
 package com.projectx.rest.domain.quickregister;
 
+import javax.validation.constraints.NotNull;
+
 
 public class UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO {
 
+	@NotNull
 	private Long customerId;
+	@NotNull
 	private Integer customerType;
+	@NotNull
 	private Integer mobileType;
 	
 	private Integer mobilePin;
+	
+	@NotNull
 	private Integer mobileVerificationAttempts;
+	@NotNull
 	private Integer resendCount;
+	@NotNull
 	private String updatedBy;
 	
 	

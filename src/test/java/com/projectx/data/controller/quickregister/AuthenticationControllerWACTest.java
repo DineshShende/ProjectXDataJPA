@@ -1,5 +1,6 @@
 package com.projectx.data.controller.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
 import static org.junit.Assert.*;
@@ -37,7 +38,7 @@ import com.projectx.data.repository.quickregister.AuthenticationDetailsRepositor
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 //@Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class AuthenticationControllerWACTest {
 
 	@Autowired

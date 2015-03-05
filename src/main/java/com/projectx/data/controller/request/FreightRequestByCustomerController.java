@@ -15,16 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
 import com.projectx.data.service.request.FreightRequestByVendorService;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 
+import static com.projectx.data.config.Constants.*;
+
 @RestController
 @RequestMapping("/request/freightByRequestCustomer")
 public class FreightRequestByCustomerController {
 
+	@Autowired
+	Constants constants;
 	
 	@Autowired
 	FreightRequestByCustomerRepository freightRequestByCustomerRepository;
@@ -81,22 +86,7 @@ public class FreightRequestByCustomerController {
 		
 	}
 	
-	@RequestMapping(value="/clearTestData")
-	public Boolean clearTestData()
-	{
-		freightRequestByCustomerRepository.deleteAll();
-		
-		return true;
-	}
-	
-	
-	@RequestMapping(value="/count")
-	public Integer count()
-	{
-		Integer count=(int)freightRequestByCustomerRepository.count();
-		
-		return count;
-	}
+
 	
 	@RequestMapping(value="/findByCustomer/{customerId}")
 	public ResponseEntity<List<FreightRequestByCustomer>> findByCustomer(@PathVariable Long customerId)
@@ -116,6 +106,25 @@ public class FreightRequestByCustomerController {
 		return new ResponseEntity<List<FreightRequestByCustomer>>(resultList, HttpStatus.OK);
 	}
 	
+	
+	
+	@RequestMapping(value="/count")
+	public Integer count()
+	{
+		Integer count=(int)freightRequestByCustomerRepository.count();
+		
+		return count;
+	}
+	
+	@RequestMapping(value="/clearTestData")
+	public Boolean clearTestData()
+	{
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			freightRequestByCustomerRepository.deleteAll();
+		
+		return true;
+	}
+
 	
 	
 }

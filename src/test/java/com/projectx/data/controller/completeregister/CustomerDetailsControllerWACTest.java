@@ -1,5 +1,6 @@
 package com.projectx.data.controller.completeregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
@@ -31,7 +32,7 @@ import com.projectx.data.config.Application;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class CustomerDetailsControllerWACTest {
 
 	@Autowired
@@ -339,7 +340,31 @@ public class CustomerDetailsControllerWACTest {
 		
 	}
 
-	
+	@Test
+	public void clearTestData() throws Exception
+	{
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON));
+		
+		
+		this.mockMvc.perform(
+				get("/customer/completeregister/count")
+				)
+				.andExpect(content().string("1"));
+		
+		this.mockMvc.perform(
+				get("/customer/completeregister/clearTestData")
+				);
+		
+		this.mockMvc.perform(
+				get("/customer/completeregister/count")
+				)
+				.andExpect(content().string("0"));
+	 
+	}
 
 }
 

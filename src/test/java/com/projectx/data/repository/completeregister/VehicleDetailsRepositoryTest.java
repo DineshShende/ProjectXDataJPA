@@ -1,6 +1,7 @@
 package com.projectx.data.repository.completeregister;
 
 import static org.junit.Assert.*;
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import com.projectx.data.domain.completeregister.VehicleDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 @Transactional
 public class VehicleDetailsRepositoryTest {
 

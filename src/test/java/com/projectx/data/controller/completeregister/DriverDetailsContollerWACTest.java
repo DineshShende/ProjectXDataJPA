@@ -1,5 +1,6 @@
 package com.projectx.data.controller.completeregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.DriverDetailsDataFixtures.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,7 +39,7 @@ import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusU
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 //@Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class DriverDetailsContollerWACTest {
 
 	@Autowired

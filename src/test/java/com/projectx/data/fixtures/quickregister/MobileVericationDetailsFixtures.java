@@ -87,6 +87,12 @@ public class MobileVericationDetailsFixtures {
 		return gson.toJson(standardCustomerIdMobileDTO());
 	}
 	
+	public static String standardJsonCustomerIdTypeMobileUpdatedBy()
+	{
+		System.out.println(gson.toJson(standardCustomerIdMobileUpdatedByDTO()));
+		return gson.toJson(standardCustomerIdMobileUpdatedByDTO());
+	}
+	
 	public static String standardJsonMobile()
 	{
 		return gson.toJson(new MobileDTO(CUST_MOBILE));

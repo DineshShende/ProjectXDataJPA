@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="RETRIGGERDETAILS")
@@ -16,9 +17,11 @@ public class RetriggerDetails {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long retriggerId;
 	
+	@NotNull
 	@Column(name="SERVICE")
 	private String service;
 	
+	@NotNull
 	@Column(name="DATA")
 	private String data;
 

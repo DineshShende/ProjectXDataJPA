@@ -1,5 +1,6 @@
 package com.projectx.data.repository.completeregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.AddressDataFixture.standardAddress;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
@@ -29,7 +30,7 @@ import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepos
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
-@ActiveProfiles(profiles={"Prod","Test"})
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class CustomerDetailsCustomRepositoryTest {
 
 	@Autowired

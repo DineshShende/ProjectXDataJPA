@@ -1,5 +1,6 @@
 package com.projectx.data.controller.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,7 +31,7 @@ import com.projectx.data.config.Application;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class EmailVerificationControllerWACTest {
 
 	@Autowired
@@ -195,7 +196,7 @@ public class EmailVerificationControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/incrementResendCountByCustomerIdAndEmail")
-	                    .content(standardJsonCustomerIdTypeEmail())
+	                    .content(standardJsonCustomerIdTypeEmailUpdatedBy())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())

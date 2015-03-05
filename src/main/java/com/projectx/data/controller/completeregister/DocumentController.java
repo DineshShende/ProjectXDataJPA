@@ -3,6 +3,7 @@ package com.projectx.data.controller.completeregister;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -11,16 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.completeregister.DocumentDetails;
 import com.projectx.data.domain.completeregister.DocumentKey;
 import com.projectx.data.repository.completeregister.DocumetDetailsRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdDTO;
-
+import static com.projectx.data.config.Constants.*;
 
 @RestController
 @RequestMapping(value="/document")
 public class DocumentController {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	DocumetDetailsRepository customerDocumentRepository;
 	
@@ -68,7 +73,8 @@ public class DocumentController {
 	@RequestMapping(value="/clearTestData",method=RequestMethod.GET)
 	public Boolean clearTestData()
 	{
-		customerDocumentRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			customerDocumentRepository.deleteAll();
 		return true;
 	}
 }

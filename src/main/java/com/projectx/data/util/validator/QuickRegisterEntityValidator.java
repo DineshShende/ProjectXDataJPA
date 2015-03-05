@@ -22,7 +22,8 @@ public class QuickRegisterEntityValidator implements ConstraintValidator<QuickRe
 	@Override
 	public boolean isValid(QuickRegisterEntity value, ConstraintValidatorContext context) {
 		
-		if(value.getMobile()==null && value.getEmail()==null)
+		if((value.getMobile()==null && value.getEmail()==null)||((value.getMobile()!=null && value.getIsMobileVerified()==null)||
+				(value.getEmail()!=null && value.getIsEmailVerified()==null)))
 			return false;
 		else
 			return true;

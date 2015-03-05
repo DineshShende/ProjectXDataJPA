@@ -1,7 +1,8 @@
 package com.projectx.data.controller.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
+
 import java.util.Date;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
@@ -27,6 +29,9 @@ import com.projectx.rest.domain.quickregister.UpdateEmailHashAndEmailHashSentTim
 @RequestMapping(value="/customer/quickregister/emailVerification")
 public class EmailVerificationController {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	EmailVerificationDetailsRepository customerEmailVerificationDetailsRepository;
 	
@@ -92,8 +97,12 @@ public class EmailVerificationController {
 	}
 
 	@RequestMapping(value="/resetEmailHashAndEmailHashSentTime",method=RequestMethod.POST)
-	public ResponseEntity<Integer> resetEmailHashAndEmailHashSentTime(@RequestBody UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO dto)
+	public ResponseEntity<Integer> resetEmailHashAndEmailHashSentTime(@Valid @RequestBody UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO dto,
+			BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
@@ -107,9 +116,13 @@ public class EmailVerificationController {
 	}
 	
 	@RequestMapping(value="/incrementResendCountByCustomerIdAndEmail",method=RequestMethod.POST)
-	public ResponseEntity<Integer> incrementResendCountByCustomerIdAndEmail(@RequestBody CustomerIdTypeEmailTypeUpdatedByDTO customerIdEmailDTO)
+	public ResponseEntity<Integer> incrementResendCountByCustomerIdAndEmail(@Valid @RequestBody CustomerIdTypeEmailTypeUpdatedByDTO customerIdEmailDTO,
+			BindingResult bindingResult)
 	{
 		ResponseEntity<Integer> result=null;
+		
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
 				.incrementResendCountByCustomerIdAndEmail(customerIdEmailDTO.getCustomerId(),customerIdEmailDTO.getCustomerType(), customerIdEmailDTO.getEmailType(),
@@ -151,18 +164,13 @@ public class EmailVerificationController {
 	@RequestMapping(value="/clearForTesting")
 	public Boolean clearEmailVerificationForTesting()
 	{
-		customerEmailVerificationDetailsRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			customerEmailVerificationDetailsRepository.deleteAll();
 		
 		return true;
 	}
 	
 	//***********************Highly Dangerous***************************************/
 	
-	/*
-	@RequestMapping(value="/test")
-	public EmailVerificationDetails getEmailVerificationDetails()
-	{
-		return new EmailVerificationDetails(new EmailVerificationKey(212L,1, 2) , "dineshshe@gmail.com", "skjgwjhsgfjguriueyiryeyriuyeiur", new Date(), 0,new Date(), new Date(), "ME");
-	}
-	*/
+	
 }

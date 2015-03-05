@@ -10,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.projectx.data.util.annotation.Pincode;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
 
@@ -27,31 +29,38 @@ public class Address {
 	@Column(name="ADDRESSID")
 	private Long addressId;
 	
+	@NotNull
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
 	@Column(name="ADDRESSLINE")
 	private String addressLine;
 	
+	@NotNull
 	@Column(name="CITY")
 	private String city;
 	
+	@NotNull
 	@Column(name="DISTRICT")
 	private String district;
 	
+	@NotNull
 	@Column(name="STATE")
 	private String state;
 	
+	@Pincode
 	@Column(name="PINCODE")
 	private Integer pincode;
 
-	
+	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull
 	@Column(name="UPDATEBY")
 	private String updatedBy;
 

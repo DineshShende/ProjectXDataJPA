@@ -1,5 +1,6 @@
 package com.projectx.data.controller.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.standardJsonCustomerEmailVerificationDetails;
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.standardJsonEmailKey;
 import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
@@ -33,7 +34,7 @@ import com.projectx.data.config.Application;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class MobileVerificationControllerWACTest {
 
 	@Autowired
@@ -190,7 +191,7 @@ public class MobileVerificationControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/mobileVerification/incrementMobileVerificationAttempts")
-	                    .content(standardJsonCustomerIdTypeMobile())
+	                    .content(standardJsonCustomerIdTypeMobileUpdatedBy())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())
@@ -215,7 +216,7 @@ public class MobileVerificationControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/mobileVerification/incrementResendCount")
-	                    .content(standardJsonCustomerIdTypeMobile())
+	                    .content(standardJsonCustomerIdTypeMobileUpdatedBy())
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 		        .andDo(print())

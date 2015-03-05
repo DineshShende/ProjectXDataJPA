@@ -21,12 +21,13 @@ import com.projectx.data.domain.quickregister.EmailVerificationDetails;
 import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 @Transactional
 public class EmailVerificationRepositoryTest {
 

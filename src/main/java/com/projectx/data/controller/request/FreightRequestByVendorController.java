@@ -1,7 +1,8 @@
 package com.projectx.data.controller.request;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projectx.data.domain.completeregister.VehicleBrandDetails;
-import com.projectx.data.domain.completeregister.VehicleDetails;
-import com.projectx.data.domain.completeregister.VehicleTypeDetails;
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.exception.request.VehicleDetailsNotFoundException;
@@ -32,6 +31,9 @@ import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
 @RequestMapping("/request/freightRequestByVendor")
 public class FreightRequestByVendorController {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	FreightRequestByVendorRepository testRequestRepository;
 	
@@ -96,22 +98,6 @@ public class FreightRequestByVendorController {
 		
 	}
 	
-	@RequestMapping(value="/clearTestData")
-	public Boolean clearTestData()
-	{
-		testRequestRepository.deleteAll();
-		
-		return true;
-	}
-	
-	
-	@RequestMapping(value="/count")
-	public Integer count()
-	{
-		Integer count=(int)testRequestRepository.count();
-		
-		return count;
-	}
 	
 	@RequestMapping(value="/findByVendorId/{vendorId}")
 	public List<FreightRequestByVendorDTO> findByVendorId(@PathVariable Long vendorId)
@@ -140,5 +126,21 @@ public class FreightRequestByVendorController {
 		return returnList;
 	}
 	
+	@RequestMapping(value="/count")
+	public Integer count()
+	{
+		Integer count=(int)testRequestRepository.count();
+		
+		return count;
+	}
+	
+	@RequestMapping(value="/clearTestData")
+	public Boolean clearTestData()
+	{
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			testRequestRepository.deleteAll();
+		
+		return true;
+	}
 	
 }

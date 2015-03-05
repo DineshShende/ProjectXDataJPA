@@ -30,15 +30,19 @@ public class EmailVerificationDetails  {
 	@Column(name="EMAILHASHSENTTIME")
 	private Date emailHashSentTime;
 	
+	@NotNull
 	@Column(name="RESENDCOUNT")
 	private Integer resendCount;
 	
+	@NotNull
 	@Column(name="INSERTIME")
 	private Date insertTime;
 	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 	

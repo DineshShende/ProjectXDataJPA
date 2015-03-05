@@ -32,9 +32,9 @@ import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 import com.projectx.data.repository.request.FreightRequestByCustomerCustomRepository;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
-
 import com.projectx.data.repository.request.FreightRequestByVendorRepository;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.standardVehicleDetails;
 import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.*;
 import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFixture.*;
@@ -43,8 +43,7 @@ import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFix
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class FreightRequestByVendorControllerWACTest {
 
 	@Autowired

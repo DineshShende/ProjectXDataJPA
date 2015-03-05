@@ -1,11 +1,7 @@
 package com.projectx.data.repository.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.*;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerEmailAuthenticationDetails;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerEmailMobileAuthenticationDetails;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerIdTypeDTO;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardCustomerMobileAuthenticationDetails;
-import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.standardUpdatePasswordEmailPasswordTypeWithEmailPass;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_COUNT_ZERO;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_EMAIL;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.CUST_MOBILE;
@@ -34,7 +30,7 @@ import com.projectx.data.domain.quickregister.AuthenticationDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 @Transactional
 public class AuthenticationDetailsRepositoryTest {
 

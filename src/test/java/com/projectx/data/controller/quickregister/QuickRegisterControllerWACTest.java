@@ -2,18 +2,15 @@ package com.projectx.data.controller.quickregister;
 
 import static org.junit.Assert.*;
 
-
 import javax.transaction.Transactional;
 
 import org.junit.After;
 import org.junit.Before;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
-
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,6 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.AuthenticationDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.quickregister.EmailVerificationDetailsDataFixtures.*;
 import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
@@ -38,7 +36,7 @@ import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class QuickRegisterControllerWACTest {
 
 	@Autowired

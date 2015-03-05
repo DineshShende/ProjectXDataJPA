@@ -1,5 +1,7 @@
 package com.projectx.data.controller.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -11,29 +13,28 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.quickregister.AuthenticationDetails;
 import com.projectx.data.domain.quickregister.AuthenticationDetailsKey;
 import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
-import com.projectx.data.util.validator.AuthenticationDetailsValidator;
-import com.projectx.rest.domain.quickregister.CustomerIdDTO;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeDTO;
 import com.projectx.rest.domain.quickregister.CustomerIdTypeUpdatedByDTO;
 import com.projectx.rest.domain.quickregister.EmailDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
-import com.projectx.rest.domain.quickregister.UpdateEmailPassword;
 import com.projectx.rest.domain.quickregister.UpdatePasswordEmailPasswordAndPasswordTypeDTO;
 
 
 @RestController
 @RequestMapping(value="/customer/quickregister/customerAuthentication")
 public class AuthenticationController {
+
+	@Autowired
+	Constants constants;
 	
 	@Autowired
 	AuthenticationDetailsRepository customerAuthenticationDetailsRepository;
@@ -41,6 +42,8 @@ public class AuthenticationController {
 	@Value("${ZERO_COUNT}")
 	private  Integer ZERO_COUNT;
 
+	
+	
 	
 	@RequestMapping(value="/saveLoginDetails",method=RequestMethod.POST)
 	public ResponseEntity<AuthenticationDetails> saveLoginDetails(@Valid @RequestBody AuthenticationDetails authenticationDetails,BindingResult resultValid)
@@ -111,8 +114,12 @@ public class AuthenticationController {
 	
 	
 	@RequestMapping(value="/updatePasswordEmailPasswordAndPasswordTypeAndCounts",method=RequestMethod.POST)
-	public ResponseEntity<Integer> updatePasswordAndPasswordTypeAndCounts(@RequestBody UpdatePasswordEmailPasswordAndPasswordTypeDTO passwordAndPasswordTypeDTO)
+	public ResponseEntity<Integer> updatePasswordAndPasswordTypeAndCounts(@Valid @RequestBody UpdatePasswordEmailPasswordAndPasswordTypeDTO passwordAndPasswordTypeDTO,
+			BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerAuthenticationDetailsRepository
@@ -126,9 +133,12 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(value="/incrementResendCount",method=RequestMethod.POST)
-	public ResponseEntity<Integer> incrementResendCount(@RequestBody  CustomerIdTypeUpdatedByDTO customerIdDTO)
+	public ResponseEntity<Integer> incrementResendCount(@Valid @RequestBody  CustomerIdTypeUpdatedByDTO customerIdDTO,BindingResult bindingResult)
 	{
 		ResponseEntity<Integer> result=null;
+		
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
 		Integer updateStatus=customerAuthenticationDetailsRepository
 				.incrementResendCount(customerIdDTO.getCustomerId(),customerIdDTO.getCustomerType(),new Date(),customerIdDTO.getUpdatedBy());
@@ -139,8 +149,12 @@ public class AuthenticationController {
 	}
 	
 	@RequestMapping(value="/incrementLastUnsucessfullAttempts",method=RequestMethod.POST)
-	public ResponseEntity<Integer> incrementLastUnsucessfullAttempts(@RequestBody  CustomerIdTypeUpdatedByDTO customerIdDTO)
+	public ResponseEntity<Integer> incrementLastUnsucessfullAttempts(@Valid @RequestBody  CustomerIdTypeUpdatedByDTO customerIdDTO,
+			BindingResult bindingResult)
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerAuthenticationDetailsRepository
@@ -161,7 +175,8 @@ public class AuthenticationController {
 	@RequestMapping(value="/clearForTesting")
 	public Boolean clearLoginDetailsForTesting()
 	{
-		customerAuthenticationDetailsRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			customerAuthenticationDetailsRepository.deleteAll();
 		
 		return true;
 	}

@@ -1,5 +1,6 @@
 package com.projectx.data.controller.completeregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.*;
 import static com.projectx.data.fixtures.completeregister.DocumentDetailsDataFixture.*;
 import static org.junit.Assert.*;
@@ -31,7 +32,7 @@ import com.projectx.data.config.Application;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 
 public class VendorDetailsControllerWACTest {
 

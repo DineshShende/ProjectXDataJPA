@@ -18,7 +18,7 @@ public class AuthenticationDetailsValidator implements ConstraintValidator<Authe
 	@Override
 	public boolean isValid(AuthenticationDetails value, ConstraintValidatorContext context) {
 		
-		if(value.getMobile()==null && value.getEmail()==null)
+		if((value.getMobile()==null && value.getEmail()==null))
 			return false;
 		else
 			return true;

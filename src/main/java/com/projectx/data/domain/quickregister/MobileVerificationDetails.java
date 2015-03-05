@@ -35,21 +35,23 @@ public class MobileVerificationDetails {
 	@Column(name="MOBILEPIN")
 	private Integer mobilePin;
 	
+	@NotNull
 	@Column(name="MOBILEVERIFICATIONATTEMPTS")
 	private Integer mobileVerificationAttempts;
 	
+	@NotNull
 	@Column(name="RESENDCOUNT")
 	private Integer resendCount;
 	
-	
+	@NotNull
 	@Column(name="INSERTIME")
 	private Date insertTime;
 	
-	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 

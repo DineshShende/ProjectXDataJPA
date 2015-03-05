@@ -38,12 +38,15 @@ public class DocumentDetails {
 	@Column(name="VERIFICATIONREMARK")
 	private String verificationRemark;
 	
+	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 

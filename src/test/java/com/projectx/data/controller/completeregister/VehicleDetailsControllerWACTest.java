@@ -1,5 +1,6 @@
 package com.projectx.data.controller.completeregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.standardJsonVendor;
 import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.*;
 import static org.junit.Assert.*;
@@ -35,8 +36,7 @@ import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 
 public class VehicleDetailsControllerWACTest {
 

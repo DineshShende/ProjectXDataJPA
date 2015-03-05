@@ -68,6 +68,9 @@ public class TransactionalUpdatesRepository {
 	@Value("${ZERO_COUNT}")
 	private  Integer ZERO_COUNT;
 	
+	@Value("${PASSWORD_TYPE_DEFAULT}")
+	private String PASSWORD_TYPE_DEFAULT;
+	
 	
 	@Transactional
 	//Will update all changes or none.
@@ -186,7 +189,7 @@ public class TransactionalUpdatesRepository {
 			}
 		
 			AuthenticationDetails authenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(customerDetails.getCustomerId(), ENTITY_TYPE_CUSTOMER),
-					customerDetails.getEmail(), customerDetails.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
+					customerDetails.getEmail(), customerDetails.getMobile(), null, PASSWORD_TYPE_DEFAULT, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), customerDetails.getUpdatedBy());
 			
 			authenticationDetailsRepository.save(authenticationDetails);
 			
@@ -277,7 +280,7 @@ public class TransactionalUpdatesRepository {
 			}
 			
 			AuthenticationDetails authenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR),
-					vendorDetails.getEmail(), vendorDetails.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
+					vendorDetails.getEmail(), vendorDetails.getMobile(), null, PASSWORD_TYPE_DEFAULT, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 			
 			authenticationDetailsRepository.save(authenticationDetails);
 
@@ -387,14 +390,12 @@ public class TransactionalUpdatesRepository {
 					new MobileVerificationDetails(new MobileVerificationKey(savedQuickRegisterEntity.getCustomerId(),savedQuickRegisterEntity.getCustomerType(), ENTITY_TYPE_PRIMARY),
 							savedQuickRegisterEntity.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
 			
-			
 			savedCustomerMobileVerificationDetails=mobileVerificationDetailsRepository.save(newCustomerMobileVerificationDetails);
-
 
 		}
 		
 		AuthenticationDetails customerAuthenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(savedQuickRegisterEntity.getCustomerId(),savedQuickRegisterEntity.getCustomerType()),
-				savedQuickRegisterEntity.getEmail(), savedQuickRegisterEntity.getMobile(), null, null, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
+				savedQuickRegisterEntity.getEmail(), savedQuickRegisterEntity.getMobile(), null, PASSWORD_TYPE_DEFAULT, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
 		
 		
 		authenticationDetailsRepository.save(customerAuthenticationDetails);

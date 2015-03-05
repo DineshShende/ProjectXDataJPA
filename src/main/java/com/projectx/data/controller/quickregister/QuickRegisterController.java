@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdDTO;
@@ -22,10 +23,13 @@ import com.projectx.rest.domain.quickregister.EmailDTO;
 import com.projectx.rest.domain.quickregister.MobileDTO;
 import com.projectx.rest.domain.quickregister.UpdateEmailMobileVerificationStatus;
 
-
+import static com.projectx.data.config.Constants.*;
 @RestController
 @RequestMapping(value="/customer/quickregister")
 public class QuickRegisterController {
+
+	@Autowired
+	Constants constants;
 	
 	@Autowired
 	QuickRegisterRepository customerQuickRegisterRepository;
@@ -127,8 +131,12 @@ public class QuickRegisterController {
 	
 	
 	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
-	public ResponseEntity<Integer> updateEmailVerificationStatus(@RequestBody UpdateEmailMobileVerificationStatus updateStatus) throws InterruptedException
+	public ResponseEntity<Integer> updateEmailVerificationStatus(@Valid @RequestBody UpdateEmailMobileVerificationStatus updateStatus,
+			BindingResult bindingResult) throws InterruptedException
 	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
 		ResponseEntity<Integer> result=null;
 		
 		Integer status=customerQuickRegisterRepository.updateEmailVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
@@ -142,9 +150,9 @@ public class QuickRegisterController {
 	@RequestMapping(value="/clearForTesting",method=RequestMethod.GET)
 	public Boolean clearTableForTesting()
 	{
-		//System.out.println("Here");
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
 		 customerQuickRegisterRepository.deleteAll();
-		//System.out.println(customerQuickRegisterRepository.count()); 
+ 
 		 
 		 return true;
 	}

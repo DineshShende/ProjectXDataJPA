@@ -92,14 +92,15 @@ public class FreightRequestByCustomer {
 	@Column(name="STATUS")
 	private String status;
 	
+	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 	

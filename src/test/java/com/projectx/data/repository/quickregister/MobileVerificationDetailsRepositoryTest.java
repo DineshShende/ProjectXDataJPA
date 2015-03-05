@@ -18,12 +18,13 @@ import com.projectx.data.config.Application;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 @Transactional
 public class MobileVerificationDetailsRepositoryTest {
 

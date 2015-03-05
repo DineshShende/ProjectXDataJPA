@@ -67,10 +67,12 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static String standardJsonCustomerIdTypeEmail()
 	{
-		
-		
-		
 		return gson.toJson(standardCustomerIdTypeEmailDTO());
+	}
+	
+	public static String standardJsonCustomerIdTypeEmailUpdatedBy()
+	{
+		return gson.toJson(standardCustomerIdTypeEmailTypeUpdatedByDTO());
 	}
 	
 	public static String standardJsonEmail()

@@ -1,5 +1,6 @@
 package com.projectx.data.repository.quickregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
@@ -19,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 
 
 
@@ -36,7 +39,7 @@ import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@Profile("Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 @Transactional
 public class QuickRegisterRespositoryTest {
 
@@ -135,7 +138,7 @@ public class QuickRegisterRespositoryTest {
                         hasProperty("mobile",nullValue()),
                         hasProperty("pincode",is(standardEmailMobileCustomer().getPincode())),
                         hasProperty("isEmailVerified",is(standardEmailMobileCustomer().getIsEmailVerified())),
-                        hasProperty("isMobileVerified",nullValue()),
+                        hasProperty("isMobileVerified",is(standardEmailMobileCustomer().getIsMobileVerified())),
                         hasProperty("insertTime",is(standardEmailMobileCustomer().getInsertTime())),
                         hasProperty("updateTime",is(standardEmailMobileCustomer().getUpdateTime())),
                         hasProperty("updatedBy",is(standardEmailMobileCustomer().getUpdatedBy()))
@@ -180,7 +183,7 @@ public class QuickRegisterRespositoryTest {
                         hasProperty("email", nullValue() ),
                         hasProperty("mobile",is(standardEmailMobileCustomer().getMobile())),
                         hasProperty("pincode",is(standardEmailMobileCustomer().getPincode())),
-                        hasProperty("isEmailVerified",nullValue()),
+                        hasProperty("isEmailVerified",is(standardEmailMobileCustomer().getIsEmailVerified())),
                         hasProperty("isMobileVerified",is(standardEmailMobileCustomer().getIsMobileVerified())),
                         hasProperty("insertTime",is(standardEmailMobileCustomer().getInsertTime())),
                         hasProperty("updateTime",is(standardEmailMobileCustomer().getUpdateTime())),

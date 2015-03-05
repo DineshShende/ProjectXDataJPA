@@ -1,6 +1,7 @@
 package com.projectx.data.repository.completeregister;
 
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.CUST_MOBILE_NEW;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.CUST_MOBILE_SEC_NEW;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.CUST_SEC_MOBILE;
@@ -58,7 +59,7 @@ import com.projectx.rest.domain.quickregister.CustomerQuickRegisterEmailMobileVe
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
-@ActiveProfiles(profiles={"Prod","Test"})
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class TransactionalUpdatesRepositoryTest {
 
 	@Autowired
@@ -1088,7 +1089,7 @@ public class TransactionalUpdatesRepositoryTest {
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
 		
 		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX", "ASD", null, null, CUST_MOBILE,null, CUST_EMAIL, null, 
-				null, null, null, null, null, null, null, null, null, null));
+				null, null, null, null, null, null, null, new Date(), new Date(), "CUST_ONLINE"));
 		
 		
 		assertEquals(1,quickRegisterRepository.count());

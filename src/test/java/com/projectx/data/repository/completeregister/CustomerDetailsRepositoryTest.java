@@ -17,12 +17,12 @@ import com.projectx.data.config.Application;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.domain.completeregister.QCustomerDetails;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.CustomerDetailsDataFixtures.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles("Prod")
-
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class CustomerDetailsRepositoryTest {
 
 	

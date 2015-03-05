@@ -33,19 +33,16 @@ public class AuthenticationDetailsDataFixtures {
     
 	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetails()
 	{
-		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
 		return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
 	}
 	
 	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetailsWithError()
 	{
-		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
 		return new AuthenticationDetails(standardAuthenticationDetailsKey(), null,null, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
 	}
 	
 	public static AuthenticationDetails standardCustomerEmailMobileAuthenticationDetailsVendor()
 	{
-		//return new AuthenticationDetails(standardAuthenticationDetailsKey(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO);
 		return new AuthenticationDetails(standardAuthenticationDetailsKeyVendor(), CUST_EMAIL,CUST_MOBILE, CUST_PASSWORD_DEFAULT, CUST_PASSWORD_TYPE_DEFAULT, CUST_EMAILHASH, CUST_COUNT_ZERO, CUST_COUNT_ZERO,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
 	}
 	
@@ -137,50 +134,7 @@ public class AuthenticationDetailsDataFixtures {
 	public static String standardJsonCustomerAuthenticationDetails(AuthenticationDetails standardCustomer)
 	{
 		
-		StringBuilder jsonBuilder=new StringBuilder();
-		
-		jsonBuilder.append("{\"key\":{\"customerId\":"+standardCustomer.getKey().getCustomerId()+",\"customerType\":"+standardCustomer.getKey().getCustomerType()+"},");
-		
-		//{"customerId":212,"customerType":1}
-		
-		if(standardCustomer.getEmail()!=null)
-			jsonBuilder.append("\"email\":\""+standardCustomer.getEmail()+"\",");
-		else
-			jsonBuilder.append("\"email\":"+standardCustomer.getEmail()+",");
-		
-		jsonBuilder.append("\"mobile\":"+standardCustomer.getMobile()+",");
-		
-		if(standardCustomer.getEmailPassword()!=null)	
-			jsonBuilder.append("\"password\":\""+standardCustomer.getPassword()+"\",");
-		else
-			jsonBuilder.append("\"password\":"+standardCustomer.getPassword()+",");
-		
-		if(standardCustomer.getEmailPassword()!=null)
-			jsonBuilder.append("\"emailPassword\":\""+standardCustomer.getEmailPassword()+"\",");
-		else
-			jsonBuilder.append("\"emailPassword\":"+standardCustomer.getEmailPassword()+",");
-		
-		jsonBuilder.append("\"lastUnsucessfullAttempts\":"+standardCustomer.getLastUnsucessfullAttempts()+",");
-		
-		jsonBuilder.append("\"resendCount\":"+standardCustomer.getResendCount()+",");
-		
-		jsonBuilder.append("\"passwordType\":\""+standardCustomer.getPasswordType()+"\"}");
-		
-		//jsonBuilder.append("\"insertTime\":"+standardCustomer.getInsertTime().getTime()+",");
-		
-		//jsonBuilder.append("\"updateTime\":"+standardCustomer.getUpdateTime().getTime()+",");
-		
-		//jsonBuilder.append("\"updatedBy\":\""+standardCustomer.getUpdatedBy()+"\"}");
-		
-		System.out.println(jsonBuilder.toString());
-		
-		System.out.println(gson.toJson(standardCustomer));
-		
-		//System.out.println(gson.toJson(standardCustomer));
-		
-		return jsonBuilder.toString();
-			
-		//return gson.toJson(standardCustomer);
+		return gson.toJson(standardCustomer);
 		
 	}
 	

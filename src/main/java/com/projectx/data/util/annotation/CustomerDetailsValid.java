@@ -20,7 +20,7 @@ import com.projectx.data.util.validator.PincodeValidator;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CustomerDetailsValid {
 
-	String message() default "{Email And Mobile Both cann't be NULL}";
+	String message() default "{Email And Mobile Both cann't be NULL OR VerificationStatus Inconsistent}";
     
     Class<?>[] groups() default {};
       

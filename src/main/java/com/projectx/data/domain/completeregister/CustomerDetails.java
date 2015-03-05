@@ -84,12 +84,15 @@ public class CustomerDetails {
 	@Column(name="SECONDARYEMAIL")
 	private String secondaryEmail;
 	
+	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 

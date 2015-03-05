@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -30,16 +31,19 @@ public class FreightRequestByVendor {
 	@JoinColumn(name="VEHICLEDETAILSID")
 	private VehicleDetails vehicleDetailsId;
 	
-	
+
+	@NotNull
 	@Column(name="SOURCE")
 	private Integer source;
 	
+	@NotNull
 	@Column(name="DESTINATION")
 	private Integer destination;
 	
 	@Column(name="DRIVERID")
 	private Long driverId;
 	
+	@NotNull
 	@Column(name="AVAILABLEDATE")
 	private Date availableDate;
 	
@@ -49,18 +53,23 @@ public class FreightRequestByVendor {
 	@Column(name="PICKUPRANGEINKM")
 	private Integer pickupRangeInKm;
 
+	@NotNull
 	@Column(name="VENDORID")
 	private Long vendorId;
 
+	
 	@Column(name="STATUS")
 	private String status;
 	
+	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
+	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 

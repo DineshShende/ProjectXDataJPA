@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -29,27 +30,30 @@ public class AuthenticationDetails  {
 	@Column(name="PASSWORD")
 	private String password;
 	
+	@NotNull
 	@Column(name="PASSWORDTYPE")
 	private String passwordType;
 	
 	@Column(name="EMAILPASSWORD")
 	private String emailPassword;
 	
+	@NotNull
 	@Column(name="RESENDCOUNT")
 	private Integer resendCount;
 	
+	@NotNull
 	@Column(name="LASTUNSUCESSFULLATTEMPTS")
 	private Integer lastUnsucessfullAttempts;
 
-	
+	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	
+	@NotNull
 	@Column(name="UPDATETIME")
-	private Date UpdateTime;
+	private Date updateTime;
 	
-	
+	@NotNull
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 
@@ -64,7 +68,7 @@ public class AuthenticationDetails  {
 			String emailPassword, Integer resendCount,
 			Integer lastUnsucessfullAttempts, Date insertTime, Date updateTime,
 			String updatedBy) {
-		super();
+
 		this.key = key;
 		this.email = email;
 		this.mobile = mobile;
@@ -74,7 +78,7 @@ public class AuthenticationDetails  {
 		this.resendCount = resendCount;
 		this.lastUnsucessfullAttempts = lastUnsucessfullAttempts;
 		this.insertTime = insertTime;
-		UpdateTime = updateTime;
+		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
 	}
 
@@ -170,12 +174,12 @@ public class AuthenticationDetails  {
 
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getUpdateTime() {
-		return UpdateTime;
+		return updateTime;
 	}
 
 	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setUpdateTime(Date updateTime) {
-		UpdateTime = updateTime;
+		this.updateTime = updateTime;
 	}
 
 
@@ -196,7 +200,7 @@ public class AuthenticationDetails  {
 				+ ", passwordType=" + passwordType + ", emailPassword="
 				+ emailPassword + ", resendCount=" + resendCount
 				+ ", lastUnsucessfullAttempts=" + lastUnsucessfullAttempts
-				+ ", insertTime=" + insertTime + ", UpdateTime=" + UpdateTime
+				+ ", insertTime=" + insertTime + ", updateTime=" + updateTime
 				+ ", updatedBy=" + updatedBy + "]";
 	}
 
@@ -205,8 +209,6 @@ public class AuthenticationDetails  {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((UpdateTime == null) ? 0 : UpdateTime.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((emailPassword == null) ? 0 : emailPassword.hashCode());
@@ -225,6 +227,8 @@ public class AuthenticationDetails  {
 		result = prime * result
 				+ ((resendCount == null) ? 0 : resendCount.hashCode());
 		result = prime * result
+				+ ((updateTime == null) ? 0 : updateTime.hashCode());
+		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		return result;
 	}
@@ -239,11 +243,6 @@ public class AuthenticationDetails  {
 		if (getClass() != obj.getClass())
 			return false;
 		AuthenticationDetails other = (AuthenticationDetails) obj;
-		if (UpdateTime == null) {
-			if (other.UpdateTime != null)
-				return false;
-		} else if (!UpdateTime.equals(other.UpdateTime))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -289,6 +288,11 @@ public class AuthenticationDetails  {
 			if (other.resendCount != null)
 				return false;
 		} else if (!resendCount.equals(other.resendCount))
+			return false;
+		if (updateTime == null) {
+			if (other.updateTime != null)
+				return false;
+		} else if (!updateTime.equals(other.updateTime))
 			return false;
 		if (updatedBy == null) {
 			if (other.updatedBy != null)

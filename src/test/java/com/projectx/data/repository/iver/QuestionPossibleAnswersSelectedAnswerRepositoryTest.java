@@ -1,5 +1,7 @@
 package com.projectx.data.repository.iver;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,7 @@ import com.projectx.data.repository.ivr.QuestionPossibleAnswersSelectedAnswerRep
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes=Application.class)
-@ActiveProfiles(profiles={"Prod","Test"})
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class QuestionPossibleAnswersSelectedAnswerRepositoryTest {
 
 	@Autowired

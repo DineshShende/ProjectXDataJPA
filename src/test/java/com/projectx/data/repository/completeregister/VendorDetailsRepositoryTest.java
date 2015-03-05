@@ -2,8 +2,6 @@ package com.projectx.data.repository.completeregister;
 
 import static org.junit.Assert.*;
 
-
-
 import javax.transaction.Transactional;
 
 import org.junit.Before;
@@ -17,12 +15,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.completeregister.VendorDetails;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.*;
 import static com.projectx.data.fixtures.completeregister.AddressDataFixture.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes={Application.class})
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 @Transactional
 public class VendorDetailsRepositoryTest {
 

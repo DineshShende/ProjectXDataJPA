@@ -1,12 +1,13 @@
 package com.projectx.data.controller.completeregister;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,17 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projectx.data.config.Constants;
 import com.projectx.data.domain.completeregister.VendorDetails;
 import com.projectx.data.repository.completeregister.VendorDetailsCustomRepository;
 import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusUpdatedByDTO;
 import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
-
-@Component
 @RestController
 @RequestMapping(value="/vendor")
 public class VendorDetailsController {
 
+	@Autowired
+	Constants constants;
+	
 	@Autowired
 	VendorDetailsCustomRepository vendorDetailsRepository;
 	
@@ -133,8 +136,9 @@ public class VendorDetailsController {
 	@RequestMapping(value="/clearTestData")
 	public Boolean clearTestData()
 	{
-		Boolean fetchedResult=vendorDetailsRepository.deleteAll();
+		if(!constants.SPRING_PROFILE_ACTIVE.equals(SPRING_PROFILE_PRODUCTION))
+			vendorDetailsRepository.deleteAll();
 		
-		return fetchedResult;
+		return true;
 	}
 }

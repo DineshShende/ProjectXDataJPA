@@ -29,11 +29,13 @@ import com.projectx.data.config.Application;
 import com.projectx.data.domain.async.RetriggerDetails;
 import com.projectx.data.repository.async.RetriggerDetailsRepository;
 
+
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 
 public class RetriggerDetailsControllerWACTest {
 

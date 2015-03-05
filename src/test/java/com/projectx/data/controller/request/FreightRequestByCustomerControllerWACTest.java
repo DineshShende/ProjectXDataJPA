@@ -1,5 +1,6 @@
 package com.projectx.data.controller.request;
 
+import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFixture.*;
 import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.*;
 import static org.junit.Assert.*;
@@ -35,7 +36,7 @@ import com.projectx.data.repository.request.FreightRequestByVendorRepository;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @Transactional
-@ActiveProfiles(value="Prod")
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class FreightRequestByCustomerControllerWACTest {
 
 	@Autowired

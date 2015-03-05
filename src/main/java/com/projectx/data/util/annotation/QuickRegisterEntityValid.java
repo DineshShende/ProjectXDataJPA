@@ -22,7 +22,7 @@ import com.projectx.data.util.validator.QuickRegisterEntityValidator;
 
 public @interface QuickRegisterEntityValid {
 
-	String message() default "{Email And Mobile Both cann't be NULL}";
+	String message() default "{Email And Mobile Both cann't be NULL OR Verification status Inconsistant}";
     
     Class<?>[] groups() default {};
       
