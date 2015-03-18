@@ -36,7 +36,7 @@ public class QuestionPossibleAnswersSelectedAnswerRepositoryTest {
 		possibileAnswer.add("D");
 		
 		QuestionPossibleAnswersSelectedAnswer questionPossibleAnswersSelectedAnswer=
-				new QuestionPossibleAnswersSelectedAnswer("Hi How R U?", possibileAnswer, "A");
+				new QuestionPossibleAnswersSelectedAnswer("Hi How R U?", possibileAnswer, 1);
 		
 		QuestionPossibleAnswersSelectedAnswer savedEntity=questionPossibleAnswersSelectedAnswerRepository
 				.save(questionPossibleAnswersSelectedAnswer);
@@ -45,6 +45,8 @@ public class QuestionPossibleAnswersSelectedAnswerRepositoryTest {
 				.findOne(savedEntity.getQuestionId());
 		
 		System.out.println(fetchedEntity);
+		
+		questionPossibleAnswersSelectedAnswerRepository.delete(savedEntity.getQuestionId());
 		
 	}
 	

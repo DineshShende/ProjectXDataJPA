@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.config.Constants;
+import com.projectx.data.domain.quickregister.MobilePinPasswordDTO;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
 import com.projectx.rest.domain.quickregister.CustomerIdDTO;
@@ -144,6 +145,12 @@ public class QuickRegisterController {
 		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
 		
 		return result;
+	}
+
+	@RequestMapping(value="/getTestData",method=RequestMethod.GET)
+	public ResponseEntity<List<MobilePinPasswordDTO>> getTestData()
+	{
+		return new ResponseEntity<List<MobilePinPasswordDTO>>(customerQuickRegisterRepository.getTestData(), HttpStatus.OK);
 	}
 	
 	//***********************Highly Dangerous***************************************/

@@ -6,9 +6,9 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.VehicleDetails;
-
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
+import com.projectx.rest.domain.request.UpdateReservationStatus;
 
 public class FreightRequestByVendorDataFixtures {
 	
@@ -116,6 +116,16 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 		System.out.println(gson.toJson(freightRequestByVendor));
 		
 		return gson.toJson(freightRequestByVendor);
+	}
+	
+	public static UpdateReservationStatus standardUpdateReservationStatus(Long requestId)
+	{
+		return new UpdateReservationStatus(requestId, "NEW", "BLOCKED", 212L);
+	}
+	
+	public static String standardJsonUpdateReservationStatus(UpdateReservationStatus updateReservationStatus)
+	{
+		return gson.toJson(updateReservationStatus);
 	}
 
 }

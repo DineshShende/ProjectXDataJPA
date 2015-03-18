@@ -154,7 +154,7 @@ public class FreightRequestByVendorRepositoryTest {
 		
 		List<FreightRequestByVendor> matchList=testRequestRepository.getMatchingVendorRequest(freightRequestByCustomer);
 		
-		//assertEquals(1, matchList.size());
+		assertEquals(1, matchList.size());
 	}
 	
 	@Test
@@ -175,5 +175,19 @@ public class FreightRequestByVendorRepositoryTest {
 		//assertEquals(2, matchList.size());
 	}
 	
+	@Test
+	public void updateReservationStatus()
+	{
+		
+		assertEquals(0, testRequestRepository.count());
+		
+		FreightRequestByVendor savedEntity=testRequestRepository.save(standardTestRequest());
+		
+		assertEquals(1, testRequestRepository.count());
+		
+		assertEquals(1, testRequestRepository.updateVerificationStatus(savedEntity.getRequestId(),
+				"NEW", "BLOCKED", 212L).intValue());
+		
+	}
 
 }

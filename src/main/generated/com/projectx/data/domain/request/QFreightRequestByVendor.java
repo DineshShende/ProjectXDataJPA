@@ -36,6 +36,8 @@ public class QFreightRequestByVendor extends EntityPathBase<FreightRequestByVend
 
     public final NumberPath<Long> requestId = createNumber("requestId", Long.class);
 
+    public final NumberPath<Long> reservedBy = createNumber("reservedBy", Long.class);
+
     public final NumberPath<Integer> source = createNumber("source", Integer.class);
 
     public final StringPath status = createString("status");

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,7 @@ import com.projectx.data.exception.request.VehicleDetailsNotFoundException;
 import com.projectx.data.repository.request.FreightRequestByVendorRepository;
 import com.projectx.data.service.request.FreightRequestByVendorService;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
+import com.projectx.rest.domain.request.UpdateReservationStatus;
 
 
 @RestController
@@ -113,6 +115,19 @@ public class FreightRequestByVendorController {
 	}
 	
 	
+	@RequestMapping(value="/updateReservationStatus",method=RequestMethod.POST)
+	public ResponseEntity<Integer> updatereservationStatus(@Valid @RequestBody UpdateReservationStatus updateReservationStatus,
+			BindingResult bindingResult)
+	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
+		Integer result=testRequestRepository.updateVerificationStatus(updateReservationStatus.getFreightRequestByVendorId(),
+				updateReservationStatus.getOldStatus(), updateReservationStatus.getNewStatus(), updateReservationStatus.getFreightRequestByCustomerId());
+		
+		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+	}
+ 	
 	@RequestMapping(value="/getMatchingVendorReqFromCustomerReq",method=RequestMethod.POST)
 	public List<FreightRequestByVendorDTO> getMatchingVendorReqFromCustomerReq(@RequestBody FreightRequestByCustomer freightRequestByCustomer)
 	{

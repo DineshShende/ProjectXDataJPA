@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Profile;
@@ -13,6 +14,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.projectx.data.domain.quickregister.MobilePinPasswordDTO;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 
 @Repository
@@ -34,6 +36,13 @@ public interface QuickRegisterRepository extends
 		 Optional<QuickRegisterEntity> findByMobile(Long mobile);
 		 
 
+		 @Query(value="select m.mobile,m.mobilepin,a.password"+
+				 	" from mobileverificationdetails m,authenticationdetails a "+
+				 	" where m.customerid=a.customerid"+
+				 	" and m.customertype=a.customertype"
+				 	,nativeQuery = true)
+			 
+		 List<MobilePinPasswordDTO> getTestData();
 	 
 		@Transactional
 		 @Modifying

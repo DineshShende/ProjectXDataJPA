@@ -24,6 +24,8 @@ public class QVehicleDetails extends EntityPathBase<VehicleDetails> {
 
     public final StringPath chassisNumber = createString("chassisNumber");
 
+    public final ListPath<String, StringPath> commodityList = this.<String, StringPath>createList("commodityList", String.class, StringPath.class, PathInits.DIRECT2);
+
     public final NumberPath<Integer> height = createNumber("height", Integer.class);
 
     public final DateTimePath<java.util.Date> insertTime = createDateTime("insertTime", java.util.Date.class);

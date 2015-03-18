@@ -22,7 +22,7 @@ public class RetriggerDetails {
 	private String service;
 	
 	@NotNull
-	@Column(name="DATA")
+	@Column(name="DATA",columnDefinition="TEXT")
 	private String data;
 
 	public RetriggerDetails() {

@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
 
 import org.junit.Before;
@@ -34,9 +35,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 
+
+
+
+
 import com.projectx.data.config.Application;
+import com.projectx.data.domain.quickregister.MobilePinPasswordDTO;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
+import com.projectx.data.repository.completeregister.TransactionalUpdatesRepository;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
+import com.projectx.rest.domain.quickregister.CustomerQuickRegisterEmailMobileVerificationEntity;
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
 @ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
@@ -45,6 +53,11 @@ public class QuickRegisterRespositoryTest {
 
 	@Autowired
 	QuickRegisterRepository  customerQuickRegisterRepository;
+	
+	@Autowired
+	TransactionalUpdatesRepository transactionalUpdatesRepository;
+	
+	
 	
 	@PersistenceContext
 	EntityManager entityManager;
@@ -375,6 +388,19 @@ public class QuickRegisterRespositoryTest {
 	//	assertTrue(customer.getIsMobileVerified());
 	}
 	
+	
+	@Test
+	public void getTestData()
+	{
+		CustomerQuickRegisterEmailMobileVerificationEntity savedEntity=transactionalUpdatesRepository.saveNewQuickRegisterEntity(standardEmailMobileCustomer());
+		
+		List<MobilePinPasswordDTO> list=customerQuickRegisterRepository.getTestData();
+	
+		System.out.println(list.get(0));
+		
+		assertEquals(1, list.size());
+		
+	}
 
 	
 	@Test
@@ -391,6 +417,8 @@ public class QuickRegisterRespositoryTest {
 		assertEquals(0, customerQuickRegisterRepository.findAll().size());
 	}
 
+	
+	
 	
 	/*
 	

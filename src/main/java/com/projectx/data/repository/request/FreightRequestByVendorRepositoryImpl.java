@@ -33,7 +33,10 @@ public class FreightRequestByVendorRepositoryImpl extends QueryDslRepositorySupp
 		
 		Predicate destinationPredicate=qTestRequest.destination.eq(freightRequestByCustomer.getDestination());
 		
-		Predicate availableDatePredicate=qTestRequest.availableDate.loe(freightRequestByCustomer.getPickupDate());
+		Predicate availableDatePredicate=qTestRequest.availableDate.between(freightRequestByCustomer.getInsertTime(),
+																					freightRequestByCustomer.getPickupDate());
+				
+				//qTestRequest.availableDate.loe(freightRequestByCustomer.getPickupDate());
 				
 				//before(freightRequestByCustomer.getPickupDate()).or(qTestRequest.availableDate.eq(freightRequestByCustomer.getPickupDate()));
 		

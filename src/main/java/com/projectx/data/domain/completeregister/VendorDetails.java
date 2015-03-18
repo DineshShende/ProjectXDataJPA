@@ -46,14 +46,14 @@ public class VendorDetails {
 	@Column(name="MOBILE",unique=true)
 	private Long mobile;
 	
-	@NotNull
+	
 	@Column(name="ISMOBILEVERIFIED")
 	private Boolean isMobileVerified;
 	
 	@Column(name="EMAIL",unique=true)
 	private String email;
 	
-	@NotNull
+	
 	@Column(name="ISEMAILVERIFIED")
 	private Boolean isEmailVerified;
 	

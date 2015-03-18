@@ -38,7 +38,9 @@ public class FreightRequestByCustomerRepositoryImpl extends
 		Predicate destinationPredicate=qFreightRequestByCustomer.destination.eq(freightRequestByVendor.getDestination());
 		
 		//TODO need discussion
-		Predicate availableDatePredicate=qFreightRequestByCustomer.pickupDate.loe(freightRequestByVendor.getAvailableDate());
+		Predicate availableDatePredicate=qFreightRequestByCustomer.pickupDate.goe(freightRequestByVendor.getAvailableDate());
+		
+		//Predicate startDatePredicate=qFreightRequestByCustomer.insertTime.before(freightRequestByVendor.getAvailableDate());
 		
 		
 		JPQLQuery jpqlQuery=from(qFreightRequestByCustomer)

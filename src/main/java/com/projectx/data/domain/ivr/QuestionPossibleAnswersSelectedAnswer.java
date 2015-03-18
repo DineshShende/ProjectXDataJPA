@@ -30,7 +30,7 @@ public class QuestionPossibleAnswersSelectedAnswer {
 	private List<String> possibleAnswer;
 	
 	@Column(name="SELECTEDANSWER")
-	private String selectedAnswer;
+	private Integer selectedAnswer;
 
 	public QuestionPossibleAnswersSelectedAnswer() {
 
@@ -39,7 +39,7 @@ public class QuestionPossibleAnswersSelectedAnswer {
 	
 	
 	public QuestionPossibleAnswersSelectedAnswer(String question,
-			List<String> possibleAnswer, String selectedAnswer) {
+			List<String> possibleAnswer, Integer selectedAnswer) {
 		super();
 		this.question = question;
 		this.possibleAnswer = possibleAnswer;
@@ -64,11 +64,15 @@ public class QuestionPossibleAnswersSelectedAnswer {
 		this.possibleAnswer = possibleAnswer;
 	}
 
-	public String getSelectedAnswer() {
+
+
+	public Integer getSelectedAnswer() {
 		return selectedAnswer;
 	}
 
-	public void setSelectedAnswer(String selectedAnswer) {
+
+
+	public void setSelectedAnswer(Integer selectedAnswer) {
 		this.selectedAnswer = selectedAnswer;
 	}
 

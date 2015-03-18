@@ -61,6 +61,9 @@ public class FreightRequestByVendor {
 	@Column(name="STATUS")
 	private String status;
 	
+	@Column(name="RESERVEDBY")
+	private Long reservedBy;
+	
 	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;

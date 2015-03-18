@@ -115,7 +115,25 @@ public class FreightRequestByVendorControllerWACTest {
 	
 	}
 	
-
+	@Test
+	public void updateVerificationStatus() throws Exception
+	{
+		
+		FreightRequestByVendor freightRequestByVendor=testRequestRepository.save(standardTestRequest());
+		
+		
+		this.mockMvc.perform(
+	            post("/request/freightRequestByVendor/updateReservationStatus")
+	                    .content(standardJsonUpdateReservationStatus(standardUpdateReservationStatus(freightRequestByVendor.getRequestId())))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(content().string("1"));
+	            
+	}
+	
+	
 	@Test
 	public void getById() throws Exception
 	{

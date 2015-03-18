@@ -1,14 +1,18 @@
 package com.projectx.data.domain.completeregister;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -101,6 +105,11 @@ public class VehicleDetails {
 	@Column(name="VENDORID")
 	private Long vendorId;
 	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@JoinTable(name="COMMODITYLIST",joinColumns=@JoinColumn(name="VEHICLEID"))
+	private List<String> commodityList;
+	
+	
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
@@ -114,6 +123,7 @@ public class VehicleDetails {
 
 	}
 
+
 	public VehicleDetails(Long vehicleId, String ownerFirstName,
 			String ownerMiddleName, String ownerLastName,
 			VehicleTypeDetails vehicleTypeId,
@@ -122,9 +132,9 @@ public class VehicleDetails {
 			String chassisNumber, Integer loadCapacityInTons, Integer length,
 			Integer width, Integer height, Integer numberOfWheels,
 			String permitType, Boolean insuranceStatus, String insuranceNumber,
-			String insuranceCompany, Long vendorId, Date insertTime,
-			Date updateTime, String updatedBy) {
-
+			String insuranceCompany, Long vendorId, List<String> commodityList,
+			Date insertTime, Date updateTime, String updatedBy) {
+		super();
 		this.vehicleId = vehicleId;
 		this.ownerFirstName = ownerFirstName;
 		this.ownerMiddleName = ownerMiddleName;
@@ -145,10 +155,12 @@ public class VehicleDetails {
 		this.insuranceNumber = insuranceNumber;
 		this.insuranceCompany = insuranceCompany;
 		this.vendorId = vendorId;
+		this.commodityList = commodityList;
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
 	}
+
 
 
 
@@ -382,6 +394,18 @@ public class VehicleDetails {
 		this.vendorId = vendorId;
 	}
 
+	
+	
+
+	public List<String> getCommodityList() {
+		return commodityList;
+	}
+
+
+	public void setCommodityList(List<String> commodityList) {
+		this.commodityList = commodityList;
+	}
+
 
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getInsertTime() {
@@ -418,13 +442,14 @@ public class VehicleDetails {
 		this.updatedBy = updatedBy;
 	}
 
+
 	@Override
 	public String toString() {
-		return "VehicleDetailsDTO [vehicleId=" + vehicleId
-				+ ", ownerFirstName=" + ownerFirstName + ", ownerMiddleName="
-				+ ownerMiddleName + ", ownerLastName=" + ownerLastName
-				+ ", vehicleTypeId=" + vehicleTypeId + ", vehicleBrandId="
-				+ vehicleBrandId + ", vehicleBodyType=" + vehicleBodyType
+		return "VehicleDetails [vehicleId=" + vehicleId + ", ownerFirstName="
+				+ ownerFirstName + ", ownerMiddleName=" + ownerMiddleName
+				+ ", ownerLastName=" + ownerLastName + ", vehicleTypeId="
+				+ vehicleTypeId + ", vehicleBrandId=" + vehicleBrandId
+				+ ", vehicleBodyType=" + vehicleBodyType
 				+ ", isBodyTypeFlexible=" + isBodyTypeFlexible
 				+ ", registrationNumber=" + registrationNumber
 				+ ", chassisNumber=" + chassisNumber + ", loadCapacityInTons="
@@ -433,10 +458,11 @@ public class VehicleDetails {
 				+ numberOfWheels + ", permitType=" + permitType
 				+ ", insuranceStatus=" + insuranceStatus + ", insuranceNumber="
 				+ insuranceNumber + ", insuranceCompany=" + insuranceCompany
-				+ ", vendorId=" + vendorId + ", insertTime=" + insertTime
-				+ ", updateTime=" + updateTime + ", updatedBy=" + updatedBy
-				+ "]";
+				+ ", vendorId=" + vendorId + ", commodityList=" + commodityList
+				+ ", insertTime=" + insertTime + ", updateTime=" + updateTime
+				+ ", updatedBy=" + updatedBy + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -444,6 +470,8 @@ public class VehicleDetails {
 		int result = 1;
 		result = prime * result
 				+ ((chassisNumber == null) ? 0 : chassisNumber.hashCode());
+		result = prime * result
+				+ ((commodityList == null) ? 0 : commodityList.hashCode());
 		result = prime * result + ((height == null) ? 0 : height.hashCode());
 		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
@@ -495,6 +523,7 @@ public class VehicleDetails {
 		return result;
 	}
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -508,6 +537,11 @@ public class VehicleDetails {
 			if (other.chassisNumber != null)
 				return false;
 		} else if (!chassisNumber.equals(other.chassisNumber))
+			return false;
+		if (commodityList == null) {
+			if (other.commodityList != null)
+				return false;
+		} else if (!commodityList.equals(other.commodityList))
 			return false;
 		if (height == null) {
 			if (other.height != null)
@@ -622,7 +656,7 @@ public class VehicleDetails {
 		return true;
 	}
 
-
+	
 	
 	
 }

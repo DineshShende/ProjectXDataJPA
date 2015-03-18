@@ -19,7 +19,8 @@ public class VendorDetailsValidator implements ConstraintValidator<VendorDetails
 	@Override
 	public boolean isValid(VendorDetails value, ConstraintValidatorContext context) {
 		
-		if(value.getMobile()==null && value.getEmail()==null)
+		if((value.getMobile()==null && value.getEmail()==null)||((value.getMobile()!=null && value.getIsMobileVerified()==null)||
+				(value.getEmail()!=null && value.getIsEmailVerified()==null)))
 			return false;
 		else
 			return true;
