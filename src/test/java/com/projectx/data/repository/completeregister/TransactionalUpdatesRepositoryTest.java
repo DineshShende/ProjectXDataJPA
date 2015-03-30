@@ -1088,7 +1088,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
 		
-		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX", "ASD", null, null, CUST_MOBILE,null, CUST_EMAIL, null, 
+		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX","A.", "ASD", null, null, CUST_MOBILE,null,null, CUST_EMAIL, null, 
 				null, null, null, null, null, null, null, new Date(), new Date(), "CUST_ONLINE"));
 		
 		
@@ -1154,8 +1154,9 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileVendor());
 		
-		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD", "AES",null, null, CUST_MOBILE, false, CUST_EMAIL, false, 
-				null, null, null, null));
+		
+		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD","A.", "AES",null,null,null, null, CUST_MOBILE,null, false, CUST_EMAIL, false, 
+				null, null, null, null,null,null));
 		
 		
 		assertEquals(1,quickRegisterRepository.count());
@@ -1226,7 +1227,7 @@ public class TransactionalUpdatesRepositoryTest {
 		
 		assertEquals(1, vendorDetailsCustomRepository.count().intValue());
 		
-		assertEquals(1, mobileVerificationDetailsRepository.count());
+		assertEquals(2, mobileVerificationDetailsRepository.count());
 		
 		assertEquals(1, emailVerificationDetailsRepository.count());
 		

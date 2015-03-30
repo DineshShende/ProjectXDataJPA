@@ -57,6 +57,7 @@ public class DriverDetailsContoller {
 				
 	}
 	
+	/*
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public ResponseEntity<DriverDetails> update(@Valid @RequestBody DriverDetails driverDetails,BindingResult bindingResult)
 	{
@@ -81,6 +82,7 @@ public class DriverDetailsContoller {
 		return result;
 				
 	}
+	*/
 	
 	@RequestMapping(value="/updateMobileAndMobileVerificationStatus",method=RequestMethod.POST)
 	public ResponseEntity<Integer> updateMobileAndMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO,BindingResult bindingResult)

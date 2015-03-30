@@ -29,7 +29,7 @@ public class FreightRequestByVendorHandler implements
 		FreightRequestByVendor testRequest=new FreightRequestByVendor(freightRequestByVendorDTO.getRequestId(), vehicleDetailsDTO,
 				freightRequestByVendorDTO.getSource(),freightRequestByVendorDTO.getDestination(),freightRequestByVendorDTO.getDriverId(),
 				freightRequestByVendorDTO.getAvailableDate(),freightRequestByVendorDTO.getAvailableTime(),freightRequestByVendorDTO.getPickupRangeInKm(),
-				freightRequestByVendorDTO.getVendorId(),freightRequestByVendorDTO.getStatus(), freightRequestByVendorDTO.getInsertTime(), 
+				freightRequestByVendorDTO.getVendorId(),freightRequestByVendorDTO.getStatus(),freightRequestByVendorDTO.getReservedBy(), freightRequestByVendorDTO.getInsertTime(), 
 				freightRequestByVendorDTO.getUpdateTime(), freightRequestByVendorDTO.getUpdatedBy());
 		
 		
@@ -39,12 +39,15 @@ public class FreightRequestByVendorHandler implements
 	@Override
 	public FreightRequestByVendorDTO toFreightRequestByVendorDTO(
 			FreightRequestByVendor freightRequestByVendor) {
+		
 
-		FreightRequestByVendorDTO freightRequestByVendorDTO=new FreightRequestByVendorDTO(freightRequestByVendor.getRequestId(),
+
+		FreightRequestByVendorDTO freightRequestByVendorDTO=		
+				new FreightRequestByVendorDTO(freightRequestByVendor.getRequestId(),
 				freightRequestByVendor.getVehicleDetailsId().getRegistrationNumber(), freightRequestByVendor.getSource(),
 				freightRequestByVendor.getDestination(),freightRequestByVendor.getDriverId(),freightRequestByVendor.getAvailableDate(),
 				freightRequestByVendor.getAvailableTime(),freightRequestByVendor.getPickupRangeInKm(),freightRequestByVendor.getVendorId(),
-				freightRequestByVendor.getStatus(), freightRequestByVendor.getInsertTime(), freightRequestByVendor.getUpdateTime(),freightRequestByVendor.getUpdatedBy());
+				freightRequestByVendor.getReservedBy(),freightRequestByVendor.getStatus(),freightRequestByVendor.getInsertTime(), freightRequestByVendor.getUpdateTime(),freightRequestByVendor.getUpdatedBy());
 		
 		
 		return freightRequestByVendorDTO;

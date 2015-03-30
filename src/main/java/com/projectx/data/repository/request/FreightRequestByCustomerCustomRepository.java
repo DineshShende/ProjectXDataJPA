@@ -9,5 +9,5 @@ import com.projectx.data.domain.request.FreightRequestByVendor;
 public interface FreightRequestByCustomerCustomRepository {
 
 	
-	List<FreightRequestByCustomer> getMatchingCustomerRequest(FreightRequestByVendor freightRequestByVendor);
+	List<FreightRequestByCustomer> getMatchingCustomerRequest(FreightRequestByVendor freightRequestByVendor,String allocationStatus);
 }

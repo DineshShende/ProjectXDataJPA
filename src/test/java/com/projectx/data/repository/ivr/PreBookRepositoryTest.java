@@ -1,4 +1,4 @@
-package com.projectx.data.repository.iver;
+package com.projectx.data.repository.ivr;
 
 import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.ivr.PreBookDataFixture.*;

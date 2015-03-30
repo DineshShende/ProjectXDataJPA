@@ -21,16 +21,9 @@ public class FreightRequestByCustomerRepositoryImpl extends
 
 	}
 
-
-
-
 	@Override
-	public List<FreightRequestByCustomer> getMatchingCustomerRequest(FreightRequestByVendor freightRequestByVendor) {
+	public List<FreightRequestByCustomer> getMatchingCustomerRequest(FreightRequestByVendor freightRequestByVendor,String allocationStatus) {
 
-		System.out.println("Request Matching:"+freightRequestByVendor);
-		
-		
-		
 		QFreightRequestByCustomer qFreightRequestByCustomer=QFreightRequestByCustomer.freightRequestByCustomer;
 		
 		Predicate sourcePredicate=qFreightRequestByCustomer.source.eq(freightRequestByVendor.getSource());
@@ -42,11 +35,18 @@ public class FreightRequestByCustomerRepositoryImpl extends
 		
 		//Predicate startDatePredicate=qFreightRequestByCustomer.insertTime.before(freightRequestByVendor.getAvailableDate());
 		
+		Predicate allocationStatusPredicate=qFreightRequestByCustomer.allocationStatus.eq(allocationStatus);
+		
+		Predicate commodityPredicate=qFreightRequestByCustomer.commodity.isNotNull().and(qFreightRequestByCustomer.commodity.isNotEmpty())
+		.and(qFreightRequestByCustomer.commodity.in(freightRequestByVendor.getVehicleDetailsId().getCommodityList()));
+		
 		
 		JPQLQuery jpqlQuery=from(qFreightRequestByCustomer)
 							.where(sourcePredicate)
 							.where(destinationPredicate)
-							.where(availableDatePredicate);
+							.where(availableDatePredicate)
+							.where(allocationStatusPredicate)
+							.where(commodityPredicate);
 		
 		
 		

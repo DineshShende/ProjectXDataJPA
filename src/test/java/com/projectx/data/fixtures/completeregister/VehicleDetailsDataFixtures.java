@@ -83,6 +83,7 @@ public class VehicleDetailsDataFixtures {
 		commodityList.add("Wheat");
 		commodityList.add("Grain");
 		commodityList.add("Cement");
+		commodityList.add("Fertiliser");
 		
 		return commodityList;
 	}

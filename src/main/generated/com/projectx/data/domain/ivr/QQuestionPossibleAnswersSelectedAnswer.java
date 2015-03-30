@@ -26,7 +26,7 @@ public class QQuestionPossibleAnswersSelectedAnswer extends EntityPathBase<Quest
 
     public final NumberPath<Long> questionId = createNumber("questionId", Long.class);
 
-    public final StringPath selectedAnswer = createString("selectedAnswer");
+    public final NumberPath<Integer> selectedAnswer = createNumber("selectedAnswer", Integer.class);
 
     public QQuestionPossibleAnswersSelectedAnswer(String variable) {
         super(QuestionPossibleAnswersSelectedAnswer.class, forVariable(variable));

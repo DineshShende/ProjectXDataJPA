@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.projectx.data.domain.completeregister.CustomerDetails;
+import com.projectx.data.domain.completeregister.DriverDetails;
 import com.projectx.data.domain.completeregister.VendorDetails;
 import com.projectx.data.domain.quickregister.AuthenticationDetails;
 import com.projectx.data.domain.quickregister.AuthenticationDetailsKey;
@@ -47,6 +48,9 @@ public class TransactionalUpdatesRepository {
 	
 	@Autowired
 	AuthenticationDetailsRepository authenticationDetailsRepository;
+	
+	@Autowired
+	DriverDetailsCustomRepository driverDetailsRepository;
 
 	@Value("${UPDATE_SUCESS}")
 	private  Integer UPDATE_SUCESS;
@@ -56,6 +60,9 @@ public class TransactionalUpdatesRepository {
 	
 	@Value("${ENTITY_TYPE_VENDOR}")
 	private  Integer ENTITY_TYPE_VENDOR;
+	
+	@Value("${ENTITY_TYPE_VENDORDRIVER}")
+	private Integer ENTITY_TYPE_VENDORDRIVER;
 	
 	@Value("${ENTITY_TYPE_PRIMARY}")
 	private  Integer ENTITY_TYPE_PRIMARY;
@@ -212,20 +219,27 @@ public class TransactionalUpdatesRepository {
 	{
 		VendorDetails oldEntity=vendorDetailsRepository.findOne(vendorDetails.getVendorId());
 		
+		Integer Entity_Type;
+		
+		//if(vendorDetails.getIsDriver())
+		//	Entity_Type=ENTITY_TYPE_VENDORDRIVER;
+		//else
+			Entity_Type=ENTITY_TYPE_VENDOR;
+		
 		if(oldEntity!=null && oldEntity.getVendorId()!=null)
 		{
 		
 			if(vendorDetails.getMobile()!=null && !vendorDetails.getMobile().equals(oldEntity.getMobile()))
 			{
-				if(mobileVerificationDetailsRepository.findOne(new MobileVerificationKey(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY))!=null)
+				if(mobileVerificationDetailsRepository.findOne(new MobileVerificationKey(vendorDetails.getVendorId(), Entity_Type, ENTITY_TYPE_PRIMARY))!=null)
 				{	
-					mobileVerificationDetailsRepository.updateMobile(vendorDetails.getVendorId(),ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY,
+					mobileVerificationDetailsRepository.updateMobile(vendorDetails.getVendorId(),Entity_Type, ENTITY_TYPE_PRIMARY,
 							vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),vendorDetails.getUpdatedBy());
 				}
 				else
 				{
 					MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(vendorDetails.getVendorId(), 
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
+							Entity_Type, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					
 					mobileVerificationDetailsRepository.save(newRecord);
 				}
@@ -235,19 +249,43 @@ public class TransactionalUpdatesRepository {
 			if(vendorDetails.getEmail()!=null && !vendorDetails.getEmail().equals(oldEntity.getEmail()))
 			{
 				
-				if(emailVerificationDetailsRepository.findOne(new EmailVerificationKey(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR,ENTITY_TYPE_PRIMARY))!=null)
-					emailVerificationDetailsRepository.updateEmail(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR,
+				if(emailVerificationDetailsRepository.findOne(new EmailVerificationKey(vendorDetails.getVendorId(), Entity_Type,ENTITY_TYPE_PRIMARY))!=null)
+					emailVerificationDetailsRepository.updateEmail(vendorDetails.getVendorId(), Entity_Type,
 							ENTITY_TYPE_PRIMARY, vendorDetails.getEmail(), null, new Date(), ZERO_COUNT,new Date(),vendorDetails.getUpdatedBy());
 				else
 				{
 					EmailVerificationDetails newRecord=new EmailVerificationDetails(new EmailVerificationKey(vendorDetails.getVendorId(),
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
+							Entity_Type, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					emailVerificationDetailsRepository.save(newRecord);
 				}
 				
 				
 			}
+			
+			if(vendorDetails.getSecondaryMobile()!=null && !vendorDetails.getSecondaryMobile().equals(oldEntity.getSecondaryMobile()))
+			{
+				if(mobileVerificationDetailsRepository.findOne(new MobileVerificationKey(vendorDetails.getVendorId(), Entity_Type, ENTITY_TYPE_SECONDARY))!=null)
+				{	
+					mobileVerificationDetailsRepository.updateMobile(vendorDetails.getVendorId(),Entity_Type, ENTITY_TYPE_SECONDARY,
+							vendorDetails.getSecondaryMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),vendorDetails.getUpdatedBy());
+				}
+				else
+				{
+					MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(vendorDetails.getVendorId(), 
+							Entity_Type, ENTITY_TYPE_SECONDARY), vendorDetails.getSecondaryMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
+					
+					mobileVerificationDetailsRepository.save(newRecord);
+				}
+				
+			}
+			
 	
+		//	if(vendorDetails.getIsDriver())
+			{
+			
+				//TODO
+			}
+			
 			//Will update changed value when verification is sucessful
 			vendorDetails.setMobile(oldEntity.getMobile());
 			vendorDetails.setEmail(oldEntity.getEmail());
@@ -258,6 +296,10 @@ public class TransactionalUpdatesRepository {
 			if(vendorDetails.getIsMobileVerified()==null)
 				vendorDetails.setIsMobileVerified(oldEntity.getIsMobileVerified());
 			
+			if(vendorDetails.getIsSecondaryMobileVerified()==null)
+				vendorDetails.setIsSecondaryMobileVerified(oldEntity.getIsSecondaryMobileVerified());
+			
+			
 			return vendorDetailsRepository.save(vendorDetails);
 		
 		}
@@ -266,7 +308,7 @@ public class TransactionalUpdatesRepository {
 			if(vendorDetails.getMobile()!=null )
 			{
 					MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(vendorDetails.getVendorId(), 
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
+							Entity_Type, ENTITY_TYPE_PRIMARY), vendorDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					
 					mobileVerificationDetailsRepository.save(newRecord);
 			}
@@ -274,12 +316,20 @@ public class TransactionalUpdatesRepository {
 			if(vendorDetails.getEmail()!=null )
 			{
 					EmailVerificationDetails newRecord=new EmailVerificationDetails(new EmailVerificationKey(vendorDetails.getVendorId(),
-							ENTITY_TYPE_VENDOR, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
+							Entity_Type, ENTITY_TYPE_PRIMARY), vendorDetails.getEmail(), null, null, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 					emailVerificationDetailsRepository.save(newRecord);			
 				
 			}
 			
-			AuthenticationDetails authenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(vendorDetails.getVendorId(), ENTITY_TYPE_VENDOR),
+			if(vendorDetails.getSecondaryMobile()!=null )
+			{
+					MobileVerificationDetails newRecord=new MobileVerificationDetails(new MobileVerificationKey(vendorDetails.getVendorId(), 
+							Entity_Type, ENTITY_TYPE_SECONDARY), vendorDetails.getSecondaryMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
+					
+					mobileVerificationDetailsRepository.save(newRecord);
+			}
+			
+			AuthenticationDetails authenticationDetails=new AuthenticationDetails(new AuthenticationDetailsKey(vendorDetails.getVendorId(), Entity_Type),
 					vendorDetails.getEmail(), vendorDetails.getMobile(), null, PASSWORD_TYPE_DEFAULT, null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), vendorDetails.getUpdatedBy());
 			
 			authenticationDetailsRepository.save(authenticationDetails);
@@ -416,8 +466,8 @@ public class TransactionalUpdatesRepository {
 		
 		if(quickRegisterEntity.getCustomerType().equals(ENTITY_TYPE_CUSTOMER))
 		{
-			CustomerDetails customerDetails=new CustomerDetails(quickRegisterEntity.getCustomerId(), quickRegisterEntity.getFirstName(),
-					quickRegisterEntity.getLastName(), null, null, quickRegisterEntity.getMobile(), quickRegisterEntity.getIsMobileVerified(),
+			CustomerDetails customerDetails=new CustomerDetails(quickRegisterEntity.getCustomerId(), quickRegisterEntity.getFirstName(),null,
+					quickRegisterEntity.getLastName(), null, null, quickRegisterEntity.getMobile(),null, quickRegisterEntity.getIsMobileVerified(),
 					quickRegisterEntity.getEmail(), quickRegisterEntity.getIsEmailVerified(), null, null, null, null, null, false, null, new Date(), new Date(), quickRegisterEntity.getUpdatedBy());
 			
 						
@@ -430,9 +480,9 @@ public class TransactionalUpdatesRepository {
 		else if(quickRegisterEntity.getCustomerType().equals(ENTITY_TYPE_VENDOR))
 		{
 			
-			VendorDetails vendorDetails=new VendorDetails(quickRegisterEntity.getCustomerId(), quickRegisterEntity.getFirstName(),
-					quickRegisterEntity.getLastName(), null, null, quickRegisterEntity.getMobile(), quickRegisterEntity.getIsMobileVerified(),
-					quickRegisterEntity.getEmail(),quickRegisterEntity.getIsEmailVerified(), null, new Date(), new Date(),quickRegisterEntity.getUpdatedBy());
+			VendorDetails vendorDetails=new VendorDetails(quickRegisterEntity.getCustomerId(), quickRegisterEntity.getFirstName(),null,
+					quickRegisterEntity.getLastName(), null, null, null,null,quickRegisterEntity.getMobile(),null, quickRegisterEntity.getIsMobileVerified(),
+					quickRegisterEntity.getEmail(),quickRegisterEntity.getIsEmailVerified(), null,null,null, new Date(), new Date(),quickRegisterEntity.getUpdatedBy());
 			
 			VendorDetails savedVendorDetails=vendorDetailsRepository.save(vendorDetails);
 			

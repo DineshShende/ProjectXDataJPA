@@ -48,9 +48,13 @@ public class QCustomerDetails extends EntityPathBase<CustomerDetails> {
 
     public final StringPath lastName = createString("lastName");
 
+    public final StringPath middleName = createString("middleName");
+
     public final NumberPath<Long> mobile = createNumber("mobile", Long.class);
 
     public final StringPath nameOfFirm = createString("nameOfFirm");
+
+    public final NumberPath<Long> phoneNumber = createNumber("phoneNumber", Long.class);
 
     public final StringPath secondaryEmail = createString("secondaryEmail");
 

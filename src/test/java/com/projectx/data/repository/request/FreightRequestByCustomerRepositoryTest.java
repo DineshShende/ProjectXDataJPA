@@ -6,6 +6,7 @@ import static com.projectx.data.fixtures.request.FreightRequestByCustomerDataFix
 import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.*;
 import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.*;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -34,9 +36,7 @@ public class FreightRequestByCustomerRepositoryTest {
 	@Autowired
 	FreightRequestByCustomerRepository  freightRequestByCustomerRepository;
 	
-//	@Autowired
-//	FreightRequestByVendorRepository freightRequestByVendorRepository;
-	
+
 	@Autowired
 	VendorDetailsRepositoty vendorDetailsRepositoty;
 	
@@ -45,6 +45,15 @@ public class FreightRequestByCustomerRepositoryTest {
 	
 	@Autowired
 	VehicleDetailsRepository vehicleDetailsRepository;
+	
+	@Value("${FREIGHTALLOCATIONSTATUS_RESPONDED}")
+	private String FREIGHTALLOCATIONSTATUS_RESPONDED;
+	
+	@Value("${FREIGHTALLOCATIONSTATUS_NEW}")
+	private String FREIGHTALLOCATIONSTATUS_NEW;
+			
+	@Value("${FREIGHTALLOCATIONSTATUS_BOOKED}")
+	private String	FREIGHTALLOCATIONSTATUS_BOOKED;
 
 	@Before
 	@After
@@ -164,7 +173,7 @@ public class FreightRequestByCustomerRepositoryTest {
 		
 		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenAcer());
 		
-		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenTata());
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenTataStatusResponded());
 		
 		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrand());
 		
@@ -176,9 +185,47 @@ public class FreightRequestByCustomerRepositoryTest {
 		
 		FreightRequestByVendor testRequest=testRequestRepository.save(standardTestRequest());
 		
-		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
+		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest,FREIGHTALLOCATIONSTATUS_NEW);
 		
-		//assertEquals(3, list.size());
+		assertEquals(2, list.size());
+	}
+	
+	@Test
+	public void getMatchingCustomerRequestStatusResponded ()
+	{
+		freightRequestByCustomerRepository.deleteAll();
+		
+		testRequestRepository.deleteAll();
+		
+		vendorDetailsRepositoty.deleteAll();
+		
+		vehicleDetailsRepository.deleteAll();
+		
+		FreightRequestByCustomer savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad110());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoadClosedAcerReq());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoadOpenTataReq());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoad15());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenAcer());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenTataStatusResponded());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrand());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrandAndNoModel());
+		
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoModel());
+		
+		//FreightRequestByVendor vendorRequest=freightRequestByVendorRepository.save(standardFreightRequestByVendor());
+		
+		FreightRequestByVendor testRequest=testRequestRepository.save(standardTestRequest());
+		
+		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest,FREIGHTALLOCATIONSTATUS_RESPONDED);
+		
+		assertEquals(1, list.size());
 	}
 	
 	@Test
@@ -206,9 +253,27 @@ public class FreightRequestByCustomerRepositoryTest {
 		
 		FreightRequestByVendor testRequest=testRequestRepository.save(standardTestRequestOpen307());
 		
-		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
+		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest,FREIGHTALLOCATIONSTATUS_NEW);
 		
-		//assertEquals(1, list.size());
+		assertEquals(1, list.size());
 	}
+	
+	@Test
+	public void updateVerificationStatus()
+	{
+		assertEquals(0, freightRequestByCustomerRepository.count());
+		
+		FreightRequestByCustomer savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
+		
+		assertEquals(1, freightRequestByCustomerRepository.count());
+		
+		assertEquals(1, freightRequestByCustomerRepository.updateVerificationStatus(savedEntity.getRequestId(), FREIGHTALLOCATIONSTATUS_NEW,
+				FREIGHTALLOCATIONSTATUS_RESPONDED, 234L, new Date()).intValue());
+		
+		assertEquals(1, freightRequestByCustomerRepository.updateVerificationStatus(savedEntity.getRequestId(), FREIGHTALLOCATIONSTATUS_RESPONDED,
+				FREIGHTALLOCATIONSTATUS_BOOKED, 234L, new Date()).intValue());
+		
+	}
+	
 	
 }

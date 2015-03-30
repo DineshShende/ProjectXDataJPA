@@ -138,6 +138,24 @@ public class FreightRequestByCustomerControllerWACTest {
 	}
 	
 	@Test
+	public void updateVerificationStatus() throws Exception
+	{
+		
+		FreightRequestByCustomer customer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
+		
+		
+		this.mockMvc.perform(
+	            post("/request/freightByRequestCustomer/updateReservationStatus")
+	                    .content(standardJsonUpdateReservationStatus(standardUpdateReservationStatus(customer.getRequestId())))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isOk())
+	            .andExpect(content().string("1"));
+	            
+	}
+	
+	@Test
 	public void deleteById() throws Exception
 	{
 		FreightRequestByCustomer customer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
@@ -242,7 +260,7 @@ public class FreightRequestByCustomerControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/request/freightByRequestCustomer/getMatchingCustReqForVendorReq")
-	                    .content(stanardJsonFreightRequestByVendorDTO(standardFreightRequestByVendorDTO()))
+	                    .content(standardJsonFreightRequestByVendorWithRequiredAllocationStatus(standardFreightRequestByVendorWithRequiredAllocationStatus(testRequest)))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())

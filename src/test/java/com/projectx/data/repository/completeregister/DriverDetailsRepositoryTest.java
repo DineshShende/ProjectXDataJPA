@@ -183,7 +183,8 @@ public class DriverDetailsRepositoryTest {
 		
 		
 	}
-	
+
+	/*
 	@Test
 	public void updateDriverMobile()
 	{
@@ -255,6 +256,6 @@ public class DriverDetailsRepositoryTest {
 		}
 	}
 	
-
+*/
 	
 }

@@ -84,6 +84,7 @@ public class DriverDetails {
 	@Column(name="LANGUAGE")
 	private String language;
 	
+		
 	@NotNull
 	@Column(name="VENDERID")
 	private Long vendorId;
@@ -112,7 +113,7 @@ public class DriverDetails {
 
 
 
-	public DriverDetails(Long driverId, String firstName, String middleName,
+	public DriverDetails(Long driverId,String firstName, String middleName,
 			String lastName, Date dateOfBirth, String bloodGroup,
 			Address homeAddress, Long mobile, Boolean isMobileVerified,
 			Long homeContactNumber, String licenceNumber, Date drivingSince,
@@ -120,7 +121,7 @@ public class DriverDetails {
 			Boolean isDealFinalizationPermissionGiven, String language,
 			Long vendorId, Date insertTime, Date updateTime, String updatedBy) {
 		super();
-		this.driverId = driverId;
+		this.driverId=driverId;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;

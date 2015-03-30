@@ -11,8 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import com.projectx.data.domain.completeregister.DriverDetails;
-import com.projectx.data.domain.quickregister.EmailVerificationDetails;
-import com.projectx.data.domain.quickregister.EmailVerificationKey;
 import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
@@ -29,17 +27,18 @@ public class DriverDetailsCustomRepository {
 	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
 	
 	private Integer ENTITY_TYPE_DRIVER=3;
+	private Integer ENTITY_TYPE_VENDORDRIVER=4;
 	private Integer ENTITY_TYPE_PRIMARY=1;
 	private Integer ZERO_COUNT=0;
 	
 	private String UPDATED_BY_CUST_ONLINE="CUST_ONLINE";
 	
 	@Transactional(rollbackOn=DataIntegrityViolationException.class)
-	public DriverDetails save (DriverDetails driverDetails)
+	public DriverDetails saveOld (DriverDetails driverDetails)//,Boolean isVendor
 	{
 		DriverDetails savedEntity=driverDetailsRepository.save(driverDetails);
 		
-		if(driverDetails.getMobile()!=null)
+		if(driverDetails.getMobile()!=null )//&& !isVendor
 		{	
 			MobileVerificationDetails mobileVerificationDetails=
 					new MobileVerificationDetails(new MobileVerificationKey(savedEntity.getDriverId(), ENTITY_TYPE_DRIVER, ENTITY_TYPE_PRIMARY),
@@ -60,8 +59,8 @@ public class DriverDetailsCustomRepository {
 		return savedEntity;
 	}
 	
-	@Transactional
-	public DriverDetails update(DriverDetails driverDetails)
+	@Transactional(rollbackOn=DataIntegrityViolationException.class)
+	public DriverDetails save(DriverDetails driverDetails)
 	{
 		DriverDetails oldEntity=driverDetailsRepository.findOne(driverDetails.getDriverId());
 		
@@ -105,7 +104,14 @@ public class DriverDetailsCustomRepository {
 						new MobileVerificationDetails(new MobileVerificationKey(savedEntity.getDriverId(), ENTITY_TYPE_DRIVER, ENTITY_TYPE_PRIMARY),
 								driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), UPDATED_BY_CUST_ONLINE);
 				
-				mobileVerificationDetailsRepository.save(mobileVerificationDetails);
+				try{
+					mobileVerificationDetailsRepository.save(mobileVerificationDetails);
+				}catch(DataIntegrityViolationException e)
+				{
+					driverDetailsRepository.delete(savedEntity.getDriverId());
+					
+					return null;
+				}
 			
 			}
 			return savedEntity;

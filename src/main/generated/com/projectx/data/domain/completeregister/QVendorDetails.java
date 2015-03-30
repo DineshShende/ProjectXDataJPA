@@ -28,7 +28,11 @@ public class QVendorDetails extends EntityPathBase<VendorDetails> {
 
     public final QAddress firmAddress;
 
+    public final StringPath firmName = createString("firmName");
+
     public final StringPath firstName = createString("firstName");
+
+    public final QAddress homeAddress;
 
     public final DateTimePath<java.util.Date> insertTime = createDateTime("insertTime", java.util.Date.class);
 
@@ -36,11 +40,19 @@ public class QVendorDetails extends EntityPathBase<VendorDetails> {
 
     public final BooleanPath isMobileVerified = createBoolean("isMobileVerified");
 
+    public final BooleanPath isSecondaryMobileVerified = createBoolean("isSecondaryMobileVerified");
+
     public final StringPath laguage = createString("laguage");
 
     public final StringPath lastName = createString("lastName");
 
+    public final StringPath middleName = createString("middleName");
+
     public final NumberPath<Long> mobile = createNumber("mobile", Long.class);
+
+    public final NumberPath<Long> phoneNumber = createNumber("phoneNumber", Long.class);
+
+    public final NumberPath<Long> secondaryMobile = createNumber("secondaryMobile", Long.class);
 
     public final StringPath updatedBy = createString("updatedBy");
 
@@ -67,6 +79,7 @@ public class QVendorDetails extends EntityPathBase<VendorDetails> {
     public QVendorDetails(Class<? extends VendorDetails> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.firmAddress = inits.isInitialized("firmAddress") ? new QAddress(forProperty("firmAddress")) : null;
+        this.homeAddress = inits.isInitialized("homeAddress") ? new QAddress(forProperty("homeAddress")) : null;
     }
 
 }

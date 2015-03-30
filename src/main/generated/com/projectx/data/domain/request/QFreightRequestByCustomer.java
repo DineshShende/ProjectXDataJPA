@@ -19,6 +19,10 @@ public class QFreightRequestByCustomer extends EntityPathBase<FreightRequestByCu
 
     public static final QFreightRequestByCustomer freightRequestByCustomer = new QFreightRequestByCustomer("freightRequestByCustomer");
 
+    public final NumberPath<Long> allocatedFor = createNumber("allocatedFor", Long.class);
+
+    public final StringPath allocationStatus = createString("allocationStatus");
+
     public final StringPath bodyType = createString("bodyType");
 
     public final NumberPath<Integer> capacity = createNumber("capacity", Integer.class);
@@ -52,8 +56,6 @@ public class QFreightRequestByCustomer extends EntityPathBase<FreightRequestByCu
     public final NumberPath<Long> requestId = createNumber("requestId", Long.class);
 
     public final NumberPath<Integer> source = createNumber("source", Integer.class);
-
-    public final StringPath status = createString("status");
 
     public final StringPath updatedBy = createString("updatedBy");
 

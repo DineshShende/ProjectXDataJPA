@@ -1,5 +1,6 @@
 package com.projectx.data.controller.request;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -21,6 +22,8 @@ import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
 import com.projectx.data.service.request.FreightRequestByVendorService;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
+import com.projectx.rest.domain.request.FreightRequestByVendorWithRequiredAllocationStatus;
+import com.projectx.rest.domain.request.UpdateReservationStatus;
 
 import static com.projectx.data.config.Constants.*;
 
@@ -72,6 +75,21 @@ public class FreightRequestByCustomerController {
 		return result;
 	}
 	
+	
+	@RequestMapping(value="/updateReservationStatus",method=RequestMethod.POST)
+	public ResponseEntity<Integer> updatereservationStatus(@Valid @RequestBody UpdateReservationStatus updateReservationStatus,
+			BindingResult bindingResult)
+	{
+		if(bindingResult.hasErrors())
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		
+		Integer result=freightRequestByCustomerRepository.updateVerificationStatus(updateReservationStatus.getEntityIdTobeReserved(),
+				updateReservationStatus.getOldStatus(), updateReservationStatus.getNewStatus(), updateReservationStatus.getEntityIdTobeReservedFor(),
+				new Date());
+		
+		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/deleteById/{requestId}")
 	public ResponseEntity<Boolean> deleteById(@PathVariable Long requestId)
 	{
@@ -97,11 +115,11 @@ public class FreightRequestByCustomerController {
 	}
 
 	@RequestMapping(value="/getMatchingCustReqForVendorReq",method=RequestMethod.POST)
-	public ResponseEntity<List<FreightRequestByCustomer>> getMatchingCustReqForVendorReq(@RequestBody FreightRequestByVendorDTO freightRequestByVendor)
+	public ResponseEntity<List<FreightRequestByCustomer>> getMatchingCustReqForVendorReq(@RequestBody FreightRequestByVendorWithRequiredAllocationStatus  freightRequestByVendor)
 	{
-		FreightRequestByVendor testRequest=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
-		
-		List<FreightRequestByCustomer> resultList=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest);
+		List<FreightRequestByCustomer> resultList=freightRequestByCustomerRepository
+				.getMatchingCustomerRequest(freightRequestByVendorService.
+						toFreightRequestByVendor(freightRequestByVendor.getFreightRequestByVendor()),freightRequestByVendor.getStatus());
 		
 		return new ResponseEntity<List<FreightRequestByCustomer>>(resultList, HttpStatus.OK);
 	}

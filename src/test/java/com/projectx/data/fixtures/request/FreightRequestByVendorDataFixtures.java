@@ -1,13 +1,18 @@
 package com.projectx.data.fixtures.request;
 
 import static com.projectx.data.fixtures.completeregister.VehicleDetailsDataFixtures.*;
+import static com.projectx.data.fixtures.request.FreightRequestByVendorDataFixtures.standardFreightRequestByVendorDTO;
 
 import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.domain.request.FreightRequestByVendor;
+import com.projectx.data.service.request.FreightRequestByVendorService;
 import com.projectx.rest.domain.request.FreightRequestByVendorDTO;
+import com.projectx.rest.domain.request.FreightRequestByVendorWithRequiredAllocationStatus;
 import com.projectx.rest.domain.request.UpdateReservationStatus;
 
 public class FreightRequestByVendorDataFixtures {
@@ -43,11 +48,14 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 	
 	private static Gson gson=new Gson();
 	
+	@Autowired
+	static FreightRequestByVendorService freightRequestByVendorService;
+	
 	public static FreightRequestByVendorDTO standardFreightRequestByVendorDTO()
 	{
 		return new FreightRequestByVendorDTO(1L, standardVehicleDetails().getRegistrationNumber(),
 				REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
-				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,null,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 	}
 	
 	public static FreightRequestByVendor standardTestRequest()
@@ -55,7 +63,7 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 		
 		
 		return new FreightRequestByVendor(1L,standardVehicleDetails(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
-				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS,null, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
@@ -64,7 +72,7 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 		
 		
 		return new FreightRequestByVendor(100L,standardVehicleDetailsOpen(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
-				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS,null, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
@@ -73,7 +81,7 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 		
 		
 		return new FreightRequestByVendor(100L,standardVehicleDetailsOpen307(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
-				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS,null, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
@@ -82,7 +90,7 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 		
 		
 		return new FreightRequestByVendor(120L,standardVehicleDetailsClosed(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
-				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS,null, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
@@ -91,14 +99,14 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 		
 		
 		return new FreightRequestByVendor(110L,standardVehicleDetailsFlexible(), REQ_SOURCE, REQ_DESTINATION, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME,
-				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+				REQ_PICK_UP_RANGE,REQ_VENDOR_ID,REQ_STATUS,null, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
 	public static FreightRequestByVendor standardTestRequestUpdated()
 	{
 		return new FreightRequestByVendor(1L,standardVehicleDetails(), REQ_SOURCE, REQ_DESTINATION_UPDATED, REQ_DRIVER, REQ_AVAIL_DATE, REQ_AVAIL_TIME_UPDATED,
-				REQ_PICK_UP_RANGE_UPDATED,REQ_VENDOR_ID,REQ_STATUS, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
+				REQ_PICK_UP_RANGE_UPDATED,REQ_VENDOR_ID,REQ_STATUS,null, REQ_DATE, REQ_DATE, REQ_UPDATED_BY);
 		
 	}
 	
@@ -116,6 +124,25 @@ public static VehicleDetails REQ_VEHICLE=standardVehicleDetails();
 		System.out.println(gson.toJson(freightRequestByVendor));
 		
 		return gson.toJson(freightRequestByVendor);
+	}
+	
+	public static FreightRequestByVendorWithRequiredAllocationStatus standardFreightRequestByVendorWithRequiredAllocationStatus(FreightRequestByVendor freightRequestByVendor)
+	{
+		FreightRequestByVendorDTO dto=new FreightRequestByVendorDTO(freightRequestByVendor.getRequestId(),
+				freightRequestByVendor.getVehicleDetailsId().getRegistrationNumber(), freightRequestByVendor.getSource(),
+				freightRequestByVendor.getDestination(), freightRequestByVendor.getDriverId(), freightRequestByVendor.getAvailableDate(), 
+				freightRequestByVendor.getAvailableTime(), freightRequestByVendor.getPickupRangeInKm(), freightRequestByVendor.getVendorId(),
+				null,freightRequestByVendor.getStatus(), freightRequestByVendor.getInsertTime(), freightRequestByVendor.getUpdateTime(), freightRequestByVendor.getUpdatedBy());
+		
+		return new FreightRequestByVendorWithRequiredAllocationStatus(REQ_STATUS, dto);
+	}
+	
+	
+	public static String standardJsonFreightRequestByVendorWithRequiredAllocationStatus(FreightRequestByVendorWithRequiredAllocationStatus dto)
+	{
+		System.out.println(gson.toJson(dto));
+		
+		return gson.toJson(dto);
 	}
 	
 	public static UpdateReservationStatus standardUpdateReservationStatus(Long requestId)

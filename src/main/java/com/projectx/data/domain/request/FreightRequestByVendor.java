@@ -80,12 +80,16 @@ public class FreightRequestByVendor {
 
 	}
 
-	public FreightRequestByVendor(Long requestId, VehicleDetails vehicleDetailsId,
-			Integer source, Integer destination, Long driverId,
-			Date availableDate, String availableTime, Integer pickupRangeInKm,
-			Long vendorId, String status, Date insertTime, Date updateTime,
+	
+	
+	
+	public FreightRequestByVendor(Long requestId,
+			VehicleDetails vehicleDetailsId, Integer source,
+			Integer destination, Long driverId, Date availableDate,
+			String availableTime, Integer pickupRangeInKm, Long vendorId,
+			String status, Long reservedBy, Date insertTime, Date updateTime,
 			String updatedBy) {
-
+		super();
 		this.requestId = requestId;
 		this.vehicleDetailsId = vehicleDetailsId;
 		this.source = source;
@@ -96,13 +100,15 @@ public class FreightRequestByVendor {
 		this.pickupRangeInKm = pickupRangeInKm;
 		this.vendorId = vendorId;
 		this.status = status;
+		this.reservedBy = reservedBy;
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
 	}
 
-	
-	
+
+
+
 	public Long getRequestId() {
 		return requestId;
 	}
@@ -212,25 +218,44 @@ public class FreightRequestByVendor {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+	
+	
 
+	public Long getReservedBy() {
+		return reservedBy;
+	}
+
+
+
+
+	public void setReservedBy(Long reservedBy) {
+		this.reservedBy = reservedBy;
+	}
+
+
+
+
+	
 	@Override
 	public String toString() {
-		return "TestRequest [requestId=" + requestId + ", vehicleDetailsId="
-				+ vehicleDetailsId + ", source=" + source + ", destination="
-				+ destination + ", driverId=" + driverId + ", availableDate="
-				+ availableDate + ", availableTime=" + availableTime
-				+ ", pickupRangeInKm=" + pickupRangeInKm + ", vendorId="
-				+ vendorId + ", status=" + status + ", insertTime="
+		return "FreightRequestByVendor [requestId=" + requestId
+				+ ", vehicleDetailsId=" + vehicleDetailsId + ", source="
+				+ source + ", destination=" + destination + ", driverId="
+				+ driverId + ", availableDate=" + availableDate
+				+ ", availableTime=" + availableTime + ", pickupRangeInKm="
+				+ pickupRangeInKm + ", vendorId=" + vendorId + ", status="
+				+ status + ", reservedBy=" + reservedBy + ", insertTime="
 				+ insertTime + ", updateTime=" + updateTime + ", updatedBy="
 				+ updatedBy + "]";
 	}
+
+
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((availableDate == null) ? 0 : availableDate.hashCode());
 		result = prime * result
 				+ ((availableTime == null) ? 0 : availableTime.hashCode());
 		result = prime * result
@@ -238,15 +263,13 @@ public class FreightRequestByVendor {
 		result = prime * result
 				+ ((driverId == null) ? 0 : driverId.hashCode());
 		result = prime * result
-				+ ((insertTime == null) ? 0 : insertTime.hashCode());
-		result = prime * result
 				+ ((pickupRangeInKm == null) ? 0 : pickupRangeInKm.hashCode());
 		result = prime * result
 				+ ((requestId == null) ? 0 : requestId.hashCode());
+		result = prime * result
+				+ ((reservedBy == null) ? 0 : reservedBy.hashCode());
 		result = prime * result + ((source == null) ? 0 : source.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		result = prime * result
-				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
 		result = prime
@@ -257,6 +280,9 @@ public class FreightRequestByVendor {
 		return result;
 	}
 
+
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -266,11 +292,6 @@ public class FreightRequestByVendor {
 		if (getClass() != obj.getClass())
 			return false;
 		FreightRequestByVendor other = (FreightRequestByVendor) obj;
-		if (availableDate == null) {
-			if (other.availableDate != null)
-				return false;
-		} else if (Math.abs(availableDate.getTime()-other.availableDate.getTime())>1000000)
-			return false;
 		if (availableTime == null) {
 			if (other.availableTime != null)
 				return false;
@@ -286,21 +307,21 @@ public class FreightRequestByVendor {
 				return false;
 		} else if (!driverId.equals(other.driverId))
 			return false;
-		if (insertTime == null) {
-			if (other.insertTime != null)
-				return false;
-		 } else if (Math.abs(insertTime.getTime()-other.insertTime.getTime())>1000000)
-			return false;
 		if (pickupRangeInKm == null) {
 			if (other.pickupRangeInKm != null)
 				return false;
 		} else if (!pickupRangeInKm.equals(other.pickupRangeInKm))
 			return false;
-		/*if (requestId == null) {
+		if (requestId == null) {
 			if (other.requestId != null)
 				return false;
 		} else if (!requestId.equals(other.requestId))
-			return false;*/
+			return false;
+		if (reservedBy == null) {
+			if (other.reservedBy != null)
+				return false;
+		} else if (!reservedBy.equals(other.reservedBy))
+			return false;
 		if (source == null) {
 			if (other.source != null)
 				return false;
@@ -310,11 +331,6 @@ public class FreightRequestByVendor {
 			if (other.status != null)
 				return false;
 		} else if (!status.equals(other.status))
-			return false;
-		if (updateTime == null) {
-			if (other.updateTime != null)
-				return false;
-		} else if (Math.abs(updateTime.getTime()-other.updateTime.getTime())>1000000)
 			return false;
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
@@ -333,6 +349,10 @@ public class FreightRequestByVendor {
 			return false;
 		return true;
 	}
+
+
+
+
 
 	
 		

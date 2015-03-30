@@ -45,6 +45,9 @@ public class FreightRequestByVendorRepositoryImpl extends QueryDslRepositorySupp
 				or(qTestRequest.vehicleDetailsId.vehicleBodyType.eq(freightRequestByCustomer.getBodyType()));
 
 		
+		
+		
+		
 		JPQLQuery jpaQuery=from(qTestRequest).where(sourcePredicate)
 				  .where(destinationPredicate)
 				  .where(availableDatePredicate)
@@ -87,6 +90,17 @@ public class FreightRequestByVendorRepositoryImpl extends QueryDslRepositorySupp
 			
 			jpaQuery=jpaQuery.where(modelPredicate);
 		}
+
+		/*
+		if(freightRequestByCustomer.getCommodity()!=null && freightRequestByCustomer.getCommodity().equals(""))
+		{
+		
+			Predicate commodity=qTestRequest.vehicleDetailsId.commodityList.contains(freightRequestByCustomer.getCommodity());
+			
+			jpaQuery=jpaQuery.where(commodity);
+			
+		}
+		*/
 		
 		//TODO pickupTime
 		

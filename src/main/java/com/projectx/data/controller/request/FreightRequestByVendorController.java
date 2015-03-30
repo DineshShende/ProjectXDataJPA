@@ -3,6 +3,7 @@ package com.projectx.data.controller.request;
 import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -122,8 +123,9 @@ public class FreightRequestByVendorController {
 		if(bindingResult.hasErrors())
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		Integer result=testRequestRepository.updateVerificationStatus(updateReservationStatus.getFreightRequestByVendorId(),
-				updateReservationStatus.getOldStatus(), updateReservationStatus.getNewStatus(), updateReservationStatus.getFreightRequestByCustomerId());
+		Integer result=testRequestRepository.updateVerificationStatus(updateReservationStatus.getEntityIdTobeReserved(),
+				updateReservationStatus.getOldStatus(), updateReservationStatus.getNewStatus(), updateReservationStatus.getEntityIdTobeReservedFor(),
+				new Date());
 		
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}

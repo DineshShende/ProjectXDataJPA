@@ -355,7 +355,7 @@ public class TransactionalUpdatesControllerWACTest {
 
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
 		
-		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX", "ASD", null, null, CUST_MOBILE,false, CUST_EMAIL, false, 
+		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX","A.", "ASD", null, null, CUST_MOBILE,null,false, CUST_EMAIL, false, 
 				null, null, null, null, null, null, null, new Date(), new Date(), "CUST_ONLINE"));
 		
 		
@@ -414,8 +414,8 @@ public class TransactionalUpdatesControllerWACTest {
 		
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileVendor());
 		
-		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD", "AES",null, null, CUST_MOBILE, false, CUST_EMAIL, false, 
-				null, null, null, null));
+		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD","A.", "AES",null,null,null, null, CUST_MOBILE,null, false, CUST_EMAIL, false, 
+				null, null, null,null,null, null));
 		
 		
 		
