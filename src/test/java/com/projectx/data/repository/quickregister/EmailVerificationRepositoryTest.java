@@ -135,7 +135,7 @@ public class EmailVerificationRepositoryTest {
 		
 		assertEquals(0, customerEmailVericationDetailsRepository.incrementResendCountByCustomerIdAndEmail(standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerId(),
 				standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerType(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getEmailType(),
-				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getUpdatedBy()).intValue());
+				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedBy()).intValue());
 		
 		EmailVerificationDetails emailVerificationDetails=customerEmailVericationDetailsRepository.save(standardCustomerEmailVerificationDetails());
 		
@@ -145,7 +145,7 @@ public class EmailVerificationRepositoryTest {
 		
 		assertEquals(1, customerEmailVericationDetailsRepository.incrementResendCountByCustomerIdAndEmail(standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerId(),
 				standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerType(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getEmailType(),
-				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getUpdatedBy()).intValue());
+				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedBy()).intValue());
 		
 		
 	}

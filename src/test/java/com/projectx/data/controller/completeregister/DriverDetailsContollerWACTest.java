@@ -102,6 +102,44 @@ public class DriverDetailsContollerWACTest {
 	}
 	
 	@Test
+	public void saveInvalidAddress() throws Exception
+	{
+		
+		this.mockMvc.perform(
+	            post("/driver")
+	                    .content(standardDriverJson(standardDriverDetailsInvalidAddress()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated())
+	            
+	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
+		
+		 		.andExpect(jsonPath("$.firstName").value(standardDriverDetails().getFirstName()))
+		 		.andExpect(jsonPath("$.middleName").value(standardDriverDetails().getMiddleName()))
+		 		.andExpect(jsonPath("$.lastName").value(standardDriverDetails().getLastName()))
+		 		.andExpect(jsonPath("$.bloodGroup").value(standardDriverDetails().getBloodGroup()))
+		 		.andExpect(jsonPath("$.homeAddress.addressLine").value(standardDriverDetails().getHomeAddress().getAddressLine()))
+	            .andExpect(jsonPath("$.homeAddress.customerType").value(standardDriverDetails().getHomeAddress().getCustomerType()))
+	            .andExpect(jsonPath("$.homeAddress.city").value(standardDriverDetails().getHomeAddress().getCity()))
+	            .andExpect(jsonPath("$.homeAddress.district").value(standardDriverDetails().getHomeAddress().getDistrict()))
+	            .andExpect(jsonPath("$.homeAddress.state").value(standardDriverDetails().getHomeAddress().getState()))
+	            .andExpect(jsonPath("$.homeAddress.pincode").value(standardDriverDetails().getHomeAddress().getPincode()))
+	            .andExpect(jsonPath("$.mobile").value(standardDriverDetails().getMobile()))
+	            .andExpect(jsonPath("$.isMobileVerified").value(standardDriverDetails().getIsMobileVerified()))
+	            .andExpect(jsonPath("$.homeContactNumber").value(standardDriverDetails().getHomeContactNumber()))
+	            .andExpect(jsonPath("$.isFreightRequestPermissionGiven").value(standardDriverDetails().getIsFreightRequestPermissionGiven()))
+	            .andExpect(jsonPath("$.isDealFinalizationPermissionGiven").value(standardDriverDetails().getIsDealFinalizationPermissionGiven()))
+	            .andExpect(jsonPath("$.licenceNumber").value(standardDriverDetails().getLicenceNumber()))
+	            .andExpect(jsonPath("$.language").value(standardDriverDetails().getLanguage()))
+	            .andExpect(jsonPath("$.updatedBy").value(standardDriverDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.insertTime").exists())
+	            .andExpect(jsonPath("$.updateTime").exists());
+		
+	}
+	
+	
+	@Test
 	public void saveWithError() throws Exception
 	{
 		
@@ -178,12 +216,12 @@ public class DriverDetailsContollerWACTest {
 		DriverDetails driverDetails=driverDetailsCustomRepository.save(standardDriverDetails());
 		
 		this.mockMvc.perform(
-	            post("/driver/update")
+	            post("/driver")
 	                    .content(standardDriverJson(standardDriverDetailsNewMobileAndFirstName(driverDetails.getDriverId())))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk())
+	            .andExpect(status().isCreated())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		
@@ -221,7 +259,7 @@ public class DriverDetailsContollerWACTest {
 		.save(new MobileVerificationDetails(new MobileVerificationKey(234L, 1, 1), DRIVER_MOBILE_UPDATED, null, 0,0, new Date(), new Date(), "CUST_ONLINE"));
 		
 		this.mockMvc.perform(
-	            post("/driver/update")
+	            post("/driver")
 	                    .content(standardDriverJson(standardDriverDetailsNewMobileAndFirstName(driverDetails.getDriverId())))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))

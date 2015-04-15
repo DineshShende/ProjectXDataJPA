@@ -9,20 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import com.projectx.data.util.serializer.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.util.annotation.CustomerDetailsValid;
+import com.projectx.data.util.serializer.JsonDateDeSerializer;
+import com.projectx.data.util.serializer.JsonDateSerializer;
 
 
 @CustomerDetailsValid
 @Entity
 @Table(name="CUSTOMERDETAILS")
-
 public class CustomerDetails {
 
 	@Id @Column(name="CUSTOMERID")
@@ -42,6 +41,7 @@ public class CustomerDetails {
 	@Column(name="DATEOFBIRTH")
 	private Date dateOfBirth;
 	
+	@Valid
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="HOMEADDRESSID")
 	private Address homeAddressId;
@@ -64,51 +64,43 @@ public class CustomerDetails {
 	@Column(name="LANGUAGE")
 	private String language;
 	
-	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="BUSINESSDOMAIN")
 	private String  businessDomain;
 	
-	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="NAMEOFFIRM")
 	private String nameOfFirm;
 	
-	@JsonIgnoreProperties(ignoreUnknown=true)
+	@Valid
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="FIRMADDRESSID")
 	private Address firmAddressId;
 	
-	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="SECONDARYMOBILE",unique=true)
 	private Long secondaryMobile;
 	
-	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="ISSECONDARYMOBILEVERIFIED")
 	private Boolean isSecondaryMobileVerified;
 	
-	@JsonIgnoreProperties(ignoreUnknown=true)
 	@Column(name="SECONDARYEMAIL")
 	private String secondaryEmail;
 	
-	@NotNull
+	@NotNull(message="insertTime can't be NULL")
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	@NotNull
+	@NotNull(message="updateTime can't be NULL")
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	@NotNull
+	@NotNull(message="updatedBy can't be NULL")
 	@Column(name="UPDATEDBY")
 	private String updatedBy;
 
 	
 	public CustomerDetails() {
 
+		
 	}
-
-	
-
-
 
 	public CustomerDetails(Long customerId, String firstName,
 			String middleName, String lastName, Date dateOfBirth,

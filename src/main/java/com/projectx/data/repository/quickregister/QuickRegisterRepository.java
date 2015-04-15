@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.SqlResultSetMapping;
 import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
 
@@ -36,6 +37,7 @@ public interface QuickRegisterRepository extends
 		 Optional<QuickRegisterEntity> findByMobile(Long mobile);
 		 
 
+		 
 		 @Query(value="select m.mobile,m.mobilepin,a.password"+
 				 	" from mobileverificationdetails m,authenticationdetails a "+
 				 	" where m.customerid=a.customerid"+
@@ -44,6 +46,7 @@ public interface QuickRegisterRepository extends
 			 
 		 List<MobilePinPasswordDTO> getTestData();
 	 
+		 
 		@Transactional
 		 @Modifying
 		 @Query(value="update quickregisterentity set ISMOBILEVERIFIED=:status,UPDATETIME=:updateTime,"

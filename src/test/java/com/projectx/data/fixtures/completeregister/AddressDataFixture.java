@@ -21,6 +21,8 @@ public class AddressDataFixture {
 	
 	public static Integer ADDRESS_PINCODE=413133;
 	
+	public static Integer ADDRESS_PINCODE_INVALID=4131337;
+	
 	public static Date ADDRESS_DATE=new Date();
 	
 	public static String ADDRESS_UPDATED_BY="CUST_ONLINE";
@@ -30,6 +32,11 @@ public class AddressDataFixture {
 	public static Address standardAddress()
 	{
 		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, ADDRESS_STATE, ADDRESS_PINCODE, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
+	}
+	
+	public static Address standardAddressInvalid()
+	{
+		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, null, 1111111, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
 	}
 	
 	public static Address standardAddressUpdated()

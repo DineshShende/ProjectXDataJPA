@@ -144,7 +144,7 @@ public class MobileVerificationDetailsRepositoryTest {
 		assertEquals(0, customerMobileVerificationDetailsRepository
 				.incrementMobileVerificationAttempts(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),
 						standardCustomerIdMobileUpdatedByDTO().getCustomerType(),standardCustomerIdMobileUpdatedByDTO().getMobileType(),
-						new Date(),standardCustomerIdMobileUpdatedByDTO().getUpdatedBy()).intValue());
+						new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()).intValue());
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
 		
@@ -152,7 +152,7 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(1, customerMobileVerificationDetailsRepository
 				.incrementMobileVerificationAttempts(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getUpdatedBy()).intValue());
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()).intValue());
 	}
 	
 	
@@ -163,7 +163,7 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(new Integer(0), customerMobileVerificationDetailsRepository
 				.incrementResendCount(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getUpdatedBy()));
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()));
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
 		//Insert Not reflected until we read.
@@ -171,7 +171,7 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(new Integer(1), customerMobileVerificationDetailsRepository
 				.incrementResendCount(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getUpdatedBy()));
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()));
 		
 	}
 	
@@ -182,7 +182,7 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(new Integer(0), customerMobileVerificationDetailsRepository
 				.incrementResendCount(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getUpdatedBy()));
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()));
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
 		//Insert Not reflected until we read.

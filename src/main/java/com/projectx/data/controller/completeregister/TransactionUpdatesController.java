@@ -97,7 +97,7 @@ public class TransactionUpdatesController {
 		try{
 			Boolean updatedStatus=transactionalUpdatesRepository
 				.updateMobileInDetailsEnityAndAuthenticationDetails(customerIdTypeMobileTypeDTO.getCustomerId(), customerIdTypeMobileTypeDTO.getCustomerType(),
-						customerIdTypeMobileTypeDTO.getMobileType(),customerIdTypeMobileTypeDTO.getUpdatedBy());
+						customerIdTypeMobileTypeDTO.getMobileType(),customerIdTypeMobileTypeDTO.getRequestedBy());
 			
 			result=new ResponseEntity<Boolean>(updatedStatus, HttpStatus.OK);
 			
@@ -120,7 +120,7 @@ public class TransactionUpdatesController {
 		try{
 			Boolean updatedStatus=transactionalUpdatesRepository
 				.updateEmailInDetailsEnityAndAuthenticationDetails(customerIdTypeEmailTypeDTO.getCustomerId(), customerIdTypeEmailTypeDTO.getCustomerType(),
-						customerIdTypeEmailTypeDTO.getEmailType(),customerIdTypeEmailTypeDTO.getUpdatedBy());
+						customerIdTypeEmailTypeDTO.getEmailType(),customerIdTypeEmailTypeDTO.getRequestedBy());
 		 result=new ResponseEntity<Boolean>(updatedStatus, HttpStatus.OK);
 		 
 		}catch(DataIntegrityViolationException e)

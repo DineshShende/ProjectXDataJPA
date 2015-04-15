@@ -20,7 +20,7 @@ import com.projectx.data.domain.async.RetriggerDetails;
 
 @RunWith(SpringJUnit4ClassRunner.class)   
 @SpringApplicationConfiguration(classes = Application.class)   
-@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
+@ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)//
 public class RetriggerDetailsRepositoryTest {
 
 	@Autowired

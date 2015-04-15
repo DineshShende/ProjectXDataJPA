@@ -16,20 +16,21 @@ public class CustomerIdTypeMobileTypeUpdatedByDTO {
 	private Integer mobileType;
 	
 	@NotNull
-	private String updatedBy;
+	private String requestedBy;
 	
 	public CustomerIdTypeMobileTypeUpdatedByDTO() {
 		
 	}
 
-	public CustomerIdTypeMobileTypeUpdatedByDTO(Long customerId, Integer customerType,
-			Integer mobileType, String updatedBy) {
+	public CustomerIdTypeMobileTypeUpdatedByDTO(Long customerId,
+			Integer customerType, Integer mobileType, String requestedBy) {
 		super();
 		this.customerId = customerId;
 		this.customerType = customerType;
 		this.mobileType = mobileType;
-		this.updatedBy = updatedBy;
+		this.requestedBy = requestedBy;
 	}
+
 
 
 
@@ -60,19 +61,22 @@ public class CustomerIdTypeMobileTypeUpdatedByDTO {
 		this.customerType = customerType;
 	}
 
-	public String getUpdatedBy() {
-		return updatedBy;
+
+	
+	
+	public String getRequestedBy() {
+		return requestedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
+	public void setRequestedBy(String requestedBy) {
+		this.requestedBy = requestedBy;
 	}
 
 	@Override
 	public String toString() {
-		return "CustomerIdTypeMobileTypeDTO [customerId=" + customerId
+		return "CustomerIdTypeMobileTypeUpdatedByDTO [customerId=" + customerId
 				+ ", customerType=" + customerType + ", mobileType="
-				+ mobileType + ", updatedBy=" + updatedBy + "]";
+				+ mobileType + ", requestedBy=" + requestedBy + "]";
 	}
 
 	@Override
@@ -86,7 +90,7 @@ public class CustomerIdTypeMobileTypeUpdatedByDTO {
 		result = prime * result
 				+ ((mobileType == null) ? 0 : mobileType.hashCode());
 		result = prime * result
-				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+				+ ((requestedBy == null) ? 0 : requestedBy.hashCode());
 		return result;
 	}
 
@@ -114,15 +118,15 @@ public class CustomerIdTypeMobileTypeUpdatedByDTO {
 				return false;
 		} else if (!mobileType.equals(other.mobileType))
 			return false;
-		if (updatedBy == null) {
-			if (other.updatedBy != null)
+		if (requestedBy == null) {
+			if (other.requestedBy != null)
 				return false;
-		} else if (!updatedBy.equals(other.updatedBy))
+		} else if (!requestedBy.equals(other.requestedBy))
 			return false;
 		return true;
 	}
 
-	
+		
 		
 	
 }

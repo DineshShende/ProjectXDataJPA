@@ -101,6 +101,42 @@ public class CustomerDetailsControllerWACTest {
 	}
 	
 	@Test
+	public void saveCustomerDetailsCopiedFromQuickRegisterEntityErrorNullFirstName() throws Exception
+	{
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsCopiedFromQuickRegisterEntityErrorNullFirstName()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	            
+	            
+		
+	}
+	
+	
+	
+	@Test
+	public void saveCustomerDetailsCopiedFromQuickRegisterEntityWithInvalidAddress() throws Exception
+	{
+		
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsWithInvalidAddress()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	            
+	            
+		
+	}
+	
+	@Test
 	public void saveCustomerDetailsCopiedFromQuickRegisterEntityErrorAlreadyReported() throws Exception
 	{
 		

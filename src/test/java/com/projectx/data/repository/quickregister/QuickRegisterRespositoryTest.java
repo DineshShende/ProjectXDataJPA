@@ -23,22 +23,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import com.projectx.data.config.Application;
 import com.projectx.data.domain.quickregister.MobilePinPasswordDTO;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
@@ -57,6 +41,8 @@ public class QuickRegisterRespositoryTest {
 	@Autowired
 	TransactionalUpdatesRepository transactionalUpdatesRepository;
 	
+	//@Autowired
+	//JdbcTemplateDAOImpl jdbcTemplateDAOImpl;
 	
 	
 	@PersistenceContext
@@ -388,20 +374,39 @@ public class QuickRegisterRespositoryTest {
 	//	assertTrue(customer.getIsMobileVerified());
 	}
 	
+	/*
 	
 	@Test
 	public void getTestData()
 	{
 		CustomerQuickRegisterEmailMobileVerificationEntity savedEntity=transactionalUpdatesRepository.saveNewQuickRegisterEntity(standardEmailMobileCustomer());
 		
-		List<MobilePinPasswordDTO> list=customerQuickRegisterRepository.getTestData();
-	
-		System.out.println(list.get(0));
+		//Object[] list=customerQuickRegisterRepository.getTestData();
 		
-		assertEquals(1, list.size());
+		List<MobilePinPasswordDTO> list=jdbcTemplateDAOImpl.getList();
+		
+		for(MobilePinPasswordDTO dto:list)
+		{
+			System.out.println(dto);
+		}
+		
+		//System.out.println(list.iterator().next());
+		
+		//for(int i=0;i<list.length;i++)
+		{
+			//System.out.println(dto);
+			//System.out.println(list[i]);
+		}
+	
+		//System.out.println(list.get(0));
+		
+		//assertEquals(1, list.size());
+		
+		System.out.println(list);
 		
 	}
 
+*/
 	
 	@Test
 	public void clearTestingData()

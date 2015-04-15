@@ -60,6 +60,16 @@ public class DriverDetailsDataFixtures {
 		
 	}
 	
+	public static DriverDetails standardDriverDetailsInvalidAddress()
+	{
+		return new DriverDetails(1L, DRIVER_FIRST_NAME, DRIVER_MIDDLE_NAME, DRIVER_LAST_NAME, DRIVER_DATE, DRIVER_BLOOD_GROUP, standardAddressInvalid(),
+				DRIVER_MOBILE,DRIVER_BOOLEAN_FALSE, DRIVER_HOME_NUMBER, DRIVER_LICENCE_NUMBER, DRIVER_DATE, DRIVER_DATE, DRIVER_BOOLEAN_FALSE,
+				DRIVER_BOOLEAN_FALSE, DRIVER_LANGUAGE, DRIVER_VENDOR_ID, DRIVER_DATE, DRIVER_DATE, DRIVER_UPDATED_BY);
+		
+		
+	}
+	
+	
 	public static DriverDetails standardDriverDetailsWithError()
 	{
 		return new DriverDetails(1L, DRIVER_FIRST_NAME, DRIVER_MIDDLE_NAME, null, DRIVER_DATE, DRIVER_BLOOD_GROUP, standardAddress(),

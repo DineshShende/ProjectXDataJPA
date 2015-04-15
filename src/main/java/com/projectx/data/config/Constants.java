@@ -17,6 +17,11 @@ public class Constants {
 	 	
 	 	@Value("${spring.profiles.active}")
 	    public String SPRING_PROFILE_ACTIVE;
+	 	
+	 	@Value("${spring.datasource.url}")
+	 	public String database;
+	 	
+	 	
 	    public static final String SPRING_PROFILE_DEVELOPMENT ="Dev";
 	    public static final String SPRING_PROFILE_PRODUCTION = "Prod";
 	    public static final String SPRING_PROFILE_TEST = "Test";

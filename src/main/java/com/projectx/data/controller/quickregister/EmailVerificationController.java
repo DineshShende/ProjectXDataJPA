@@ -126,7 +126,7 @@ public class EmailVerificationController {
 		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
 				.incrementResendCountByCustomerIdAndEmail(customerIdEmailDTO.getCustomerId(),customerIdEmailDTO.getCustomerType(), customerIdEmailDTO.getEmailType(),
-						new Date(),customerIdEmailDTO.getUpdatedBy());
+						new Date(),customerIdEmailDTO.getRequestedBy());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		

@@ -62,7 +62,12 @@ public class DriverDetailsCustomRepository {
 	@Transactional(rollbackOn=DataIntegrityViolationException.class)
 	public DriverDetails save(DriverDetails driverDetails)
 	{
-		DriverDetails oldEntity=driverDetailsRepository.findOne(driverDetails.getDriverId());
+		DriverDetails oldEntity=null;
+		
+		if(driverDetails.getDriverId()!=null)
+			oldEntity=driverDetailsRepository.findOne(driverDetails.getDriverId());
+		else
+			oldEntity=null;
 		
 		if(oldEntity!=null)
 		{

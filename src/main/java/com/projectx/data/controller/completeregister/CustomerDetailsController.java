@@ -10,6 +10,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,7 +47,14 @@ public class CustomerDetailsController {
 	public ResponseEntity<CustomerDetails> saveCustomerDetails(@Valid @RequestBody CustomerDetails customerDetails,BindingResult resultValid)
 	{
 		if(resultValid.hasErrors())
+		{
+			for(FieldError error:resultValid.getFieldErrors())
+			{
+				System.out.println(error.getField());
+				System.out.println(error.getDefaultMessage());
+			}
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
 		
 		ResponseEntity<CustomerDetails> result=null;
 		

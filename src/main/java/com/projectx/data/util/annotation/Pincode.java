@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 	public @interface Pincode {
 	  
 	      
-	    String message() default "{Phone}";
+	    String message() default "Pincode should be in range between 100000 and 999999";
 	      
 	    Class<?>[] groups() default {};
 	      

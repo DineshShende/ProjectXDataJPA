@@ -76,6 +76,15 @@ public class CustomerDetailsDataFixtures {
 				null, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
 	}
 	
+	public static CustomerDetails standardCustomerDetailsCopiedFromQuickRegisterEntityErrorNullFirstName()
+	{
+		return new CustomerDetails(333L, null,CUST_MIDDLENAME,
+				standardEmailMobileCustomer().getLastName(), null, null, standardEmailMobileCustomer().getMobile(),null, 
+				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
+				standardEmailMobileCustomer().getIsEmailVerified(), null, null, null, null, null, null,
+				null, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+	}
+	
 	public static CustomerDetails standardCustomerDetailsCopiedFromQuickRegisterEntityError()
 	{
 		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),CUST_MIDDLENAME,
@@ -128,6 +137,16 @@ public class CustomerDetailsDataFixtures {
 	{
 		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),CUST_MIDDLENAME,
 				standardEmailMobileCustomer().getLastName(), CUST_DATE, standardAddress(), CUST_MOBILE_NEW,null, 
+				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
+				standardEmailMobileCustomer().getIsEmailVerified(), CUST_LANG, CUST_BUSINESS_DOMAIN, CUST_NAME_OF_FIRM, standardAddress(),
+				CUST_SEC_MOBILE, null,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+		
+	}
+	
+	public static CustomerDetails standardCustomerDetailsWithInvalidAddress()
+	{
+		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),CUST_MIDDLENAME,
+				standardEmailMobileCustomer().getLastName(), CUST_DATE, standardAddressInvalid(), null,null, 
 				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
 				standardEmailMobileCustomer().getIsEmailVerified(), CUST_LANG, CUST_BUSINESS_DOMAIN, CUST_NAME_OF_FIRM, standardAddress(),
 				CUST_SEC_MOBILE, null,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);

@@ -16,6 +16,7 @@ import com.projectx.data.util.annotation.Pincode;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
 
+
 @Entity
 @Table(name="Address")
 public class Address {
@@ -24,22 +25,22 @@ public class Address {
 	@Column(name="ADDRESSID")
 	private Long addressId;
 	
-	@NotNull
+	@NotNull(message="CustomerType can't be NULL")
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
-	@Column(name="ADDRESSLINE")
+	@NotNull(message="AddressLine can't be NULL")
 	private String addressLine;
 	
-	@NotNull
+	@NotNull(message="City can't be NULL")
 	@Column(name="CITY")
 	private String city;
 	
-	@NotNull
+	@NotNull(message="District can't be NULL")
 	@Column(name="DISTRICT")
 	private String district;
 	
-	@NotNull
+	@NotNull(message="State can't be NULL")
 	@Column(name="STATE")
 	private String state;
 	
@@ -47,15 +48,15 @@ public class Address {
 	@Column(name="PINCODE")
 	private Integer pincode;
 
-	@NotNull
+	@NotNull(message="InsertTime can't be NULL")
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	@NotNull
+	@NotNull(message="UpdateTime can't be NULL")
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	@NotNull
+	@NotNull(message="updatedBy can't be NULL")
 	@Column(name="UPDATEBY")
 	private String updatedBy;
 
