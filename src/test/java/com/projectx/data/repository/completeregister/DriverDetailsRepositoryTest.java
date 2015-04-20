@@ -3,6 +3,7 @@ package com.projectx.data.repository.completeregister;
 import static org.junit.Assert.*;
 import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.DriverDetailsDataFixtures.*;
+import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
 
 import java.util.Date;
 import java.util.List;
@@ -58,7 +59,7 @@ public class DriverDetailsRepositoryTest {
 		assertEquals(0, driverDetailsRepository.count().intValue());
 		
 		mobileVerificationDetailsRepository
-		.save(new MobileVerificationDetails(new MobileVerificationKey(234L, 1, 1), DRIVER_MOBILE, null, 0,0, new Date(), new Date(), "CUST_ONLINE"));
+		.save(standardCustomerMobileVerificationDetails(standardDriverDetails().getMobile()));
 	
 		assertEquals(1, mobileVerificationDetailsRepository.count());
 		
@@ -179,7 +180,8 @@ public class DriverDetailsRepositoryTest {
 		
 		assertEquals(1, driverDetailsRepository.count().intValue());
 		
-		assertEquals(1, driverDetailsRepository.updateMobileAndMobileVerificationStatus(savedEntity.getDriverId(), 988776655443L, true,DRIVER_UPDATED_BY).intValue());
+		assertEquals(1, driverDetailsRepository.updateMobileAndMobileVerificationStatus(savedEntity.getDriverId(), 988776655443L, 
+				true,DRIVER_UPDATED_BY,savedEntity.getDriverId()).intValue());
 		
 		
 	}

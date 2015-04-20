@@ -12,11 +12,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.util.annotation.AuthenticationDetailsValid;
 import com.projectx.data.util.serializer.*;
+import com.projectx.rest.domain.quickregister.ResponseDTO;
 
 @AuthenticationDetailsValid
 @Entity
 @Table(name="AUTHENTICATIONDETAILS")
-public class AuthenticationDetails  {
+public class AuthenticationDetails {
 
 	@EmbeddedId
 	private AuthenticationDetailsKey key;
@@ -30,44 +31,58 @@ public class AuthenticationDetails  {
 	@Column(name="PASSWORD")
 	private String password;
 	
-	@NotNull
+	@NotNull(message="PasswordType cann't be NULL")
 	@Column(name="PASSWORDTYPE")
 	private String passwordType;
 	
 	@Column(name="EMAILPASSWORD")
 	private String emailPassword;
 	
-	@NotNull
+	@NotNull(message="ResendCount cann't be NULL")
 	@Column(name="RESENDCOUNT")
 	private Integer resendCount;
 	
-	@NotNull
+	@NotNull(message="LastUnsucessfullAttempts cann't be NULL")
 	@Column(name="LASTUNSUCESSFULLATTEMPTS")
 	private Integer lastUnsucessfullAttempts;
 
-	@NotNull
+	@NotNull(message="InsertTime can't be NULL")
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	@NotNull
+	@NotNull(message="UpdateTime can't be NULL")
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	@NotNull
+	@NotNull(message="UpdatedBy can't be NULL")
 	@Column(name="UPDATEDBY")
-	private String updatedBy;
+	private Integer updatedBy;
+	
+	@NotNull(message="InsertedBy can't be NULL")
+	@Column(name="INSERTEDBY")
+	private Integer insertedBy;
+	
+	@NotNull(message="UpdatedById can't be NULL")
+	@Column(name="UPDATEDBYID")
+	private Long updatedById;
+	
+	@NotNull(message="InsertedById can't be NULL")
+	@Column(name="INSERTEDBYID")
+	private Long insertedById;
 
 
 	public AuthenticationDetails() {
-
+		super();
 	}
 
+	
+	
 
 	public AuthenticationDetails(AuthenticationDetailsKey key, String email,
 			Long mobile, String password, String passwordType,
 			String emailPassword, Integer resendCount,
 			Integer lastUnsucessfullAttempts, Date insertTime, Date updateTime,
-			String updatedBy) {
+			Integer updatedBy,Integer insertedBy,Long updatedById,Long insertedById) {
 
 		this.key = key;
 		this.email = email;
@@ -80,6 +95,9 @@ public class AuthenticationDetails  {
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
+		this.insertedBy=insertedBy;
+		this.updatedById=updatedById;
+		this.insertedById=insertedById;
 	}
 
 
@@ -182,14 +200,43 @@ public class AuthenticationDetails  {
 		this.updateTime = updateTime;
 	}
 
-
-	public String getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
 
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
 	}
 
 
@@ -201,7 +248,9 @@ public class AuthenticationDetails  {
 				+ emailPassword + ", resendCount=" + resendCount
 				+ ", lastUnsucessfullAttempts=" + lastUnsucessfullAttempts
 				+ ", insertTime=" + insertTime + ", updateTime=" + updateTime
-				+ ", updatedBy=" + updatedBy + "]";
+				+ ", updatedBy=" + updatedBy + ", insertedBy=" + insertedBy
+				+ ", updatedById=" + updatedById + ", insertedById="
+				+ insertedById + "]";
 	}
 
 
@@ -214,6 +263,10 @@ public class AuthenticationDetails  {
 				+ ((emailPassword == null) ? 0 : emailPassword.hashCode());
 		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
+		result = prime * result
+				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
+		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime
 				* result
@@ -230,6 +283,8 @@ public class AuthenticationDetails  {
 				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		return result;
 	}
 
@@ -256,7 +311,16 @@ public class AuthenticationDetails  {
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (!insertTime.equals(other.insertTime))
+		} 
+		if (insertedBy == null) {
+			if (other.insertedBy != null)
+				return false;
+		} else if (!insertedBy.equals(other.insertedBy))
+			return false;
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		} else if (!insertedById.equals(other.insertedById))
 			return false;
 		if (key == null) {
 			if (other.key != null)
@@ -292,15 +356,19 @@ public class AuthenticationDetails  {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (!updateTime.equals(other.updateTime))
-			return false;
-		if (updatedBy == null) {
+		}if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
 			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
+			return false;
 		return true;
 	}
+
 
 
 				

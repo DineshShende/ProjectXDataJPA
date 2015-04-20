@@ -115,7 +115,7 @@ public class AuthenticationControllerWACTest {
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetailsDuplicate()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
@@ -129,19 +129,19 @@ public class AuthenticationControllerWACTest {
 	{
 		this.mockMvc.perform(
 	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetails()))
+	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isCreated())
 	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerEmailAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailAuthenticationDetails().getMobile()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
 	           // .andExpect(jsonPath("$.password").value(null))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailAuthenticationDetails().getPasswordType()))
-	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailAuthenticationDetails().getEmailPassword()))
-	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailAuthenticationDetails().getResendCount()))
-	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailAuthenticationDetails().getLastUnsucessfullAttempts()));
+	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()))
+	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailMobileAuthenticationDetails().getEmailPassword()))
+	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailMobileAuthenticationDetails().getResendCount()))
+	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
 		
 		
 	}

@@ -34,17 +34,30 @@ public class EmailVerificationDetails  {
 	@Column(name="RESENDCOUNT")
 	private Integer resendCount;
 	
-	@NotNull
-	@Column(name="INSERTIME")
+	@NotNull(message="InsertTime can't be NULL")
+	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	@NotNull
+	@NotNull(message="UpdateTime can't be NULL")
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	@NotNull
+	@NotNull(message="UpdatedBy can't be NULL")
 	@Column(name="UPDATEDBY")
-	private String updatedBy;
+	private Integer updatedBy;
+	
+	@NotNull(message="InsertedBy can't be NULL")
+	@Column(name="INSERTEDBY")
+	private Integer insertedBy;
+	
+	@NotNull(message="UpdatedById can't be NULL")
+	@Column(name="UPDATEDBYID")
+	private Long updatedById;
+	
+	@NotNull(message="InsertedById can't be NULL")
+	@Column(name="INSERTEDBYID")
+	private Long insertedById;
+
 	
 
 
@@ -54,7 +67,8 @@ public class EmailVerificationDetails  {
 
 	public EmailVerificationDetails(EmailVerificationKey key, String email,
 			String emailHash, Date emailHashSentTime, Integer resendCount,
-			Date insertTime, Date updateTime, String updatedBy) {
+			Date insertTime, Date updateTime, Integer updatedBy,
+			Integer insertedBy,Long updatedById,Long insertedById) {
 		super();
 		this.key = key;
 		this.email = email;
@@ -64,6 +78,9 @@ public class EmailVerificationDetails  {
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
+		this.insertedBy=insertedBy;
+		this.updatedById=updatedById;
+		this.insertedById=insertedById;
 	}
 
 
@@ -145,15 +162,36 @@ public class EmailVerificationDetails  {
 	}
 
 
-
-	public String getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-
-
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
 	}
 
 	@Override
@@ -162,13 +200,16 @@ public class EmailVerificationDetails  {
 				+ ", emailHash=" + emailHash + ", emailHashSentTime="
 				+ emailHashSentTime + ", resendCount=" + resendCount
 				+ ", insertTime=" + insertTime + ", updateTime=" + updateTime
-				+ ", updatedBy=" + updatedBy + "]";
+				+ ", updatedBy=" + updatedBy + ", insertedBy=" + insertedBy
+				+ ", updatedById=" + updatedById + ", insertedById="
+				+ insertedById + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result
 				+ ((emailHash == null) ? 0 : emailHash.hashCode());
 		result = prime
@@ -176,9 +217,11 @@ public class EmailVerificationDetails  {
 				+ ((emailHashSentTime == null) ? 0 : emailHashSentTime
 						.hashCode());
 		result = prime * result
-				+ ((email == null) ? 0 : email.hashCode());
-		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
+		result = prime * result
+				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
+		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
 		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		result = prime * result
 				+ ((resendCount == null) ? 0 : resendCount.hashCode());
@@ -186,10 +229,10 @@ public class EmailVerificationDetails  {
 				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -200,6 +243,11 @@ public class EmailVerificationDetails  {
 		if (getClass() != obj.getClass())
 			return false;
 		EmailVerificationDetails other = (EmailVerificationDetails) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
 		if (emailHash == null) {
 			if (other.emailHash != null)
 				return false;
@@ -210,15 +258,19 @@ public class EmailVerificationDetails  {
 				return false;
 		} else if (!emailHashSentTime.equals(other.emailHashSentTime))
 			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (!insertTime.equals(other.insertTime))
+		} 
+		if (insertedBy == null) {
+			if (other.insertedBy != null)
+				return false;
+		} else if (!insertedBy.equals(other.insertedBy))
+			return false;
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		} else if (!insertedById.equals(other.insertedById))
 			return false;
 		if (key == null) {
 			if (other.key != null)
@@ -233,16 +285,23 @@ public class EmailVerificationDetails  {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (!updateTime.equals(other.updateTime))
-			return false;
+		} 
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
 			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
+			return false;
 		return true;
 	}
 
+
+	
+	
 	/*
 	@Override
 	@JsonIgnore

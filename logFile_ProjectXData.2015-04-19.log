@@ -1,0 +1,34 @@
+2015-04-19 18:43:41,309 INFO  [main] RemoteTestRunner: Starting RemoteTestRunner on chhand-Vostro-3446 with PID 3357 (/home/chhand/sts-bundle/sts-3.6.0.RELEASE/configuration/org.eclipse.osgi/405/0/.cp started by chhand in /home/chhand/WorkSpace/ProjectXDataJPA)
+2015-04-19 18:43:41,311 DEBUG [main] RemoteTestRunner: Running with Spring Boot v1.2.1.RELEASE, Spring v4.1.4.RELEASE
+2015-04-19 18:43:42,600 DEBUG [main] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2015-04-19 18:43:45,409 INFO  [main] DatabaseMetaData: HHH000262: Table not found: test_child
+2015-04-19 18:43:45,413 INFO  [main] DatabaseMetaData: HHH000262: Table not found: test_parent
+2015-04-19 18:43:45,449 INFO  [main] DatabaseMetaData: HHH000262: Table not found: test_child
+2015-04-19 18:43:45,453 INFO  [main] DatabaseMetaData: HHH000262: Table not found: test_parent
+2015-04-19 18:43:45,457 INFO  [main] DatabaseMetaData: HHH000262: Table not found: test_child
+2015-04-19 18:43:45,461 INFO  [main] DatabaseMetaData: HHH000262: Table not found: test_parent
+2015-04-19 18:43:48,492 INFO  [main] RemoteTestRunner: Started RemoteTestRunner in 7.45 seconds (JVM running for 8.34)
+2015-04-19 18:54:03,610 INFO  [main] RemoteTestRunner: Starting RemoteTestRunner on chhand-Vostro-3446 with PID 3465 (/home/chhand/sts-bundle/sts-3.6.0.RELEASE/configuration/org.eclipse.osgi/405/0/.cp started by chhand in /home/chhand/WorkSpace/ProjectXDataJPA)
+2015-04-19 18:54:03,613 DEBUG [main] RemoteTestRunner: Running with Spring Boot v1.2.1.RELEASE, Spring v4.1.4.RELEASE
+2015-04-19 18:54:05,001 DEBUG [main] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2015-04-19 18:54:09,393 INFO  [main] RemoteTestRunner: Started RemoteTestRunner in 6.019 seconds (JVM running for 6.717)
+2015-04-19 18:55:08,444 INFO  [main] RemoteTestRunner: Starting RemoteTestRunner on chhand-Vostro-3446 with PID 3502 (/home/chhand/sts-bundle/sts-3.6.0.RELEASE/configuration/org.eclipse.osgi/405/0/.cp started by chhand in /home/chhand/WorkSpace/ProjectXDataJPA)
+2015-04-19 18:55:08,446 DEBUG [main] RemoteTestRunner: Running with Spring Boot v1.2.1.RELEASE, Spring v4.1.4.RELEASE
+2015-04-19 18:55:09,765 DEBUG [main] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2015-04-19 18:55:14,431 INFO  [main] RemoteTestRunner: Started RemoteTestRunner in 6.221 seconds (JVM running for 7.092)
+2015-04-19 18:55:43,053 INFO  [main] RemoteTestRunner: Starting RemoteTestRunner on chhand-Vostro-3446 with PID 3540 (/home/chhand/sts-bundle/sts-3.6.0.RELEASE/configuration/org.eclipse.osgi/405/0/.cp started by chhand in /home/chhand/WorkSpace/ProjectXDataJPA)
+2015-04-19 18:55:43,055 DEBUG [main] RemoteTestRunner: Running with Spring Boot v1.2.1.RELEASE, Spring v4.1.4.RELEASE
+2015-04-19 18:55:44,256 DEBUG [main] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2015-04-19 18:55:49,277 INFO  [main] RemoteTestRunner: Started RemoteTestRunner in 6.446 seconds (JVM running for 7.112)
+2015-04-19 18:56:35,635 INFO  [main] RemoteTestRunner: Starting RemoteTestRunner on chhand-Vostro-3446 with PID 3582 (/home/chhand/sts-bundle/sts-3.6.0.RELEASE/configuration/org.eclipse.osgi/405/0/.cp started by chhand in /home/chhand/WorkSpace/ProjectXDataJPA)
+2015-04-19 18:56:35,637 DEBUG [main] RemoteTestRunner: Running with Spring Boot v1.2.1.RELEASE, Spring v4.1.4.RELEASE
+2015-04-19 18:56:36,987 DEBUG [main] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2015-04-19 18:56:41,481 INFO  [main] RemoteTestRunner: Started RemoteTestRunner in 6.087 seconds (JVM running for 6.773)
+2015-04-19 18:58:13,064 INFO  [main] RemoteTestRunner: Starting RemoteTestRunner on chhand-Vostro-3446 with PID 3675 (/home/chhand/sts-bundle/sts-3.6.0.RELEASE/configuration/org.eclipse.osgi/405/0/.cp started by chhand in /home/chhand/WorkSpace/ProjectXDataJPA)
+2015-04-19 18:58:13,067 DEBUG [main] RemoteTestRunner: Running with Spring Boot v1.2.1.RELEASE, Spring v4.1.4.RELEASE
+2015-04-19 18:58:14,387 DEBUG [main] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2015-04-19 18:58:18,936 INFO  [main] RemoteTestRunner: Started RemoteTestRunner in 6.099 seconds (JVM running for 6.786)
+2015-04-19 19:06:04,242 INFO  [main] RemoteTestRunner: Starting RemoteTestRunner on chhand-Vostro-3446 with PID 3767 (/home/chhand/sts-bundle/sts-3.6.0.RELEASE/configuration/org.eclipse.osgi/405/0/.cp started by chhand in /home/chhand/WorkSpace/ProjectXDataJPA)
+2015-04-19 19:06:04,245 DEBUG [main] RemoteTestRunner: Running with Spring Boot v1.2.1.RELEASE, Spring v4.1.4.RELEASE
+2015-04-19 19:06:05,552 DEBUG [main] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider
+2015-04-19 19:06:10,184 INFO  [main] RemoteTestRunner: Started RemoteTestRunner in 6.176 seconds (JVM running for 6.842)

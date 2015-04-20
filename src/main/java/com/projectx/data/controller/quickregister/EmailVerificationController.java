@@ -107,7 +107,7 @@ public class EmailVerificationController {
 		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
 				.resetEmailHashAndEmailHashSentTime(dto.getCustomerId(),dto.getCustomerType(), dto.getEmailType(), dto.getEmailHash(), dto.getEmailHashSentTime(),
-						dto.getResendCount(),new Date(),dto.getUpdatedBy());
+						dto.getResendCount(),new Date(),dto.getUpdatedBy(),dto.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		
@@ -126,7 +126,7 @@ public class EmailVerificationController {
 		
 		Integer updateStatus=customerEmailVerificationDetailsRepository
 				.incrementResendCountByCustomerIdAndEmail(customerIdEmailDTO.getCustomerId(),customerIdEmailDTO.getCustomerType(), customerIdEmailDTO.getEmailType(),
-						new Date(),customerIdEmailDTO.getRequestedBy());
+						new Date(),customerIdEmailDTO.getRequestedBy(),customerIdEmailDTO.getRequestedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		

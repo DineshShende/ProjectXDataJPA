@@ -30,6 +30,7 @@ public class Address {
 	private Integer customerType;
 	
 	@NotNull(message="AddressLine can't be NULL")
+	@Column(name="ADDRESSLINE")
 	private String addressLine;
 	
 	@NotNull(message="City can't be NULL")
@@ -56,9 +57,23 @@ public class Address {
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	@NotNull(message="updatedBy can't be NULL")
-	@Column(name="UPDATEBY")
-	private String updatedBy;
+	@NotNull(message="UpdatedBy can't be NULL")
+	@Column(name="UPDATEDBY")
+	private Integer updatedBy;
+	
+	@NotNull(message="InsertedBy can't be NULL")
+	@Column(name="INSERTEDBY")
+	private Integer insertedBy;
+	
+	@NotNull(message="UpdatedById can't be NULL")
+	@Column(name="UPDATEDBYID")
+	private Long updatedById;
+	
+	@NotNull(message="InsertedById can't be NULL")
+	@Column(name="INSERTEDBYID")
+	private Long insertedById;
+	
+	
 
 	public Address() {
 
@@ -67,7 +82,8 @@ public class Address {
 	
 	public Address( Integer customerType, String addressLine,
 			String city, String district, String state, Integer pincode,
-			Date insertTime, Date updateTime, String updatedBy) {
+			Date insertTime, Date updateTime, Integer updatedBy,
+			Integer insertedBy,Long updatedById,Long insertedById) {
 		
 		this.customerType = customerType;
 		this.addressLine = addressLine;
@@ -78,6 +94,32 @@ public class Address {
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
+		this.insertedBy=insertedBy;
+		this.updatedById=updatedById;
+		this.insertedById=insertedById;
+	}
+
+
+	
+	
+	public Address(Long addressId, Integer customerType, String addressLine,
+			String city, String district, String state, Integer pincode,
+			Date insertTime, Date updateTime, Integer updatedBy,
+			Integer insertedBy, Long updatedById, Long insertedById) {
+		super();
+		this.addressId = addressId;
+		this.customerType = customerType;
+		this.addressLine = addressLine;
+		this.city = city;
+		this.district = district;
+		this.state = state;
+		this.pincode = pincode;
+		this.insertTime = insertTime;
+		this.updateTime = updateTime;
+		this.updatedBy = updatedBy;
+		this.insertedBy = insertedBy;
+		this.updatedById = updatedById;
+		this.insertedById = insertedById;
 	}
 
 
@@ -141,15 +183,48 @@ public class Address {
 		this.updateTime = updateTime;
 	}
 
-	public String getUpdatedBy() {
+
+	
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
+
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
-	
+
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
+	}
+
+
 	public Integer getCustomerType() {
 		return customerType;
 	}
@@ -172,6 +247,8 @@ public class Address {
 
 	
 	
+
+
 	@Override
 	public String toString() {
 		return "Address [addressId=" + addressId + ", customerType="
@@ -179,7 +256,8 @@ public class Address {
 				+ city + ", district=" + district + ", state=" + state
 				+ ", pincode=" + pincode + ", insertTime=" + insertTime
 				+ ", updateTime=" + updateTime + ", updatedBy=" + updatedBy
-				+ "]";
+				+ ", insertedBy=" + insertedBy + ", updatedById=" + updatedById
+				+ ", insertedById=" + insertedById + "]";
 	}
 
 
@@ -198,12 +276,18 @@ public class Address {
 				+ ((district == null) ? 0 : district.hashCode());
 		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
+		result = prime * result
+				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
+		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
 		result = prime * result + ((pincode == null) ? 0 : pincode.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result
 				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		return result;
 	}
 
@@ -216,16 +300,7 @@ public class Address {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		
 		Address other = (Address) obj;
-		
-		//To take care of automatically generated values
-		/*
-		if (addressId == null) {
-			if (other.addressId != null)
-				return false;
-		} else if (!addressId.equals(other.addressId))
-			return false;*/
 		if (addressLine == null) {
 			if (other.addressLine != null)
 				return false;
@@ -249,7 +324,16 @@ public class Address {
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (Math.abs(insertTime.getTime()-other.insertTime.getTime())>10000)
+		} 
+		if (insertedBy == null) {
+			if (other.insertedBy != null)
+				return false;
+		} else if (!insertedBy.equals(other.insertedBy))
+			return false;
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		} else if (!insertedById.equals(other.insertedById))
 			return false;
 		if (pincode == null) {
 			if (other.pincode != null)
@@ -264,15 +348,21 @@ public class Address {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (Math.abs(updateTime.getTime()-other.updateTime.getTime())>10000)
-			return false;
+		} 
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
 			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
+			return false;
 		return true;
 	}
+
+
 
 
 		

@@ -3,6 +3,8 @@ package com.projectx.data.fixtures.quickregister;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.google.gson.Gson;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 import com.projectx.rest.domain.quickregister.CustomerIdDTO;
@@ -17,6 +19,9 @@ import com.projectx.rest.domain.quickregister.UpdatePasswordEmailPasswordAndPass
 
 public class QuickRegisterDataFixture {
 
+	
+
+	public static Integer ACTOR_ENTITY_SELF_WEB=1;
 	
 	public static Long CUST_ID=212L;
 	public static String CUST_FIRSTNAME="dinesh";
@@ -61,7 +66,7 @@ public class QuickRegisterDataFixture {
 	public static Boolean CUST_ISEMAIL_VERIFIED=false;
 	public static Date CUST_INSERT_TIME=new Date();
 	public static Date CUST_UPDATE_TIME=new Date();
-	public static String CUST_UPDATED_BY="CUST_ONLINE";
+	public static Integer CUST_UPDATED_BY=1;
 	
 
 	static Gson gson=new Gson();
@@ -71,41 +76,41 @@ public class QuickRegisterDataFixture {
 	public static QuickRegisterEntity standardEmailMobileCustomer()
 	{
 		return new QuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL, CUST_MOBILE, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED,CUST_TYPE_CUSTOMER ,CUST_INSERT_TIME, 
-				CUST_UPDATE_TIME, CUST_UPDATED_BY);
+				CUST_UPDATE_TIME, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 		
 	}
 	
 	public static QuickRegisterEntity standardEmailMobileVendor()
 	{
 		return new QuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL, CUST_MOBILE, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED,CUST_TYPE_VENDER ,CUST_INSERT_TIME, 
-				CUST_UPDATE_TIME, CUST_UPDATED_BY);
+				CUST_UPDATE_TIME, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 		
 	}
 	
 	public static QuickRegisterEntity standardEmailMobileCustomerWithErrors()
 	{
 		return new QuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, null, null, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED,CUST_TYPE_CUSTOMER, CUST_INSERT_TIME, 
-				CUST_UPDATE_TIME, CUST_UPDATED_BY);
+				CUST_UPDATE_TIME, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 		
 	}
 	
 	public static QuickRegisterEntity standardEmailMobileVendorWithErrorNullFirstName()
 	{
 		return new QuickRegisterEntity(CUST_ID, null, CUST_LASTNAME, CUST_EMAIL, CUST_MOBILE, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED,CUST_TYPE_VENDER ,CUST_INSERT_TIME, 
-				CUST_UPDATE_TIME, CUST_UPDATED_BY);
+				CUST_UPDATE_TIME, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 		
 	}
 	
 	public static QuickRegisterEntity standardMobileCustomer()
 	{
 		return new QuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, null, CUST_MOBILE, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED,CUST_TYPE_CUSTOMER, CUST_INSERT_TIME, 
-				CUST_UPDATE_TIME, CUST_UPDATED_BY);
+				CUST_UPDATE_TIME, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 	}
 	
 	public static QuickRegisterEntity standardEmailCustomer()
 	{
 		return new QuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL, null, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED,CUST_TYPE_CUSTOMER, CUST_INSERT_TIME, 
-				CUST_UPDATE_TIME, CUST_UPDATED_BY);
+				CUST_UPDATE_TIME, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 		
 	}
 	
@@ -115,7 +120,7 @@ public class QuickRegisterDataFixture {
 	{
 		
 		return new QuickRegisterEntity(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, CUST_EMAIL_OTHER, null, CUST_PIN, CUST_ISEMAIL_VERIFIED, CUST_ISMOBILE_VERIFIED,CUST_TYPE_CUSTOMER, CUST_INSERT_TIME, 
-					CUST_UPDATE_TIME, CUST_UPDATED_BY);
+					CUST_UPDATE_TIME, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 			
 	}
 	
@@ -152,7 +157,7 @@ public class QuickRegisterDataFixture {
 	
 	public static UpdateEmailMobileVerificationStatus standardUpdateEmailMobileVerificationStatus()
 	{
-		return new UpdateEmailMobileVerificationStatus(CUST_ID, true, new Date(), CUST_UPDATED_BY);
+		return new UpdateEmailMobileVerificationStatus(CUST_ID, true, new Date(), CUST_UPDATED_BY,CUST_ID);
 	}
 	
 	

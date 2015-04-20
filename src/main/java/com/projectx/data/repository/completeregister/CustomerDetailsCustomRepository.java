@@ -16,7 +16,7 @@ import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.domain.quickregister.MobileVerificationKey;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
-import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
+
 
 @Repository
 @Profile(value={"Test","Dev","Prod"})
@@ -44,19 +44,19 @@ public class CustomerDetailsCustomRepository {
 	}
 	
 	
-	public Integer updateMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status,String updatedBy)
+	public Integer updateMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status,Integer updatedBy,Long updatedById)
 	{
-		return customerDetailsRepository.updateMobileAndMobileVerificationStatus(customerId, mobile, status,new Date(),updatedBy);
+		return customerDetailsRepository.updateMobileAndMobileVerificationStatus(customerId, mobile, status,new Date(),updatedBy,updatedById);
 	}
 	
-	public Integer updateSecondaryMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status,String updatedBy)
+	public Integer updateSecondaryMobileAndVerificationStatusInMainEntity(Long customerId,Long mobile,Boolean status,Integer updatedBy,Long updatedById)
 	{
-		return customerDetailsRepository.updateSecMobileAndSecMobileVerificationStatus(customerId, mobile, status,new Date(),updatedBy);
+		return customerDetailsRepository.updateSecMobileAndSecMobileVerificationStatus(customerId, mobile, status,new Date(),updatedBy,updatedById);
 	}
 	
-	public Integer updateEmailAndVerificationStatusInMainEntity(Long customerId,String email,Boolean status,String updatedBy)
+	public Integer updateEmailAndVerificationStatusInMainEntity(Long customerId,String email,Boolean status,Integer updatedBy,Long updatedById)
 	{
-		return customerDetailsRepository.updateEmailAndMEmailVerificationStatus(customerId, email, status,new Date(),updatedBy);
+		return customerDetailsRepository.updateEmailAndMEmailVerificationStatus(customerId, email, status,new Date(),updatedBy,updatedById);
 	}
 	
 	public Long count()

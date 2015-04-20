@@ -21,9 +21,9 @@ public interface DriverDetailsRepository extends
 	@Transactional
 	@Modifying
 	@Query(value="update driverdetails set mobile=:mobile,ismobileverified=:isMobileVerified,"
-			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy where driverid=:driverId",nativeQuery=true)
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where driverid=:driverId",nativeQuery=true)
 	Integer updateMobileAndMobileVerificationStaus(@Param("driverId")Long driverId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified,
-			@Param("updateTime") Date updateTime,@Param("updatedBy") String updatedBy);
+			@Param("updateTime") Date updateTime,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 	
 	@Query(value="select * from driverdetails where venderid=:vendorId",nativeQuery=true)
 	List<DriverDetails> getDriverListByVendorId(@Param("vendorId") Long vendorId);

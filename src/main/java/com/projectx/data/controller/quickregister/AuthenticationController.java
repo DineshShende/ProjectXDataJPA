@@ -13,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,7 +50,15 @@ public class AuthenticationController {
 	public ResponseEntity<AuthenticationDetails> saveLoginDetails(@Valid @RequestBody AuthenticationDetails authenticationDetails,BindingResult resultValid)
 	{
 		if(resultValid.hasErrors())
+		{
+			for(FieldError error:resultValid.getFieldErrors())
+			{
+				System.out.println(error.getField());
+				System.out.println(error.getDefaultMessage());
+			}
+
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
 		
 		ResponseEntity<AuthenticationDetails> result=null;
 		
@@ -125,7 +134,8 @@ public class AuthenticationController {
 		Integer updateStatus=customerAuthenticationDetailsRepository
 				.updatePasswordEmailPasswordAndPasswordTypeAndCounts(passwordAndPasswordTypeDTO.getCustomerId(),passwordAndPasswordTypeDTO.getCustomerType(),
 						passwordAndPasswordTypeDTO.getPassword(),passwordAndPasswordTypeDTO.getEmailPassword(),
-						passwordAndPasswordTypeDTO.getPasswordType(), ZERO_COUNT, ZERO_COUNT,new Date(),passwordAndPasswordTypeDTO.getUpdatedBy());
+						passwordAndPasswordTypeDTO.getPasswordType(), ZERO_COUNT, ZERO_COUNT,new Date(),passwordAndPasswordTypeDTO.getUpdatedBy(),
+						passwordAndPasswordTypeDTO.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		
@@ -141,7 +151,8 @@ public class AuthenticationController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
 		Integer updateStatus=customerAuthenticationDetailsRepository
-				.incrementResendCount(customerIdDTO.getCustomerId(),customerIdDTO.getCustomerType(),new Date(),customerIdDTO.getUpdatedBy());
+				.incrementResendCount(customerIdDTO.getCustomerId(),customerIdDTO.getCustomerType(),new Date(),
+						customerIdDTO.getUpdatedBy(),customerIdDTO.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		
@@ -158,7 +169,8 @@ public class AuthenticationController {
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerAuthenticationDetailsRepository
-				.incrementLastUnsucessfullAttempts(customerIdDTO.getCustomerId(),customerIdDTO.getCustomerType(),new Date(),customerIdDTO.getUpdatedBy());
+				.incrementLastUnsucessfullAttempts(customerIdDTO.getCustomerId(),customerIdDTO.getCustomerType(),new Date(),
+						customerIdDTO.getUpdatedBy(),customerIdDTO.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		

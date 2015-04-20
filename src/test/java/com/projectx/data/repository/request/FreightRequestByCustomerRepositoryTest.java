@@ -268,10 +268,10 @@ public class FreightRequestByCustomerRepositoryTest {
 		assertEquals(1, freightRequestByCustomerRepository.count());
 		
 		assertEquals(1, freightRequestByCustomerRepository.updateVerificationStatus(savedEntity.getRequestId(), FREIGHTALLOCATIONSTATUS_NEW,
-				FREIGHTALLOCATIONSTATUS_RESPONDED, 234L, new Date()).intValue());
+				FREIGHTALLOCATIONSTATUS_RESPONDED, 234L, new Date(),1,234L).intValue());
 		
 		assertEquals(1, freightRequestByCustomerRepository.updateVerificationStatus(savedEntity.getRequestId(), FREIGHTALLOCATIONSTATUS_RESPONDED,
-				FREIGHTALLOCATIONSTATUS_BOOKED, 234L, new Date()).intValue());
+				FREIGHTALLOCATIONSTATUS_BOOKED, 234L, new Date(),1,234L).intValue());
 		
 	}
 	

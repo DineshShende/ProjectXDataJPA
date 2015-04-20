@@ -76,16 +76,16 @@ public class VendorDetailsCustomRepository {
 		return vendorDetailsRepository.findOne(vendorId);
 	}
 	
-	public Integer updateEmailAndVerificationStatus(Long vendorId,String email,Boolean status,String updatedBy)
+	public Integer updateEmailAndVerificationStatus(Long vendorId,String email,Boolean status,Integer updatedBy,Long updatedById)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateIsEmailVerified(vendorId,email, status,new Date(),updatedBy);
+		Integer updateStatus=vendorDetailsRepository.updateIsEmailVerified(vendorId,email, status,new Date(),updatedBy,updatedById);
 		
 		return updateStatus;
 	}
 	
-	public Integer updateMobileAndVerificationStatus(Long vendorId,Long mobile,Boolean status,String updatedBy)
+	public Integer updateMobileAndVerificationStatus(Long vendorId,Long mobile,Boolean status,Integer updatedBy,Long updatedById)
 	{
-		Integer updateStatus=vendorDetailsRepository.updateIsMobileVerified(vendorId,mobile, status,new Date(),updatedBy);
+		Integer updateStatus=vendorDetailsRepository.updateIsMobileVerified(vendorId,mobile, status,new Date(),updatedBy,updatedById);
 		
 		return updateStatus;
 	}

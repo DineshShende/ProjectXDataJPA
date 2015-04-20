@@ -17,6 +17,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+
+
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.projectx.data.util.annotation.VehicleDetailsValid;
@@ -49,7 +52,9 @@ public class VehicleDetails {
 	private VehicleTypeDetails vehicleTypeId;
 	*/
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne
+	(cascade={CascadeType.ALL})
+	//@Cascade(value={CascadeType.ALL})
 	@JoinColumn(name="VEHICLEBRANDID")
 	private VehicleBrandDetails vehicleBrandId;
 	
@@ -111,14 +116,30 @@ public class VehicleDetails {
 	private List<String> commodityList;
 	
 	
+	@NotNull(message="InsertTime can't be NULL")
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
+	@NotNull(message="UpdateTime can't be NULL")
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
+	@NotNull(message="UpdatedBy can't be NULL")
 	@Column(name="UPDATEDBY")
-	private String updatedBy;
+	private Integer updatedBy;
+	
+	@NotNull(message="InsertedBy can't be NULL")
+	@Column(name="INSERTEDBY")
+	private Integer insertedBy;
+	
+	@NotNull(message="UpdatedById can't be NULL")
+	@Column(name="UPDATEDBYID")
+	private Long updatedById;
+	
+	@NotNull(message="InsertedById can't be NULL")
+	@Column(name="INSERTEDBYID")
+	private Long insertedById;
+
 
 	public VehicleDetails() {
 
@@ -134,7 +155,8 @@ public class VehicleDetails {
 			Integer width, Integer height, Integer numberOfWheels,
 			String permitType, Boolean insuranceStatus, String insuranceNumber,
 			String insuranceCompany, Long vendorId, List<String> commodityList,
-			Date insertTime, Date updateTime, String updatedBy) {
+			Date insertTime, Date updateTime, Integer updatedBy,
+			Integer insertedBy,Long updatedById,Long insertedById) {
 		super();
 		this.vehicleId = vehicleId;
 		this.ownerFirstName = ownerFirstName;
@@ -159,6 +181,9 @@ public class VehicleDetails {
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
+		this.insertedBy=insertedBy;
+		this.updatedById=updatedById;
+		this.insertedById=insertedById;
 	}
 
 
@@ -418,15 +443,43 @@ public class VehicleDetails {
 	}
 
 
-
-	public String getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
 
-
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
 	}
 
 
@@ -446,7 +499,9 @@ public class VehicleDetails {
 				+ insuranceNumber + ", insuranceCompany=" + insuranceCompany
 				+ ", vendorId=" + vendorId + ", commodityList=" + commodityList
 				+ ", insertTime=" + insertTime + ", updateTime=" + updateTime
-				+ ", updatedBy=" + updatedBy + "]";
+				+ ", updatedBy=" + updatedBy + ", insertedBy=" + insertedBy
+				+ ", updatedById=" + updatedById + ", insertedById="
+				+ insertedById + "]";
 	}
 
 
@@ -461,6 +516,10 @@ public class VehicleDetails {
 		result = prime * result + ((height == null) ? 0 : height.hashCode());
 		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
+		result = prime * result
+				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
+		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
 		result = prime
 				* result
 				+ ((insuranceCompany == null) ? 0 : insuranceCompany.hashCode());
@@ -495,6 +554,8 @@ public class VehicleDetails {
 				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		result = prime * result
 				+ ((vehicleBodyType == null) ? 0 : vehicleBodyType.hashCode());
 		result = prime * result
@@ -531,6 +592,20 @@ public class VehicleDetails {
 			if (other.height != null)
 				return false;
 		} else if (!height.equals(other.height))
+			return false;
+		if (insertTime == null) {
+			if (other.insertTime != null)
+				return false;
+		} 
+		if (insertedBy == null) {
+			if (other.insertedBy != null)
+				return false;
+		} else if (!insertedBy.equals(other.insertedBy))
+			return false;
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		} else if (!insertedById.equals(other.insertedById))
 			return false;
 		if (insuranceCompany == null) {
 			if (other.insuranceCompany != null)
@@ -592,10 +667,19 @@ public class VehicleDetails {
 				return false;
 		} else if (!registrationNumber.equals(other.registrationNumber))
 			return false;
+		if (updateTime == null) {
+			if (other.updateTime != null)
+				return false;
+		} 
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
+			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
 			return false;
 		if (vehicleBodyType == null) {
 			if (other.vehicleBodyType != null)
@@ -624,6 +708,7 @@ public class VehicleDetails {
 			return false;
 		return true;
 	}
+
 
 	
 	

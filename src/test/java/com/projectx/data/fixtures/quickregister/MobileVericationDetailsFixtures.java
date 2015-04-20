@@ -40,18 +40,29 @@ public class MobileVericationDetailsFixtures {
 	
 	public static MobileVerificationDetails standardCustomerMobileVerificationDetails()
 	{
-		return new MobileVerificationDetails(standardMobileVerificationKey(), CUST_MOBILE, CUST_MOBILEPIN, CUST_MOBILE_VERIFICATION_ATTEMPTS, CUST_MOBILE_VERIFICATION_ATTEMPTS,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
+		return new MobileVerificationDetails(standardMobileVerificationKey(), CUST_MOBILE, CUST_MOBILEPIN,
+				CUST_MOBILE_VERIFICATION_ATTEMPTS, CUST_MOBILE_VERIFICATION_ATTEMPTS,CUST_DATE,CUST_DATE,
+				ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
+	}
+	
+	public static MobileVerificationDetails standardCustomerMobileVerificationDetails(Long mobile)
+	{
+		return new MobileVerificationDetails(standardMobileVerificationKey(), mobile, CUST_MOBILEPIN,
+				CUST_MOBILE_VERIFICATION_ATTEMPTS, CUST_MOBILE_VERIFICATION_ATTEMPTS,CUST_DATE,CUST_DATE,
+				ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 	}
 	
 	public static MobileVerificationDetails standardCustomerMobileVerificationDetailsOther()
 	{
-		return new MobileVerificationDetails(standardMobileVerificationKey(), CUST_MOBILE, CUST_MOBILEPIN_UPDATED, CUST_MOBILE_VERIFICATION_ATTEMPTS, CUST_MOBILE_VERIFICATION_ATTEMPTS,CUST_DATE,CUST_DATE,CUST_UPDATED_BY);
+		return new MobileVerificationDetails(standardMobileVerificationKey(), CUST_MOBILE, CUST_MOBILEPIN_UPDATED,
+				CUST_MOBILE_VERIFICATION_ATTEMPTS, CUST_MOBILE_VERIFICATION_ATTEMPTS,CUST_DATE,CUST_DATE,
+				 ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 	}
 	
 	
 	public static UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO standardUpdateMobilePinAndMobileVerificationAttemptsDTO()
 	{
-		return new UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY, CUST_MOBILEPIN_UPDATED, CUST_MOBILE_VERIFICATION_ATTEMPTS+1,CUST_RESEND_COUNT+1,CUST_UPDATED_BY);
+		return new UpdateMobilePinAndMobileVerificationAttemptsAndResetCountDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY, CUST_MOBILEPIN_UPDATED, CUST_MOBILE_VERIFICATION_ATTEMPTS+1,CUST_RESEND_COUNT+1,CUST_UPDATED_BY,CUST_ID);
 	}
 	
 
@@ -62,7 +73,7 @@ public class MobileVericationDetailsFixtures {
 	
 	public static CustomerIdTypeMobileTypeUpdatedByDTO standardCustomerIdMobileUpdatedByDTO()
 	{
-		return new CustomerIdTypeMobileTypeUpdatedByDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY,CUST_UPDATED_BY);
+		return new CustomerIdTypeMobileTypeUpdatedByDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_MOBILE_TYPE_PRIMARY,CUST_UPDATED_BY,CUST_ID);
 	}
 	
 	public static String standardJsonCustomerMobileVerificationDetails()

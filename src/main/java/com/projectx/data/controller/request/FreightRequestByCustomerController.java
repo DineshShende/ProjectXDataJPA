@@ -84,8 +84,8 @@ public class FreightRequestByCustomerController {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
 		Integer result=freightRequestByCustomerRepository.updateVerificationStatus(updateReservationStatus.getEntityIdTobeReserved(),
-				updateReservationStatus.getOldStatus(), updateReservationStatus.getNewStatus(), updateReservationStatus.getEntityIdTobeReservedFor(),
-				new Date());
+				updateReservationStatus.getOldStatus(), updateReservationStatus.getNewStatus(), updateReservationStatus.getEntityIdTobeReservedFor()
+				,new Date(),updateReservationStatus.getUpdatedBy(),updateReservationStatus.getUpdatedById());
 		
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}

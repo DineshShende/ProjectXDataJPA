@@ -27,11 +27,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
+import com.projectx.data.repository.completeregister.CustomerDetailsRepository;
+import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
+import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
+import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-@Transactional
+//@Transactional
 @ActiveProfiles(SPRING_PROFILE_ACTIVE_TEST)
 public class CustomerDetailsControllerWACTest {
 
@@ -40,11 +44,26 @@ public class CustomerDetailsControllerWACTest {
 	
 	MockMvc mockMvc;
 	
+	@Autowired
+	CustomerDetailsRepository customerDetailsRepository;
+	
+	@Autowired
+	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
+	
+	@Autowired
+	EmailVerificationDetailsRepository emailVerificationDetailsRepository;
+	
+	@Autowired
+	AuthenticationDetailsRepository authenticationDetailsRepository;
+	
 	@Before
 	public void setUp() throws Exception
 	{
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
-	
+		customerDetailsRepository.deleteAll();
+		mobileVerificationDetailsRepository.deleteAll();
+		emailVerificationDetailsRepository.deleteAll();
+		authenticationDetailsRepository.deleteAll();
 	}
 
 	@Test

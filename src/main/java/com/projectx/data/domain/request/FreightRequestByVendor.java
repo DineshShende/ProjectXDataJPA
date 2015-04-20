@@ -64,17 +64,29 @@ public class FreightRequestByVendor {
 	@Column(name="RESERVEDBY")
 	private Long reservedBy;
 	
-	@NotNull
+	@NotNull(message="InsertTime can't be NULL")
 	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	@NotNull
+	@NotNull(message="UpdateTime can't be NULL")
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	@NotNull
+	@NotNull(message="UpdatedBy can't be NULL")
 	@Column(name="UPDATEDBY")
-	private String updatedBy;
+	private Integer updatedBy;
+	
+	@NotNull(message="InsertedBy can't be NULL")
+	@Column(name="INSERTEDBY")
+	private Integer insertedBy;
+	
+	@NotNull(message="UpdatedById can't be NULL")
+	@Column(name="UPDATEDBYID")
+	private Long updatedById;
+	
+	@NotNull(message="InsertedById can't be NULL")
+	@Column(name="INSERTEDBYID")
+	private Long insertedById;
 
 	public FreightRequestByVendor() {
 
@@ -87,8 +99,8 @@ public class FreightRequestByVendor {
 			VehicleDetails vehicleDetailsId, Integer source,
 			Integer destination, Long driverId, Date availableDate,
 			String availableTime, Integer pickupRangeInKm, Long vendorId,
-			String status, Long reservedBy, Date insertTime, Date updateTime,
-			String updatedBy) {
+			String status, Long reservedBy, Date insertTime, Date updateTime,Integer updatedBy,
+			Integer insertedBy,Long updatedById,Long insertedById) {
 		super();
 		this.requestId = requestId;
 		this.vehicleDetailsId = vehicleDetailsId;
@@ -104,6 +116,9 @@ public class FreightRequestByVendor {
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
+		this.insertedBy=insertedBy;
+		this.updatedById=updatedById;
+		this.insertedById=insertedById;
 	}
 
 
@@ -211,15 +226,63 @@ public class FreightRequestByVendor {
 		this.updateTime = updateTime;
 	}
 
-	public String getUpdatedBy() {
+	
+
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
+
+
+
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
-	
+
+
+
+
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+
+
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+
+
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+
+
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+
+
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+
+
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
+	}
+
+
+
 
 	public Long getReservedBy() {
 		return reservedBy;
@@ -235,7 +298,6 @@ public class FreightRequestByVendor {
 
 
 
-	
 	@Override
 	public String toString() {
 		return "FreightRequestByVendor [requestId=" + requestId
@@ -246,7 +308,8 @@ public class FreightRequestByVendor {
 				+ pickupRangeInKm + ", vendorId=" + vendorId + ", status="
 				+ status + ", reservedBy=" + reservedBy + ", insertTime="
 				+ insertTime + ", updateTime=" + updateTime + ", updatedBy="
-				+ updatedBy + "]";
+				+ updatedBy + ", insertedBy=" + insertedBy + ", updatedById="
+				+ updatedById + ", insertedById=" + insertedById + "]";
 	}
 
 
@@ -257,11 +320,19 @@ public class FreightRequestByVendor {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
+				+ ((availableDate == null) ? 0 : availableDate.hashCode());
+		result = prime * result
 				+ ((availableTime == null) ? 0 : availableTime.hashCode());
 		result = prime * result
 				+ ((destination == null) ? 0 : destination.hashCode());
 		result = prime * result
 				+ ((driverId == null) ? 0 : driverId.hashCode());
+		result = prime * result
+				+ ((insertTime == null) ? 0 : insertTime.hashCode());
+		result = prime * result
+				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
+		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
 		result = prime * result
 				+ ((pickupRangeInKm == null) ? 0 : pickupRangeInKm.hashCode());
 		result = prime * result
@@ -271,7 +342,11 @@ public class FreightRequestByVendor {
 		result = prime * result + ((source == null) ? 0 : source.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result
+				+ ((updateTime == null) ? 0 : updateTime.hashCode());
+		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		result = prime
 				* result
 				+ ((vehicleDetailsId == null) ? 0 : vehicleDetailsId.hashCode());
@@ -292,6 +367,10 @@ public class FreightRequestByVendor {
 		if (getClass() != obj.getClass())
 			return false;
 		FreightRequestByVendor other = (FreightRequestByVendor) obj;
+		if (availableDate == null) {
+			if (other.availableDate != null)
+				return false;
+		}
 		if (availableTime == null) {
 			if (other.availableTime != null)
 				return false;
@@ -306,6 +385,20 @@ public class FreightRequestByVendor {
 			if (other.driverId != null)
 				return false;
 		} else if (!driverId.equals(other.driverId))
+			return false;
+		if (insertTime == null) {
+			if (other.insertTime != null)
+				return false;
+		}
+		if (insertedBy == null) {
+			if (other.insertedBy != null)
+				return false;
+		} else if (!insertedBy.equals(other.insertedBy))
+			return false;
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		} else if (!insertedById.equals(other.insertedById))
 			return false;
 		if (pickupRangeInKm == null) {
 			if (other.pickupRangeInKm != null)
@@ -332,10 +425,19 @@ public class FreightRequestByVendor {
 				return false;
 		} else if (!status.equals(other.status))
 			return false;
+		if (updateTime == null) {
+			if (other.updateTime != null)
+				return false;
+		}
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
+			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
 			return false;
 		if (vehicleDetailsId == null) {
 			if (other.vehicleDetailsId != null)
@@ -350,10 +452,6 @@ public class FreightRequestByVendor {
 		return true;
 	}
 
-
-
-
-
 	
-		
+	
 }

@@ -85,7 +85,8 @@ public class VendorDetailsRepositoryTest {
 		
 		assertEquals(1,vendorDetailsRepository.count().intValue());
 		
-		assertEquals(1,vendorDetailsRepository.updateEmailAndVerificationStatus(savedEntity.getVendorId(),savedEntity.getEmail(), true,savedEntity.getUpdatedBy()).intValue());
+		assertEquals(1,vendorDetailsRepository.updateEmailAndVerificationStatus(savedEntity.getVendorId(),savedEntity.getEmail(), true,
+				savedEntity.getUpdatedBy(),savedEntity.getVendorId()).intValue());
 	
 		assertEquals(1,vendorDetailsRepository.count().intValue());
 		
@@ -101,7 +102,8 @@ public class VendorDetailsRepositoryTest {
 		
 		assertEquals(1,vendorDetailsRepository.count().intValue());
 		
-		assertEquals(1,vendorDetailsRepository.updateMobileAndVerificationStatus(savedEntity.getVendorId(),savedEntity.getMobile(), true,savedEntity.getUpdatedBy()).intValue());
+		assertEquals(1,vendorDetailsRepository.updateMobileAndVerificationStatus(savedEntity.getVendorId(),savedEntity.getMobile(), 
+				true,savedEntity.getUpdatedBy(),savedEntity.getVendorId()).intValue());
 	
 		assertEquals(1,vendorDetailsRepository.count().intValue());
 		

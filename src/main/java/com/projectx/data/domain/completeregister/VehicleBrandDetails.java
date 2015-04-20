@@ -1,5 +1,6 @@
 package com.projectx.data.domain.completeregister;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table(name="VEHICLEBRANDDETAILS")
 public class VehicleBrandDetails {
@@ -18,7 +21,9 @@ public class VehicleBrandDetails {
 	@Column(name="VEHICLEBRANDID")
 	private Long vehicleBrandId;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne
+	(cascade=CascadeType.ALL)
+	//@Cascade(value={CascadeType.ALL})
 	@JoinColumn(name="VEHICLETYPEID")
 	private VehicleTypeDetails vehicleTypeId;
 	

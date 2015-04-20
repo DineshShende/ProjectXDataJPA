@@ -40,41 +40,41 @@ public interface AuthenticationDetailsRepository extends
 
 	@Query(value="update authenticationdetails set PASSWORD=:password,EMAILPASSWORD=:emailPassword,PASSWORDTYPE=:passwordType,"
 			+ "RESENDCOUNT=:resendCount,LASTUNSUCESSFULLATTEMPTS=:lastUnsucessfullAttempts,"
-			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType" ,nativeQuery = true)
+			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType" ,nativeQuery = true)
 	Integer updatePasswordEmailPasswordAndPasswordTypeAndCounts(@Param("customerId")Long customerId,@Param("customerType")Integer customerType,@Param("password")String password,
 			@Param("emailPassword")String emailPassword,@Param("passwordType")String passwordType,@Param("resendCount")Integer resendCount,@Param("lastUnsucessfullAttempts")Integer lastUnsucessfullAttempts,
-			@Param("updateDate") Date updateDate,@Param("updatedBy") String updatedBy);
+			@Param("updateDate") Date updateDate,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 	
 		
 	@Transactional
 	@Modifying
 	@Query(value="update authenticationdetails set RESENDCOUNT=RESENDCOUNT+1,"
-			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType",nativeQuery=true)
+			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType",nativeQuery=true)
 	Integer incrementResendCount(@Param("customerId") Long customerId,@Param("customerType")Integer customerType,
-			@Param("updateDate") Date updateDate,@Param("updatedBy") String updatedBy);
+			@Param("updateDate") Date updateDate,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 
 	
 	@Transactional
 	@Modifying
 	@Query(value="update authenticationdetails set LASTUNSUCESSFULLATTEMPTS=LASTUNSUCESSFULLATTEMPTS+1,"
-			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType",nativeQuery=true)
+			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType",nativeQuery=true)
 	Integer incrementLastUnsucessfullAttempts(@Param("customerId") Long customerId,@Param("customerType")Integer customerType,
-			@Param("updateDate") Date updateDate,@Param("updatedBy") String updatedBy);
+			@Param("updateDate") Date updateDate,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 
 
 	@Transactional
 	@Modifying
 	@Query(value="update authenticationdetails set EMAIL=:email,"
-			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:entityType",nativeQuery=true)
+			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:entityType",nativeQuery=true)
 	Integer updateEmail(@Param("customerId") Long customerId,@Param("entityType") Integer entityType,@Param("email")String email,
-			@Param("updateDate") Date updateDate,@Param("updatedBy") String updatedBy);
+			@Param("updateDate") Date updateDate,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 
 	@Transactional
 	@Modifying
 	@Query(value="update authenticationdetails set MOBILE=:mobile,"
-			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:entityType",nativeQuery=true)
+			+ "UPDATETIME=:updateDate ,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:entityType",nativeQuery=true)
 	Integer updateMobile(@Param("customerId") Long customerId,@Param("entityType") Integer entityType,@Param("mobile")Long mobile,
-			@Param("updateDate") Date updateDate,@Param("updatedBy") String updatedBy);
+			@Param("updateDate") Date updateDate,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 
 
 }

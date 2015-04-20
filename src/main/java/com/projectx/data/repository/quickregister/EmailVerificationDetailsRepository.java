@@ -30,27 +30,27 @@ public interface EmailVerificationDetailsRepository extends CrudRepository<Email
 	@Transactional
 	@Modifying
 	@Query(value="update emailverificationdetails set EMAIL=:email,EMAILHASH=:emailHash,EMAILHASHSENTTIME=:emailHashSentTime,RESENDCOUNT=:resendCount,"
-			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
 	Integer updateEmail(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("emailType")Integer emailType,@Param("email")String email,
 				@Param("emailHash")String emailHash, @Param("emailHashSentTime")Date emailHashSentTime,@Param("resendCount")Integer resendCount,
-				@Param("updateTime") Date updateTime,@Param("updatedBy") String updatedBy);
+				@Param("updateTime") Date updateTime,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 
 	
 	@Transactional
 	@Modifying
 	@Query(value="update emailverificationdetails set EMAILHASH=:emailHash,EMAILHASHSENTTIME=:emailHashSentTime,RESENDCOUNT=:resendCount,"
-			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
 	Integer resetEmailHashAndEmailHashSentTime(@Param("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("emailType")Integer emailType,
 				@Param("emailHash")String emailHash, @Param("emailHashSentTime")Date emailHashSentTime,@Param("resendCount")Integer resendCount,
-				@Param("updateTime") Date updateTime,@Param("updatedBy") String updatedBy);
+				@Param("updateTime") Date updateTime,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 	
 	
 	@Transactional
 	@Modifying
 	@Query(value="update emailverificationdetails set RESENDCOUNT=RESENDCOUNT+1,"
-			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId and CUSTOMERTYPE=:customerType and EMAILTYPE=:emailType",nativeQuery=true)
 	Integer incrementResendCountByCustomerIdAndEmail(@Param ("customerId")Long customerId,@Param("customerType") Integer customerType,@Param("emailType")Integer emailType,
-			@Param("updateTime") Date updateTime,@Param("updatedBy") String updatedBy);
+			@Param("updateTime") Date updateTime,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 
 
 	@Override

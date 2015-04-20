@@ -120,7 +120,8 @@ public class CustomerDetailsCustomRepositoryTest {
 		
 		assertEquals(1, customerDetailsCustomRepository.count().intValue());
 		
-		assertEquals(1, customerDetailsCustomRepository.updateMobileAndVerificationStatusInMainEntity(savedEntity.getCustomerId(),standardCustomerDetails().getMobile(), true,CUST_UPDATED_BY).intValue());
+		assertEquals(1, customerDetailsCustomRepository.updateMobileAndVerificationStatusInMainEntity(savedEntity.getCustomerId(),standardCustomerDetails().getMobile(),
+				true,CUST_UPDATED_BY,savedEntity.getCustomerId()).intValue());
 		
 	}
 	
@@ -135,7 +136,8 @@ public class CustomerDetailsCustomRepositoryTest {
 		
 		assertEquals(1, customerDetailsCustomRepository.count().intValue());
 		
-		assertEquals(1, customerDetailsCustomRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(savedEntity.getCustomerId(),savedEntity.getSecondaryMobile(), true,CUST_UPDATED_BY).intValue());
+		assertEquals(1, customerDetailsCustomRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(savedEntity.getCustomerId(),
+				savedEntity.getSecondaryMobile(), true,CUST_UPDATED_BY,savedEntity.getCustomerId()).intValue());
 		
 	}
 	
@@ -148,7 +150,8 @@ public class CustomerDetailsCustomRepositoryTest {
 		
 		assertEquals(1, customerDetailsCustomRepository.count().intValue());
 		
-		assertEquals(1, customerDetailsCustomRepository.updateEmailAndVerificationStatusInMainEntity(savedEntity.getCustomerId(), savedEntity.getEmail(),true,CUST_UPDATED_BY).intValue());
+		assertEquals(1, customerDetailsCustomRepository.updateEmailAndVerificationStatusInMainEntity(savedEntity.getCustomerId(), savedEntity.getEmail(),
+				true,CUST_UPDATED_BY,savedEntity.getCustomerId()).intValue());
 		
 	}
 

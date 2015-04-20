@@ -19,9 +19,9 @@ public interface FreightRequestByVendorRepository extends CrudRepository<Freight
 	@Transactional
 	@Modifying
 	@Query(value="update freightrequestbyvendor set status=:newStatus,reservedby=:freightRequestByCustomerId,"
-			+ " updatetime=:updateTime where requestid=:freightRequestByVendorId and status=:oldStatus",nativeQuery=true)
+			+ "updatedby=:updatedBy,updatedbyid=:updatedById,updatetime=:updateTime where requestid=:freightRequestByVendorId and status=:oldStatus",nativeQuery=true)
 	Integer updateVerificationStatus(@Param("freightRequestByVendorId")Long freightRequestByVendorId,
 			@Param("oldStatus")String oldStatus,@Param("newStatus")String newStatus,@Param("freightRequestByCustomerId")Long freightRequestByCustomerId,
-			@Param("updateTime")Date updateTime);
+			@Param("updateTime")Date updateTime,@Param("updatedBy")Integer updatedBy,@Param("updatedById")Long updatedById);
 	
 }

@@ -30,7 +30,8 @@ public class FreightRequestByVendorHandler implements
 				freightRequestByVendorDTO.getSource(),freightRequestByVendorDTO.getDestination(),freightRequestByVendorDTO.getDriverId(),
 				freightRequestByVendorDTO.getAvailableDate(),freightRequestByVendorDTO.getAvailableTime(),freightRequestByVendorDTO.getPickupRangeInKm(),
 				freightRequestByVendorDTO.getVendorId(),freightRequestByVendorDTO.getStatus(),freightRequestByVendorDTO.getReservedBy(), freightRequestByVendorDTO.getInsertTime(), 
-				freightRequestByVendorDTO.getUpdateTime(), freightRequestByVendorDTO.getUpdatedBy());
+				freightRequestByVendorDTO.getUpdateTime(), freightRequestByVendorDTO.getUpdatedBy(),freightRequestByVendorDTO.getInsertedBy(),
+				freightRequestByVendorDTO.getUpdatedById(),freightRequestByVendorDTO.getInsertedById());
 		
 		
 		return testRequest;
@@ -47,7 +48,9 @@ public class FreightRequestByVendorHandler implements
 				freightRequestByVendor.getVehicleDetailsId().getRegistrationNumber(), freightRequestByVendor.getSource(),
 				freightRequestByVendor.getDestination(),freightRequestByVendor.getDriverId(),freightRequestByVendor.getAvailableDate(),
 				freightRequestByVendor.getAvailableTime(),freightRequestByVendor.getPickupRangeInKm(),freightRequestByVendor.getVendorId(),
-				freightRequestByVendor.getReservedBy(),freightRequestByVendor.getStatus(),freightRequestByVendor.getInsertTime(), freightRequestByVendor.getUpdateTime(),freightRequestByVendor.getUpdatedBy());
+				freightRequestByVendor.getReservedBy(),freightRequestByVendor.getStatus(),freightRequestByVendor.getInsertTime(), 
+				freightRequestByVendor.getUpdateTime(),freightRequestByVendor.getUpdatedBy(),freightRequestByVendor.getInsertedBy(),
+				freightRequestByVendor.getUpdatedById(),freightRequestByVendor.getInsertedById());
 		
 		
 		return freightRequestByVendorDTO;

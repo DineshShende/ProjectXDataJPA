@@ -96,7 +96,8 @@ public class VendorDetailsController {
 		try{
 		
 			Integer updateStatus=vendorDetailsRepository.updateMobileAndVerificationStatus(updateVerificationStatusDTO.getCustomerId(),
-					updateVerificationStatusDTO.getMobile(),updateVerificationStatusDTO.getStatus(),updateVerificationStatusDTO.getUpdatedBy());
+					updateVerificationStatusDTO.getMobile(),updateVerificationStatusDTO.getStatus(),updateVerificationStatusDTO.getUpdatedBy(),
+					updateVerificationStatusDTO.getUpdatedById());
 			
 			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		}catch(DataIntegrityViolationException e)
@@ -118,7 +119,8 @@ public class VendorDetailsController {
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=vendorDetailsRepository.updateEmailAndVerificationStatus(updateVerificationStatusDTO.getCustomerId(), 
-				updateVerificationStatusDTO.getEmail(),updateVerificationStatusDTO.getStatus(),updateVerificationStatusDTO.getUpdatedBy());
+				updateVerificationStatusDTO.getEmail(),updateVerificationStatusDTO.getStatus(),updateVerificationStatusDTO.getUpdatedBy(),
+				updateVerificationStatusDTO.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		

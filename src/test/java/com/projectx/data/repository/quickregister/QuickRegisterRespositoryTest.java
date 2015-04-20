@@ -58,6 +58,12 @@ public class QuickRegisterRespositoryTest {
 	}
 	
 	
+	@Test
+	public void environmentTest()
+	{
+		
+	}
+	
 	
 	@Test
 	//@Rollback(value=false)
@@ -284,7 +290,7 @@ public class QuickRegisterRespositoryTest {
 		
 		assertEquals(0, customerQuickRegisterRepository.updateMobileVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById()).intValue());
 		
 		QuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardMobileCustomer());
 		
@@ -299,7 +305,7 @@ public class QuickRegisterRespositoryTest {
 		
 		assertEquals(1, customerQuickRegisterRepository.updateMobileVerificationStatus(savedCustomer.getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),savedCustomer.getCustomerId()).intValue());
 		
 	//	customer=customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId());
 		
@@ -314,7 +320,7 @@ public class QuickRegisterRespositoryTest {
 		
 		assertEquals(0, customerQuickRegisterRepository.updateEmailVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById()).intValue());
 		
 		QuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailCustomer());
 		
@@ -328,7 +334,7 @@ public class QuickRegisterRespositoryTest {
 		
 		assertEquals(1, customerQuickRegisterRepository.updateEmailVerificationStatus(savedCustomer.getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById()).intValue());
 		
 	//	customer=customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId());
 		
@@ -343,11 +349,11 @@ public class QuickRegisterRespositoryTest {
 		
 		assertEquals(0, customerQuickRegisterRepository.updateEmailVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById()).intValue());
 		
 		assertEquals(0, customerQuickRegisterRepository.updateMobileVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById()).intValue());
 		
 		
 		QuickRegisterEntity savedCustomer=customerQuickRegisterRepository.save(standardEmailMobileCustomer());
@@ -363,11 +369,11 @@ public class QuickRegisterRespositoryTest {
 		
 		assertEquals(1, customerQuickRegisterRepository.updateEmailVerificationStatus(savedCustomer.getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById()).intValue());
 		
 		assertEquals(1, customerQuickRegisterRepository.updateMobileVerificationStatus(savedCustomer.getCustomerId(), 
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy()).intValue());
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById()).intValue());
 		
 	//	customer=customerQuickRegisterRepository.findByCustomerId(savedCustomer.getCustomerId());
 		

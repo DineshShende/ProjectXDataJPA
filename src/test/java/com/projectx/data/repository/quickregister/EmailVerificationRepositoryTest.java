@@ -58,7 +58,8 @@ public class EmailVerificationRepositoryTest {
 		
 		try{
 		customerEmailVericationDetailsRepository.save(new EmailVerificationDetails(standardEmailVerificationKey(), 
-				"dineshshende@gmail.com", "skjfhkfhakjfh78658746884r", new Date(), 0, new Date(), new Date(), "CUST_TEST"));
+				"dineshshende@gmail.com", "skjfhkfhakjfh78658746884r", new Date(), 0, new Date(), new Date(), 1,1,standardEmailVerificationKey().getCustomerId(),
+				standardEmailVerificationKey().getCustomerId()));
 		}catch(DataIntegrityViolationException e)
 		{
 			
@@ -108,7 +109,8 @@ public class EmailVerificationRepositoryTest {
 				standardUpdateEmailHashAndEmailHashSentTimeDTO().getCustomerType(),
 				standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailType(),standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailHash(),
 				standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailHashSentTime(), standardUpdateEmailHashAndEmailHashSentTimeDTO().getResendCount(),
-				new Date(),standardUpdateEmailHashAndEmailHashSentTimeDTO().getUpdatedBy()).intValue());
+				new Date(),standardUpdateEmailHashAndEmailHashSentTimeDTO().getUpdatedBy(),
+				standardUpdateEmailHashAndEmailHashSentTimeDTO().getUpdatedById()).intValue());
 		
 		
 		EmailVerificationDetails emailVerificationDetails=customerEmailVericationDetailsRepository.save(standardCustomerEmailVerificationDetails());
@@ -121,7 +123,8 @@ public class EmailVerificationRepositoryTest {
 				standardUpdateEmailHashAndEmailHashSentTimeDTO().getCustomerType(),
 				standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailType(),standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailHash(),
 				standardUpdateEmailHashAndEmailHashSentTimeDTO().getEmailHashSentTime(), standardUpdateEmailHashAndEmailHashSentTimeDTO().getResendCount(),
-				new Date(),standardUpdateEmailHashAndEmailHashSentTimeDTO().getUpdatedBy()).intValue());
+				new Date(),standardUpdateEmailHashAndEmailHashSentTimeDTO().getUpdatedBy(),
+				standardUpdateEmailHashAndEmailHashSentTimeDTO().getUpdatedById()).intValue());
 		
 	}
 	
@@ -135,7 +138,8 @@ public class EmailVerificationRepositoryTest {
 		
 		assertEquals(0, customerEmailVericationDetailsRepository.incrementResendCountByCustomerIdAndEmail(standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerId(),
 				standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerType(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getEmailType(),
-				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedBy()).intValue());
+				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedBy(),
+				standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedById()).intValue());
 		
 		EmailVerificationDetails emailVerificationDetails=customerEmailVericationDetailsRepository.save(standardCustomerEmailVerificationDetails());
 		
@@ -145,7 +149,8 @@ public class EmailVerificationRepositoryTest {
 		
 		assertEquals(1, customerEmailVericationDetailsRepository.incrementResendCountByCustomerIdAndEmail(standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerId(),
 				standardCustomerIdTypeEmailTypeUpdatedByDTO().getCustomerType(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getEmailType(),
-				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedBy()).intValue());
+				new Date(),standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedBy(),
+				standardCustomerIdTypeEmailTypeUpdatedByDTO().getRequestedById()).intValue());
 		
 		
 	}
@@ -192,7 +197,7 @@ public class EmailVerificationRepositoryTest {
 		
 		assertEquals(1, customerEmailVericationDetailsRepository.updateEmail(emailVerificationDetails.getKey().getCustomerId(),
 				emailVerificationDetails.getKey().getCustomerType(),emailVerificationDetails.getKey().getEmailType(),
-				"newEmail@gmail.com", null, new Date(), 0,new Date(),"CUST_ONLINE").intValue());
+				"newEmail@gmail.com", null, new Date(), 0,new Date(),1,emailVerificationDetails.getKey().getCustomerId()).intValue());
 		
 		
 		

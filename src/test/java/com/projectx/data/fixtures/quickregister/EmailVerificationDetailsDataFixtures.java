@@ -25,18 +25,18 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static EmailVerificationDetails standardCustomerEmailVerificationDetails()
 	{
-		return new EmailVerificationDetails(standardEmailVerificationKey(), CUST_EMAIL, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+		return new EmailVerificationDetails(standardEmailVerificationKey(), CUST_EMAIL, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE,  ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 	}
 	
 	
 	public static EmailVerificationDetails standardCustomerEmailVerificationDetailsWithError()
 	{
-		return new EmailVerificationDetails(standardEmailVerificationKey(), null, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
+		return new EmailVerificationDetails(standardEmailVerificationKey(), null, CUST_EMAIL, CUST_DATE, CUST_COUNT_ZERO, CUST_DATE, CUST_DATE,  ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID);
 	}
 	
 	public static UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO standardUpdateEmailHashAndEmailHashSentTimeDTO()
 	{
-		return new UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO(CUST_ID, CUST_TYPE_CUSTOMER,CUST_EMAIL_TYPE_PRIMARY, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME,CUST_RESEND_COUNT,CUST_UPDATED_BY);
+		return new UpdateEmailHashAndEmailHashSentTimeAndResendCountDTO(CUST_ID, CUST_TYPE_CUSTOMER,CUST_EMAIL_TYPE_PRIMARY, CUST_EMAILHASH_UPDATED, CUST_EMAIL_HASH_SENT_TIME,CUST_RESEND_COUNT,CUST_UPDATED_BY,CUST_ID);
 	}
 	
 	public static CustomerIdTypeEmailTypeDTO standardCustomerIdTypeEmailDTO()
@@ -48,7 +48,7 @@ public class EmailVerificationDetailsDataFixtures {
 	
 	public static CustomerIdTypeEmailTypeUpdatedByDTO standardCustomerIdTypeEmailTypeUpdatedByDTO()
 	{
-		return new CustomerIdTypeEmailTypeUpdatedByDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_EMAIL_TYPE_PRIMARY,CUST_UPDATED_BY);
+		return new CustomerIdTypeEmailTypeUpdatedByDTO(CUST_ID,CUST_TYPE_CUSTOMER, CUST_EMAIL_TYPE_PRIMARY,CUST_UPDATED_BY,CUST_ID);
 	}
 	
 	public static EmailVerificationKey standardEmailVerificationKey()

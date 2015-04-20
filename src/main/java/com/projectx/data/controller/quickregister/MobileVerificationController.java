@@ -104,7 +104,7 @@ public class MobileVerificationController {
 		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
 				.updateMobilePinAndMobileVerificationAttemptsAndResendCount(dto.getCustomerId(),dto.getCustomerType(), dto.getMobileType(),
-						dto.getMobilePin(),dto.getMobileVerificationAttempts(),dto.getResendCount(),new Date(),dto.getUpdatedBy());
+						dto.getMobilePin(),dto.getMobileVerificationAttempts(),dto.getResendCount(),new Date(),dto.getUpdatedBy(),dto.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		
@@ -122,7 +122,8 @@ public class MobileVerificationController {
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
-				.incrementMobileVerificationAttempts(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(),mobileDTO.getMobileType(),new Date(),mobileDTO.getRequestedBy());
+				.incrementMobileVerificationAttempts(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(),mobileDTO.getMobileType(),
+						new Date(),mobileDTO.getRequestedBy(),mobileDTO.getRequestedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		
@@ -140,7 +141,8 @@ public class MobileVerificationController {
 		ResponseEntity<Integer> result=null;
 		
 		Integer updateStatus=customerMobileVerificationDetailsRepository
-				.incrementResendCount(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(), mobileDTO.getMobileType(),new Date(),mobileDTO.getRequestedBy());
+				.incrementResendCount(mobileDTO.getCustomerId(),mobileDTO.getCustomerType(), mobileDTO.getMobileType(),new Date(),
+						mobileDTO.getRequestedBy(),mobileDTO.getRequestedById());
 		
 		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 		

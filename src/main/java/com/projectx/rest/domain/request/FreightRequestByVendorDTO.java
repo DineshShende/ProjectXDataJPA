@@ -39,15 +39,23 @@ public class FreightRequestByVendorDTO {
 
 	private String status;
 
-	@NotNull
+	@NotNull(message="InsertTime can't be NULL")
 	private Date insertTime;
 	
-	@NotNull
+	@NotNull(message="UpdateTime can't be NULL")
 	private Date updateTime;
 	
-	@NotNull
-	private String updatedBy;
+	@NotNull(message="UpdatedBy can't be NULL")
+	private Integer updatedBy;
 	
+	@NotNull(message="InsertedBy can't be NULL")
+	private Integer insertedBy;
+	
+	@NotNull(message="UpdatedById can't be NULL")
+	private Long updatedById;
+	
+	@NotNull(message="InsertedById can't be NULL")
+	private Long insertedById;
 
 	
 	public FreightRequestByVendorDTO() {
@@ -60,7 +68,7 @@ public class FreightRequestByVendorDTO {
 			Integer destination, Long driverId, Date availableDate,
 			String availableTime, Integer pickupRangeInKm, Long vendorId,
 			Long reservedBy, String status, Date insertTime, Date updateTime,
-			String updatedBy) {
+			Integer updatedBy,Integer insertedBy,Long updatedById,Long insertedById) {
 		super();
 		this.requestId = requestId;
 		this.vehicleRegistrationNumber = vehicleRegistrationNumber;
@@ -76,6 +84,10 @@ public class FreightRequestByVendorDTO {
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
+		this.insertedBy=insertedBy;
+		this.updatedById=updatedById;
+		this.insertedById=insertedById;
+
 	}
 
 
@@ -168,11 +180,11 @@ public class FreightRequestByVendorDTO {
 		this.updateTime = updateTime;
 	}
 
-	public String getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -206,6 +218,38 @@ public class FreightRequestByVendorDTO {
 	}
 
 
+	
+	
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
+	}
+
+
 	@Override
 	public String toString() {
 		return "FreightRequestByVendorDTO [requestId=" + requestId
@@ -216,7 +260,8 @@ public class FreightRequestByVendorDTO {
 				+ pickupRangeInKm + ", vendorId=" + vendorId + ", reservedBy="
 				+ reservedBy + ", status=" + status + ", insertTime="
 				+ insertTime + ", updateTime=" + updateTime + ", updatedBy="
-				+ updatedBy + "]";
+				+ updatedBy + ", insertedBy=" + insertedBy + ", updatedById="
+				+ updatedById + ", insertedById=" + insertedById + "]";
 	}
 
 
@@ -235,6 +280,10 @@ public class FreightRequestByVendorDTO {
 		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
 		result = prime * result
+				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
+		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
+		result = prime * result
 				+ ((pickupRangeInKm == null) ? 0 : pickupRangeInKm.hashCode());
 		result = prime * result
 				+ ((requestId == null) ? 0 : requestId.hashCode());
@@ -246,6 +295,8 @@ public class FreightRequestByVendorDTO {
 				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		result = prime
 				* result
 				+ ((vehicleRegistrationNumber == null) ? 0
@@ -268,8 +319,7 @@ public class FreightRequestByVendorDTO {
 		if (availableDate == null) {
 			if (other.availableDate != null)
 				return false;
-		} else if (!availableDate.equals(other.availableDate))
-			return false;
+		}
 		if (availableTime == null) {
 			if (other.availableTime != null)
 				return false;
@@ -288,7 +338,16 @@ public class FreightRequestByVendorDTO {
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (!insertTime.equals(other.insertTime))
+		}
+		if (insertedBy == null) {
+			if (other.insertedBy != null)
+				return false;
+		} else if (!insertedBy.equals(other.insertedBy))
+			return false;
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		} else if (!insertedById.equals(other.insertedById))
 			return false;
 		if (pickupRangeInKm == null) {
 			if (other.pickupRangeInKm != null)
@@ -318,12 +377,16 @@ public class FreightRequestByVendorDTO {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (!updateTime.equals(other.updateTime))
-			return false;
+		}
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
+			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
 			return false;
 		if (vehicleRegistrationNumber == null) {
 			if (other.vehicleRegistrationNumber != null)
@@ -340,7 +403,7 @@ public class FreightRequestByVendorDTO {
 	}
 
 
-	
+		
 		
 	
 }

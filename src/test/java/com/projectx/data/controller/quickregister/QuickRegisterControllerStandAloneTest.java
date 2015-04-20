@@ -103,7 +103,7 @@ public class QuickRegisterControllerStandAloneTest {
 	{
 		when(customerQuickRegisterRepository.updateMobileVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(),
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy())).thenReturn(new Integer(1));
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById())).thenReturn(new Integer(1));
 		
 
 		this.mockMvc.perform(
@@ -121,7 +121,7 @@ public class QuickRegisterControllerStandAloneTest {
 	{
 		when(customerQuickRegisterRepository.updateEmailVerificationStatus(standardUpdateEmailMobileVerificationStatus().getCustomerId(),
 				standardUpdateEmailMobileVerificationStatus().getStatus(),standardUpdateEmailMobileVerificationStatus().getUpdateTime(),
-				standardUpdateEmailMobileVerificationStatus().getUpdatedBy())).thenReturn(new Integer(1));
+				standardUpdateEmailMobileVerificationStatus().getUpdatedBy(),standardUpdateEmailMobileVerificationStatus().getUpdatedById())).thenReturn(new Integer(1));
 		
 
 		this.mockMvc.perform(

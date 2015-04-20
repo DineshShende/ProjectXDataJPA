@@ -148,7 +148,8 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(0, customerAuthenticationDetailsRepository.
 				updatePasswordEmailPasswordAndPasswordTypeAndCounts(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),
 						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),null,standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPasswordType(),
-						CUST_COUNT_ZERO,CUST_COUNT_ZERO,new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy()).intValue());
+						CUST_COUNT_ZERO,CUST_COUNT_ZERO,new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy(),
+						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedById()).intValue());
 		
 		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
@@ -157,7 +158,8 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(1, customerAuthenticationDetailsRepository.
 				updatePasswordEmailPasswordAndPasswordTypeAndCounts(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),
 						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),null,standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPasswordType(),
-						CUST_COUNT_ZERO,CUST_COUNT_ZERO,new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy()).intValue());
+						CUST_COUNT_ZERO,CUST_COUNT_ZERO,new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy(),
+						standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedById()).intValue());
 		
 	}
 	
@@ -169,7 +171,8 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(0, customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts(standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerId(),
 				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),null,
 				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getEmailPassword(), CUST_PASSWORD_TYPE_DEFAULT, CUST_COUNT_ZERO, CUST_COUNT_ZERO,
-				new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy()).intValue());
+				new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy(),
+				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedById()).intValue());
 		
 		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
@@ -178,7 +181,8 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(1, customerAuthenticationDetailsRepository.updatePasswordEmailPasswordAndPasswordTypeAndCounts(savedEntity.getKey().getCustomerId(),
 				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getCustomerType(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getPassword(),
 				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getEmailPassword(), CUST_PASSWORD_TYPE_DEFAULT, CUST_COUNT_ZERO, CUST_COUNT_ZERO
-				,new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy()).intValue());
+				,new Date(),standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedBy(),
+				standardUpdatePasswordEmailPasswordTypeWithEmailPass().getUpdatedById()).intValue());
 	}
 	
 	
@@ -188,14 +192,14 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(0,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(0, customerAuthenticationDetailsRepository.incrementResendCount(standardCustomerIdTypeDTO().getCustomerId(),standardCustomerIdTypeDTO().getCustomerType()
-				,new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy()).intValue());
+				,new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy(),standardCustomerIdTypeUpdatedByDTO().getUpdatedById()).intValue());
 		
 		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
 		assertEquals(1,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(1, customerAuthenticationDetailsRepository.incrementResendCount(standardCustomerIdTypeDTO().getCustomerId(),standardCustomerIdTypeDTO().getCustomerType(),
-				new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy()).intValue());
+				new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy(),standardCustomerIdTypeUpdatedByDTO().getUpdatedById()).intValue());
 		
 	}
 	
@@ -206,14 +210,14 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(0,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(0, customerAuthenticationDetailsRepository.incrementLastUnsucessfullAttempts(standardCustomerId().getCustomerId(),standardCustomerIdTypeDTO().getCustomerType(),
-				new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy()).intValue());
+				new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy(),standardCustomerIdTypeUpdatedByDTO().getUpdatedById()).intValue());
 		
 		AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
 		assertEquals(1,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(1, customerAuthenticationDetailsRepository.incrementLastUnsucessfullAttempts(standardCustomerId().getCustomerId(),standardCustomerIdTypeDTO().getCustomerType(),
-				new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy()).intValue());
+				new Date(),standardCustomerIdTypeUpdatedByDTO().getUpdatedBy(),standardCustomerIdTypeUpdatedByDTO().getUpdatedById()).intValue());
 		
 	}
 	
@@ -228,7 +232,8 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(1,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(1,customerAuthenticationDetailsRepository
-				.updateEmail(savedEntity.getKey().getCustomerId(), savedEntity.getKey().getCustomerType(), "other@gmail.com",new Date(),CUST_UPDATED_BY).intValue());
+				.updateEmail(savedEntity.getKey().getCustomerId(), savedEntity.getKey().getCustomerType(), "other@gmail.com",
+						new Date(),CUST_UPDATED_BY,savedEntity.getKey().getCustomerId()).intValue());
 		
 	}
 	
@@ -242,7 +247,8 @@ public class AuthenticationDetailsRepositoryTest {
 		assertEquals(1,customerAuthenticationDetailsRepository.count());
 		
 		assertEquals(1,customerAuthenticationDetailsRepository
-				.updateMobile(savedEntity.getKey().getCustomerId(), savedEntity.getKey().getCustomerType(),9999999999L,new Date(),CUST_UPDATED_BY).intValue());
+				.updateMobile(savedEntity.getKey().getCustomerId(), savedEntity.getKey().getCustomerType(),9999999999L,
+						new Date(),CUST_UPDATED_BY,savedEntity.getKey().getCustomerId()).intValue());
 		
 	}
 	

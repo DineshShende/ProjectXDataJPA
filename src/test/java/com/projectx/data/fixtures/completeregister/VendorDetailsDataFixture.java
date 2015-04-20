@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.VendorDetails;
 
 import static com.projectx.data.fixtures.completeregister.AddressDataFixture.*;
+import static com.projectx.data.fixtures.completeregister.VendorDetailsDataFixture.VENDOR_ID;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.ACTOR_ENTITY_SELF_WEB;
 
 import com.projectx.data.domain.completeregister.Address;
 import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusUpdatedByDTO;
@@ -41,36 +43,39 @@ public class VendorDetailsDataFixture {
 	
 	public static String VENDOR_LANGUAGE="English";
 	
-	public static String VENDOR_UPDATEDBY="CUST_ONLINE";
+	public static Integer VENDOR_UPDATEDBY=1;
 	
 	private static Gson gson=new Gson();
 	
 	public static VendorDetails standardVendor()
 	{
 		return new VendorDetails(VENDOR_ID, VENDER_FIRSTNAME,VENDER_MIDDLENAME, VENDER_LASTNAME, VENDOR_DATE,VENDOR_FIRMNAME,VENDOR_ADDRESS, VENDOR_ADDRESS, VENDOR_MOBILE,
-				VENDOR_PHONENUMBER,VENDOR_STATUS_FALSE,VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE,VENDOR_SEC_MOBILE, VENDOR_STATUS_FALSE,VENDOR_DATE, VENDOR_DATE, VENDOR_UPDATEDBY);
+				VENDOR_PHONENUMBER,VENDOR_STATUS_FALSE,VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE,VENDOR_SEC_MOBILE, VENDOR_STATUS_FALSE,VENDOR_DATE, VENDOR_DATE,
+				ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,VENDOR_ID,VENDOR_ID);
 	}
 	
 	public static VendorDetails standardVendorError()
 	{
 		return new VendorDetails(VENDOR_ID, null,VENDER_MIDDLENAME, VENDER_LASTNAME, VENDOR_DATE,VENDOR_FIRMNAME,VENDOR_ADDRESS, VENDOR_ADDRESS, VENDOR_MOBILE,VENDOR_PHONENUMBER,
-				VENDOR_STATUS_FALSE,VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE,VENDOR_SEC_MOBILE, VENDOR_STATUS_FALSE, VENDOR_DATE, VENDOR_DATE, VENDOR_UPDATEDBY);
+				VENDOR_STATUS_FALSE,VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE,VENDOR_SEC_MOBILE, VENDOR_STATUS_FALSE, VENDOR_DATE, VENDOR_DATE, 
+				ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,VENDOR_ID,VENDOR_ID);
 	}
 	
 	public static VendorDetails standardVendorUpdatedFirstLastName()
 	{
 		return new VendorDetails(VENDOR_ID, "Updated",VENDER_MIDDLENAME, "Updated", VENDOR_DATE,VENDOR_FIRMNAME,VENDOR_ADDRESS, VENDOR_ADDRESS, VENDOR_MOBILE,VENDOR_PHONENUMBER,
-				VENDOR_STATUS_FALSE,VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE,VENDOR_SEC_MOBILE, VENDOR_STATUS_FALSE, VENDOR_DATE, VENDOR_DATE, VENDOR_UPDATEDBY);
+				VENDOR_STATUS_FALSE,VENDOR_EMAIL,VENDOR_STATUS_FALSE, VENDOR_LANGUAGE,VENDOR_SEC_MOBILE, VENDOR_STATUS_FALSE, VENDOR_DATE, VENDOR_DATE, 
+				ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,VENDOR_ID,VENDOR_ID);
 	}
 	
 	public static UpdateMobileVerificationStatusUpdatedByDTO standardUpdateMobileVerificationStatusDTO()
 	{
-		return new UpdateMobileVerificationStatusUpdatedByDTO(VENDOR_ID,VENDOR_MOBILE, VENDOR_STATUS_TRUE,VENDOR_UPDATEDBY);
+		return new UpdateMobileVerificationStatusUpdatedByDTO(VENDOR_ID,VENDOR_MOBILE, VENDOR_STATUS_TRUE,VENDOR_UPDATEDBY,VENDOR_ID);
 	}
 	
 	public static UpdateEmailVerificationStatusUpdatedByDTO standardEmailUpdateVerificationStatusDTO()
 	{
-		return new UpdateEmailVerificationStatusUpdatedByDTO(VENDOR_ID,VENDOR_EMAIL, VENDOR_STATUS_TRUE,VENDOR_UPDATEDBY);
+		return new UpdateEmailVerificationStatusUpdatedByDTO(VENDOR_ID,VENDOR_EMAIL, VENDOR_STATUS_TRUE,VENDOR_UPDATEDBY,VENDOR_ID);
 	}
 	
 	public static String standardJsonVendor(VendorDetails vendorDetails)

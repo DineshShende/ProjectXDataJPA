@@ -94,7 +94,7 @@ public class DriverDetailsContoller {
 		
 		Integer status=driverDetailsRepository
 				.updateMobileAndMobileVerificationStatus(mobileVerificationStatusDTO.getCustomerId(), mobileVerificationStatusDTO.getMobile(),
-						mobileVerificationStatusDTO.getStatus(),mobileVerificationStatusDTO.getUpdatedBy());
+						mobileVerificationStatusDTO.getStatus(),mobileVerificationStatusDTO.getUpdatedBy(),mobileVerificationStatusDTO.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
 		

@@ -327,7 +327,7 @@ public class TransactionalUpdatesControllerWACTest {
 	            .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.customerDetails.firstName").value(standardCustomerDetails().getFirstName()))
 	            .andExpect(jsonPath("$.customerDetails.lastName").value(standardCustomerDetails().getLastName()))
-	            .andExpect(jsonPath("$.customerDetails.homeAddressId").doesNotExist())
+	            .andExpect(jsonPath("$.customerDetails.homeAddressId").exists())
 	            .andExpect(jsonPath("$.customerDetails.mobile").value(standardCustomerDetails().getMobile()))
 	            .andExpect(jsonPath("$.customerDetails.isMobileVerified").value(standardCustomerDetails().getIsMobileVerified()))
 	            .andExpect(jsonPath("$.customerDetails.email").value(standardCustomerDetails().getEmail()))
@@ -356,7 +356,8 @@ public class TransactionalUpdatesControllerWACTest {
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileCustomer());
 		
 		customerDetailsCustomRepository.save(new CustomerDetails(215L, "ABX","A.", "ASD", null, null, CUST_MOBILE,null,false, CUST_EMAIL, false, 
-				null, null, null, null, null, null, null, new Date(), new Date(), "CUST_ONLINE"));
+				null, null, null, null, null, null, null, new Date(), new Date(), 
+				ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID));
 		
 		
 		this.mockMvc.perform(
@@ -415,7 +416,7 @@ public class TransactionalUpdatesControllerWACTest {
 		QuickRegisterEntity quickRegisterEntity=quickRegisterRepository.save(standardEmailMobileVendor());
 		
 		vendorDetailsCustomRepository.save(new VendorDetails(215L, "ASD","A.", "AES",null,null,null, null, CUST_MOBILE,null, false, CUST_EMAIL, false, 
-				null, null, null,null,null, null));
+				null, null, null,new Date(),new Date(), ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CUST_ID,CUST_ID));
 		
 		
 		

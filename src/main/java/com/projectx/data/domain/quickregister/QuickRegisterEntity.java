@@ -60,17 +60,30 @@ public class QuickRegisterEntity {
 	@Column(name="CUSTOMERTYPE")
 	private Integer customerType;
 	
-	@NotNull
-	@Column(name="INSERTIME")
+	@NotNull(message="InsertTime can't be NULL")
+	@Column(name="INSERTTIME")
 	private Date insertTime;
 	
-	@NotNull
+	@NotNull(message="UpdateTime can't be NULL")
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 	
-	@NotNull
+	@NotNull(message="UpdatedBy can't be NULL")
 	@Column(name="UPDATEDBY")
-	private String updatedBy;
+	private Integer updatedBy;
+	
+	@NotNull(message="InsertedBy can't be NULL")
+	@Column(name="INSERTEDBY")
+	private Integer insertedBy;
+	
+	@NotNull(message="UpdatedById can't be NULL")
+	@Column(name="UPDATEDBYID")
+	private Long updatedById;
+	
+	@NotNull(message="InsertedById can't be NULL")
+	@Column(name="INSERTEDBYID")
+	private Long insertedById;
+
 
 	public QuickRegisterEntity()
 	{
@@ -81,8 +94,8 @@ public class QuickRegisterEntity {
 	public QuickRegisterEntity(Long customerId, String firstName,
 			String lastName, String email, Long mobile, Integer pincode,
 			Boolean isEmailVerified, Boolean isMobileVerified,
-			Integer customerType, Date insertTime, Date updateTime,
-			String updatedBy) {
+			Integer customerType, Date insertTime, Date updateTime, Integer updatedBy,
+			Integer insertedBy,Long updatedById,Long insertedById) {
 		super();
 		this.customerId = customerId;
 		this.firstName = firstName;
@@ -96,6 +109,9 @@ public class QuickRegisterEntity {
 		this.insertTime = insertTime;
 		this.updateTime = updateTime;
 		this.updatedBy = updatedBy;
+		this.insertedBy=insertedBy;
+		this.updatedById=updatedById;
+		this.insertedById=insertedById;
 	}
 
 
@@ -200,19 +216,6 @@ public class QuickRegisterEntity {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-
-	
 	
 	public Integer getCustomerType() {
 		return customerType;
@@ -224,17 +227,43 @@ public class QuickRegisterEntity {
 	}
 
 
+	public Integer getUpdatedBy() {
+		return updatedBy;
+	}
 
 
-	@Override
-	public String toString() {
-		return "QuickRegisterEntity [customerId=" + customerId + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", mobile=" + mobile + ", pincode=" + pincode
-				+ ", isEmailVerified=" + isEmailVerified
-				+ ", isMobileVerified=" + isMobileVerified + ", customerType="
-				+ customerType + ", insertTime=" + insertTime + ", updateTime="
-				+ updateTime + ", updatedBy=" + updatedBy + "]";
+	public void setUpdatedBy(Integer updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
 	}
 
 
@@ -252,6 +281,10 @@ public class QuickRegisterEntity {
 		result = prime * result
 				+ ((insertTime == null) ? 0 : insertTime.hashCode());
 		result = prime * result
+				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
+		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
+		result = prime * result
 				+ ((isEmailVerified == null) ? 0 : isEmailVerified.hashCode());
 		result = prime
 				* result
@@ -264,6 +297,8 @@ public class QuickRegisterEntity {
 				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		return result;
 	}
 
@@ -282,7 +317,6 @@ public class QuickRegisterEntity {
 				return false;
 		} else if (!customerId.equals(other.customerId))
 			return false;
-			
 		if (customerType == null) {
 			if (other.customerType != null)
 				return false;
@@ -301,7 +335,16 @@ public class QuickRegisterEntity {
 		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (Math.abs(insertTime.getTime()-other.insertTime.getTime())>100000)
+		} 
+		if (insertedBy == null) {
+			if (other.insertedBy != null)
+				return false;
+		} else if (!insertedBy.equals(other.insertedBy))
+			return false;
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		} else if (!insertedById.equals(other.insertedById))
 			return false;
 		if (isEmailVerified == null) {
 			if (other.isEmailVerified != null)
@@ -331,15 +374,21 @@ public class QuickRegisterEntity {
 		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (Math.abs(updateTime.getTime()-other.updateTime.getTime())>100000)
-			return false;
+		} 
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
 			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
+			return false;
 		return true;
 	}
+
+
 
 
 

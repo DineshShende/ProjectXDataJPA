@@ -2,6 +2,7 @@ package com.projectx.data.controller.completeregister;
 
 import static com.projectx.data.config.Constants.SPRING_PROFILE_ACTIVE_TEST;
 import static com.projectx.data.fixtures.completeregister.DriverDetailsDataFixtures.*;
+import static com.projectx.data.fixtures.quickregister.MobileVericationDetailsFixtures.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -111,31 +112,10 @@ public class DriverDetailsContollerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isCreated())
+	            .andExpect(status().isNotAcceptable());
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
-		
-		 		.andExpect(jsonPath("$.firstName").value(standardDriverDetails().getFirstName()))
-		 		.andExpect(jsonPath("$.middleName").value(standardDriverDetails().getMiddleName()))
-		 		.andExpect(jsonPath("$.lastName").value(standardDriverDetails().getLastName()))
-		 		.andExpect(jsonPath("$.bloodGroup").value(standardDriverDetails().getBloodGroup()))
-		 		.andExpect(jsonPath("$.homeAddress.addressLine").value(standardDriverDetails().getHomeAddress().getAddressLine()))
-	            .andExpect(jsonPath("$.homeAddress.customerType").value(standardDriverDetails().getHomeAddress().getCustomerType()))
-	            .andExpect(jsonPath("$.homeAddress.city").value(standardDriverDetails().getHomeAddress().getCity()))
-	            .andExpect(jsonPath("$.homeAddress.district").value(standardDriverDetails().getHomeAddress().getDistrict()))
-	            .andExpect(jsonPath("$.homeAddress.state").value(standardDriverDetails().getHomeAddress().getState()))
-	            .andExpect(jsonPath("$.homeAddress.pincode").value(standardDriverDetails().getHomeAddress().getPincode()))
-	            .andExpect(jsonPath("$.mobile").value(standardDriverDetails().getMobile()))
-	            .andExpect(jsonPath("$.isMobileVerified").value(standardDriverDetails().getIsMobileVerified()))
-	            .andExpect(jsonPath("$.homeContactNumber").value(standardDriverDetails().getHomeContactNumber()))
-	            .andExpect(jsonPath("$.isFreightRequestPermissionGiven").value(standardDriverDetails().getIsFreightRequestPermissionGiven()))
-	            .andExpect(jsonPath("$.isDealFinalizationPermissionGiven").value(standardDriverDetails().getIsDealFinalizationPermissionGiven()))
-	            .andExpect(jsonPath("$.licenceNumber").value(standardDriverDetails().getLicenceNumber()))
-	            .andExpect(jsonPath("$.language").value(standardDriverDetails().getLanguage()))
-	            .andExpect(jsonPath("$.updatedBy").value(standardDriverDetails().getUpdatedBy()))
-	            .andExpect(jsonPath("$.insertTime").exists())
-	            .andExpect(jsonPath("$.updateTime").exists());
-		
+			
 	}
 	
 	
@@ -156,7 +136,7 @@ public class DriverDetailsContollerWACTest {
 	public void saveWithFailure() throws Exception
 	{
 		mobileVerificationDetailsRepository
-		.save(new MobileVerificationDetails(new MobileVerificationKey(234L, 1, 1), DRIVER_MOBILE, null, 0,0, new Date(), new Date(), "CUST_ONLINE"));
+		.save(standardCustomerMobileVerificationDetails(standardDriverDetails().getMobile()));
 	
 		this.mockMvc.perform(
 	            post("/driver")
@@ -256,7 +236,7 @@ public class DriverDetailsContollerWACTest {
 		DriverDetails driverDetails=driverDetailsCustomRepository.save(standardDriverDetails());
 		
 		mobileVerificationDetailsRepository
-		.save(new MobileVerificationDetails(new MobileVerificationKey(234L, 1, 1), DRIVER_MOBILE_UPDATED, null, 0,0, new Date(), new Date(), "CUST_ONLINE"));
+		.save(standardCustomerMobileVerificationDetails(DRIVER_MOBILE_UPDATED));
 		
 		this.mockMvc.perform(
 	            post("/driver")
@@ -357,7 +337,8 @@ public class DriverDetailsContollerWACTest {
 		
 		DriverDetails driverDetails=driverDetailsCustomRepository.save(standardDriverDetails());
 		
-		UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO=new UpdateMobileVerificationStatusUpdatedByDTO(driverDetails.getDriverId(), driverDetails.getMobile(), true,DRIVER_UPDATED_BY);
+		UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO=new UpdateMobileVerificationStatusUpdatedByDTO(driverDetails.getDriverId(), driverDetails.getMobile(), 
+				true,DRIVER_UPDATED_BY,driverDetails.getDriverId());
 		
 		
 		this.mockMvc.perform(

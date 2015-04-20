@@ -4,6 +4,8 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 import com.projectx.data.domain.completeregister.Address;
+import static com.projectx.data.fixtures.quickregister.QuickRegisterDataFixture.*;
+
 
 public class AddressDataFixture {
 
@@ -25,23 +27,23 @@ public class AddressDataFixture {
 	
 	public static Date ADDRESS_DATE=new Date();
 	
-	public static String ADDRESS_UPDATED_BY="CUST_ONLINE";
+	
 	
 	private static Gson gson=new Gson();
 	
 	public static Address standardAddress()
 	{
-		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, ADDRESS_STATE, ADDRESS_PINCODE, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
+		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, ADDRESS_STATE, ADDRESS_PINCODE, ADDRESS_DATE, ADDRESS_DATE, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,ADDRESS_ID,ADDRESS_ID);
 	}
 	
 	public static Address standardAddressInvalid()
 	{
-		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, null, 1111111, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
+		return new Address(ADDRESS_CUST_TYPE, ADDRESS_LINE, ADDRESS_CITY, ADDRESS_DIST, null, 1111111, ADDRESS_DATE, ADDRESS_DATE, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,ADDRESS_ID,ADDRESS_ID);
 	}
 	
 	public static Address standardAddressUpdated()
 	{
-		return new Address(ADDRESS_CUST_TYPE, "Updated", "Updated", "Updated", "Updated", 111111, ADDRESS_DATE, ADDRESS_DATE, ADDRESS_UPDATED_BY);
+		return new Address(ADDRESS_CUST_TYPE, "Updated", "Updated", "Updated", "Updated", 111111, ADDRESS_DATE, ADDRESS_DATE, ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,ADDRESS_ID,ADDRESS_ID);
 	}
 	
 	public static String standardJsonAddressId()

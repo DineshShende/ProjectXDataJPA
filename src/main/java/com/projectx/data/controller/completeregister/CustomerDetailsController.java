@@ -26,7 +26,6 @@ import com.projectx.data.repository.completeregister.CustomerDetailsCustomReposi
 import com.projectx.data.repository.completeregister.CustomerDetailsRepository;
 import com.projectx.data.util.validator.AuthenticationDetailsValidator;
 import com.projectx.data.util.validator.CustomerDetailsValidator;
-import com.projectx.rest.domain.completeregister.UpdateAddressDTO;
 import com.projectx.rest.domain.completeregister.UpdateEmailVerificationStatusUpdatedByDTO;
 import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
@@ -99,7 +98,8 @@ public class CustomerDetailsController {
 		try{
 		
 			Integer updateStatus=customerDetailsCustomRepository.updateMobileAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
-					verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy());
+					verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy(),
+					verificationStatusDTO.getUpdatedById());
 			
 			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 			
@@ -124,7 +124,8 @@ public class CustomerDetailsController {
 		try{
 		
 			Integer updateStatus=customerDetailsCustomRepository.updateSecondaryMobileAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
-					verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy());
+					verificationStatusDTO.getMobile(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy(),
+					verificationStatusDTO.getUpdatedById());
 			
 			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 			
@@ -147,7 +148,8 @@ public class CustomerDetailsController {
 		
 		try{
 			Integer updateStatus=customerDetailsCustomRepository.updateEmailAndVerificationStatusInMainEntity(verificationStatusDTO.getCustomerId(),
-					verificationStatusDTO.getEmail(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy());
+					verificationStatusDTO.getEmail(),verificationStatusDTO.getStatus(),verificationStatusDTO.getUpdatedBy(),
+					verificationStatusDTO.getUpdatedById());
 			
 			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
 			

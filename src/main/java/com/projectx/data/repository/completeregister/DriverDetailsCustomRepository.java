@@ -27,7 +27,6 @@ public class DriverDetailsCustomRepository {
 	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
 	
 	private Integer ENTITY_TYPE_DRIVER=3;
-	private Integer ENTITY_TYPE_VENDORDRIVER=4;
 	private Integer ENTITY_TYPE_PRIMARY=1;
 	private Integer ZERO_COUNT=0;
 	
@@ -42,7 +41,8 @@ public class DriverDetailsCustomRepository {
 		{	
 			MobileVerificationDetails mobileVerificationDetails=
 					new MobileVerificationDetails(new MobileVerificationKey(savedEntity.getDriverId(), ENTITY_TYPE_DRIVER, ENTITY_TYPE_PRIMARY),
-							driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), UPDATED_BY_CUST_ONLINE);
+							driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), driverDetails.getInsertedBy(),
+							driverDetails.getInsertedBy(),driverDetails.getInsertedById(),driverDetails.getInsertedById());
 			
 			try
 			{
@@ -81,14 +81,15 @@ public class DriverDetailsCustomRepository {
 				{
 					MobileVerificationDetails mobileVerificationDetails=
 							new MobileVerificationDetails(new MobileVerificationKey(driverDetails.getDriverId(), ENTITY_TYPE_DRIVER,
-									ENTITY_TYPE_PRIMARY), driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), UPDATED_BY_CUST_ONLINE);
+									ENTITY_TYPE_PRIMARY), driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), 
+									 driverDetails.getInsertedBy(),driverDetails.getInsertedBy(),driverDetails.getInsertedById(),driverDetails.getInsertedById());
 				
 					mobileVerificationDetailsRepository.save(mobileVerificationDetails);
 				}
 				else
 				{
 					mobileVerificationDetailsRepository.updateMobile(driverDetails.getDriverId(), ENTITY_TYPE_DRIVER,
-							ENTITY_TYPE_PRIMARY, driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),driverDetails.getUpdatedBy());
+							ENTITY_TYPE_PRIMARY, driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT,new Date(),driverDetails.getUpdatedBy(),driverDetails.getUpdatedById());
 					
 				}
 				
@@ -107,7 +108,8 @@ public class DriverDetailsCustomRepository {
 			{	
 				MobileVerificationDetails mobileVerificationDetails=
 						new MobileVerificationDetails(new MobileVerificationKey(savedEntity.getDriverId(), ENTITY_TYPE_DRIVER, ENTITY_TYPE_PRIMARY),
-								driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), UPDATED_BY_CUST_ONLINE);
+								driverDetails.getMobile(), null, ZERO_COUNT, ZERO_COUNT, new Date(), new Date(), 
+								driverDetails.getInsertedBy(),driverDetails.getInsertedBy(),driverDetails.getInsertedById(),driverDetails.getInsertedById());
 				
 				try{
 					mobileVerificationDetailsRepository.save(mobileVerificationDetails);
@@ -126,9 +128,9 @@ public class DriverDetailsCustomRepository {
 		
 	}
 	
-	public Integer updateMobileAndMobileVerificationStatus(Long driverId,Long mobile,Boolean isMobileVerified,String updatedBy)
+	public Integer updateMobileAndMobileVerificationStatus(Long driverId,Long mobile,Boolean isMobileVerified,Integer updatedBy,Long updatedById)
 	{
-		return driverDetailsRepository.updateMobileAndMobileVerificationStaus(driverId, mobile, isMobileVerified,new Date(),updatedBy);
+		return driverDetailsRepository.updateMobileAndMobileVerificationStaus(driverId, mobile, isMobileVerified,new Date(),updatedBy,updatedById);
 	}
 	
 	public List<DriverDetails> getDriverListByVendorId(Long vendorId)

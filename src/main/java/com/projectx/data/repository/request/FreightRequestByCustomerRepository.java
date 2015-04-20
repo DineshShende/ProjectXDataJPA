@@ -23,9 +23,9 @@ public interface FreightRequestByCustomerRepository extends
 	@Transactional
 	@Modifying
 	@Query(value="update freightrequestbycustomer set allocationstatus=:newStatus,allocatedfor=:freightRequestByVendorId,"
-			+ " updatetime=:updateTime where requestid=:freightRequestByCustomerId and allocationstatus=:oldStatus",nativeQuery=true)
+			+ "updatedby=:updatedBy,updatedbyid=:updatedById,updatetime=:updateTime where requestid=:freightRequestByCustomerId and allocationstatus=:oldStatus",nativeQuery=true)
 	Integer updateVerificationStatus(@Param("freightRequestByCustomerId")Long freightRequestByCustomerId,
 			@Param("oldStatus")String oldStatus,@Param("newStatus")String newStatus,@Param("freightRequestByVendorId")Long freightRequestByVendorId,
-			@Param("updateTime")Date updateTime);
+			@Param("updateTime")Date updateTime,@Param("updatedBy")Integer updatedBy,@Param("updatedById")Long updatedById);
 
 }

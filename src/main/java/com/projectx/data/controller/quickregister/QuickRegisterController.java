@@ -123,7 +123,7 @@ public class QuickRegisterController {
 		ResponseEntity<Integer> result=null;
 		
 		Integer status=customerQuickRegisterRepository.updateMobileVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
-													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy());
+													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
 		
 		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
 		
@@ -141,7 +141,7 @@ public class QuickRegisterController {
 		ResponseEntity<Integer> result=null;
 		
 		Integer status=customerQuickRegisterRepository.updateEmailVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
-													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy());
+													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
 		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
 		
 		return result;

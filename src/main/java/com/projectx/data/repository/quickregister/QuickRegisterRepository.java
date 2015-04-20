@@ -50,16 +50,16 @@ public interface QuickRegisterRepository extends
 		@Transactional
 		 @Modifying
 		 @Query(value="update quickregisterentity set ISMOBILEVERIFIED=:status,UPDATETIME=:updateTime,"
-		 		+ "UPDATEDBY=:updatedBy where CUSTOMERID=:customerId",nativeQuery = true)
+		 		+ "UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId",nativeQuery = true)
 		 Integer updateMobileVerificationStatus(@Param("customerId")Long customerId, @Param("status")Boolean status,
-				 @Param("updateTime")Date updateTime,@Param("updatedBy")String updatedBy);
+				 @Param("updateTime")Date updateTime,@Param("updatedBy")Integer updatedBy,@Param("updatedById") Long updatedById);
 		 
 		@Transactional
 		 @Modifying
 		 @Query(value="update quickregisterentity set ISEMAILVERIFIED=:status,UPDATETIME=:updateTime,"
-		 		+ "UPDATEDBY=:updatedBy where CUSTOMERID=:customerId",nativeQuery = true)
+		 		+ "UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where CUSTOMERID=:customerId",nativeQuery = true)
 		 Integer updateEmailVerificationStatus(@Param("customerId")Long customerId,@Param("status")Boolean status,
-				 @Param("updateTime")Date updateTime,@Param("updatedBy")String updatedBy);
+				 @Param("updateTime")Date updateTime,@Param("updatedBy")Integer updatedBy,@Param("updatedById") Long updatedById);
 
 	
 		

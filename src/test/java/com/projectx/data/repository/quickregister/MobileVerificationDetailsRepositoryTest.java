@@ -121,7 +121,8 @@ public class MobileVerificationDetailsRepositoryTest {
 						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getCustomerType(),
 						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobileType(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobilePin(),
 						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobileVerificationAttempts(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getResendCount(),
-						new Date(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getUpdatedBy()).intValue());
+						new Date(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getUpdatedBy(),
+						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getUpdatedById()).intValue());
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
 		
@@ -132,7 +133,8 @@ public class MobileVerificationDetailsRepositoryTest {
 						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getCustomerType(),
 						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobileType(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobilePin(),
 						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getMobileVerificationAttempts(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getResendCount(),
-						new Date(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getUpdatedBy()).intValue());
+						new Date(),standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getUpdatedBy(),
+						standardUpdateMobilePinAndMobileVerificationAttemptsDTO().getUpdatedById()).intValue());
 	}
 	
 	
@@ -144,7 +146,8 @@ public class MobileVerificationDetailsRepositoryTest {
 		assertEquals(0, customerMobileVerificationDetailsRepository
 				.incrementMobileVerificationAttempts(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),
 						standardCustomerIdMobileUpdatedByDTO().getCustomerType(),standardCustomerIdMobileUpdatedByDTO().getMobileType(),
-						new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()).intValue());
+						new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy(),
+						standardCustomerIdMobileUpdatedByDTO().getRequestedById()).intValue());
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
 		
@@ -152,7 +155,8 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(1, customerMobileVerificationDetailsRepository
 				.incrementMobileVerificationAttempts(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()).intValue());
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy(),
+						standardCustomerIdMobileUpdatedByDTO().getRequestedById()).intValue());
 	}
 	
 	
@@ -163,7 +167,8 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(new Integer(0), customerMobileVerificationDetailsRepository
 				.incrementResendCount(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()));
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy(),
+						standardCustomerIdMobileUpdatedByDTO().getRequestedById()));
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
 		//Insert Not reflected until we read.
@@ -171,7 +176,8 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(new Integer(1), customerMobileVerificationDetailsRepository
 				.incrementResendCount(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()));
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy(),
+						standardCustomerIdMobileUpdatedByDTO().getRequestedById()));
 		
 	}
 	
@@ -182,7 +188,8 @@ public class MobileVerificationDetailsRepositoryTest {
 		
 		assertEquals(new Integer(0), customerMobileVerificationDetailsRepository
 				.incrementResendCount(standardCustomerIdMobileUpdatedByDTO().getCustomerId(),standardCustomerIdMobileUpdatedByDTO().getCustomerType(),
-						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy()));
+						standardCustomerIdMobileUpdatedByDTO().getMobileType(),new Date(),standardCustomerIdMobileUpdatedByDTO().getRequestedBy(),
+						standardCustomerIdMobileUpdatedByDTO().getRequestedById()));
 		
 		assertEquals(standardCustomerMobileVerificationDetails(), customerMobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails()));
 		//Insert Not reflected until we read.
@@ -222,7 +229,8 @@ public class MobileVerificationDetailsRepositoryTest {
 		assertEquals(1, customerMobileVerificationDetailsRepository.count());
 		
 		assertEquals(1, customerMobileVerificationDetailsRepository.updateMobile(mobileVerification.getKey().getCustomerId(),
-				mobileVerification.getKey().getCustomerType(),mobileVerification.getKey().getMobileType(), 8888888888L, null, 0, 0,new Date(),"CUST_ONLINE").intValue());
+				mobileVerification.getKey().getCustomerType(),mobileVerification.getKey().getMobileType(), 8888888888L, null, 0, 0,
+				new Date(),1,mobileVerification.getKey().getCustomerId()).intValue());
 		
 		assertEquals(1, customerMobileVerificationDetailsRepository.count());
 	

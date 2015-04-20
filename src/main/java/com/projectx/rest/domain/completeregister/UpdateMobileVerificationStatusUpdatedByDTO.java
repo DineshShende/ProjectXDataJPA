@@ -13,7 +13,10 @@ public class UpdateMobileVerificationStatusUpdatedByDTO {
 	private Boolean status;
 	
 	@NotNull
-	private String updatedBy;
+	private Integer updatedBy;
+	
+	@NotNull
+	private Long updatedById;
 
 	public UpdateMobileVerificationStatusUpdatedByDTO() {
 
@@ -22,11 +25,12 @@ public class UpdateMobileVerificationStatusUpdatedByDTO {
 	
 
 	public UpdateMobileVerificationStatusUpdatedByDTO(Long customerId,
-			Long mobile, Boolean status, String updatedBy) {
+			Long mobile, Boolean status, Integer updatedBy,Long updatedById) {
 		this.customerId = customerId;
 		this.mobile = mobile;
 		this.status = status;
 		this.updatedBy = updatedBy;
+		this.updatedById=updatedById;
 	}
 
 
@@ -58,12 +62,20 @@ public class UpdateMobileVerificationStatusUpdatedByDTO {
 	}
 
 	
-	public String getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
 	}
 
 
@@ -72,7 +84,8 @@ public class UpdateMobileVerificationStatusUpdatedByDTO {
 	public String toString() {
 		return "UpdateMobileVerificationStatusUpdatedByDTO [customerId="
 				+ customerId + ", mobile=" + mobile + ", status=" + status
-				+ ", updatedBy=" + updatedBy + "]";
+				+ ", updatedBy=" + updatedBy + ", updatedById=" + updatedById
+				+ "]";
 	}
 
 
@@ -87,6 +100,8 @@ public class UpdateMobileVerificationStatusUpdatedByDTO {
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		return result;
 	}
 
@@ -120,6 +135,11 @@ public class UpdateMobileVerificationStatusUpdatedByDTO {
 			if (other.updatedBy != null)
 				return false;
 		} else if (!updatedBy.equals(other.updatedBy))
+			return false;
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		} else if (!updatedById.equals(other.updatedById))
 			return false;
 		return true;
 	}
