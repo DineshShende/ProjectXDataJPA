@@ -16,8 +16,8 @@ import com.projectx.data.domain.quickregister.MobileVerificationKey;
 public interface MobileVerificationDetailsRepository extends
 		CrudRepository<MobileVerificationDetails, MobileVerificationKey> {
 	
-	@Override
-	MobileVerificationDetails save(MobileVerificationDetails mobileVerificationDetails);
+		
+	
 	
 	@Override
 	MobileVerificationDetails  findOne(MobileVerificationKey id);

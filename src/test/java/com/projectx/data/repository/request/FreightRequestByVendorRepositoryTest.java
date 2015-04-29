@@ -156,6 +156,13 @@ public class FreightRequestByVendorRepositoryTest {
 	{
 		FreightRequestByCustomer freightRequestByCustomer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
 		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		
 		FreightRequestByVendor savedEntity=testRequestRepository.save(standardTestRequest());
 		
 		testRequestRepository.save(standardTestRequestOpen());
@@ -163,8 +170,6 @@ public class FreightRequestByVendorRepositoryTest {
 		testRequestRepository.save(standardTestRequestClosed());
 		
 		testRequestRepository.save(standardTestRequestFlexible());
-		
-		
 		
 		List<FreightRequestByVendor> matchList=testRequestRepository.getMatchingVendorRequest(freightRequestByCustomer);
 		
@@ -177,6 +182,12 @@ public class FreightRequestByVendorRepositoryTest {
 		
 		FreightRequestByCustomer freightRequestByCustomer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoad());
 		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		FreightRequestByVendor savedEntity=testRequestRepository.save(standardTestRequest());
 		
 		testRequestRepository.save(standardTestRequestOpen());
@@ -184,8 +195,6 @@ public class FreightRequestByVendorRepositoryTest {
 		testRequestRepository.save(standardTestRequestClosed());
 		
 		testRequestRepository.save(standardTestRequestFlexible());
-		
-		
 		
 		List<FreightRequestByVendor> matchList=testRequestRepository.getMatchingVendorRequest(freightRequestByCustomer);
 		

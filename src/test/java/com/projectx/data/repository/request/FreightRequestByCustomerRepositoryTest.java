@@ -229,6 +229,26 @@ public class FreightRequestByCustomerRepositoryTest {
 	}
 	
 	@Test
+	public void getMatchingCustomerRequestSimple()
+	{
+		freightRequestByCustomerRepository.deleteAll();
+		
+		testRequestRepository.deleteAll();
+		
+		vendorDetailsRepositoty.deleteAll();
+		
+		vehicleDetailsRepository.deleteAll();
+		
+		FreightRequestByCustomer savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerSimple());
+		
+		FreightRequestByVendor testRequest=testRequestRepository.save(standardTestRequest());
+		
+		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest,FREIGHTALLOCATIONSTATUS_NEW);
+		
+		assertEquals(1, list.size());
+	}
+	
+	@Test
 	public void getMatchingCustomerRequestBodyTypeNotFlexible()
 	{
 		freightRequestByCustomerRepository.deleteAll();

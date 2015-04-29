@@ -189,15 +189,7 @@ public class AuthenticationDetailsDataFixtures {
 		
 	}
 	
-	/*
-	public static String standardJsonUpdateEmailPassword()
-	{
-		System.out.println(standardUpdateEmailPassword());
 		
-		return gson.toJson(standardUpdateEmailPassword());
-	}
-	*/
-	
 	public static String standardJsonCustomerIdForLoginDetails(Long customerId) {
 		
 		System.out.println("{\"customerId\":"+customerId+"}");

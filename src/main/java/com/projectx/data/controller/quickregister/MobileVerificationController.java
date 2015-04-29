@@ -35,27 +35,6 @@ public class MobileVerificationController {
 	MobileVerificationDetailsRepository customerMobileVerificationDetailsRepository;
 	
 
-	@RequestMapping(value="/saveMobileVerificationDetails",method=RequestMethod.POST)
-	public ResponseEntity<MobileVerificationDetails> saveMobileVerificationEntity(@Valid @RequestBody MobileVerificationDetails mobileVerificationDetails,
-			BindingResult resultValid)
-	{
-		if(resultValid.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		
-		ResponseEntity<MobileVerificationDetails> result=null;
-		
-		try{
-			MobileVerificationDetails savedmobileVerificationDetails=customerMobileVerificationDetailsRepository.save(mobileVerificationDetails);
-			result=new ResponseEntity<MobileVerificationDetails>(savedmobileVerificationDetails, HttpStatus.CREATED);
-		}catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-		
-		return result;
-		
-	}
-	
 	@RequestMapping(value="/getMobileVerificationDetailsByCustomerIdAndMobile",method=RequestMethod.POST)
 	public ResponseEntity<MobileVerificationDetails> getMobileVerificationDetailsByCustomerIdAndMobile(@RequestBody CustomerIdTypeMobileTypeUpdatedByDTO customerIdMobileDTO)
 	{

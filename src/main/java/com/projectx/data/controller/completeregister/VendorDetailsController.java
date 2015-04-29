@@ -50,25 +50,7 @@ public class VendorDetailsController {
 		return result;
 	}
 	
-	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public ResponseEntity<VendorDetails> update(@Valid @RequestBody VendorDetails vendorDetails,BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		ResponseEntity<VendorDetails> result=null;
-		
-		try{
-			VendorDetails updatedEntity=vendorDetailsRepository.update(vendorDetails);
-			result=new ResponseEntity<VendorDetails>(updatedEntity, HttpStatus.OK);
-		}catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-		
-		return result;
-	}
-	
 	@RequestMapping(value="/getById/{vendorId}")
 	public ResponseEntity<VendorDetails> findOne(@PathVariable("vendorId") Long vendorId)
 	{
@@ -84,48 +66,6 @@ public class VendorDetailsController {
 		return result;
 	}
 	
-	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
-	public ResponseEntity<Integer> updateMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO updateVerificationStatusDTO,
-			BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		
-		ResponseEntity<Integer> result=null;
-		
-		try{
-		
-			Integer updateStatus=vendorDetailsRepository.updateMobileAndVerificationStatus(updateVerificationStatusDTO.getCustomerId(),
-					updateVerificationStatusDTO.getMobile(),updateVerificationStatusDTO.getStatus(),updateVerificationStatusDTO.getUpdatedBy(),
-					updateVerificationStatusDTO.getUpdatedById());
-			
-			result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
-		}catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-		
-		
-		return result;
-	}
-	
-	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
-	public ResponseEntity<Integer> updateEmailVerificationStatus(@Valid @RequestBody UpdateEmailVerificationStatusUpdatedByDTO updateVerificationStatusDTO,
-			BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		
-		ResponseEntity<Integer> result=null;
-		
-		Integer updateStatus=vendorDetailsRepository.updateEmailAndVerificationStatus(updateVerificationStatusDTO.getCustomerId(), 
-				updateVerificationStatusDTO.getEmail(),updateVerificationStatusDTO.getStatus(),updateVerificationStatusDTO.getUpdatedBy(),
-				updateVerificationStatusDTO.getUpdatedById());
-		
-		result=new ResponseEntity<Integer>(updateStatus, HttpStatus.OK);
-		
-		return result;
-	}
 	
 	@RequestMapping(value="/count")
 	public Integer count()

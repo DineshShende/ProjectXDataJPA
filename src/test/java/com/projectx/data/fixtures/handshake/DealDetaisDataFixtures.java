@@ -19,15 +19,20 @@ public class DealDetaisDataFixtures {
 	
 	public static Date DEAL_DATE=new Date();
 	
-	public static String DEAL_UPDATE_BY="CUST_ONLINE";
+	public static Integer DEAL_UPDATE_BY=1;
+	
+	public static Long DEAL_UPDATE_BY_ID=213L;
 	
 	
 	private static Gson gson=new Gson(); 
 	
 	public static DealDetails standardDealDetails()
 	{
-		return new DealDetails(DEAL_ID, DEAL_FREIGHTREQUESTBYCUSTOMER_ID, DEAL_FREIGHTREQUESTBYVENDOR_ID, DEAL_DEDUCTIONMODE,
-				DEAL_AMOUNT, DEAL_UPDATE_BY, DEAL_DATE, DEAL_UPDATE_BY, DEAL_DATE);
+		
+		return new DealDetails(DEAL_ID, DEAL_FREIGHTREQUESTBYCUSTOMER_ID, DEAL_FREIGHTREQUESTBYVENDOR_ID, DEAL_DEDUCTIONMODE, DEAL_AMOUNT, DEAL_DATE, DEAL_DATE,
+				DEAL_UPDATE_BY, DEAL_UPDATE_BY_ID,DEAL_UPDATE_BY , DEAL_UPDATE_BY_ID);
+		
+		
 	}
 	
 	

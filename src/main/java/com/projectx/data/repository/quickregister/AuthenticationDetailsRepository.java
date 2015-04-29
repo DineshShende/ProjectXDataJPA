@@ -25,8 +25,6 @@ import org.springframework.stereotype.Repository;
 public interface AuthenticationDetailsRepository extends
 		CrudRepository<AuthenticationDetails, AuthenticationDetailsKey> {
 
-	@Override
-	AuthenticationDetails save(AuthenticationDetails authenticationDetails);
 	
 	@Override
 	public AuthenticationDetails findOne(AuthenticationDetailsKey id);

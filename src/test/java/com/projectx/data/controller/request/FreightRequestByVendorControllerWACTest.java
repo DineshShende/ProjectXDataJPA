@@ -144,7 +144,7 @@ public class FreightRequestByVendorControllerWACTest {
 	            
 	            .andDo(print())
 	            .andExpect(status().isFound())
-	            .andExpect(jsonPath("$.vehicleRegistrationNumber").value(standardTestRequest().getVehicleDetailsId().getRegistrationNumber()))
+	             .andExpect(jsonPath("$.vehicleDetailsId").exists())
 	            .andExpect(jsonPath("$.source").value(standardTestRequest().getSource()))
 	            .andExpect(jsonPath("$.destination").value(standardTestRequest().getDestination()))
 	            .andExpect(jsonPath("$.driverId").exists())
@@ -210,7 +210,7 @@ public class FreightRequestByVendorControllerWACTest {
 	            
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.[0].vehicleRegistrationNumber").value(standardTestRequest().getVehicleDetailsId().getRegistrationNumber()))
+	            .andExpect(jsonPath("$.[0].vehicleDetailsId").exists())
 	            .andExpect(jsonPath("$.[0].source").value(standardTestRequest().getSource()))
 	            .andExpect(jsonPath("$.[0].destination").value(standardTestRequest().getDestination()))
 	            .andExpect(jsonPath("$.[0].driverId").exists())
@@ -246,7 +246,7 @@ public class FreightRequestByVendorControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.[0].vehicleRegistrationNumber").value(standardTestRequest().getVehicleDetailsId().getRegistrationNumber()))
+	            .andExpect(jsonPath("$.[0].vehicleDetailsId").exists())
 	            .andExpect(jsonPath("$.[0].source").value(standardTestRequest().getSource()))
 	            .andExpect(jsonPath("$.[0].destination").value(standardTestRequest().getDestination()))
 	            .andExpect(jsonPath("$.[0].driverId").exists())

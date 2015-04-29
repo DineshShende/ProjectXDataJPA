@@ -73,8 +73,9 @@ public class RetriggerDetailsControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isCreated())
-	            .andExpect(jsonPath("$.service").value(standardRetriggerDetails().getService()))
-	            .andExpect(jsonPath("$.data").value(standardRetriggerDetails().getData()));
+	            .andExpect(jsonPath("$.errorMessage").value(""))
+	            .andExpect(jsonPath("$.result.service").value(standardRetriggerDetails().getService()))
+	            .andExpect(jsonPath("$.result.data").value(standardRetriggerDetails().getData()));
 
 	
 	}
@@ -89,8 +90,9 @@ public class RetriggerDetailsControllerWACTest {
 	               )
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.[0].service").value(standardRetriggerDetails().getService()))
-	            .andExpect(jsonPath("$.[0].data").value(standardRetriggerDetails().getData()));
+	            .andExpect(jsonPath("$.errorMessage").value(""))
+	            .andExpect(jsonPath("$.result.[0].service").value(standardRetriggerDetails().getService()))
+	            .andExpect(jsonPath("$.result.[0].data").value(standardRetriggerDetails().getData()));
 
 	
 	}
@@ -100,21 +102,15 @@ public class RetriggerDetailsControllerWACTest {
 	{
 		RetriggerDetails retriggerDetails=retriggerDetailsRepository.save(standardRetriggerDetails());
 
-		this.mockMvc.perform(
-	            get("/retriggerDetails/findAll")
-	               )
-	            .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(jsonPath("$.[0].service").value(standardRetriggerDetails().getService()))
-	            .andExpect(jsonPath("$.[0].data").value(standardRetriggerDetails().getData()));
-
+		
 		
 		this.mockMvc.perform(
 	            get("/retriggerDetails/deleteById/"+retriggerDetails.getRetriggerId())
 	               )
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(content().string("true"));
+	            .andExpect(jsonPath("$.errorMessage").value(""))
+	            .andExpect(jsonPath("$.result").value(true));
 		
 		assertEquals(0, retriggerDetailsRepository.count());
 		

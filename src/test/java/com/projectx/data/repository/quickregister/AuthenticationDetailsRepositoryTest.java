@@ -268,32 +268,5 @@ public class AuthenticationDetailsRepositoryTest {
 	}
 	
 
-
-	
-	/*
-	 
-	@Test
-	public void loginVerificationWithEmailMobileCustomer()
-	{
-		assertEquals(0,customerAuthenticationDetailsRepository.count());
-		
-		CustomerAuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
-		
-		assertEquals(1,customerAuthenticationDetailsRepository.count());
-		
-		assertNotNull(customerAuthenticationDetailsRepository.loginVerification(standardLoginVerificationWithEmail().getEmail(),
-				standardLoginVerificationWithEmail().getMobile(), standardLoginVerificationWithEmail().getPassword()));
-		
-		assertNotNull(customerAuthenticationDetailsRepository.loginVerification(standardLoginVerificationWithMobile().getEmail(),
-				standardLoginVerificationWithMobile().getMobile(), standardLoginVerificationWithMobile().getPassword()));
-		
-		assertNull(customerAuthenticationDetailsRepository.loginVerification(standardLoginVerificationWithMobileNewPassword().getEmail(),
-				standardLoginVerificationWithMobileNewPassword().getMobile(), standardLoginVerificationWithMobileNewPassword().getPassword()));
-		
-		assertNull(customerAuthenticationDetailsRepository.loginVerification(standardLoginVerificationWithEmailNewPassword().getEmail(),
-				standardLoginVerificationWithEmailNewPassword().getMobile(), standardLoginVerificationWithEmailNewPassword().getPassword()));
-	}
-	 
-	 */
 	 
 }

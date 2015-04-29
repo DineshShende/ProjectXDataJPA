@@ -37,8 +37,10 @@ public class FreightRequestByCustomerRepositoryImpl extends
 		
 		Predicate allocationStatusPredicate=qFreightRequestByCustomer.allocationStatus.eq(allocationStatus);
 		
-		Predicate commodityPredicate=qFreightRequestByCustomer.commodity.isNotNull().and(qFreightRequestByCustomer.commodity.isNotEmpty())
-		.and(qFreightRequestByCustomer.commodity.in(freightRequestByVendor.getVehicleDetailsId().getCommodityList()));
+		Predicate commodityPredicate=qFreightRequestByCustomer.commodity.isNull().or(qFreightRequestByCustomer.commodity.isNotNull().and(qFreightRequestByCustomer.commodity.isNotEmpty())
+				.and(qFreightRequestByCustomer.commodity.in(freightRequestByVendor.getVehicleDetailsId().getCommodityList())));
+				
+				
 		
 		
 		JPQLQuery jpqlQuery=from(qFreightRequestByCustomer)
@@ -53,6 +55,7 @@ public class FreightRequestByCustomerRepositoryImpl extends
 		Predicate fullTruckLoadPredicate=qFreightRequestByCustomer.isFullTruckLoad.eq(true)
 							.and(qFreightRequestByCustomer.capacity.loe(freightRequestByVendor.getVehicleDetailsId().getLoadCapacityInTons()));
 		
+		
 		Predicate lessThanTruckLoadPredicateORfullTruckLoadPredicate
 							=qFreightRequestByCustomer.isLessThanTruckLoad.eq(true)
 								.and(qFreightRequestByCustomer.grossWeight.loe(freightRequestByVendor.getVehicleDetailsId().getLoadCapacityInTons()))
@@ -65,9 +68,10 @@ public class FreightRequestByCustomerRepositoryImpl extends
 		jpqlQuery=jpqlQuery.where(lessThanTruckLoadPredicateORfullTruckLoadPredicate);
 		
 		
+		
 		if(!freightRequestByVendor.getVehicleDetailsId().getIsBodyTypeFlexible())
 		{
-			Predicate bodyTypePredicate=qFreightRequestByCustomer.bodyType.eq(freightRequestByVendor.getVehicleDetailsId().getVehicleBodyType());
+			Predicate bodyTypePredicate=qFreightRequestByCustomer.bodyType.isNull().or(qFreightRequestByCustomer.bodyType.eq(freightRequestByVendor.getVehicleDetailsId().getVehicleBodyType()));
 		
 			jpqlQuery=jpqlQuery.where(bodyTypePredicate);
 		}	
@@ -75,14 +79,14 @@ public class FreightRequestByCustomerRepositoryImpl extends
 		
 		Predicate vehicleBrandPredicate=qFreightRequestByCustomer.vehicleBrand.notLike("")
 										.and(qFreightRequestByCustomer.vehicleBrand.eq(freightRequestByVendor.getVehicleDetailsId().getVehicleBrandId().getVehicleBrandName()))
-										.or(qFreightRequestByCustomer.vehicleBrand.eq(""));
+										.or(qFreightRequestByCustomer.vehicleBrand.isNull());
 		
 		jpqlQuery=jpqlQuery.where(vehicleBrandPredicate);
 		
 		
 		Predicate modelNumberPredicate=qFreightRequestByCustomer.model.notLike("")
 				.and(qFreightRequestByCustomer.model.eq(freightRequestByVendor.getVehicleDetailsId().getVehicleBrandId().getModelNumber()))
-				.or(qFreightRequestByCustomer.model.eq(""));
+				.or(qFreightRequestByCustomer.model.isNull());
 		
 		jpqlQuery=jpqlQuery.where(modelNumberPredicate);
 		

@@ -57,32 +57,6 @@ public class DriverDetailsContoller {
 				
 	}
 	
-	/*
-	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public ResponseEntity<DriverDetails> update(@Valid @RequestBody DriverDetails driverDetails,BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		
-		ResponseEntity<DriverDetails> result=null;
-		
-		DriverDetails savedEntity=new DriverDetails();
-		
-		try
-		{
-			savedEntity=driverDetailsRepository.update(driverDetails);
-			
-			result=new ResponseEntity<DriverDetails>(savedEntity, HttpStatus.OK);
-		}
-		catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-		
-		return result;
-				
-	}
-	*/
 	
 	@RequestMapping(value="/updateMobileAndMobileVerificationStatus",method=RequestMethod.POST)
 	public ResponseEntity<Integer> updateMobileAndMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO,BindingResult bindingResult)

@@ -38,40 +38,56 @@ public class DealDetails {
 	private Integer amount;
 	
 	@NotNull
-	@Column(name="INSERTEDBY")
-	private String insertedBy;
-	
-	@NotNull
 	@Column(name="INSERTTIME")
 	private Date insertTime;
-	
-	@NotNull
-	@Column(name="UPDATEDBY")
-	private String updatedBy;
-	
+
 	@NotNull
 	@Column(name="UPDATETIME")
 	private Date updateTime;
 
+	@NotNull
+	@Column(name="UPDATEDBY")
+	private Integer updatedBy;
+	
+	@NotNull
+	@Column(name="UPDATEDBYID")
+	private Long updatedById;
+
+	@NotNull
+	@Column(name="INSERTEDBY")
+	private Integer insertedBy;
+	
+	@NotNull
+	@Column(name="INSERTEDBYID")
+	private Long insertedById;
+	
+	
 	public DealDetails() {
 
 	}
 
+	
+
 	public DealDetails(Long dealId, Long freightRequestByCustomerId,
 			Long freightRequestByVendorId, String deductionMode,
-			Integer amount, String insertedBy, Date insertTime,
-			String updatedBy, Date updateTime) {
+			Integer amount, Date insertTime, Date updateTime,
+			Integer updatedBy, Long updatedById, Integer insertedBy,
+			Long insertedById) {
 		super();
 		this.dealId = dealId;
 		this.freightRequestByCustomerId = freightRequestByCustomerId;
 		this.freightRequestByVendorId = freightRequestByVendorId;
 		this.deductionMode = deductionMode;
 		this.amount = amount;
-		this.insertedBy = insertedBy;
 		this.insertTime = insertTime;
-		this.updatedBy = updatedBy;
 		this.updateTime = updateTime;
+		this.updatedBy = updatedBy;
+		this.updatedById = updatedById;
+		this.insertedBy = insertedBy;
+		this.insertedById = insertedById;
 	}
+
+
 
 	public Long getDealId() {
 		return dealId;
@@ -113,14 +129,6 @@ public class DealDetails {
 		this.amount = amount;
 	}
 
-	public String getInsertedBy() {
-		return insertedBy;
-	}
-
-	public void setInsertedBy(String insertedBy) {
-		this.insertedBy = insertedBy;
-	}
-
 	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getInsertTime() {
 		return insertTime;
@@ -129,14 +137,6 @@ public class DealDetails {
 	@JsonDeserialize(using = JsonDateDeSerializer.class)
 	public void setInsertTime(Date insertTime) {
 		this.insertTime = insertTime;
-	}
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
 	}
 
 	@JsonSerialize(using=JsonDateSerializer.class)
@@ -148,6 +148,56 @@ public class DealDetails {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+	
+	
+
+	public Integer getUpdatedBy() {
+		return updatedBy;
+	}
+
+
+
+	public void setUpdatedBy(Integer updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+
+
+	public Long getUpdatedById() {
+		return updatedById;
+	}
+
+
+
+	public void setUpdatedById(Long updatedById) {
+		this.updatedById = updatedById;
+	}
+
+
+
+	public Integer getInsertedBy() {
+		return insertedBy;
+	}
+
+
+
+	public void setInsertedBy(Integer insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+
+
+	public Long getInsertedById() {
+		return insertedById;
+	}
+
+
+
+	public void setInsertedById(Long insertedById) {
+		this.insertedById = insertedById;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -155,10 +205,13 @@ public class DealDetails {
 				+ ", freightRequestByCustomerId=" + freightRequestByCustomerId
 				+ ", freightRequestByVendorId=" + freightRequestByVendorId
 				+ ", deductionMode=" + deductionMode + ", amount=" + amount
-				+ ", insertedBy=" + insertedBy + ", insertTime=" + insertTime
-				+ ", updatedBy=" + updatedBy + ", updateTime=" + updateTime
-				+ "]";
+				+ ", insertTime=" + insertTime + ", updateTime=" + updateTime
+				+ ", updatedBy=" + updatedBy + ", updatedById=" + updatedById
+				+ ", insertedBy=" + insertedBy + ", insertedById="
+				+ insertedById + "]";
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -181,11 +234,17 @@ public class DealDetails {
 		result = prime * result
 				+ ((insertedBy == null) ? 0 : insertedBy.hashCode());
 		result = prime * result
+				+ ((insertedById == null) ? 0 : insertedById.hashCode());
+		result = prime * result
 				+ ((updateTime == null) ? 0 : updateTime.hashCode());
 		result = prime * result
 				+ ((updatedBy == null) ? 0 : updatedBy.hashCode());
+		result = prime * result
+				+ ((updatedById == null) ? 0 : updatedById.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -223,30 +282,36 @@ public class DealDetails {
 		} else if (!freightRequestByVendorId
 				.equals(other.freightRequestByVendorId))
 			return false;
-		/*if (insertTime == null) {
+		if (insertTime == null) {
 			if (other.insertTime != null)
 				return false;
-		} else if (!insertTime.equals(other.insertTime))
-			return false;*/
+		}
 		if (insertedBy == null) {
 			if (other.insertedBy != null)
 				return false;
-		} else if (!insertedBy.equals(other.insertedBy))
-			return false;
-		/*if (updateTime == null) {
+		}
+		if (insertedById == null) {
+			if (other.insertedById != null)
+				return false;
+		}
+		if (updateTime == null) {
 			if (other.updateTime != null)
 				return false;
-		} else if (!updateTime.equals(other.updateTime))
-			return false;*/
+		}
 		if (updatedBy == null) {
 			if (other.updatedBy != null)
 				return false;
-		} else if (!updatedBy.equals(other.updatedBy))
-			return false;
+		}
+		if (updatedById == null) {
+			if (other.updatedById != null)
+				return false;
+		}
 		return true;
 	}
-	
-	
+
+
+
+		
 	
 	
 }

@@ -78,6 +78,14 @@ public class FreightRequestByCustomerDataFixture {
 				 ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CREQ_CUST_ID,CREQ_CUST_ID);
 	}
 	
+	public static FreightRequestByCustomer standardFreightRequestByCustomerSimple()
+	{
+		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,
+				100,null,null , null, null,null, null, null, null,
+				CREQ_PICKUP_TIME,CREQ_CUST_ID, CREQ_ALLOCATION_STATUS,null,CREQ_DATE, CREQ_DATE,
+				 ACTOR_ENTITY_SELF_WEB,ACTOR_ENTITY_SELF_WEB,CREQ_CUST_ID,CREQ_CUST_ID);
+	}
+	
 	public static FreightRequestByCustomer standardFreightRequestByCustomerFullTruckLoadOpenTataReq()
 	{
 		return new FreightRequestByCustomer(null,CREQ_SOURCE, CREQ_DEST, CREQ_PICK_UP_TIME, CREQ_NOOFVEHICLE, CREQ_BOOL_TRUE, CREQ_BOOL_FALSE,

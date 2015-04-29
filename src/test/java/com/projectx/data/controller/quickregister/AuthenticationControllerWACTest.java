@@ -71,116 +71,11 @@ public class AuthenticationControllerWACTest {
 
 	
 	@Test
-	public void saveVerificationDetailsWithEmailMobileCustomer() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isCreated())
-	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
-	            .andExpect(jsonPath("$.password").value(standardCustomerEmailMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()))
-	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailMobileAuthenticationDetails().getEmailPassword()))
-	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailMobileAuthenticationDetails().getResendCount()))
-	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
-		
-		
-	}
-
-	@Test
-	public void saveVerificationDetailsWithEmailMobileCustomerWithErrors() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetailsWithError()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isNotAcceptable());
-		
-	}
-	
-	@Test
-	public void saveVerificationDetailsWithEmailMobileCustomerWithAlreadyReported() throws Exception
-	{
-		
-		authenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
-
-		authenticationDetailsRepository.count();
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetailsDuplicate()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isAlreadyReported());
-		
-	}
-
-	
-	@Test
-	public void saveVerificationDetailsWithEmailCustomer() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isCreated())
-	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerEmailMobileAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerEmailMobileAuthenticationDetails().getMobile()))
-	           // .andExpect(jsonPath("$.password").value(null))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerEmailMobileAuthenticationDetails().getPasswordType()))
-	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerEmailMobileAuthenticationDetails().getEmailPassword()))
-	            .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailMobileAuthenticationDetails().getResendCount()))
-	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerEmailMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
-		
-		
-	}
-
-	
-	@Test
-	public void saveVerificationDetailsWithMobileCustomer() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	            .andDo(print())
-	            .andExpect(status().isCreated())
-	         //   .andExpect(jsonPath("$.customerId").value(standardCustomerEmailMobileAuthenticationDetails().getCustomerId()))
-	            .andExpect(jsonPath("$.email").value(standardCustomerMobileAuthenticationDetails().getEmail()))
-	            .andExpect(jsonPath("$.mobile").value(standardCustomerMobileAuthenticationDetails().getMobile()))
-	            .andExpect(jsonPath("$.password").value(standardCustomerMobileAuthenticationDetails().getPassword()))
-	            .andExpect(jsonPath("$.passwordType").value(standardCustomerMobileAuthenticationDetails().getPasswordType()))
-	            .andExpect(jsonPath("$.emailPassword").value(standardCustomerMobileAuthenticationDetails().getEmailPassword()))
-	            .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileAuthenticationDetails().getResendCount()))
-	            .andExpect(jsonPath("$.lastUnsucessfullAttempts").value(standardCustomerMobileAuthenticationDetails().getLastUnsucessfullAttempts()));
-		
-		
-	}
-	
-	
-	
-	@Test
 	public void getLoginDetailsByEmailWithEmailAuthenticationEntity() throws Exception
 	{
 		authenticationDetailsRepository.deleteAll();		
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		authenticationDetailsRepository.save(standardCustomerEmailAuthenticationDetails());
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByEmail")
@@ -206,11 +101,7 @@ public class AuthenticationControllerWACTest {
 		
 		authenticationDetailsRepository.deleteAll();
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		authenticationDetailsRepository.save(standardCustomerMobileAuthenticationDetails());
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByMobile")
@@ -234,11 +125,7 @@ public class AuthenticationControllerWACTest {
 	{
 		authenticationDetailsRepository.deleteAll();
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		authenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/customerAuthentication/getLoginDetailsByMobile")
@@ -369,11 +256,7 @@ public class AuthenticationControllerWACTest {
 	{
 		authenticationDetailsRepository.deleteAll();
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		AuthenticationDetails authenticationDetails=authenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
 		this.mockMvc.perform(get("/customer/quickregister/customerAuthentication/getCount"))
 				.andDo(print())
@@ -386,11 +269,7 @@ public class AuthenticationControllerWACTest {
 	{
 		authenticationDetailsRepository.deleteAll();
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/customerAuthentication/saveLoginDetails")
-	                    .content(standardJsonCustomerAuthenticationDetails(standardCustomerEmailMobileAuthenticationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		AuthenticationDetails authenticationDetails=authenticationDetailsRepository.save(standardCustomerEmailMobileAuthenticationDetails());
 		
 		this.mockMvc.perform(get("/customer/quickregister/customerAuthentication/getCount"))
 				.andDo(print())

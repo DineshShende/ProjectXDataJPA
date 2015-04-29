@@ -1,4 +1,4 @@
-package com.projectx.data.controller.quickregister;
+	package com.projectx.data.controller.quickregister;
 
 import static com.projectx.data.config.Constants.SPRING_PROFILE_PRODUCTION;
 
@@ -35,26 +35,6 @@ public class EmailVerificationController {
 	@Autowired
 	EmailVerificationDetailsRepository customerEmailVerificationDetailsRepository;
 	
-	@RequestMapping(value="/saveEmailVerificationDetails",method=RequestMethod.POST)
-	public ResponseEntity<EmailVerificationDetails> saveEmailVerificationEntity(@Valid @RequestBody EmailVerificationDetails emailVerificationDetails,
-			BindingResult resultValid)
-	{
-		if(resultValid.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); 
-		
-		ResponseEntity<EmailVerificationDetails> result=null;
-		
-		try{
-			EmailVerificationDetails savedEmailVerificationDetails=customerEmailVerificationDetailsRepository.save(emailVerificationDetails);
-			result=new ResponseEntity<EmailVerificationDetails>(savedEmailVerificationDetails, HttpStatus.CREATED);
-		}catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-				
-		return result;
-		
-	}
 	
 	@RequestMapping(value="/getEmailVerificationDetailsByCustomerIdAndEmail",method=RequestMethod.POST)
 	public ResponseEntity<EmailVerificationDetails> getEmailVerificationDetailsByCustomerIdAndEmail(@RequestBody CustomerIdTypeEmailTypeDTO customerIdEmailDTO)

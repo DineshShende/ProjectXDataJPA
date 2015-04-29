@@ -73,16 +73,16 @@ public class FreightRequestByVendorController {
 	}
 	
 	@RequestMapping(value="/getById/{requestId}",method=RequestMethod.GET)
-	public ResponseEntity<FreightRequestByVendorDTO> getById(@PathVariable Long requestId)
+	public ResponseEntity<FreightRequestByVendor> getById(@PathVariable Long requestId)
 	{
-		ResponseEntity<FreightRequestByVendorDTO> result=null;
+		ResponseEntity<FreightRequestByVendor> result=null;
 		
 		FreightRequestByVendor savedEntity=testRequestRepository.findOne(requestId);
 		
 		if(savedEntity==null)
 			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		else
-			result=new ResponseEntity<FreightRequestByVendorDTO>(freightRequestByVendorService.toFreightRequestByVendorDTO(savedEntity), HttpStatus.FOUND);
+			result=new ResponseEntity<FreightRequestByVendor>(savedEntity, HttpStatus.FOUND);
 			
 		return result;
 	}
@@ -103,16 +103,16 @@ public class FreightRequestByVendorController {
 	
 	
 	@RequestMapping(value="/findByVendorId/{vendorId}")
-	public List<FreightRequestByVendorDTO> findByVendorId(@PathVariable Long vendorId)
+	public List<FreightRequestByVendor> findByVendorId(@PathVariable Long vendorId)
 	{
 		List<FreightRequestByVendor> requestList=testRequestRepository.findByVendorId(vendorId);
 		
-		List<FreightRequestByVendorDTO> returnList=new ArrayList<FreightRequestByVendorDTO>();
+		//List<FreightRequestByVendorDTO> returnList=new ArrayList<FreightRequestByVendorDTO>();
 	
-		for(int i=0;i<requestList.size();i++)
-			returnList.add(freightRequestByVendorService.toFreightRequestByVendorDTO(requestList.get(i)));
+		//for(int i=0;i<requestList.size();i++)
+		//	returnList.add(freightRequestByVendorService.toFreightRequestByVendorDTO(requestList.get(i)));
 		
-		return returnList;
+		return requestList;
 	}
 	
 	
@@ -132,16 +132,16 @@ public class FreightRequestByVendorController {
 	}
  	
 	@RequestMapping(value="/getMatchingVendorReqFromCustomerReq",method=RequestMethod.POST)
-	public List<FreightRequestByVendorDTO> getMatchingVendorReqFromCustomerReq(@RequestBody FreightRequestByCustomer freightRequestByCustomer)
+	public List<FreightRequestByVendor> getMatchingVendorReqFromCustomerReq(@RequestBody FreightRequestByCustomer freightRequestByCustomer)
 	{
 		List<FreightRequestByVendor> requestList=testRequestRepository.getMatchingVendorRequest(freightRequestByCustomer);
 		
-		List<FreightRequestByVendorDTO> returnList=new ArrayList<FreightRequestByVendorDTO>();
+		//List<FreightRequestByVendorDTO> returnList=new ArrayList<FreightRequestByVendorDTO>();
 		
-		for(int i=0;i<requestList.size();i++)
-			returnList.add(freightRequestByVendorService.toFreightRequestByVendorDTO(requestList.get(i)));
+		//for(int i=0;i<requestList.size();i++)
+		//	returnList.add(freightRequestByVendorService.toFreightRequestByVendorDTO(requestList.get(i)));
 		
-		return returnList;
+		return requestList;
 	}
 	
 	@RequestMapping(value="/count")

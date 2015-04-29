@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.config.Constants;
 import com.projectx.data.domain.async.RetriggerDetails;
+import com.projectx.data.domain.commdto.ResponseDTO;
 import com.projectx.data.repository.async.RetriggerDetailsRepository;
 
 import static com.projectx.data.config.Constants.*;
@@ -33,18 +34,18 @@ public class RetriggerDetailsContoller {
 	RetriggerDetailsRepository retriggerDetailsRepository;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<RetriggerDetails> save(@Valid @RequestBody RetriggerDetails retriggerDetails,BindingResult bindingResult)
+	public ResponseEntity<ResponseDTO<RetriggerDetails>> save(@Valid @RequestBody RetriggerDetails retriggerDetails,BindingResult bindingResult)
 	{
 		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ResponseDTO<RetriggerDetails>>(new ResponseDTO<RetriggerDetails>("VALIDATION_FAILED", null),HttpStatus.OK);
 		
 		RetriggerDetails savedEntity=retriggerDetailsRepository.save(retriggerDetails);
 		
-		return new ResponseEntity<RetriggerDetails>(savedEntity, HttpStatus.CREATED);
+		return new ResponseEntity<ResponseDTO<RetriggerDetails>>(new ResponseDTO<RetriggerDetails>("", savedEntity), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/findAll",method=RequestMethod.GET)
-	public ResponseEntity<List<RetriggerDetails>> findAll()
+	public ResponseEntity<ResponseDTO<List<RetriggerDetails>>> findAll()
 	{
 		List<RetriggerDetails> list=new ArrayList<RetriggerDetails>();
 		
@@ -52,18 +53,18 @@ public class RetriggerDetailsContoller {
 		
 		iterator.forEach(e->list.add(e));
 		
-		return new ResponseEntity<List<RetriggerDetails>>(list, HttpStatus.OK);
+		return new ResponseEntity<ResponseDTO<List<RetriggerDetails>>>(new ResponseDTO<List<RetriggerDetails>>("",list), HttpStatus.OK);
 	}
 
 	@RequestMapping(value="/deleteById/{retriggerId}",method=RequestMethod.GET)
-	public ResponseEntity<Boolean> deleteById(@PathVariable Long retriggerId)
+	public ResponseEntity<ResponseDTO<Boolean>> deleteById(@PathVariable Long retriggerId)
 	{
 		try{
 		retriggerDetailsRepository.delete(retriggerId);
-		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		return new ResponseEntity<ResponseDTO<Boolean>>(new ResponseDTO<Boolean>("",true), HttpStatus.OK);
 		}catch(DataIntegrityViolationException e)
 		{
-			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+			return new ResponseEntity<ResponseDTO<Boolean>>(new ResponseDTO<Boolean>("NOT_FOUND",false), HttpStatus.OK);
 		}
 		
 		

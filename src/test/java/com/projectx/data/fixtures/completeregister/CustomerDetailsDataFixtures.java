@@ -50,22 +50,13 @@ public class CustomerDetailsDataFixtures {
 	static Gson gson=new Gson();
 	
 	
-	/*
-	public static CustomerDetails standardCustomerDetails()
-	{
-		return new CustomerDetails(CUST_ID, CUST_FIRSTNAME, CUST_LASTNAME, CUST_DOB, standardAddress(), CUST_MOBILE, CUST_ISMOBILE_VERIFIED,
-				CUST_EMAIL, CUST_ISEMAIL_VERIFIED, CUST_LANG, CUST_BUSINESS_DOMAIN, CUST_NAME_OF_FIRM, standardAddress(),CUST_SEC_MOBILE , 
-				CUST_ISMOBILE_VERIFIED, 
-				CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, CUST_UPDATED_BY);
-	}
-*/
 	
 	public static CustomerDetails standardCustomerDetailsCopiedFromQuickRegisterEntity()
 	{
 		return new CustomerDetails(standardEmailMobileCustomer().getCustomerId(), standardEmailMobileCustomer().getFirstName(),null,
 				standardEmailMobileCustomer().getLastName(), null, null, standardEmailMobileCustomer().getMobile(),null, 
 				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
-				standardEmailMobileCustomer().getIsEmailVerified(), null, null, null, null, null, null,
+				standardEmailMobileCustomer().getIsEmailVerified(), null, null, null, null, null, false,
 				null, CUST_DATE, CUST_DATE, standardEmailMobileCustomer().getInsertedBy(),standardEmailMobileCustomer().getUpdatedBy(),
 				standardEmailMobileCustomer().getCustomerId(),standardEmailMobileCustomer().getCustomerId());
 	}
@@ -127,7 +118,7 @@ public class CustomerDetailsDataFixtures {
 				standardEmailMobileCustomer().getLastName(), CUST_DATE, standardAddress(), standardEmailMobileCustomer().getMobile(),null, 
 				standardEmailMobileCustomer().getIsEmailVerified(),standardEmailMobileCustomer().getEmail(),
 				standardEmailMobileCustomer().getIsEmailVerified(), CUST_LANG, CUST_BUSINESS_DOMAIN, CUST_NAME_OF_FIRM, standardAddress(),
-				CUST_SEC_MOBILE, null,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, standardEmailMobileCustomer().getInsertedBy(),standardEmailMobileCustomer().getUpdatedBy(),
+				CUST_SEC_MOBILE, false,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, standardEmailMobileCustomer().getInsertedBy(),standardEmailMobileCustomer().getUpdatedBy(),
 				standardEmailMobileCustomer().getCustomerId(),standardEmailMobileCustomer().getCustomerId());
 		
 	}
@@ -138,7 +129,7 @@ public class CustomerDetailsDataFixtures {
 				standardEmailMobileCustomer().getLastName(), CUST_DATE, standardAddress(), null, null,
 				standardEmailMobileCustomer().getIsEmailVerified(),null,
 				standardEmailMobileCustomer().getIsEmailVerified(), CUST_LANG, CUST_BUSINESS_DOMAIN, CUST_NAME_OF_FIRM, standardAddress(),
-				CUST_SEC_MOBILE, null,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, standardEmailMobileCustomer().getInsertedBy(),standardEmailMobileCustomer().getUpdatedBy(),
+				CUST_SEC_MOBILE, false,	CUST_SEC_EMAIL, CUST_DATE, CUST_DATE, standardEmailMobileCustomer().getInsertedBy(),standardEmailMobileCustomer().getUpdatedBy(),
 				standardEmailMobileCustomer().getCustomerId(),standardEmailMobileCustomer().getCustomerId());
 		
 	}

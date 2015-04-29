@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
+import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -37,15 +38,24 @@ public class EmailVerificationControllerWACTest {
 	@Autowired
 	private WebApplicationContext  wac;
 	
+	@Autowired
+	EmailVerificationDetailsRepository emailVerificationDetailsRepository;
+	
 	MockMvc mockMvc;
 	
 	@Before
 	public void setUp() throws Exception
 	{
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
+		
 	
 	}
 	
+	@Before
+	public void clearTestData()
+	{
+		emailVerificationDetailsRepository.deleteAll();
+	}
 	
 	@Test
 	public void environmentTest() {
@@ -53,55 +63,16 @@ public class EmailVerificationControllerWACTest {
 	}
 
 	
-	@Test
-	public void saveEmailVerificationEntity() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isCreated())
-	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
-	          .andExpect(jsonPath("$.key.customerType").value(standardEmailVerificationKey().getCustomerType()))
-	          .andExpect(jsonPath("$.key.emailType").value(standardEmailVerificationKey().getEmailType()))
-	          .andExpect(jsonPath("$.email").value(standardCustomerEmailVerificationDetails().getEmail()))
-	          .andExpect(jsonPath("$.emailHash").value(standardCustomerEmailVerificationDetails().getEmailHash()))
-	          .andExpect(jsonPath("$.emailHashSentTime").exists())
-	          .andExpect(jsonPath("$.insertTime").exists())
-	          .andExpect(jsonPath("$.updateTime").exists())
-	          .andExpect(jsonPath("$.resendCount").value(standardCustomerEmailVerificationDetails().getResendCount()))
-	          .andExpect(jsonPath("$.updatedBy").value(standardCustomerEmailVerificationDetails().getUpdatedBy()));
-	            
-	}
-
 	
-	
-	@Test
-	public void saveEmailVerificationEntityError() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetailsWithError()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-		        .andDo(print())
-	            .andExpect(status().isNotAcceptable());
-	}
-
 	@Test
 	public void getEmailVerificationDetailsByCustomerIdAndEmail() throws Exception
 	{
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		emailVerificationDetailsRepository.deleteAll();
 		
+		emailVerificationDetailsRepository.save(standardCustomerEmailVerificationDetails());
 		
-		
+				
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/getEmailVerificationDetailsByCustomerIdAndEmail")
 	                    .content(standardJsonCustomerIdTypeEmail())
@@ -128,13 +99,10 @@ public class EmailVerificationControllerWACTest {
 	public void getEmailVerificationDetailsByEmail() throws Exception
 	{
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		emailVerificationDetailsRepository.deleteAll();
 		
-		
+		emailVerificationDetailsRepository.save(standardCustomerEmailVerificationDetails());
+				
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/emailVerification/getEmailVerificationDetailsByEmail")
@@ -161,12 +129,10 @@ public class EmailVerificationControllerWACTest {
 	//@Rollback(value=false)
 	public void resetEmailHashAndEmailHashSentTime() throws Exception
 	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-	
+		
+		emailVerificationDetailsRepository.deleteAll();
+		
+		emailVerificationDetailsRepository.save(standardCustomerEmailVerificationDetails());
 		
 		this.mockMvc.perform(get("/customer/quickregister/emailVerification/getCount"));
 		
@@ -186,11 +152,9 @@ public class EmailVerificationControllerWACTest {
 	@Test
 	public void incrementResendCountByCustomerIdAndEmail() throws Exception
 	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		emailVerificationDetailsRepository.deleteAll();	
+		
+		emailVerificationDetailsRepository.save(standardCustomerEmailVerificationDetails());
 	
 		this.mockMvc.perform(get("/customer/quickregister/emailVerification/getCount"));
 		
@@ -210,11 +174,9 @@ public class EmailVerificationControllerWACTest {
 	@Test
 	public void getEmailVerificationCount() throws Exception
 	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		emailVerificationDetailsRepository.deleteAll();
+		
+		emailVerificationDetailsRepository.save(standardCustomerEmailVerificationDetails());
 	
 		this.mockMvc.perform(get("/customer/quickregister/emailVerification/getCount"))
 				.andDo(print())
@@ -226,12 +188,9 @@ public class EmailVerificationControllerWACTest {
 	@Test
 	public void deleteByKey() throws Exception
 	{
-	
-		this.mockMvc.perform(
-	            post("/customer/quickregister/emailVerification/saveEmailVerificationDetails")
-	                    .content(standardJsonCustomerEmailVerificationDetails(standardCustomerEmailVerificationDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		emailVerificationDetailsRepository.deleteAll();
+		
+		emailVerificationDetailsRepository.save(standardCustomerEmailVerificationDetails());
 	
 		this.mockMvc.perform(get("/customer/quickregister/emailVerification/getCount"))
 		.andDo(print())

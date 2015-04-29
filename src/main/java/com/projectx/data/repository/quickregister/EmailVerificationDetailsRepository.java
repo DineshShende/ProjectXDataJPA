@@ -19,8 +19,7 @@ import com.projectx.data.domain.quickregister.EmailVerificationKey;
 @Profile(value={"Test","Prod","Dev"})
 public interface EmailVerificationDetailsRepository extends CrudRepository<EmailVerificationDetails, EmailVerificationKey> {
 	
-	EmailVerificationDetails save(EmailVerificationDetails increment);
-	
+		
 	@Override
 	EmailVerificationDetails findOne(EmailVerificationKey id);
 

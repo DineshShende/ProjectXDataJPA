@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.config.Constants;
+import com.projectx.data.domain.commdto.ResponseDTO;
 import com.projectx.data.domain.quickregister.MobilePinPasswordDTO;
 import com.projectx.data.domain.quickregister.QuickRegisterEntity;
 import com.projectx.data.repository.quickregister.QuickRegisterRepository;
@@ -35,122 +36,103 @@ public class QuickRegisterController {
 	@Autowired
 	QuickRegisterRepository customerQuickRegisterRepository;
 	
-       
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<QuickRegisterEntity> saveNewCustomer(@Valid @RequestBody  QuickRegisterEntity quickRegisterEntity,
-			BindingResult result)
-	{
-		ResponseEntity<QuickRegisterEntity> resultResponse=null;
+    
 		
-		if(result.hasErrors())
-		{
-			resultResponse=new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-			return resultResponse;
-		}
-		
-		try{
-			QuickRegisterEntity savedEntity=customerQuickRegisterRepository.save(quickRegisterEntity);
-			resultResponse=new ResponseEntity<QuickRegisterEntity>(savedEntity, HttpStatus.CREATED);
-		}catch(DataIntegrityViolationException e)
-		{
-			resultResponse=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-		
-		return resultResponse;
-				
-	}
-	
-	@RequestMapping(value="/getAll",method=RequestMethod.GET)
-	public ResponseEntity<List<QuickRegisterEntity>> getAllCustomer()
-	{
-		return new  ResponseEntity<List<QuickRegisterEntity>>(customerQuickRegisterRepository.findAll(), HttpStatus.OK); 
-	}
-	
 	@RequestMapping(value="/getEntityByCustomerId",method=RequestMethod.POST)
-	public ResponseEntity<QuickRegisterEntity> getCustomerByCustomerId(@RequestBody CustomerIdDTO customerDTO)
+	public ResponseEntity<ResponseDTO<QuickRegisterEntity>> getCustomerByCustomerId(@RequestBody CustomerIdDTO customerDTO)
 	{
-		ResponseEntity<QuickRegisterEntity> result=null;
+		ResponseEntity<ResponseDTO<QuickRegisterEntity>> result=null;
 		
 		Optional<QuickRegisterEntity> fetchedEntity= customerQuickRegisterRepository.findByCustomerId(customerDTO.getCustomerId());
 		
 		if(!fetchedEntity.isPresent())
-			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			result=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>(new ResponseDTO<QuickRegisterEntity>
+											("QUICKREG_ENTITY_NOT_FOUND_BY_MOBILE", null),HttpStatus.OK);
 		else
-			result=new ResponseEntity<QuickRegisterEntity>(fetchedEntity.get(), HttpStatus.FOUND);
+			result=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>(new ResponseDTO<QuickRegisterEntity>
+			("", fetchedEntity.get()), HttpStatus.OK);
 		
 		return result;
 	}
 	
 	@RequestMapping(value="/getCustomerQuickRegisterEntityByEmail",method=RequestMethod.POST)
-	public ResponseEntity<QuickRegisterEntity> getCustomerQuickRegisterEntityByEmail(@RequestBody EmailDTO getByEmailDTO)
+	public ResponseEntity<ResponseDTO<QuickRegisterEntity>> getCustomerQuickRegisterEntityByEmail(@RequestBody EmailDTO getByEmailDTO)
 	{
-		ResponseEntity<QuickRegisterEntity> result=null;
+		ResponseEntity<ResponseDTO<QuickRegisterEntity>> result=null;
 		
 		Optional<QuickRegisterEntity> fetchedEntity=customerQuickRegisterRepository.findByEmail(getByEmailDTO.getEmail());
 		
 		if(!fetchedEntity.isPresent())
-			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			result=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>(new ResponseDTO<QuickRegisterEntity>("QUICKREG_ENTITY_NOT_FOUND_BY_MOBILE",
+					null),HttpStatus.OK);
 		else
-			result=new ResponseEntity<QuickRegisterEntity>(fetchedEntity.get(), HttpStatus.FOUND);
+			result=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>(new ResponseDTO<QuickRegisterEntity>("",
+					fetchedEntity.get()),HttpStatus.OK);
 		
 		return result;
 	}
 	
 	
 	@RequestMapping(value="/getCustomerQuickRegisterEntityByMobile",method=RequestMethod.POST)
-	public ResponseEntity<QuickRegisterEntity> getCustomerQuickRegisterEntityByMobile(@RequestBody MobileDTO getByMobileDTO)
+	public ResponseEntity<ResponseDTO<QuickRegisterEntity>> getCustomerQuickRegisterEntityByMobile(@RequestBody MobileDTO getByMobileDTO)
 	{
-		ResponseEntity<QuickRegisterEntity> result=null;
+		ResponseEntity<ResponseDTO<QuickRegisterEntity>> result=null;
 		
 		Optional<QuickRegisterEntity> fetchedEntity=customerQuickRegisterRepository.findByMobile(getByMobileDTO.getMobile());
 		
 		if(!fetchedEntity.isPresent())
-			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			result=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>(new ResponseDTO<QuickRegisterEntity>("QUICKREG_ENTITY_NOT_FOUND_BY_MOBILE",
+					null),HttpStatus.OK);
 		else
-			result=new ResponseEntity<QuickRegisterEntity>(fetchedEntity.get(), HttpStatus.FOUND);
+			result=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>(new ResponseDTO<QuickRegisterEntity>("",
+					fetchedEntity.get()),HttpStatus.OK);
 		
 		return result;
 	}
 	
 	
 	@RequestMapping(value="/updateMobileVerificationStatus",method=RequestMethod.POST)
-	public ResponseEntity<Integer> updateMobileVerificationStatus(@Valid @RequestBody UpdateEmailMobileVerificationStatus updateStatus,
+	public ResponseEntity<ResponseDTO<Integer>> updateMobileVerificationStatus(@Valid @RequestBody UpdateEmailMobileVerificationStatus updateStatus,
 			BindingResult bindingResult) throws InterruptedException
 	{
 		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("VALIDATION_FAILED",null),HttpStatus.OK);
 		
-		ResponseEntity<Integer> result=null;
+		ResponseEntity<ResponseDTO<Integer>> result=null;
 		
 		Integer status=customerQuickRegisterRepository.updateMobileVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
 													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
 		
-		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
+		result=new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("",status),HttpStatus.OK);
 		
 		return result;
 	}
 	
 	
 	@RequestMapping(value="/updateEmailVerificationStatus",method=RequestMethod.POST)
-	public ResponseEntity<Integer> updateEmailVerificationStatus(@Valid @RequestBody UpdateEmailMobileVerificationStatus updateStatus,
+	public ResponseEntity<ResponseDTO<Integer>> updateEmailVerificationStatus(@Valid @RequestBody UpdateEmailMobileVerificationStatus updateStatus,
 			BindingResult bindingResult) throws InterruptedException
 	{
 		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("VALIDATION_FAILED",null),HttpStatus.OK);
 		
-		ResponseEntity<Integer> result=null;
+		ResponseEntity<ResponseDTO<Integer>> result=null;
 		
 		Integer status=customerQuickRegisterRepository.updateEmailVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
 													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
-		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
+		
+		result=new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("",status),HttpStatus.OK);
 		
 		return result;
 	}
 
-	@RequestMapping(value="/getTestData",method=RequestMethod.GET)
-	public ResponseEntity<List<MobilePinPasswordDTO>> getTestData()
+	
+	@RequestMapping(value="/count",method=RequestMethod.GET)
+	public Integer getCount()
 	{
-		return new ResponseEntity<List<MobilePinPasswordDTO>>(customerQuickRegisterRepository.getTestData(), HttpStatus.OK);
+		Integer count=(int)customerQuickRegisterRepository.count();
+		
+		return count;
 	}
 	
 	//***********************Highly Dangerous***************************************/
@@ -164,6 +146,36 @@ public class QuickRegisterController {
 		 return true;
 	}
 	//***********************Highly Dangerous***************************************/
+	
+	/*
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<ResponseDTO<QuickRegisterEntity>> saveNewCustomer(@Valid @RequestBody  QuickRegisterEntity quickRegisterEntity,
+			BindingResult result)
+	{
+		ResponseEntity<ResponseDTO<QuickRegisterEntity>> resultResponse=null;
+		
+		if(result.hasErrors())
+		{
+			resultResponse=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>
+									(new ResponseDTO<QuickRegisterEntity>("VALIDATION_FAILED",null),HttpStatus.OK);
+			return resultResponse;
+		}
+		
+		try{
+			QuickRegisterEntity savedEntity=customerQuickRegisterRepository.save(quickRegisterEntity);
+			resultResponse=new ResponseEntity<ResponseDTO<QuickRegisterEntity>>
+									(new ResponseDTO<QuickRegisterEntity>("",savedEntity), HttpStatus.CREATED);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			resultResponse=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+		}
+		
+		return resultResponse;
+				
+	}
+	*/
+	
 	
 	
 }

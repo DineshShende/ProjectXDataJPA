@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
+import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.repository.completeregister.CustomerDetailsRepository;
 import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
@@ -70,6 +71,71 @@ public class CustomerDetailsControllerWACTest {
 	public void environmentTest() {
 		
 	}
+	
+	@Test
+	public void updateCustomerDetails() throws Exception
+	{
+		CustomerDetails savedEnity=customerDetailsRepository.save(standardCustomerDetails());
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated())
+	            
+	          //  .andExpect(jsonPath("$.customerId").value(standardCustomerDetailsFirstPart().getCustomerId()))
+	            .andExpect(jsonPath("$.firstName").value(standardCustomerDetails().getFirstName()))
+	            .andExpect(jsonPath("$.lastName").value(standardCustomerDetails().getLastName()))
+	            .andExpect(jsonPath("$.homeAddressId.customerType").value(standardCustomerDetails().getHomeAddressId().getCustomerType()))
+	            .andExpect(jsonPath("$.homeAddressId.addressLine").value(standardCustomerDetails().getHomeAddressId().getAddressLine()))
+	            .andExpect(jsonPath("$.homeAddressId.city").value(standardCustomerDetails().getHomeAddressId().getCity()))
+	            .andExpect(jsonPath("$.homeAddressId.district").value(standardCustomerDetails().getHomeAddressId().getDistrict()))
+	            .andExpect(jsonPath("$.homeAddressId.state").value(standardCustomerDetails().getHomeAddressId().getState()))
+	            .andExpect(jsonPath("$.homeAddressId.pincode").value(standardCustomerDetails().getHomeAddressId().getPincode()))
+	            .andExpect(jsonPath("$.homeAddressId.updatedBy").value(standardCustomerDetails().getHomeAddressId().getUpdatedBy()))
+	            .andExpect(jsonPath("$.homeAddressId.insertTime").exists())
+	            .andExpect(jsonPath("$.homeAddressId.updateTime").exists())
+	            .andExpect(jsonPath("$.mobile").value(standardCustomerDetails().getMobile()))
+	            .andExpect(jsonPath("$.isMobileVerified").value(standardCustomerDetails().getIsMobileVerified()))
+	            .andExpect(jsonPath("$.email").value(standardCustomerDetails().getEmail()))
+	            .andExpect(jsonPath("$.isEmailVerified").value(standardCustomerDetails().getIsEmailVerified()))
+	            .andExpect(jsonPath("$.language").value(standardCustomerDetails().getLanguage()))
+	            .andExpect(jsonPath("$.firmAddressId.customerType").value(standardCustomerDetails().getFirmAddressId().getCustomerType()))
+	            .andExpect(jsonPath("$.firmAddressId.addressLine").value(standardCustomerDetails().getFirmAddressId().getAddressLine()))
+	            .andExpect(jsonPath("$.firmAddressId.city").value(standardCustomerDetails().getFirmAddressId().getCity()))
+	            .andExpect(jsonPath("$.firmAddressId.district").value(standardCustomerDetails().getFirmAddressId().getDistrict()))
+	            .andExpect(jsonPath("$.firmAddressId.state").value(standardCustomerDetails().getFirmAddressId().getState()))
+	            .andExpect(jsonPath("$.firmAddressId.pincode").value(standardCustomerDetails().getFirmAddressId().getPincode()))
+	            .andExpect(jsonPath("$.firmAddressId.updatedBy").value(standardCustomerDetails().getFirmAddressId().getUpdatedBy()))
+	            .andExpect(jsonPath("$.firmAddressId.insertTime").exists())
+	            .andExpect(jsonPath("$.firmAddressId.updateTime").exists())
+	            .andExpect(jsonPath("$.businessDomain").value(standardCustomerDetails().getBusinessDomain()))
+	            .andExpect(jsonPath("$.nameOfFirm").value(standardCustomerDetails().getNameOfFirm()))
+	            .andExpect(jsonPath("$.updatedBy").value(standardCustomerDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.secondaryMobile").value(standardCustomerDetails().getSecondaryMobile()))
+	            .andExpect(jsonPath("$.isSecondaryMobileVerified").value(standardCustomerDetails().getIsSecondaryMobileVerified()))
+	            .andExpect(jsonPath("$.secondaryEmail").value(standardCustomerDetails().getSecondaryEmail()))
+	            .andExpect(jsonPath("$.insertTime").exists())
+	            .andExpect(jsonPath("$.updateTime").exists());		
+	
+	}
+
+	@Test
+	public void updateCustomerDetailsWithError() throws Exception
+	{
+		CustomerDetails savedEnity=customerDetailsRepository.save(standardCustomerDetails());
+		
+		this.mockMvc.perform(
+	            post("/customer/completeregister")
+	                    .content(standardJsonCustomerDetails(standardCustomerDetailsError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	}
+
 	
 	@Test
 	public void saveCustomerDetailsCopiedFromQuickRegisterEntity() throws Exception
@@ -249,7 +315,7 @@ public class CustomerDetailsControllerWACTest {
 	            .andExpect(jsonPath("$.businessDomain").value(standardCustomerDetails().getBusinessDomain()))
 	            .andExpect(jsonPath("$.nameOfFirm").value(standardCustomerDetails().getNameOfFirm()))
 	            .andExpect(jsonPath("$.updatedBy").value(standardCustomerDetails().getUpdatedBy()))
-	            .andExpect(jsonPath("$.secondaryMobile").value(standardCustomerDetails().getSecondaryMobile()))
+	            .andExpect(jsonPath("$.secondaryMobile").doesNotExist())
 	            .andExpect(jsonPath("$.isSecondaryMobileVerified").value(standardCustomerDetails().getIsSecondaryMobileVerified()))
 	            .andExpect(jsonPath("$.secondaryEmail").value(standardCustomerDetails().getSecondaryEmail()))
 	            .andExpect(jsonPath("$.insertTime").exists())
@@ -313,87 +379,6 @@ public class CustomerDetailsControllerWACTest {
 		
 	}
 	
-	@Test
-	public void updateMobileVerificationStatus() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/completeregister")
-	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	           // .andDo(print())
-	            .andExpect(status().isCreated());
-	 
-		this.mockMvc.perform(
-				get("/customer/completeregister/count")
-				);
-		
-	
-		this.mockMvc.perform(
-	            post("/customer/completeregister/updateMobileVerificationStatus")
-	                    .content(standardJsonUpdateVerificationStatus())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	           // .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-	}
-	
-	@Test
-	public void updateSecondaryMobileVerificationStatus() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/completeregister")
-	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	          //  .andDo(print())
-	            .andExpect(status().isCreated());
-	 
-		this.mockMvc.perform(
-				get("/customer/completeregister/count")
-				);
-		
-	
-		this.mockMvc.perform(
-	            post("/customer/completeregister/updateSecondaryMobileVerificationStatus")
-	                    .content(standardJsonUpdateVerificationStatus())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	           // .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-	}
-	
-	@Test
-	public void updateEmailVerificationStatus() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/completeregister")
-	                    .content(standardJsonCustomerDetails(standardCustomerDetails()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	          //  .andDo(print())
-	            .andExpect(status().isCreated());
-	 
-	
-		this.mockMvc.perform(
-				get("/customer/completeregister/count")
-				);
-		
-		
-		this.mockMvc.perform(
-	            post("/customer/completeregister/updateEmailVerificationStatus")
-	                    .content(standardJsonEmailUpdateVerificationStatus())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	           // .andDo(print())
-	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
-		
-	}
 
 	@Test
 	public void clearTestData() throws Exception

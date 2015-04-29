@@ -43,47 +43,6 @@ public class TransactionUpdatesController {
 	@Autowired
 	VendorDetailsCustomRepository vendorDetailsCustomRepository;
 
-	@RequestMapping(value="/updateCustomerDetails",method=RequestMethod.POST)
-	public ResponseEntity<CustomerDetails> updateCustomerDetails(@Valid @RequestBody CustomerDetails customerDetails,BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		
-		ResponseEntity<CustomerDetails> result=null;
-		CustomerDetails updatedEntity=null;
-		try
-		{
-			updatedEntity=transactionalUpdatesRepository.updateCustomerDetails(customerDetails);
-			result=new ResponseEntity<CustomerDetails>(updatedEntity, HttpStatus.OK);
-		}
-		catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<CustomerDetails>(HttpStatus.ALREADY_REPORTED);
-		}
-		return result;
-		
-	}
-	
-	@RequestMapping(value="/updateVendorDetails",method=RequestMethod.POST)
-	public ResponseEntity<VendorDetails> updateVendorDetails(@Valid @RequestBody VendorDetails vendorDetails,BindingResult bindingResult)
-	{
-		if(bindingResult.hasErrors())
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		
-		ResponseEntity<VendorDetails> result=null;
-		try{		
-		
-			VendorDetails updatedEntity=transactionalUpdatesRepository.updateVendorDetails(vendorDetails);
-			
-			result=new ResponseEntity<VendorDetails>(updatedEntity, HttpStatus.OK);
-			
-		}catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-		
-		return result;
-	}
 	
 	@RequestMapping(value="/updateMobileInDetailsEnityAndAuthenticationDetails",method=RequestMethod.POST)
 	public ResponseEntity<Boolean> updateMobileInDetailsEnityAndAuthenticationDetails(@Valid @RequestBody CustomerIdTypeMobileTypeUpdatedByDTO customerIdTypeMobileTypeDTO,

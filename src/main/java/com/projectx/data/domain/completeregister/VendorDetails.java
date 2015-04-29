@@ -475,8 +475,7 @@ public class VendorDetails {
 		if (dateOfBirth == null) {
 			if (other.dateOfBirth != null)
 				return false;
-		} else if (!dateOfBirth.equals(other.dateOfBirth))
-			return false;
+		} 
 		if (email == null) {
 			if (other.email != null)
 				return false;

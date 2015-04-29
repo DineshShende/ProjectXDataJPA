@@ -45,34 +45,7 @@ public class AuthenticationController {
 
 	
 	
-	
-	@RequestMapping(value="/saveLoginDetails",method=RequestMethod.POST)
-	public ResponseEntity<AuthenticationDetails> saveLoginDetails(@Valid @RequestBody AuthenticationDetails authenticationDetails,BindingResult resultValid)
-	{
-		if(resultValid.hasErrors())
-		{
-			for(FieldError error:resultValid.getFieldErrors())
-			{
-				System.out.println(error.getField());
-				System.out.println(error.getDefaultMessage());
-			}
-
-			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-		}
 		
-		ResponseEntity<AuthenticationDetails> result=null;
-		
-		try{
-			AuthenticationDetails savedEntity=customerAuthenticationDetailsRepository.save(authenticationDetails);
-			result=new ResponseEntity<AuthenticationDetails>(savedEntity, HttpStatus.CREATED);
-		}catch(DataIntegrityViolationException e)
-		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
-		}
-		
-		return result;
-	}
-	
 	@RequestMapping(value="/getLoginDetailsByCustomerIdType",method=RequestMethod.POST)
 	public ResponseEntity<AuthenticationDetails> getLoginDetailsByCustomerId(@RequestBody CustomerIdTypeDTO customerIdDTO)
 	{

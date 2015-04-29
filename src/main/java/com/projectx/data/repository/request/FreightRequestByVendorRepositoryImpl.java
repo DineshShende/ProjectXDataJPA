@@ -40,19 +40,22 @@ public class FreightRequestByVendorRepositoryImpl extends QueryDslRepositorySupp
 				
 				//before(freightRequestByCustomer.getPickupDate()).or(qTestRequest.availableDate.eq(freightRequestByCustomer.getPickupDate()));
 		
-		
-		Predicate bodyType=qTestRequest.vehicleDetailsId.isBodyTypeFlexible.eq(true).
-				or(qTestRequest.vehicleDetailsId.vehicleBodyType.eq(freightRequestByCustomer.getBodyType()));
 
-		
-		
-		
 		
 		JPQLQuery jpaQuery=from(qTestRequest).where(sourcePredicate)
 				  .where(destinationPredicate)
-				  .where(availableDatePredicate)
-				  .where(bodyType);
+				  .where(availableDatePredicate);
+				  
 
+
+		if(freightRequestByCustomer.getBodyType()!=null)
+		{
+			Predicate bodyType=qTestRequest.vehicleDetailsId.isBodyTypeFlexible.eq(true).
+					or(qTestRequest.vehicleDetailsId.vehicleBodyType.eq(freightRequestByCustomer.getBodyType()));
+			
+			jpaQuery=jpaQuery.where(bodyType);
+
+		}
 		
 		
 		if(freightRequestByCustomer.getIsFullTruckLoad())
@@ -91,8 +94,9 @@ public class FreightRequestByVendorRepositoryImpl extends QueryDslRepositorySupp
 			jpaQuery=jpaQuery.where(modelPredicate);
 		}
 
-		/*
-		if(freightRequestByCustomer.getCommodity()!=null && freightRequestByCustomer.getCommodity().equals(""))
+
+		
+		if(freightRequestByCustomer.getCommodity()!=null && !freightRequestByCustomer.getCommodity().equals(""))
 		{
 		
 			Predicate commodity=qTestRequest.vehicleDetailsId.commodityList.contains(freightRequestByCustomer.getCommodity());
@@ -100,7 +104,7 @@ public class FreightRequestByVendorRepositoryImpl extends QueryDslRepositorySupp
 			jpaQuery=jpaQuery.where(commodity);
 			
 		}
-		*/
+		
 		
 		//TODO pickupTime
 		

@@ -27,6 +27,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
+import com.projectx.data.domain.completeregister.VendorDetails;
+import com.projectx.data.repository.completeregister.VendorDetailsRepositoty;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -41,6 +43,9 @@ public class VendorDetailsControllerWACTest {
 	
 	MockMvc mockMvc;
 	
+	
+	@Autowired
+	VendorDetailsRepositoty vendorDetailsRepositoty;
 	
 	@Before
 	public void setUp() throws Exception
@@ -104,26 +109,20 @@ public class VendorDetailsControllerWACTest {
 	}
 	
 	@Test
-	public void update() throws Exception
+	public void updateVendorDetails() throws Exception
 	{
-		this.mockMvc.perform(
-	            post("/vendor/save")
-	                    .content(standardJsonVendor(standardVendor()))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-	    
+		VendorDetails vendorDetails=vendorDetailsRepositoty.save(standardVendor());
 		
 		this.mockMvc.perform(
-	            post("/vendor/update")
+	            post("/vendor/save")
 	                    .content(standardJsonVendor(standardVendorUpdatedFirstLastName()))
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
 	            
-	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
-		
-		 		.andExpect(jsonPath("$.firstName").value(standardVendorUpdatedFirstLastName().getFirstName()))
+	          //  .andExpect(jsonPath("$.customerId").value(standardCustomerDetailsFirstPart().getCustomerId()))
+	            .andExpect(jsonPath("$.firstName").value(standardVendorUpdatedFirstLastName().getFirstName()))
 		 		.andExpect(jsonPath("$.lastName").value(standardVendorUpdatedFirstLastName().getLastName()))
 		 		.andExpect(jsonPath("$.firmAddress.addressLine").value(standardVendor().getFirmAddress().getAddressLine()))
 	            .andExpect(jsonPath("$.firmAddress.customerType").value(standardVendor().getFirmAddress().getCustomerType()))
@@ -139,8 +138,24 @@ public class VendorDetailsControllerWACTest {
 	            .andExpect(jsonPath("$.updatedBy").value(standardVendor().getUpdatedBy()))
 	            .andExpect(jsonPath("$.insertTime").exists())
 	            .andExpect(jsonPath("$.updateTime").exists());		
-
+		
+	
 	}
+	
+	@Test
+	public void updateVendorDetailsError() throws Exception
+	{
+		VendorDetails vendorDetails=vendorDetailsRepositoty.save(standardVendor());
+		
+		this.mockMvc.perform(
+	            post("/vendor/save")
+	                    .content(standardJsonVendor(standardVendorError()))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isNotAcceptable());
+	}
+	
 	
 	@Test
 	public void getById() throws Exception
@@ -185,7 +200,7 @@ public class VendorDetailsControllerWACTest {
 
 	}
 	
-	
+	/*
 	@Test
 	public void updateEmailVerificationStatus() throws Exception
 	{
@@ -216,7 +231,7 @@ public class VendorDetailsControllerWACTest {
 		
 	}
 	
-	
+	@Test
 	public void updateMobileVerificationStatus() throws Exception
 	{
 		this.mockMvc.perform(
@@ -245,7 +260,7 @@ public class VendorDetailsControllerWACTest {
 	    
 		
 	}
-	
+	*/
 	
 	@Test
 	public void count() throws Exception

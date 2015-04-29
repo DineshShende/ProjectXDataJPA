@@ -23,6 +23,13 @@ public interface VendorDetailsRepositoty extends CrudRepository<VendorDetails, L
 	Integer updateIsMobileVerified(@Param("vendorId")Long vendorId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified,
 			@Param("updateTime") Date updateTime,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
 	
+	@Transactional
+	@Modifying
+	@Query(value="update vendordetails set secondarymobile=:mobile,issecondarymobileverified=:isMobileVerified,"
+			+ "UPDATETIME=:updateTime,UPDATEDBY=:updatedBy,UPDATEDBYID=:updatedById where vendorid=:vendorId",nativeQuery=true)
+	Integer updateIsSecondaryMobileVerified(@Param("vendorId")Long vendorId,@Param("mobile")Long mobile,@Param("isMobileVerified")Boolean isMobileVerified,
+			@Param("updateTime") Date updateTime,@Param("updatedBy") Integer updatedBy,@Param("updatedById") Long updatedById);
+	
 	
 	@Transactional
 	@Modifying

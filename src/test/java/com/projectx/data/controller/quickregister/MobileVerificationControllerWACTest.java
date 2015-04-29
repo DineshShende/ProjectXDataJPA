@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.projectx.data.config.Application;
+import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,12 +43,17 @@ public class MobileVerificationControllerWACTest {
 	
 	MockMvc mockMvc;
 	
+	@Autowired
+	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
+	
 	@Before
 	public void setUp() throws Exception
 	{
 		this.mockMvc=MockMvcBuilders.webAppContextSetup(wac).build();
 	
 		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/clearForTesting"));
+		
+		mobileVerificationDetailsRepository.deleteAll();
 	}
 	
 	
@@ -59,41 +65,12 @@ public class MobileVerificationControllerWACTest {
 	}
 	
 	
-	@Test
-	public void saveMobileVerificationEntity() throws Exception
-	{
-		this.mockMvc.perform(
-	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
-	                    .content(standardJsonCustomerMobileVerificationDetails())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
-	             .andDo(print())
-	            .andExpect(status().isCreated())
-	          //.andExpect(jsonPath("$.customerId").value(standardCustomerEmailVerificationDetails().getCustomerId()))
-	          .andExpect(jsonPath("$.key.customerType").value(standardCustomerMobileVerificationDetails().getKey().getCustomerType()))
-	          .andExpect(jsonPath("$.key.mobileType").value(standardCustomerMobileVerificationDetails().getKey().getMobileType()))
-	          .andExpect(jsonPath("$.mobile").value(standardCustomerMobileVerificationDetails().getMobile()))
-	          .andExpect(jsonPath("$.mobilePin").value(standardCustomerMobileVerificationDetails().getMobilePin()))
-	          .andExpect(jsonPath("$.mobileVerificationAttempts").value(standardCustomerMobileVerificationDetails().getMobileVerificationAttempts()))
-	          .andExpect(jsonPath("$.resendCount").value(standardCustomerMobileVerificationDetails().getResendCount()))
-	          .andExpect(jsonPath("$.insertTime").exists())
-	          .andExpect(jsonPath("$.updateTime").exists())
-	          .andExpect(jsonPath("$.updatedBy").value(standardCustomerMobileVerificationDetails().getUpdatedBy()));
-	            
-	}
-	
 	
 	@Test
 	public void getMobikeVerificationDetailsByCustomerIdAndMobile() throws Exception
 	{
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
-	                    .content(standardJsonCustomerMobileVerificationDetails())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-		
-		
+				
+		mobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/mobileVerification/getMobileVerificationDetailsByCustomerIdAndMobile")
@@ -119,15 +96,8 @@ public class MobileVerificationControllerWACTest {
 	@Test
 	public void getMobikeVerificationDetailsByMobile() throws Exception
 	{
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
-	                    .content(standardJsonCustomerMobileVerificationDetails())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
-		
-		
-		
+		mobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
+				
 		this.mockMvc.perform(
 	            post("/customer/quickregister/mobileVerification/getMobileVerificationDetailsByMobile")
 	                    .content(standardJsonMobile())
@@ -152,6 +122,8 @@ public class MobileVerificationControllerWACTest {
 	@Test
 	public void updateMobilePinAndMobileVerificationAttemptsAndResendCount() throws Exception
 	{
+		
+		mobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
 		
 		this.mockMvc.perform(
 	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
@@ -178,12 +150,7 @@ public class MobileVerificationControllerWACTest {
 	@Test
 	public void incrementMobileVerificationAttempts() throws Exception
 	{
-		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
-	                    .content(standardJsonCustomerMobileVerificationDetails())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		mobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
 		
 		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/getCount"));
 		
@@ -205,11 +172,7 @@ public class MobileVerificationControllerWACTest {
 	public void incrementResendCount() throws Exception
 	{
 		
-		this.mockMvc.perform(
-	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
-	                    .content(standardJsonCustomerMobileVerificationDetails())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		mobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
 		
 		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/getCount"));
 		
@@ -231,11 +194,7 @@ public class MobileVerificationControllerWACTest {
 	public void mobileVerificationCount() throws Exception
 	{
 
-		this.mockMvc.perform(
-	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
-	                    .content(standardJsonCustomerMobileVerificationDetails())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		mobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
 		
 	
 		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/getCount"))
@@ -248,11 +207,7 @@ public class MobileVerificationControllerWACTest {
 	public void deleteByKey() throws Exception
 	{
 	
-		this.mockMvc.perform(
-	            post("/customer/quickregister/mobileVerification/saveMobileVerificationDetails")
-	                    .content(standardJsonCustomerMobileVerificationDetails())
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON));
+		mobileVerificationDetailsRepository.save(standardCustomerMobileVerificationDetails());
 	
 		this.mockMvc.perform(get("/customer/quickregister/mobileVerification/getCount"))
 		.andDo(print())

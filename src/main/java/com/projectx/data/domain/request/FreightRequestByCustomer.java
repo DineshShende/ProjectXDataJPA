@@ -17,6 +17,14 @@ import com.projectx.data.util.annotation.FreightRequestByCustomerValid;
 import com.projectx.data.util.serializer.JsonDateDeSerializer;
 import com.projectx.data.util.serializer.JsonDateSerializer;
 
+/**
+ * @author chhand
+ *
+ */
+/**
+ * @author chhand
+ *
+ */
 @FreightRequestByCustomerValid
 @Entity
 @Table(name="FREIGHTREQUESTBYCUSTOMER")
@@ -378,6 +386,27 @@ public class FreightRequestByCustomer {
 
 	public void setInsertedById(Long insertedById) {
 		this.insertedById = insertedById;
+	}
+
+	
+	
+	@Override
+	public String toString() {
+		return "FreightRequestByCustomer [requestId=" + requestId + ", source="
+				+ source + ", destination=" + destination + ", pickupDate="
+				+ pickupDate + ", noOfVehicles=" + noOfVehicles
+				+ ", isFullTruckLoad=" + isFullTruckLoad
+				+ ", isLessThanTruckLoad=" + isLessThanTruckLoad
+				+ ", capacity=" + capacity + ", bodyType=" + bodyType
+				+ ", grossWeight=" + grossWeight + ", length=" + length
+				+ ", width=" + width + ", height=" + height + ", vehicleBrand="
+				+ vehicleBrand + ", model=" + model + ", commodity="
+				+ commodity + ", pickupTime=" + pickupTime + ", customerId="
+				+ customerId + ", allocationStatus=" + allocationStatus
+				+ ", allocatedFor=" + allocatedFor + ", insertTime="
+				+ insertTime + ", updateTime=" + updateTime + ", updatedBy="
+				+ updatedBy + ", insertedBy=" + insertedBy + ", updatedById="
+				+ updatedById + ", insertedById=" + insertedById + "]";
 	}
 
 	@Override
