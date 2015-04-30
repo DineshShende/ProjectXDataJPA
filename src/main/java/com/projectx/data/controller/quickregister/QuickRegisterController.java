@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,15 @@ public class QuickRegisterController {
 	@Autowired
 	QuickRegisterRepository customerQuickRegisterRepository;
 	
-    
+	@Value("${MOBILE_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED}")
+	private String MOBILE_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED;
+	
+	@Value("${EMAIL_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED}")
+	private String EMAIL_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED;
+	
+	@Value("${ALREADY_REPORTED}")
+	private String ALREADY_REPORTED;
+
 		
 	@RequestMapping(value="/getEntityByCustomerId",method=RequestMethod.POST)
 	public ResponseEntity<ResponseDTO<QuickRegisterEntity>> getCustomerByCustomerId(@RequestBody CustomerIdDTO customerDTO)
@@ -100,10 +109,25 @@ public class QuickRegisterController {
 		
 		ResponseEntity<ResponseDTO<Integer>> result=null;
 		
-		Integer status=customerQuickRegisterRepository.updateMobileVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
-													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
+		try{
+			
+			Integer status=customerQuickRegisterRepository.updateMobileVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
+					updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
+
+			result=new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("",status),HttpStatus.OK);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			StringBuilder errorMessage=new StringBuilder();
+			
+			errorMessage.append(MOBILE_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED);
+			errorMessage.append(ALREADY_REPORTED);
+			
+			return  new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>(errorMessage.toString(),null),
+					HttpStatus.ALREADY_REPORTED);
+		}
 		
-		result=new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("",status),HttpStatus.OK);
+		
 		
 		return result;
 	}
@@ -118,10 +142,24 @@ public class QuickRegisterController {
 		
 		ResponseEntity<ResponseDTO<Integer>> result=null;
 		
-		Integer status=customerQuickRegisterRepository.updateEmailVerificationStatus(updateStatus.getCustomerId(), updateStatus.getStatus(),
-													updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
+		try{
+			Integer status=customerQuickRegisterRepository.updateEmailVerificationStatus(updateStatus.getCustomerId(), 
+					updateStatus.getStatus(),updateStatus.getUpdateTime(), updateStatus.getUpdatedBy(),updateStatus.getUpdatedById());
+			
+			result=new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("",status),HttpStatus.OK);
+		}catch(DataIntegrityViolationException e)
+		{
+			StringBuilder errorMessage=new StringBuilder();
+			
+			errorMessage.append(EMAIL_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED);
+			errorMessage.append(ALREADY_REPORTED);
+			
+			return  new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>(errorMessage.toString(),null),
+					HttpStatus.ALREADY_REPORTED);
+			
+		}
 		
-		result=new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("",status),HttpStatus.OK);
+		
 		
 		return result;
 	}

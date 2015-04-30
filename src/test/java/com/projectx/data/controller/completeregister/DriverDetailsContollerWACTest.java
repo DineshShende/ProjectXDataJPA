@@ -79,26 +79,26 @@ public class DriverDetailsContollerWACTest {
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		
-		 		.andExpect(jsonPath("$.firstName").value(standardDriverDetails().getFirstName()))
-		 		.andExpect(jsonPath("$.middleName").value(standardDriverDetails().getMiddleName()))
-		 		.andExpect(jsonPath("$.lastName").value(standardDriverDetails().getLastName()))
-		 		.andExpect(jsonPath("$.bloodGroup").value(standardDriverDetails().getBloodGroup()))
-		 		.andExpect(jsonPath("$.homeAddress.addressLine").value(standardDriverDetails().getHomeAddress().getAddressLine()))
-	            .andExpect(jsonPath("$.homeAddress.customerType").value(standardDriverDetails().getHomeAddress().getCustomerType()))
-	            .andExpect(jsonPath("$.homeAddress.city").value(standardDriverDetails().getHomeAddress().getCity()))
-	            .andExpect(jsonPath("$.homeAddress.district").value(standardDriverDetails().getHomeAddress().getDistrict()))
-	            .andExpect(jsonPath("$.homeAddress.state").value(standardDriverDetails().getHomeAddress().getState()))
-	            .andExpect(jsonPath("$.homeAddress.pincode").value(standardDriverDetails().getHomeAddress().getPincode()))
-	            .andExpect(jsonPath("$.mobile").value(standardDriverDetails().getMobile()))
-	            .andExpect(jsonPath("$.isMobileVerified").value(standardDriverDetails().getIsMobileVerified()))
-	            .andExpect(jsonPath("$.homeContactNumber").value(standardDriverDetails().getHomeContactNumber()))
-	            .andExpect(jsonPath("$.isFreightRequestPermissionGiven").value(standardDriverDetails().getIsFreightRequestPermissionGiven()))
-	            .andExpect(jsonPath("$.isDealFinalizationPermissionGiven").value(standardDriverDetails().getIsDealFinalizationPermissionGiven()))
-	            .andExpect(jsonPath("$.licenceNumber").value(standardDriverDetails().getLicenceNumber()))
-	            .andExpect(jsonPath("$.language").value(standardDriverDetails().getLanguage()))
-	            .andExpect(jsonPath("$.updatedBy").value(standardDriverDetails().getUpdatedBy()))
-	            .andExpect(jsonPath("$.insertTime").exists())
-	            .andExpect(jsonPath("$.updateTime").exists());
+		 		.andExpect(jsonPath("$.result.firstName").value(standardDriverDetails().getFirstName()))
+		 		.andExpect(jsonPath("$.result.middleName").value(standardDriverDetails().getMiddleName()))
+		 		.andExpect(jsonPath("$.result.lastName").value(standardDriverDetails().getLastName()))
+		 		.andExpect(jsonPath("$.result.bloodGroup").value(standardDriverDetails().getBloodGroup()))
+		 		.andExpect(jsonPath("$.result.homeAddress.addressLine").value(standardDriverDetails().getHomeAddress().getAddressLine()))
+	            .andExpect(jsonPath("$.result.homeAddress.customerType").value(standardDriverDetails().getHomeAddress().getCustomerType()))
+	            .andExpect(jsonPath("$.result.homeAddress.city").value(standardDriverDetails().getHomeAddress().getCity()))
+	            .andExpect(jsonPath("$.result.homeAddress.district").value(standardDriverDetails().getHomeAddress().getDistrict()))
+	            .andExpect(jsonPath("$.result.homeAddress.state").value(standardDriverDetails().getHomeAddress().getState()))
+	            .andExpect(jsonPath("$.result.homeAddress.pincode").value(standardDriverDetails().getHomeAddress().getPincode()))
+	            .andExpect(jsonPath("$.result.mobile").value(standardDriverDetails().getMobile()))
+	            .andExpect(jsonPath("$.result.isMobileVerified").value(standardDriverDetails().getIsMobileVerified()))
+	            .andExpect(jsonPath("$.result.homeContactNumber").value(standardDriverDetails().getHomeContactNumber()))
+	            .andExpect(jsonPath("$.result.isFreightRequestPermissionGiven").value(standardDriverDetails().getIsFreightRequestPermissionGiven()))
+	            .andExpect(jsonPath("$.result.isDealFinalizationPermissionGiven").value(standardDriverDetails().getIsDealFinalizationPermissionGiven()))
+	            .andExpect(jsonPath("$.result.licenceNumber").value(standardDriverDetails().getLicenceNumber()))
+	            .andExpect(jsonPath("$.result.language").value(standardDriverDetails().getLanguage()))
+	            .andExpect(jsonPath("$.result.updatedBy").value(standardDriverDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.result.insertTime").exists())
+	            .andExpect(jsonPath("$.result.updateTime").exists());
 		
 	}
 	
@@ -117,6 +117,8 @@ public class DriverDetailsContollerWACTest {
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 			
 	}
+	
+
 	
 	
 	@Test
@@ -188,24 +190,21 @@ public class DriverDetailsContollerWACTest {
 		
 	}
 	
-	
 	@Test
-	public void update() throws Exception
+	public void getByLicenceNumber() throws Exception
 	{
 		
 		DriverDetails driverDetails=driverDetailsCustomRepository.save(standardDriverDetails());
 		
 		this.mockMvc.perform(
-	            post("/driver")
-	                    .content(standardDriverJson(standardDriverDetailsNewMobileAndFirstName(driverDetails.getDriverId())))
-	                    .contentType(MediaType.APPLICATION_JSON)
-	                    .accept(MediaType.APPLICATION_JSON))
+	            get("/driver/getByLicenceNumber/"+driverDetails.getLicenceNumber())
+	                    )
 	            .andDo(print())
-	            .andExpect(status().isCreated())
+	            .andExpect(status().isFound())
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		
-		 		.andExpect(jsonPath("$.firstName").value(standardDriverDetailsNewMobileAndFirstName(driverDetails.getDriverId()).getFirstName()))
+		 		.andExpect(jsonPath("$.firstName").value(standardDriverDetails().getFirstName()))
 		 		.andExpect(jsonPath("$.middleName").value(standardDriverDetails().getMiddleName()))
 		 		.andExpect(jsonPath("$.lastName").value(standardDriverDetails().getLastName()))
 		 		.andExpect(jsonPath("$.bloodGroup").value(standardDriverDetails().getBloodGroup()))
@@ -225,6 +224,46 @@ public class DriverDetailsContollerWACTest {
 	            .andExpect(jsonPath("$.updatedBy").value(standardDriverDetails().getUpdatedBy()))
 	            .andExpect(jsonPath("$.insertTime").exists())
 	            .andExpect(jsonPath("$.updateTime").exists());
+		
+	}
+	
+	
+	@Test
+	public void update() throws Exception
+	{
+		
+		DriverDetails driverDetails=driverDetailsCustomRepository.save(standardDriverDetails());
+		
+		this.mockMvc.perform(
+	            post("/driver")
+	                    .content(standardDriverJson(standardDriverDetailsNewMobileAndFirstName(driverDetails.getDriverId())))
+	                    .contentType(MediaType.APPLICATION_JSON)
+	                    .accept(MediaType.APPLICATION_JSON))
+	            .andDo(print())
+	            .andExpect(status().isCreated())
+	            
+	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
+		
+		 		.andExpect(jsonPath("$.result.firstName").value(standardDriverDetailsNewMobileAndFirstName(driverDetails.getDriverId()).getFirstName()))
+		 		.andExpect(jsonPath("$.result.middleName").value(standardDriverDetails().getMiddleName()))
+		 		.andExpect(jsonPath("$.result.lastName").value(standardDriverDetails().getLastName()))
+		 		.andExpect(jsonPath("$.result.bloodGroup").value(standardDriverDetails().getBloodGroup()))
+		 		.andExpect(jsonPath("$.result.homeAddress.addressLine").value(standardDriverDetails().getHomeAddress().getAddressLine()))
+	            .andExpect(jsonPath("$.result.homeAddress.customerType").value(standardDriverDetails().getHomeAddress().getCustomerType()))
+	            .andExpect(jsonPath("$.result.homeAddress.city").value(standardDriverDetails().getHomeAddress().getCity()))
+	            .andExpect(jsonPath("$.result.homeAddress.district").value(standardDriverDetails().getHomeAddress().getDistrict()))
+	            .andExpect(jsonPath("$.result.homeAddress.state").value(standardDriverDetails().getHomeAddress().getState()))
+	            .andExpect(jsonPath("$.result.homeAddress.pincode").value(standardDriverDetails().getHomeAddress().getPincode()))
+	            .andExpect(jsonPath("$.result.mobile").value(standardDriverDetails().getMobile()))
+	            .andExpect(jsonPath("$.result.isMobileVerified").value(standardDriverDetails().getIsMobileVerified()))
+	            .andExpect(jsonPath("$.result.homeContactNumber").value(standardDriverDetails().getHomeContactNumber()))
+	            .andExpect(jsonPath("$.result.isFreightRequestPermissionGiven").value(standardDriverDetails().getIsFreightRequestPermissionGiven()))
+	            .andExpect(jsonPath("$.result.isDealFinalizationPermissionGiven").value(standardDriverDetails().getIsDealFinalizationPermissionGiven()))
+	            .andExpect(jsonPath("$.result.licenceNumber").value(standardDriverDetails().getLicenceNumber()))
+	            .andExpect(jsonPath("$.result.language").value(standardDriverDetails().getLanguage()))
+	            .andExpect(jsonPath("$.result.updatedBy").value(standardDriverDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.result.insertTime").exists())
+	            .andExpect(jsonPath("$.result.updateTime").exists());
 		
 	}
 	
@@ -348,7 +387,8 @@ public class DriverDetailsContollerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(content().string("1"));
+	            .andExpect(jsonPath("$.result").value(1))
+	            .andExpect(jsonPath("$.errorMessage").value(""));
 	            
 	}
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.config.Constants;
+import com.projectx.data.domain.commdto.ResponseDTO;
 import com.projectx.data.domain.completeregister.VehicleDetails;
 import com.projectx.data.repository.completeregister.VehicleDetailsRepository;
+
 import static com.projectx.data.config.Constants.*;
 
 @RestController
@@ -32,20 +35,45 @@ public class VehicleDetailsController {
 	@Autowired
 	VehicleDetailsRepository vehicleDetailsRepository;
 	
+	@Value("${ALREADY_REPORTED}")
+	private String ALREADY_REPORTED;
+
+	@Value("${REGISTRATION_NUMBER_ALREADY_REPORTED}")
+	private String 	REGISTRATION_NUMBER_ALREADY_REPORTED;
+	
+	@Value("${CHASIS_NUMBER_ALREADY_REPORTED}")
+	private String CHASIS_NUMBER_ALREADY_REPORTED;
+	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<VehicleDetails> save(@Valid @RequestBody VehicleDetails vehicleDetails,BindingResult bindingResult)
+	public ResponseEntity<ResponseDTO<VehicleDetails>> save(@Valid @RequestBody VehicleDetails vehicleDetails,BindingResult bindingResult)
 	{
 		if(bindingResult.hasErrors())
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		ResponseEntity<VehicleDetails> result=null;
+		ResponseEntity<ResponseDTO<VehicleDetails>> result=null;
 		
 		try{
 			VehicleDetails savedEntity=vehicleDetailsRepository.save(vehicleDetails);
-			result=new ResponseEntity<VehicleDetails>(savedEntity, HttpStatus.CREATED);
+			result=new ResponseEntity<ResponseDTO<VehicleDetails>>(new ResponseDTO<VehicleDetails>("",savedEntity), HttpStatus.CREATED);
 		}catch(DataIntegrityViolationException e)
 		{
-			result=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+			StringBuilder errorMessage=new StringBuilder();
+			
+			VehicleDetails detailsRegistartionNumber=vehicleDetailsRepository
+					.findByRegistrationNumber(vehicleDetails.getRegistrationNumber());
+			
+			if(detailsRegistartionNumber!=null)
+				errorMessage.append(REGISTRATION_NUMBER_ALREADY_REPORTED);
+					
+			
+			VehicleDetails detailsChasisNumber=vehicleDetailsRepository.findByChassisNumber(vehicleDetails.getChassisNumber());
+			
+			if(detailsChasisNumber!=null)
+				errorMessage.append(CHASIS_NUMBER_ALREADY_REPORTED);
+			
+			errorMessage.append(ALREADY_REPORTED);
+			
+			result=new ResponseEntity<ResponseDTO<VehicleDetails>>(new ResponseDTO<VehicleDetails>(errorMessage.toString(),null), HttpStatus.ALREADY_REPORTED);
 		}
 		
 		return result;
@@ -76,7 +104,20 @@ public class VehicleDetailsController {
 		return result;
 	}
 
-	
+	@RequestMapping(value="/getByChassisNumber/{chassisNumber}")
+	public ResponseEntity<VehicleDetails> findByChassisNumber(@PathVariable String chassisNumber)
+	{
+		ResponseEntity<VehicleDetails> result=null;
+		
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.findByChassisNumber(chassisNumber);
+		
+		if(vehicleDetails ==null)
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<VehicleDetails>(vehicleDetails, HttpStatus.FOUND);
+				
+		return result;
+	}
 	
 	@RequestMapping(value="/getById/{vehicleId}")
 	public ResponseEntity<VehicleDetails> findOne(@PathVariable Long vehicleId)

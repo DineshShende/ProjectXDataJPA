@@ -84,26 +84,27 @@ public class VehicleDetailsControllerWACTest {
 	            
 	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
 		
-		 		.andExpect(jsonPath("$.ownerFirstName").value(standardVehicleDetails().getOwnerFirstName()))
-		 		.andExpect(jsonPath("$.ownerMiddleName").value(standardVehicleDetails().getOwnerMiddleName()))
-		 		.andExpect(jsonPath("$.ownerLastName").value(standardVehicleDetails().getOwnerLastName()))
+		 		.andExpect(jsonPath("$.result.ownerFirstName").value(standardVehicleDetails().getOwnerFirstName()))
+		 		.andExpect(jsonPath("$.result.ownerMiddleName").value(standardVehicleDetails().getOwnerMiddleName()))
+		 		.andExpect(jsonPath("$.result.ownerLastName").value(standardVehicleDetails().getOwnerLastName()))
 		 	//	.andExpect(jsonPath("$.vehicleTypeId.vehicleTypeName").value(standVehicleTypeDetails().getVehicleTypeName()))
-	            .andExpect(jsonPath("$.vehicleBrandId.vehicleBrandName").value(standardVehicleBrandDetails().getVehicleBrandName()))
-	            .andExpect(jsonPath("$.vehicleBrandId.modelNumber").value(standardVehicleBrandDetails().getModelNumber()))
-	            .andExpect(jsonPath("$.vehicleBrandId.vehicleTypeId.vehicleTypeName").value(standVehicleTypeDetails().getVehicleTypeName()))
-	            .andExpect(jsonPath("$.vehicleBodyType").value(standardVehicleDetails().getVehicleBodyType()))
-	            .andExpect(jsonPath("$.isBodyTypeFlexible").value(standardVehicleDetails().getIsBodyTypeFlexible()))
-	            .andExpect(jsonPath("$.registrationNumber").value(standardVehicleDetails().getRegistrationNumber()))
-	            .andExpect(jsonPath("$.chassisNumber").value(standardVehicleDetails().getChassisNumber()))
-	            .andExpect(jsonPath("$.loadCapacityInTons").value(standardVehicleDetails().getLoadCapacityInTons()))
-	            .andExpect(jsonPath("$.numberOfWheels").value(standardVehicleDetails().getNumberOfWheels()))
-	            .andExpect(jsonPath("$.permitType").value(standardVehicleDetails().getPermitType()))
-	            .andExpect(jsonPath("$.insuranceStatus").value(standardVehicleDetails().getInsuranceStatus()))
-	            .andExpect(jsonPath("$.insuranceNumber").value(standardVehicleDetails().getInsuranceNumber()))
-	            .andExpect(jsonPath("$.insuranceCompany").value(standardVehicleDetails().getInsuranceCompany()))
-	            .andExpect(jsonPath("$.updatedBy").value(standardVehicleDetails().getUpdatedBy()))
-	            .andExpect(jsonPath("$.insertTime").exists())
-	            .andExpect(jsonPath("$.updateTime").exists());
+	            .andExpect(jsonPath("$.result.vehicleBrandId.vehicleBrandName").value(standardVehicleBrandDetails().getVehicleBrandName()))
+	            .andExpect(jsonPath("$.result.vehicleBrandId.modelNumber").value(standardVehicleBrandDetails().getModelNumber()))
+	            .andExpect(jsonPath("$.result.vehicleBrandId.vehicleTypeId.vehicleTypeName").value(standVehicleTypeDetails().getVehicleTypeName()))
+	            .andExpect(jsonPath("$.result.vehicleBodyType").value(standardVehicleDetails().getVehicleBodyType()))
+	            .andExpect(jsonPath("$.result.isBodyTypeFlexible").value(standardVehicleDetails().getIsBodyTypeFlexible()))
+	            .andExpect(jsonPath("$.result.registrationNumber").value(standardVehicleDetails().getRegistrationNumber()))
+	            .andExpect(jsonPath("$.result.chassisNumber").value(standardVehicleDetails().getChassisNumber()))
+	            .andExpect(jsonPath("$.result.loadCapacityInTons").value(standardVehicleDetails().getLoadCapacityInTons()))
+	            .andExpect(jsonPath("$.result.numberOfWheels").value(standardVehicleDetails().getNumberOfWheels()))
+	            .andExpect(jsonPath("$.result.permitType").value(standardVehicleDetails().getPermitType()))
+	            .andExpect(jsonPath("$.result.insuranceStatus").value(standardVehicleDetails().getInsuranceStatus()))
+	            .andExpect(jsonPath("$.result.insuranceNumber").value(standardVehicleDetails().getInsuranceNumber()))
+	            .andExpect(jsonPath("$.result.insuranceCompany").value(standardVehicleDetails().getInsuranceCompany()))
+	            .andExpect(jsonPath("$.result.updatedBy").value(standardVehicleDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.result.insertTime").exists())
+	            .andExpect(jsonPath("$.result.updateTime").exists())
+	            .andExpect(jsonPath("$.errorMessage").value(""));
 	            
 	            		
 	}
@@ -143,7 +144,9 @@ public class VehicleDetailsControllerWACTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isAlreadyReported());
+	            .andExpect(status().isAlreadyReported())
+	            .andExpect(jsonPath("$.errorMessage").value("REGISTRATION_NUMBER_CHASIS_NUMBER_ALREADY_REPORTED"))
+	            .andExpect(jsonPath("$.result").doesNotExist());
 	            
 	}
 
@@ -201,6 +204,52 @@ public class VehicleDetailsControllerWACTest {
 		
 		this.mockMvc.perform(
 	            get("/vehicle/getByRegistrationNumber/"+vehicleDetails.getRegistrationNumber())
+	                )
+	            .andDo(print())
+	            .andExpect(status().isFound())
+	            
+	         //   .andExpect(jsonPath("$.key.customerId").value(standardDocumentDetailsWithDummyDocument().getKey().getCustomerId()))
+		
+		 		.andExpect(jsonPath("$.ownerFirstName").value(standardVehicleDetails().getOwnerFirstName()))
+		 		.andExpect(jsonPath("$.ownerMiddleName").value(standardVehicleDetails().getOwnerMiddleName()))
+		 		.andExpect(jsonPath("$.ownerLastName").value(standardVehicleDetails().getOwnerLastName()))
+		 		//.andExpect(jsonPath("$.vehicleTypeId.vehicleTypeName").value(standVehicleTypeDetails().getVehicleTypeName()))
+	            .andExpect(jsonPath("$.vehicleBrandId.vehicleBrandName").value(standardVehicleBrandDetails().getVehicleBrandName()))
+	            .andExpect(jsonPath("$.vehicleBrandId.modelNumber").value(standardVehicleBrandDetails().getModelNumber()))
+	            .andExpect(jsonPath("$.vehicleBrandId.vehicleTypeId.vehicleTypeName").value(standVehicleTypeDetails().getVehicleTypeName()))
+	            .andExpect(jsonPath("$.vehicleBodyType").value(standardVehicleDetails().getVehicleBodyType()))
+	            .andExpect(jsonPath("$.isBodyTypeFlexible").value(standardVehicleDetails().getIsBodyTypeFlexible()))
+	            .andExpect(jsonPath("$.registrationNumber").value(standardVehicleDetails().getRegistrationNumber()))
+	            .andExpect(jsonPath("$.chassisNumber").value(standardVehicleDetails().getChassisNumber()))
+	            .andExpect(jsonPath("$.loadCapacityInTons").value(standardVehicleDetails().getLoadCapacityInTons()))
+	            .andExpect(jsonPath("$.numberOfWheels").value(standardVehicleDetails().getNumberOfWheels()))
+	            .andExpect(jsonPath("$.permitType").value(standardVehicleDetails().getPermitType()))
+	            .andExpect(jsonPath("$.insuranceStatus").value(standardVehicleDetails().getInsuranceStatus()))
+	            .andExpect(jsonPath("$.insuranceNumber").value(standardVehicleDetails().getInsuranceNumber()))
+	            .andExpect(jsonPath("$.insuranceCompany").value(standardVehicleDetails().getInsuranceCompany()))
+	            .andExpect(jsonPath("$.updatedBy").value(standardVehicleDetails().getUpdatedBy()))
+	            .andExpect(jsonPath("$.insertTime").exists())
+	            .andExpect(jsonPath("$.updateTime").exists());
+	            
+	            		
+	}
+
+
+	@Test
+	public void getByChassisNumber() throws Exception
+	{
+		vehicleDetailsRepository.deleteAll();
+		
+		this.mockMvc.perform(
+	            get("/vehicle/getByChassisNumber/"+"212")
+	                )
+	            .andDo(print())
+	            .andExpect(status().isNoContent());
+		
+		VehicleDetails vehicleDetails=vehicleDetailsRepository.save(standardVehicleDetails());
+		
+		this.mockMvc.perform(
+	            get("/vehicle/getByChassisNumber/"+vehicleDetails.getChassisNumber())
 	                )
 	            .andDo(print())
 	            .andExpect(status().isFound())

@@ -119,4 +119,17 @@ public class VehicleDetailsRepositoryTest {
 		
 		assertEquals(1, vehicleDetailsRepository.count());
 	}
+	
+	@Test
+	public void findByChassisNumber()
+	{
+		assertEquals(0, vehicleDetailsRepository.count());
+		
+		VehicleDetails savedEntity=vehicleDetailsRepository.save(standardVehicleDetails());
+		
+		assertEquals(savedEntity, vehicleDetailsRepository.findByChassisNumber(standardVehicleDetails().getChassisNumber()));
+		
+		assertEquals(1, vehicleDetailsRepository.count());
+	}
+
 }

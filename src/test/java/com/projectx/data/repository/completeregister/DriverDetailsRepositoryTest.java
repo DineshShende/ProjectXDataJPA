@@ -114,7 +114,19 @@ public class DriverDetailsRepositoryTest {
 		assertEquals(2, driverList.size());
 		
 	}
+
 	
+	@Test
+	public void getDriverByLicenceNumber()
+	{
+		assertEquals(0, driverDetailsRepository.count().intValue());
+		
+		DriverDetails savedEntity=driverDetailsRepository.save(standardDriverDetails());
+		
+		assertEquals(savedEntity, driverDetailsRepository.findByLicenceNumber(standardDriverDetails().getLicenceNumber()));
+		
+	}
+
 	
 	@Test
 	public void updateAddress()

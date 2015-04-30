@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.config.Constants;
+import com.projectx.data.domain.commdto.ResponseDTO;
 import com.projectx.data.domain.completeregister.DriverDetails;
 import com.projectx.data.repository.completeregister.DriverDetailsCustomRepository;
+import com.projectx.data.repository.quickregister.MobileVerificationDetailsRepository;
 import com.projectx.rest.domain.completeregister.UpdateMobileVerificationStatusUpdatedByDTO;
 
 @RestController
@@ -32,13 +35,28 @@ public class DriverDetailsContoller {
 	@Autowired
 	DriverDetailsCustomRepository driverDetailsRepository;
 	
+	@Autowired
+	MobileVerificationDetailsRepository mobileVerificationDetailsRepository;
+	
+	@Value("${MOBILE_ALREADY_REPORTED}")
+	private String MOBILE_ALREADY_REPORTED;
+	
+	@Value("${MOBILE_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED}")
+	private String MOBILE_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED;
+	
+	@Value("${DRIVING_LICENCE_ALREADY_REPORTED}")
+	private String DRIVING_LICENCE_ALREADY_REPORTED;
+	
+	@Value("${ALREADY_REPORTED}")
+	private String ALREADY_REPORTED;
+	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<DriverDetails> save(@Valid @RequestBody DriverDetails driverDetails,BindingResult bindingResult)
+	public ResponseEntity<ResponseDTO<DriverDetails>> save(@Valid @RequestBody DriverDetails driverDetails,BindingResult bindingResult)
 	{
 		if(bindingResult.hasErrors())
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		ResponseEntity<DriverDetails> savedEntityResponse=null;
+		ResponseEntity<ResponseDTO<DriverDetails>> savedEntityResponse=null;
 		
 		DriverDetails savedEntity=null;
 		
@@ -46,11 +64,22 @@ public class DriverDetailsContoller {
 		{
 			savedEntity=driverDetailsRepository.save(driverDetails);
 			
-			savedEntityResponse=new ResponseEntity<DriverDetails>(savedEntity, HttpStatus.CREATED);
+			savedEntityResponse=new ResponseEntity<ResponseDTO<DriverDetails>>(new ResponseDTO<DriverDetails>("",savedEntity), HttpStatus.CREATED);
 		}
 		catch(DataIntegrityViolationException e)
 		{
-			savedEntityResponse=new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+			StringBuilder errorMessage=new StringBuilder();
+			
+			if(mobileVerificationDetailsRepository.findByMobile(driverDetails.getMobile())!=null)
+					errorMessage.append(MOBILE_ALREADY_REPORTED);
+			
+			if(driverDetailsRepository.findByLicenceNumber(driverDetails.getLicenceNumber())!=null)
+				errorMessage.append(DRIVING_LICENCE_ALREADY_REPORTED);
+			
+			errorMessage.append(ALREADY_REPORTED);
+			
+			savedEntityResponse=new ResponseEntity<ResponseDTO<DriverDetails>>(new ResponseDTO<DriverDetails>(errorMessage.toString(),null),
+					HttpStatus.ALREADY_REPORTED);
 		}
 		
 		return savedEntityResponse;
@@ -59,18 +88,33 @@ public class DriverDetailsContoller {
 	
 	
 	@RequestMapping(value="/updateMobileAndMobileVerificationStatus",method=RequestMethod.POST)
-	public ResponseEntity<Integer> updateMobileAndMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO,BindingResult bindingResult)
+	public ResponseEntity<ResponseDTO<Integer>> updateMobileAndMobileVerificationStatus(@Valid @RequestBody UpdateMobileVerificationStatusUpdatedByDTO mobileVerificationStatusDTO,BindingResult bindingResult)
 	{
 		if(bindingResult.hasErrors())
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		ResponseEntity<Integer> result=null;
+		ResponseEntity<ResponseDTO<Integer>> result=null;
 		
-		Integer status=driverDetailsRepository
+		Integer status=null;
+		
+		try{
+		
+			status=driverDetailsRepository
 				.updateMobileAndMobileVerificationStatus(mobileVerificationStatusDTO.getCustomerId(), mobileVerificationStatusDTO.getMobile(),
 						mobileVerificationStatusDTO.getStatus(),mobileVerificationStatusDTO.getUpdatedBy(),mobileVerificationStatusDTO.getUpdatedById());
+			
+			result=new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>("",status), HttpStatus.OK);
+			
+		}catch(DataIntegrityViolationException e)
+		{
+			StringBuilder errorMessage=new StringBuilder();
+			errorMessage.append(MOBILE_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED);
+			errorMessage.append(ALREADY_REPORTED);
+			
+			return new ResponseEntity<ResponseDTO<Integer>>(new ResponseDTO<Integer>(errorMessage.toString(),null), HttpStatus.ALREADY_REPORTED);
+		}
 		
-		result=new ResponseEntity<Integer>(status, HttpStatus.OK);
+		
 		
 		return result;
 	}
@@ -83,12 +127,29 @@ public class DriverDetailsContoller {
 		return new ResponseEntity<List<DriverDetails>>(driverList, HttpStatus.OK);
 	}
 	
+	
+	
 	@RequestMapping(value="/getById/{driverId}")
 	public ResponseEntity<DriverDetails> findOne(@PathVariable Long driverId)
 	{
 		ResponseEntity<DriverDetails> result=null;
 		
 		DriverDetails driverDetails=driverDetailsRepository.findOne(driverId);
+		
+		if(driverDetails==null)
+			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		else
+			result=new ResponseEntity<DriverDetails>(driverDetails, HttpStatus.FOUND);
+			
+		return result;
+	}
+	
+	@RequestMapping(value="/getByLicenceNumber/{licenceNumber}")
+	public ResponseEntity<DriverDetails> findByLicenceNumber(@PathVariable String licenceNumber)
+	{
+		ResponseEntity<DriverDetails> result=null;
+		
+		DriverDetails driverDetails=driverDetailsRepository.findByLicenceNumber(licenceNumber);
 		
 		if(driverDetails==null)
 			result=new ResponseEntity<>(HttpStatus.NO_CONTENT);

@@ -19,4 +19,6 @@ public interface VehicleDetailsRepository extends
 	
 	VehicleDetails findByRegistrationNumber(String registrationNumber);
 	
+	VehicleDetails findByChassisNumber(String chassisNumber);
+	
 }

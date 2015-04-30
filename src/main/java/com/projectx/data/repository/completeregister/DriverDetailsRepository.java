@@ -28,5 +28,6 @@ public interface DriverDetailsRepository extends
 	@Query(value="select * from driverdetails where venderid=:vendorId",nativeQuery=true)
 	List<DriverDetails> getDriverListByVendorId(@Param("vendorId") Long vendorId);
 	
+	DriverDetails findByLicenceNumber(String licenceNumber);
 	
 }

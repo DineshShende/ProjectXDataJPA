@@ -112,7 +112,9 @@ public class QuickRegisterControllerStandAloneTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk());
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.errorMessage").value(""))
+	            .andExpect(jsonPath("$.result").exists());
 	}
 	
 	
@@ -130,7 +132,9 @@ public class QuickRegisterControllerStandAloneTest {
 	                    .contentType(MediaType.APPLICATION_JSON)
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
-	            .andExpect(status().isOk());
+	            .andExpect(status().isOk())
+	            .andExpect(jsonPath("$.errorMessage").value(""))
+	            .andExpect(jsonPath("$.result").exists());;
 	}
 	
 	

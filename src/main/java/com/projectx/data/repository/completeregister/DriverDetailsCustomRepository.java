@@ -102,6 +102,8 @@ public class DriverDetailsCustomRepository {
 		}
 		else
 		{
+			
+			
 			DriverDetails savedEntity=driverDetailsRepository.save(driverDetails);
 			
 			if(driverDetails.getMobile()!=null)
@@ -158,7 +160,10 @@ public class DriverDetailsCustomRepository {
 		return driverDetailsRepository.findOne(driverId);
 	}
 	
-	
+	public DriverDetails findByLicenceNumber(String licenceNumber)
+	{
+		return driverDetailsRepository.findByLicenceNumber(licenceNumber);
+	}
 }
 
 
