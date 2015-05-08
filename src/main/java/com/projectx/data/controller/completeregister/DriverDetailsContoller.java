@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -166,7 +167,7 @@ public class DriverDetailsContoller {
 		{
 			driverDetailsRepository.deleteByKey(driverId);
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		}catch(DataIntegrityViolationException e)
+		}catch(EmptyResultDataAccessException e)
 		{
 			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 		}

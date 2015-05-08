@@ -48,7 +48,7 @@ public class VendorDetails {
 	private String firmName;
 	
 	@Valid
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="FIRMADDRESSID")
 	private Address firmAddress;
 	

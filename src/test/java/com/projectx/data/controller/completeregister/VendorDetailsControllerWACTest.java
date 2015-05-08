@@ -110,6 +110,7 @@ public class VendorDetailsControllerWACTest {
 	}
 	
 	@Test
+	@Transactional
 	public void updateVendorDetails() throws Exception
 	{
 		VendorDetails vendorDetails=vendorDetailsRepositoty.save(standardVendor());

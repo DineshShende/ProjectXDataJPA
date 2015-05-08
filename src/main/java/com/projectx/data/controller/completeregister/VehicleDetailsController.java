@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -142,7 +143,7 @@ public class VehicleDetailsController {
 		try{
 		vehicleDetailsRepository.delete(vehicleId);
 		result=new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		}catch(DataIntegrityViolationException e)
+		}catch(EmptyResultDataAccessException e)
 		{
 			result=new ResponseEntity<Boolean>(false, HttpStatus.OK);
 		}

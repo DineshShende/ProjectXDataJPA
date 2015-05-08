@@ -173,7 +173,7 @@ public class FreightRequestByCustomerRepositoryTest {
 		
 		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenAcer());
 		
-		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenTataStatusResponded());
+		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenTata());
 		
 		savedEntity=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerLessThanTruckLoadOpenNoBrand());
 		
@@ -187,7 +187,7 @@ public class FreightRequestByCustomerRepositoryTest {
 		
 		List<FreightRequestByCustomer> list=freightRequestByCustomerRepository.getMatchingCustomerRequest(testRequest,FREIGHTALLOCATIONSTATUS_NEW);
 		
-		assertEquals(2, list.size());
+		assertEquals(1, list.size());
 	}
 	
 	@Test

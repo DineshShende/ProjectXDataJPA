@@ -165,7 +165,8 @@ public class FreightRequestByCustomerControllerWACTest {
 	            
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(content().string("true"));
+	                .andExpect(jsonPath("$.result").value(true))
+	                .andExpect(jsonPath("$.errorMessage").value(""));
 	    
 	}
 	

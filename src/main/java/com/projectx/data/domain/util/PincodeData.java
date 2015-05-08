@@ -18,20 +18,30 @@ public class PincodeData {
 	private String district;
 	
 	private String state;
+	
+	private String latitude;
+	
+	private String longitude;
 
 	public PincodeData() {
 		super();
 	}
 
+	
+
 	public PincodeData(Integer pincode, String officeName, String taluk,
-			String district, String state) {
+			String district, String state, String latitude, String longitude) {
 		super();
 		this.pincode = pincode;
 		this.officeName = officeName;
 		Taluk = taluk;
 		this.district = district;
 		this.state = state;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
+
+
 
 	public Integer getPincode() {
 		return pincode;
@@ -72,13 +82,42 @@ public class PincodeData {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "PincodeData [pincode=" + pincode + ", officeName=" + officeName
 				+ ", Taluk=" + Taluk + ", district=" + district + ", state="
-				+ state + "]";
+				+ state + ", latitude=" + latitude + ", longitude=" + longitude
+				+ "]";
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -88,11 +127,17 @@ public class PincodeData {
 		result = prime * result
 				+ ((district == null) ? 0 : district.hashCode());
 		result = prime * result
+				+ ((latitude == null) ? 0 : latitude.hashCode());
+		result = prime * result
+				+ ((longitude == null) ? 0 : longitude.hashCode());
+		result = prime * result
 				+ ((officeName == null) ? 0 : officeName.hashCode());
 		result = prime * result + ((pincode == null) ? 0 : pincode.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -113,6 +158,16 @@ public class PincodeData {
 				return false;
 		} else if (!district.equals(other.district))
 			return false;
+		if (latitude == null) {
+			if (other.latitude != null)
+				return false;
+		} else if (!latitude.equals(other.latitude))
+			return false;
+		if (longitude == null) {
+			if (other.longitude != null)
+				return false;
+		} else if (!longitude.equals(other.longitude))
+			return false;
 		if (officeName == null) {
 			if (other.officeName != null)
 				return false;
@@ -130,6 +185,8 @@ public class PincodeData {
 			return false;
 		return true;
 	}
+
+
 	
 	
 	

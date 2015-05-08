@@ -48,7 +48,7 @@ public class PincodeReadCSV {
 		                                 + " , pincode=" + country[1] + ",Taluka="+country[7]+",Dist="+country[8]+",state="+country[9]+"]");
 					
 					
-					PincodeData pincodeData=new PincodeData(Integer.parseInt(country[1]), country[0], country[7], country[8], country[9]);
+					PincodeData pincodeData=new PincodeData(Integer.parseInt(country[1]), country[0], country[7], country[8], country[9],"","");
 					
 					pincodeDataRepository.save(pincodeData);
 		 

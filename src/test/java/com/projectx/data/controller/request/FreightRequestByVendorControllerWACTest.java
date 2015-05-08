@@ -73,7 +73,9 @@ public class FreightRequestByVendorControllerWACTest {
 	public void cleanUp()
 	{
 		testRequestRepository.deleteAll();
+		freightRequestByCustomerRepository.deleteAll();
 		vehicleDetailsRepository.deleteAll();
+
 		
 	}
 	
@@ -98,16 +100,17 @@ public class FreightRequestByVendorControllerWACTest {
 	                    .accept(MediaType.APPLICATION_JSON))
 	            .andDo(print())
 	            .andExpect(status().isCreated())
-	            .andExpect(jsonPath("$.vehicleRegistrationNumber").value(standardTestRequest().getVehicleDetailsId().getRegistrationNumber()))
-	            .andExpect(jsonPath("$.source").value(standardTestRequest().getSource()))
-	            .andExpect(jsonPath("$.destination").value(standardTestRequest().getDestination()))
-	            .andExpect(jsonPath("$.driverId").exists())
-	            .andExpect(jsonPath("$.availableTime").value(standardTestRequest().getAvailableTime()))
-	            .andExpect(jsonPath("$.pickupRangeInKm").value(standardTestRequest().getPickupRangeInKm()))
-	            .andExpect(jsonPath("$.updatedBy").value(standardTestRequest().getUpdatedBy()))
-	            .andExpect(jsonPath("$.availableDate").exists())
-	            .andExpect(jsonPath("$.insertTime").exists())
-	            .andExpect(jsonPath("$.updateTime").exists())
+	            .andExpect(jsonPath("$.result.vehicleRegistrationNumber").value(standardTestRequest().getVehicleDetailsId().getRegistrationNumber()))
+	            .andExpect(jsonPath("$.result.source").value(standardTestRequest().getSource()))
+	            .andExpect(jsonPath("$.result.destination").value(standardTestRequest().getDestination()))
+	            .andExpect(jsonPath("$.result.driverId").exists())
+	            .andExpect(jsonPath("$.result.availableTime").value(standardTestRequest().getAvailableTime()))
+	            .andExpect(jsonPath("$.result.pickupRangeInKm").value(standardTestRequest().getPickupRangeInKm()))
+	            .andExpect(jsonPath("$.result.updatedBy").value(standardTestRequest().getUpdatedBy()))
+	            .andExpect(jsonPath("$.result.availableDate").exists())
+	            .andExpect(jsonPath("$.result.insertTime").exists())
+	            .andExpect(jsonPath("$.result.updateTime").exists())
+	            .andExpect(jsonPath("$.errorMessage").value(""))
 	            ;
 
 		
@@ -171,7 +174,8 @@ public class FreightRequestByVendorControllerWACTest {
 	            
 	            .andDo(print())
 	            .andExpect(status().isOk())
-	            .andExpect(content().string("true"));
+	            .andExpect(jsonPath("$.result").value(true))
+	            .andExpect(jsonPath("$.errorMessage").value(""));
 	    
 	}
 	
@@ -228,15 +232,24 @@ public class FreightRequestByVendorControllerWACTest {
 	@Test
 	public void getMatchingVendorReqFromCustomerReq() throws Exception
 	{
-		FreightRequestByVendor customer=testRequestRepository.save(standardTestRequest());
+		
+		
+		FreightRequestByCustomer freightRequestByCustomer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		
+		FreightRequestByVendor savedEntity=testRequestRepository.save(standardTestRequest());
 		
 		testRequestRepository.save(standardTestRequestOpen());
 		
 		testRequestRepository.save(standardTestRequestClosed());
 		
 		testRequestRepository.save(standardTestRequestFlexible());
-		
-		FreightRequestByCustomer freightRequestByCustomer=freightRequestByCustomerRepository.save(standardFreightRequestByCustomerFullTruckLoad());
 		
 		
 		this.mockMvc.perform(

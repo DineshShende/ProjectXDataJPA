@@ -23,6 +23,8 @@ public class VehicleDetailsDataFixtures {
 	
 	public static String VEHICLE_BRAND_NAME="Tata tempo";
 	
+	public static String VEHICLE_BRAND_NAME_NEW="Tata Tempo";
+	
 	public static String VEHICLE_MODEL_NUMBER="407";
 	
 	public static Long VEHICLE_ID=269L;
@@ -101,7 +103,7 @@ public class VehicleDetailsDataFixtures {
 	
 	public static VehicleBrandDetails standardVehicleBrandDetails()
 	{
-		return new VehicleBrandDetails(VEHICLE_BRAND_ID, standVehicleTypeDetails(), VEHICLE_BRAND_NAME, VEHICLE_MODEL_NUMBER);
+		return new VehicleBrandDetails(VEHICLE_BRAND_ID, standVehicleTypeDetails(), VEHICLE_BRAND_NAME_NEW, VEHICLE_MODEL_NUMBER);
 		
 	}
 	

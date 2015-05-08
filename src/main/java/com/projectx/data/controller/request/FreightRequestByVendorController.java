@@ -9,7 +9,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.config.Constants;
+import com.projectx.data.domain.commdto.ResponseDTO;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.exception.request.VehicleDetailsNotFoundException;
@@ -43,26 +46,34 @@ public class FreightRequestByVendorController {
 	@Autowired
 	FreightRequestByVendorService freightRequestByVendorService;
 	
+	@Value("${VEHICLE_DETAILS_NOT_FOUND_BY_REGISTRATION_NUMBER}")
+	private String VEHICLE_DETAILS_NOT_FOUND_BY_REGISTRATION_NUMBER;
+	
+	@Value("${FREIGHT_REQUEST_BY_VENDOR_BY_ID_NOT_FOUND}")
+	private String FREIGHT_REQUEST_BY_VENDOR_BY_ID_NOT_FOUND;
+	
+	
+	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<FreightRequestByVendorDTO> save(@Valid @RequestBody FreightRequestByVendorDTO freightRequestByVendor,
+	public ResponseEntity<ResponseDTO<FreightRequestByVendorDTO>> save(@Valid @RequestBody FreightRequestByVendorDTO freightRequestByVendor,
 			BindingResult bindingResult)
 	{
 		if(bindingResult.hasErrors())
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		
-		ResponseEntity<FreightRequestByVendorDTO> result=null;
+		ResponseEntity<ResponseDTO<FreightRequestByVendorDTO>> result=null;
 		
 		FreightRequestByVendor savedEntity=null;
 		try{
 			savedEntity=freightRequestByVendorService.toFreightRequestByVendor(freightRequestByVendor);
 		}catch(VehicleDetailsNotFoundException e)
 		{
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<ResponseDTO<FreightRequestByVendorDTO>>(new ResponseDTO<FreightRequestByVendorDTO>(VEHICLE_DETAILS_NOT_FOUND_BY_REGISTRATION_NUMBER,null),HttpStatus.OK);
 		}
 		
 		try{
 			savedEntity=testRequestRepository.save(savedEntity);
-			result=new ResponseEntity<FreightRequestByVendorDTO>(freightRequestByVendorService.toFreightRequestByVendorDTO(savedEntity),
+			result=new ResponseEntity<ResponseDTO<FreightRequestByVendorDTO>>(new ResponseDTO<FreightRequestByVendorDTO>("",freightRequestByVendorService.toFreightRequestByVendorDTO(savedEntity)),
 					HttpStatus.CREATED);
 		}catch(DataIntegrityViolationException e)
 		{
@@ -88,15 +99,15 @@ public class FreightRequestByVendorController {
 	}
 	
 	@RequestMapping(value="/deleteById/{requestId}")
-	public ResponseEntity<Boolean> deleteById(@PathVariable Long requestId)
+	public ResponseEntity<ResponseDTO<Boolean>> deleteById(@PathVariable Long requestId)
 	{
 				
 		try{
 			testRequestRepository.delete(requestId);
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		}catch(DataIntegrityViolationException e)
+			return new ResponseEntity<ResponseDTO<Boolean>>(new ResponseDTO<Boolean>("",true), HttpStatus.OK);
+		}catch(EmptyResultDataAccessException e)
 		{
-			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+			return new ResponseEntity<ResponseDTO<Boolean>>(new ResponseDTO<Boolean>(FREIGHT_REQUEST_BY_VENDOR_BY_ID_NOT_FOUND,null), HttpStatus.OK);
 		}
 		
 	}

@@ -21,6 +21,10 @@ public class QPincodeData extends EntityPathBase<PincodeData> {
 
     public final StringPath district = createString("district");
 
+    public final StringPath latitude = createString("latitude");
+
+    public final StringPath longitude = createString("longitude");
+
     public final StringPath officeName = createString("officeName");
 
     public final NumberPath<Integer> pincode = createNumber("pincode", Integer.class);

@@ -6,7 +6,9 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projectx.data.config.Constants;
+import com.projectx.data.domain.commdto.ResponseDTO;
 import com.projectx.data.domain.request.FreightRequestByCustomer;
 import com.projectx.data.domain.request.FreightRequestByVendor;
 import com.projectx.data.repository.request.FreightRequestByCustomerRepository;
@@ -39,6 +42,9 @@ public class FreightRequestByCustomerController {
 	
 	@Autowired
 	FreightRequestByVendorService freightRequestByVendorService;
+	
+	@Value("${FREIGHT_REQUEST_BY_CUSTOMER_BY_ID_NOT_FOUND}")
+	private String FREIGHT_REQUEST_BY_CUSTOMER_BY_ID_NOT_FOUND;
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<FreightRequestByCustomer> save(@Valid @RequestBody FreightRequestByCustomer freightRequestByCustomer,BindingResult bindingResult)
@@ -91,15 +97,15 @@ public class FreightRequestByCustomerController {
 	}
 	
 	@RequestMapping(value="/deleteById/{requestId}")
-	public ResponseEntity<Boolean> deleteById(@PathVariable Long requestId)
+	public ResponseEntity<ResponseDTO<Boolean>> deleteById(@PathVariable Long requestId)
 	{
 		
 		try{
 			freightRequestByCustomerRepository.delete(requestId);
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		}catch(DataIntegrityViolationException e)
+			return new ResponseEntity<ResponseDTO<Boolean>>(new ResponseDTO<Boolean>("",true), HttpStatus.OK);
+		}catch(EmptyResultDataAccessException e)
 		{
-			return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+			return new ResponseEntity<ResponseDTO<Boolean>>(new ResponseDTO<Boolean>(FREIGHT_REQUEST_BY_CUSTOMER_BY_ID_NOT_FOUND,null), HttpStatus.OK);
 		}
 		
 	}

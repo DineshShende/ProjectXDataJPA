@@ -23,6 +23,7 @@ import com.projectx.data.domain.commdto.ResponseDTO;
 import com.projectx.data.domain.completeregister.CustomerDetails;
 import com.projectx.data.domain.completeregister.VendorDetails;
 import com.projectx.data.domain.quickregister.AuthenticationDetails;
+import com.projectx.data.domain.quickregister.MobileVerificationDetails;
 import com.projectx.data.repository.completeregister.VendorDetailsCustomRepository;
 import com.projectx.data.repository.quickregister.AuthenticationDetailsRepository;
 import com.projectx.data.repository.quickregister.EmailVerificationDetailsRepository;
@@ -67,6 +68,8 @@ public class VendorDetailsController {
 	@Value("${ALREADY_REPORTED}")
 	private String ALREADY_REPORTED;
 	
+	private Integer ENTITY_TYPE_VENDOR=2;
+	
 	@RequestMapping(value="/save",method=RequestMethod.POST)
 	public ResponseEntity<ResponseDTO<VendorDetails>> save(@Valid @RequestBody VendorDetails vendorDetails,BindingResult bindingResult)
 	{
@@ -104,8 +107,10 @@ public class VendorDetailsController {
 					errorMessage.append(EMAIL_DUE_TO_UPDATE_INCONSISTENCY_ALREADY_REPORTED);
 			}
 			
+			MobileVerificationDetails  mobileVerificationDetails=mobileVerificationDetailsRepository.findByMobile(vendorDetails.getSecondaryMobile());
 						
-			if(mobileVerificationDetailsRepository.findByMobile(vendorDetails.getSecondaryMobile())!=null)
+			if(mobileVerificationDetails!=null &&(!mobileVerificationDetails.getKey().getCustomerId().equals(vendorDetails.getVendorId())||
+					!mobileVerificationDetails.getKey().getCustomerType().equals(ENTITY_TYPE_VENDOR)))
 			{
 				errorMessage.append(SEC_MOBILE_ALREADY_REPORTED);
 			}
